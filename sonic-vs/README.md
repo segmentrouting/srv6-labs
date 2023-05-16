@@ -1,7 +1,7 @@
 # sonic-vs
 This repo contains kvm xml and config files for launching and running a 12-node sonic-vs CLOS topology as shown in the diagram. There are two sets of router configurations, IPv6/BGP numbered and unnumbered, depending on your preference. The numbered and unnumbered folders contain their own READMEs as well.
 
-<img src="/diagrams/sonic-vs-clos.png" width="1200">
+<img src="/sonic-vs/diagrams/sonic-vs-clos.png" width="1200">
 
 Requirements: 1 vCPU and 4GB memory per sonic-vs instance. The topology in this repo has been tested on an Ubuntu 20.04 host using virsh.
 
@@ -56,7 +56,7 @@ Help:    https://sonic-net.github.io/SONiC/
 
 Last login: Sat Apr  8 02:33:24 UTC 2023 from 192.168.122.1 on pts/0
 ```
-#### the xml files create a mgt port attached to linux bridge virbr0, which should allocate a DHCP address for the mgt port IP. Example:
+#### the xml files create a management port attached to linux bridge virbr0. virbr0 should allocate a DHCP address for the management port IP. Example:
 
 2. sonic cli: show ip interfaces
 ``` 
@@ -72,7 +72,7 @@ eth0                   192.168.122.116/24   up/up         N/A             N/A   
 lo                     127.0.0.1/16         up/up         N/A             N/A
 admin@sonic:~$ 
 ```
-3. ssh to the mgt IP and scp the config files to the sonic instance. Example:
+3. ssh to the management IP and scp the config files to the sonic instance. Example:
 ```
 scp brmcdoug@192.168.122.1:/home/brmcdoug/sonic-vs/config-unnumbered/sonic01/* .
 ```
