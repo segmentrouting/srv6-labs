@@ -49,21 +49,24 @@ sudo sysctl -p
 ```
 10. Run host check script to validate we have sufficient server/VM resources:  
 ```
-./host-check 
+./util/host-check 
 ```   
    You may see hugepages and IOMMU errors/warnings. I proceeded without addressing these.
   
 11. Optional: dry run script 
 ```
-./launch-xrd --dry-run localhost/ios-xr:7.7.1 --platform xrd
+./util/launch-xrd --dry-run localhost/ios-xr:7.7.1 --platform xrd
 ```
-12. Launch the topology 
+12. cd into the desired topology directory and launch the topology. Examples: 
 ``` 
-./xr-compose -f docker-compose-6-node.yml -i localhost/ios-xr:7.7.1 -l
+cd 6-node
+../xrd-compose -f docker-compose-6-node.yml -i localhost/ios-xr:7.7.1 -l
 
-or
+cd 4-node
+../xrd-compose -f docker-compose-4-node.yml -i localhost/ios-xr:7.7.1 -l
 
-./xr-compose -f docker-compose-4-node.yml -i localhost/ios-xr:7.7.1 -l
+cd 43-node
+../xrd-compose -f docker-compose-43-node-2dc.yml -i localhost/ios-xr:7.7.1 -l
   
 ```
 12. check containers: 
@@ -72,7 +75,7 @@ docker ps
 ```
 13. access XR cli (note, it will take a couple minutes for the containers to build, so cli won't be immediately available):
 ```
-docker exec -it xrd27 /pkg/bin/xr_cli.sh
+docker exec -it xrd91 /pkg/bin/xr_cli.sh
 ```
 
 14. Cleanup example: 4-node topology (or just run ./cleanup.sh script)
@@ -86,7 +89,7 @@ docker volume rm xrd94
 ```
 
 
-### 27 node topology
+### 43 node topology
 Tested on bare metal with 32 vCPU and 96G of memory.
 It does require some additional tuning:
 
