@@ -1,19 +1,6 @@
-# The 27-node topology is comprised of routers xrd00 thru xrd26
+# The 35-node topology is comprised of WAN routers xrd00 thru xrd26 and DC1 routers xrd40 thru xrd46
 
 services:
-# Ubuntu containers
-  source:
-    non_xr: true
-    image: alpine:3.15
-    container_name: alpine-06
-    stdin_open: true
-    tty: true
-    cap_add:
-      - NET_ADMIN
-    command: /bin/sh -c "ip route add 10.0.0.0/8 via 10.10.6.2 && /bin/sh"
-    networks:
-      xrd06-host:
-        ipv4_address: 10.10.6.4
 
 # XRd containers
   xrd00:
