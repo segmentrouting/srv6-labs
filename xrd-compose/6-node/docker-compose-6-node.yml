@@ -1,0 +1,124 @@
+# The 6-node topology is comprised of routers xrd25 thru xrd30
+
+services:
+# Ubuntu containers
+  source:
+    non_xr: true
+    image: alpine:3.15
+    container_name: source
+    stdin_open: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    command: /bin/sh -c "ip route add 10.0.0.0/8 via 10.0.95.1 && /bin/sh"
+    networks:
+      xrd95-host:
+        ipv4_address: 10.10.95.3
+
+# XRd containers
+  xrd95:
+    xr_startup_cfg: xrd95.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Mg0/RP0/CPU0/0
+        #    networks:
+        #source-xrd25:
+        #ipv4_address: 10.0.95.1
+  xrd96:
+    xr_startup_cfg: xrd96.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+  xrd97:
+    xr_startup_cfg: xrd97.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+  xrd98:
+    xr_startup_cfg: xrd98.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+  xrd99:
+    xr_startup_cfg: xrd99.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+  xrd100:
+    xr_startup_cfg: xrd100.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+xr_l2networks:
+  - ["xrd95:Gi0/0/0/0", "xrd96:Gi0/0/0/2"]
+  - ["xrd95:Gi0/0/0/4", "xrd98:Gi0/0/0/3"]
+  - ["xrd95:Gi0/0/0/1", "xrd100:Gi0/0/0/0"]
+  - ["xrd96:Gi0/0/0/0", "xrd98:Gi0/0/0/0"]
+  - ["xrd97:Gi0/0/0/0", "xrd98:Gi0/0/0/1"]
+  - ["xrd97:Gi0/0/0/1", "xrd99:Gi0/0/0/1"]
+  - ["xrd98:Gi0/0/0/2", "xrd99:Gi0/0/0/0"]
+  - ["xrd100:Gi0/0/0/2", "xrd96:Gi0/0/0/1"]
+  - ["xrd100:Gi0/0/0/1", "xrd97:Gi0/0/0/2"]
+
+networks:
+  mgmt:
+    xr_interfaces:
+      - xrd97:Mg0/RP0/CPU0/0
+      - xrd95:Mg0/RP0/CPU0/0
+      - xrd96:Mg0/RP0/CPU0/0
+      - xrd98:Mg0/RP0/CPU0/0
+      - xrd99:Mg0/RP0/CPU0/0
+      - xrd100:Mg0/RP0/CPU0/0
+    ipam:
+      config:
+        - subnet: 172.40.0.0/24
+  xrd95-host:
+    ipam:
+      config:
+        - subnet: 10.10.95.0/24
+    xr_interfaces:
+      - xrd95:Gi0/0/0/2
+  xrd96-host:
+    ipam:
+      config:
+        - subnet: 10.10.96.0/24
+    xr_interfaces:
+      - xrd96:Gi0/0/0/3
+
+  xrd97-host:
+    ipam:
+      config:
+        - subnet: 10.10.97.0/24
+    xr_interfaces:
+      - xrd97:Gi0/0/0/3
+
+  xrd99-host:
+    ipam:
+      config:
+        - subnet: 10.10.99.0/24
+    xr_interfaces:
+      - xrd99:Gi0/0/0/2

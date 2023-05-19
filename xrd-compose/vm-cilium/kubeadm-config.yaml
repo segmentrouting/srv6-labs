@@ -1,0 +1,15 @@
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+networking:
+  podSubnet: 10.244.0.0/16,2001:db8:42:0::/56
+  serviceSubnet: 10.96.0.0/16,2001:db8:42:1::/112
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: "192.168.122.170"
+  bindPort: 6443
+nodeRegistration:
+  kubeletExtraArgs:
+    node-ip: 10.10.66.3,2001:1:10:66::3

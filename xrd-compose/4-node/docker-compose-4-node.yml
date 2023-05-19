@@ -1,0 +1,82 @@
+# The 4-node topology is comprised of routers xrd31 thru xrd34
+
+services:
+# Ubuntu containers
+  source:
+    non_xr: true
+    image: alpine:3.15
+    container_name: source
+    stdin_open: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    command: /bin/sh -c "ip route add 10.0.0.0/8 via 10.0.25.1 && /bin/sh"
+    networks:
+      source-xrd25:
+        ipv4_address: 10.0.25.2
+
+# XRd
+  xrd91:
+    xr_startup_cfg: xrd91.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+  xrd92:
+    xr_startup_cfg: xrd92.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+  xrd93:
+    xr_startup_cfg: xrd93.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+  xrd94:
+    xr_startup_cfg: xrd94.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+
+xr_l2networks:
+  - ["xrd91:Gi0/0/0/0", "xrd92:Gi0/0/0/0"]
+  - ["xrd91:Gi0/0/0/1", "xrd93:Gi0/0/0/2"]
+  - ["xrd92:Gi0/0/0/2", "xrd94:Gi0/0/0/0"]
+  - ["xrd93:Gi0/0/0/1", "xrd94:Gi0/0/0/1"]
+
+
+networks:
+  mgmt:
+    xr_interfaces:
+      - xrd91:Mg0/RP0/CPU0/0
+      - xrd92:Mg0/RP0/CPU0/0
+      - xrd93:Mg0/RP0/CPU0/0
+      - xrd94:Mg0/RP0/CPU0/0
+
+    ipam:
+      config:
+        - subnet: 172.40.0.0/24
+  xrd91-host:
+    ipam:
+      config:
+        - subnet: 10.0.91.0/24
+    xr_interfaces:
+      - xrd91:Gi0/0/0/2
+  xrd94-host:
+    ipam:
+      config:
+        - subnet: 10.10.94.0/24
+    xr_interfaces:
+      - xrd94:Gi0/0/0/2
