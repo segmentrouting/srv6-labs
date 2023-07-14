@@ -4,15 +4,15 @@
             "hwsku": "Force10-S6000",
             "platform": "x86_64-kvm_x86_64-r0",
             "mac": "52:54:00:74:c1:12",
-            "hostname": "sonic112",
+            "hostname": "sonic12",
             "type": "LeafRouter",
-            "bgp_asn": "65112",
+            "bgp_asn": "65012",
             "docker_routing_config_mode": "split"
         }
     },
     "LOOPBACK_INTERFACE": {
-        "Loopback0|10.0.0.112/32": {},
-        "Loopback0|fc00:0:112::1/128": {}
+        "Loopback0|10.0.0.12/32": {},
+        "Loopback0|fc00:0:12::1/128": {}
     },
 
     "INTERFACE": {
@@ -25,10 +25,16 @@
         "Ethernet12": {},
         "Ethernet12|fc00:0:ffff::63/127": {},
 
-        "Ethernet16|10.10.52.12/29": {},
-        "Ethernet16|2001:1:10:52::12/125": {},
-        "Ethernet20|10.10.52.3/29": {},
-        "Ethernet20|2001:1:10:52::3/125": {},
+        "Ethernet16": {
+            "vrf_name": "Vrf1"
+        },
+        "Ethernet16|10.101.12.1/24": {},
+        "Ethernet16|2001:0:101:12::1/64": {},
+        "Ethernet20": {
+            "vrf_name": "Vrf2"
+        },
+        "Ethernet20|10.102.12.1/24": {},
+        "Ethernet20|2001:0:102:12::1/64": {},
 
         "Ethernet24": {},
         "Ethernet28": {}
