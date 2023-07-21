@@ -1,0 +1,58 @@
+# Topology
+#
+#     r1
+#    /  \
+#   r2--r3
+
+name: c8201-sonic-3-node
+
+mgmt:
+  network: fixedips
+  ipv4_subnet: 172.100.100.0/24
+  ipv6_subnet: 2001:172:100:100::/80
+
+topology:
+  kinds:
+    linux:
+      image: c8000-clab-sonic:27
+      binds: 
+          - /home/brmcdoug/vxr-img:/images
+      env:
+          IMAGE: /images/sonic-cisco-8000.bin
+          PID: '8201-32FH'
+
+  nodes:
+    r1:
+      kind: linux
+      mgmt_ipv4: 172.100.100.21
+      mgmt_ipv6: 2001:172:100:100::1021
+
+    r2:
+      kind: linux
+      wait-for:
+        - r1
+      mgmt_ipv4: 172.100.100.22
+      mgmt_ipv6: 2001:172:100:100::1022
+
+    r3:
+      kind: linux
+      wait-for:
+        - r1
+        - r2
+      mgmt_ipv4: 172.100.100.23
+      mgmt_ipv6: 2001:172:100:100::1023
+
+    br1:
+      kind: bridge
+    br2:
+      kind: bridge
+    br3:
+      kind: bridge
+
+  links:
+    - endpoints: ["r1:eth1", "br1:r1eth1"]
+    - endpoints: ["r2:eth1", "br1:r2eth1"]
+    - endpoints: ["r1:eth2", "br2:r1eth2"]
+    - endpoints: ["r3:eth1", "br2:r3eth1"]
+    - endpoints: ["r2:eth2", "br3:r2eth2"]
+    - endpoints: ["r3:eth2", "br3:r3eth2"]
