@@ -77,6 +77,16 @@ eth1 -> first front panel port  (Ethernet0)
 eth2 -> second front panel port (Ethernet4 or Ethernet8)
 ```
 
+#### NOTE: all X-node.yml topology files in this repo use Linux bridge to connect the clab routers. Be sure to create linux bridge instances prior to deploying the X-node.yml topologies:
+
+```
+sudo brctl addbr br1
+sudo brctl addbr br2
+sudo ip link set br1 up
+sudo ip link set br2 up
+etc.
+```
+
 5. Deploy topology
 ```
 sudo containerlab deploy -t example.yml
