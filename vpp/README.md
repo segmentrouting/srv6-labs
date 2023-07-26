@@ -2,7 +2,7 @@
 
 ### VPP Section
 Assumptions: Ubuntu 20.04 or 18.04
-These instructions will result in a VM that uses VPP as its gateway:
+These instructions will result in a VM that uses VPP as its gateway (think of VPP as a VNF sitting between Linux and the outside network):
 
 ```
 linux -- host-out/vpp-in -- VPP -- VM-NIC -- outside network
@@ -23,7 +23,7 @@ brmcdoug@ubuntu-vpp:~$ ls /etc/vpp/
 startup.conf  vpp-running.conf
 ```
 
-4. Edit netplan to look something like netplan.yaml in this repo. Key is the host-to-vpp -> vpp{} section as that creates the veth pair to connect linux to your VPP's "host interface"
+4. Edit netplan to look something like netplan.yaml in this repo. Key is the host-to-vpp -> vpp{} section as that creates the veth pair to connect linux to your VPP's "host interface".
    
 5. Restart netplan
 ```
@@ -54,9 +54,16 @@ local0 (dn):
 vpp# 
 ```
 
-8. Add SRv6 policies. For return traffic note the 'sr localsid' line in vpp-running.conf
+8. Add SRv6 policies and steering instructions to VPP. For return traffic note the 'sr localsid' line in vpp-running.conf
 
-### Linux Section
+```
+sr policy add bsid 1::1 next fc00:0:104:108:111:e006:: encap
+sr policy add bsid 1::2 next fc00:0:105:109:111:e006:: encap
+sr steer l3 10.10.1.0/24 via bsid 1::1
+sr steer l3 10.10.2.0/24 via bsid 1::2
+```
+
+### Linux kernel SRv6 Section
 
 Same assumptions re: Ubuntu
 

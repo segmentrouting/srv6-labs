@@ -1,12 +1,17 @@
 # sonic-vs
-This repo contains kvm xml and config files for launching and running a 12-node sonic-vs CLOS topology as shown in the diagram. There are two sets of router configurations, IPv6/BGP numbered and unnumbered, depending on your preference. The numbered and unnumbered folders contain their own READMEs as well.
+This repo contains kvm/virsh xml and config files for launching and running a 12-node sonic-vs CLOS topology as shown in the diagram. There are two sets of router configurations, IPv6/BGP numbered and unnumbered, depending on your preference. The numbered and unnumbered folders contain their own READMEs as well.
+
+More info on this lab and use case can be found here: https://www.segment-routing.net/blogs/srv6-usid-on-sonic/
 
 <img src="/sonic-vs/diagrams/sonic-vs-clos.png" width="1200">
 
 Requirements: 1 vCPU and 4GB memory per sonic-vs instance. The topology in this repo has been tested on an Ubuntu 20.04 host using virsh.
 
 ### sonic-vs launch instructions:
-1. acquire a sonic-vs image
+1. acquire a sonic-vs image - the full uSID-enabled image used in this repo/blog can be found here: https://onedrive.live.com/download?cid=266D2E4F35D86653&resid=266D2E4F35D86653%21138084&authkey=AN9P9j7tPoEU3iU
+
+ - Official sonic images: https://sonic.software/
+
 2. edit the image path in the sonic kvm xml files as needed
 3. define and launch kvms:
 ```
@@ -76,17 +81,18 @@ admin@sonic:~$
 ```
 scp brmcdoug@192.168.122.1:/home/brmcdoug/sonic-vs/config-unnumbered/sonic01/* .
 ```
+  
 ```
-admin@sonic04:~$ scp brmcdoug@192.168.122.1:/home/brmcdoug/sonic-vs/config-unnumbered/sonic01/* .
+admin@sonic01:~$ scp brmcdoug@192.168.122.1:/home/brmcdoug/sonic-vs/config-unnumbered/sonic01/* .
 brmcdoug@192.168.122.116's password: 
 config_db.json   100% 8426     5.5MB/s   00:00    
 frr.conf        100% 2383     3.1MB/s   00:00
 ```
-4. The config_db.json file contains interface and device metadata config. Replace the original config_db.json file with the new one:
+1. The config_db.json file contains interface and device metadata config. Replace the original config_db.json file with the new one:
 ```
 sudo mv config_db.json /etc/sonic/
 ```
-5. reload sonic config:
+1. reload sonic config:
 ```
 sudo config reload
 ```
@@ -133,7 +139,7 @@ sonic01(config)#  <paste>
 
 ### Notes, caveats:
 
-As of May 15, 2023:
+As of July 26, 2023:
 
 1. The repo doesn't contain any config automation yet, hence the FRR copy/paste routine...submissions are welcome :)
 
