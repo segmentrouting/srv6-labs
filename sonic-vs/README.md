@@ -30,7 +30,7 @@ etc.
       <target type='serial' port='0'/>
     </console>
 ```
-1. telnet to console
+2. telnet to console
 ```
 telnet localhost 8001
 ```
@@ -63,7 +63,7 @@ Last login: Sat Apr  8 02:33:24 UTC 2023 from 192.168.122.1 on pts/0
 ```
 #### the xml files create a management port attached to linux bridge virbr0. virbr0 should allocate a DHCP address for the management port IP. Example:
 
-2. sonic cli: show ip interfaces
+3. sonic cli: show ip interfaces
 ``` 
 show ip interfaces
 ```
@@ -77,7 +77,9 @@ eth0                   192.168.122.116/24   up/up         N/A             N/A   
 lo                     127.0.0.1/16         up/up         N/A             N/A
 admin@sonic:~$ 
 ```
-3. ssh to the management IP and scp the config files to the sonic instance. Example:
+### Configure sonic node
+
+1. ssh to the management IP and scp the config files to the sonic instance. Example:
 ```
 scp brmcdoug@192.168.122.1:/home/brmcdoug/sonic-vs/config-unnumbered/sonic01/* .
 ```
@@ -88,11 +90,11 @@ brmcdoug@192.168.122.116's password:
 config_db.json   100% 8426     5.5MB/s   00:00    
 frr.conf        100% 2383     3.1MB/s   00:00
 ```
-1. The config_db.json file contains interface and device metadata config. Replace the original config_db.json file with the new one:
+2. The config_db.json file contains interface and device metadata config. Replace the original config_db.json file with the new one:
 ```
 sudo mv config_db.json /etc/sonic/
 ```
-1. reload sonic config:
+3. reload sonic config:
 ```
 sudo config reload
 ```
@@ -121,7 +123,7 @@ show interfaces status
 show ip interfaces
 show ipv6 interfaces
 ```
-6. The frr.conf file contains BGP and SRv6 configurations. Invoke the FRR CLI, conf t, then paste in the config:
+4. The frr.conf file contains BGP and SRv6 configurations. Invoke the FRR CLI, conf t, then paste in the config:
 ```
 vtysh
 ```
@@ -143,14 +145,29 @@ As of July 26, 2023:
 
 1. The repo doesn't contain any config automation yet, hence the FRR copy/paste routine...submissions are welcome :)
 
-2. SONiC-VS and the FRR implementation have a couple quirks to be aware of:
+2. The util directory contains some scapy scripts to generate ipv6 encapsulated packets to probe/test the SRv6 topology
+   
+3. SONiC-VS and the FRR implementation have a couple quirks to be aware of:
 
-   - L3VPN forwarding requires setting the VRF strict mode sysctl kernel property followed by a config reload:
-   ```
-   net.vrf.strict_mode = 1
-   ```
+   - L3VPN forwarding requires setting the VRF strict mode sysctl kernel property:
 
-   - FRR also applies some default settings for BGP and RT values after events like reloads, which require cleanup. I’ll discuss these items with the engineering team and see what we can do to correct that. In the meantime:
+```
+admin@sonic01:~$ tail -f /etc/sysctl.conf 
+net.ipv6.conf.eth0.keep_addr_on_down = 1
+net.ipv4.tcp_l3mdev_accept = 1
+net.ipv4.udp_l3mdev_accept = 1
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.core.somaxconn = 512
+net.ipv4.fib_multipath_use_neigh = 1
+
+net.vrf.strict_mode = 1     <------------
+```
+ - after editing sysctl.conf reset sysctl
+```
+sudo sysctl -p
+```
+   - FRR may also apply some default settings for BGP and RT values after events like reloads, which require cleanup. I’ll discuss these items with the engineering team and see what we can do to correct that. In the meantime:
 
    ```
    no route-map RM_SET_SRC6 permit 10
@@ -158,3 +175,88 @@ As of July 26, 2023:
    no ip protocol bgp route-map RM_SET_SRC
    no ipv6 protocol bgp route-map RM_SET_SRC6
    ```
+### Additional notes:
+
+1. Full cleanout of stuff that frr might have in there by default 
+```
+no ip prefix-list PL_LoopbackV4 seq 5 permit 10.1.0.1/32
+no route-map RM_SET_SRC6 permit 10
+no route-map RM_SET_SRC permit 10
+no ip protocol bgp route-map RM_SET_SRC
+no ipv6 protocol bgp route-map RM_SET_SRC6
+
+no bgp community-list standard allow_list_default_community seq 5 permit no-export
+no bgp community-list standard allow_list_default_community seq 10 permit 5060:12345
+no route-map ALLOW_LIST_DEPLOYMENT_ID_0_V4 permit 65535
+no route-map ALLOW_LIST_DEPLOYMENT_ID_0_V6 permit 65535
+no route-map FROM_BGP_PEER_V4 permit 10
+no route-map FROM_BGP_PEER_V4 permit 11
+no route-map FROM_BGP_PEER_V4 permit 100
+no route-map FROM_BGP_PEER_V6 permit 1
+no route-map FROM_BGP_PEER_V6 permit 10
+no route-map FROM_BGP_PEER_V6 permit 11
+no route-map FROM_BGP_PEER_V6 permit 100
+no route-map TO_BGP_PEER_V4 permit 100
+no route-map TO_BGP_PEER_V6 permit 100
+```
+6. if necessary fix bgp vpn RT settings (same note about Bug)
+```
+router bgp 65001 vrf Vrf1
+ address-family ipv4 unicast
+ rd vpn export 10.0.0.1:1
+ rt vpn both 1:1
+ exit-address-family
+ address-family ipv6 unicast
+ rd vpn export 10.0.0.1:1
+ rt vpn both 1:1
+```
+7. Do 'show ipv6 route' in FRR. If BGP L3VPN SID is 'rejected', restart docker bgp container
+Example:
+```
+B>r fc00:0:2:6500::/128 [20/0] is directly connected, Vrf1, seg6local uDT46 unknown(seg6local_context2str), flavors unknown(seg6local_context2str), seg6 ::, weight 1, 01:44:25
+```
+```
+docker restart bgp
+```
+Now it should show something like:
+```
+sonic02# show ipv6 route
+Codes: K - kernel route, C - connected, S - static, R - RIPng,
+       O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
+       v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+B>* fc00:0:1::/48 [20/0] via fc00:0:ffff::11, Ethernet4, weight 1, 00:09:49
+B>* fc00:0:1::1/128 [20/0] via fc00:0:ffff::11, Ethernet4, weight 1, 00:09:49
+S>* fc00:0:2::/48 [1/0] is directly connected, Loopback0, weight 1, 00:09:57
+C>* fc00:0:2::1/128 is directly connected, Loopback0, 00:09:59
+B>* fc00:0:2:6500::/128 [20/0] is directly connected, Vrf1, seg6local uDT46 unknown(seg6local_context2str), flavors unknown(seg6local_context2str), seg6 ::, weight 1, 00:09:54
+```
+8. Check sonic linux routes
+```
+admin@sonic01:~$ ip route show vrf Vrf1
+10.10.101.0/24 dev Ethernet16 proto kernel scope link src 10.10.101.1 
+10.10.201.0/24 nhid 233  encap seg6 mode encap segs 1 [ fc00:0:2:6500:: ] via inet6 fc00:0:ffff::3 dev Ethernet4 proto bgp metric 20 
+```
+9. Verify dataplane using tcpdump on sonic linux; example sonic PE egress interface:
+```
+admin@sonic01:~$ sudo tcpdump -ni Ethernet4
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on Ethernet4, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+
+04:51:54.905226 IP6 fe80::5054:ff:fe74:c104 > ff02::1: ICMP6, router advertisement, length 56
+04:51:56.262226 IP6 fc00:0:1::1 > fc00:0:2:6500::: RT6 (len=2, type=4, segleft=0, last-entry=0, tag=0, [0]fc00:0:2:6500::) IP 10.10.101.2 > 10.10.201.1: ICMP echo request, id 6248, seq 1, length 76
+04:51:56.265307 IP6 fc00:0:2::1 > fc00:0:1:6500::: RT6 (len=2, type=4, segleft=0, last-entry=0, tag=0, [0]fc00:0:1:6500::) IP 10.10.201.1 > 10.10.101.2: ICMP echo reply, id 6248, seq 1, length 76
+```
+
+### Appendix:
+
+1. To manually configure a VRF on sonic linux
+```
+sudo config vrf add Vrf1
+sudo config interface vrf bind Ethernet16 Vrf1
+```
+2. Possible bug: change to sonic/linux vrf IP results in FRR changing the vrf RT export values, thus breaking remote vrf RT imports
+3. Possible bug: changes to sonic/linux config results in FRR re-adding the route-maps, etc. listed in step 5 above

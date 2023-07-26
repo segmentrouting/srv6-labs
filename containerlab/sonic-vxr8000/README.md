@@ -28,12 +28,12 @@ sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
 https://containerlab.dev/install/
 ```
 
-1. Install 8000 SONiC docker image
+3. Install 8000 SONiC docker image
 ```   
 docker load -i c8000-clab-sonic:27.tar.gz
 ```
 
-1. Copy sonic-cisco-8000.bin image to local storage (e.g. /sonic_images). Example:
+4. Copy sonic-cisco-8000.bin image to local storage (e.g. /sonic_images). Example:
 ```
 ls /opt/images/ | grep sonic
 
@@ -43,7 +43,7 @@ sonic-README
 sonic.tar
 ```
 
-4. Create a simple SONiC back-to-back clab topology file
+5. Create a simple SONiC back-to-back clab topology file
 
     - NOTE: we will be using 'linux' ContainerLab kind to boot sonic images
 
@@ -87,7 +87,7 @@ sudo ip link set br2 up
 etc.
 ```
 
-5. Deploy topology
+6. Deploy topology
 ```
 sudo containerlab deploy -t example.yml
 ```
@@ -111,7 +111,7 @@ INFO[0004] Adding containerlab host entries to /etc/hosts file
 ```
    - NOTE: it may 10 or more minutes for SONiC to come up
 
-6. Monitor sonic device bringup
+7. Monitor sonic device bringup
 ```
 docker logs -f clab-sonic-r1 
 ```
@@ -122,7 +122,7 @@ Router up
 ```
 #### If you don't see "Router up" after 10 minutes, please share the "docker logs ..." output with Cisco team.
 
-7. Test ssh to XR (either use SONiC default admin/YourPaSsWoRd or cisco/cisco123 login credentials)
+8. Test ssh to XR (either use SONiC default admin/YourPaSsWoRd or cisco/cisco123 login credentials)
 ```
 sudo containerlab inspect -t example.yml |grep r1
 ```
@@ -146,7 +146,7 @@ You are on
 Last login: Tue Feb 21 19:56:42 2023 from 172.20.20.1
 cisco@sonic:~$ 
 ```
-8. Destroy topology
+9. Destroy topology
 ```
 sudo containerlab destroy -t example.yml 
 ```

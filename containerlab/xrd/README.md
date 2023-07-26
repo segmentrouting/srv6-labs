@@ -1,5 +1,36 @@
+### Quick start
+The 7-node topology is based on https://github.com/jalapeno/SRv6_dCloud_Lab
 
-Console output
+1. Host server requirements
+
+   - verify that Open vSwitch is installed
+     ovs-vsctl --version
+```
+sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
+```
+
+   - limit /proc/sys/kernel/pid_max to 1048575
+     sysctl -w kernel.pid_max=1048575
+
+   - make sure KVM modules are installed and configured
+     file /dev/kvm (the output should be /dev/kvm: character special)
+
+   - cpu and memory: recommend 20GB and 4 cores per router
+
+2. Install Containerlab:
+```
+https://containerlab.dev/install/
+```
+3. Load XRd docker image:
+```
+docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
+``` 
+4. Define/edit topology yml file
+5. Launch topology
+```
+sudo containerlab deploy -t 7-node.yml
+```
+Example console output
 
 ```
 brmcdoug@naja:~/srv6-labs/containerlab/xrd$ sudo containerlab40 deploy -t 7-node-v2.yml 
@@ -37,4 +68,10 @@ Run 'containerlab version upgrade' to upgrade or go check other installation opt
 | 7 | clab-xrd-7-node-xrd07 | 87ff17bcc9e3 | ios-xr/xrd-control-plane:7.11.1.04E | cisco_xrd | running | 172.20.5.207/24 | 2001:172:20:5::207/80 |
 +---+-----------------------+--------------+-------------------------------------+-----------+---------+-----------------+-----------------------+
 brmcdoug@naja:~/srv6-labs/containerlab/xrd$ 
+```
+
+3. ssh to routers
+```
+ssh cisco@172.20.5.201
+pw = cisco123
 ```
