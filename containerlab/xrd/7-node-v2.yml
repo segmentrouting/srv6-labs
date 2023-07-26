@@ -1,0 +1,84 @@
+#  Topology (my ascii artistry is not well developed...)
+#
+#     r2--r3--r4
+#    /  \   /   \
+#   r1    X     r7
+#    \   / \    /
+#     \_r5__r6_/
+
+name: xrd-7-node
+
+mgmt:
+  network: fixedips
+  ipv4_subnet: 172.20.6.0/24
+  ipv6_subnet: 2001:172:20:6::/80
+
+topology:
+  nodes:
+    xrd01:
+      kind: cisco_xrd
+      image: xrd-control-plane:7.11.1.04E
+      mgmt_ipv4: 172.20.6.101
+      mgmt_ipv6: 2001:172:20:6::101
+      startup-config: config/xrd01.cfg
+
+    xrd02:
+      kind: cisco_xrd
+      image: xrd-control-plane:7.11.1.04E
+      mgmt_ipv4: 172.20.6.102
+      mgmt_ipv6: 2001:172:20:6::102
+      startup-config: config/xrd02.cfg
+
+    xrd03:
+      kind: cisco_xrd
+      image: xrd-control-plane:7.11.1.04E
+      mgmt_ipv4: 172.20.6.102
+      mgmt_ipv6: 2001:172:20:6::103
+      startup-config: config/xrd03.cfg
+
+    xrd04:
+      kind: cisco_xrd
+      image: xrd-control-plane:7.11.1.04E
+      mgmt_ipv4: 172.20.6.104
+      mgmt_ipv6: 2001:172:20:6::104
+      startup-config: config/xrd04.cfg
+
+    xrd05:
+      kind: cisco_xrd
+      image: xrd-control-plane:7.11.1.04E
+      mgmt_ipv4: 172.20.6.105
+      mgmt_ipv6: 2001:172:20:6::105
+      startup-config: config/xrd05.cfg
+
+    xrd06:
+      kind: cisco_xrd
+      image: xrd-control-plane:7.11.1.04E
+      mgmt_ipv4: 172.20.6.106
+      mgmt_ipv6: 2001:172:20:6::106
+      startup-config: config/xrd06.cfg
+
+    xrd06:
+      kind: cisco_xrd
+      image: xrd-control-plane:7.11.1.04E
+      mgmt_ipv4: 172.20.6.107
+      mgmt_ipv6: 2001:172:20:6::107
+      startup-config: config/xrd07.cfg
+
+  links:
+    - endpoints: ["xrd01:Gi0-0-0-1", xrd02:Gi0-0-0-0"]
+
+    - endpoints: ["xrd01:Gi0-0-0-2", xrd05:Gi0-0-0-0"]
+
+    - endpoints: ["xrd02:Gi0-0-0-1", xrd03:Gi0-0-0-0"]
+
+    - endpoints: ["xrd02:Gi0-0-0-2", xrd06:Gi0-0-0-1"]
+
+    - endpoints: ["xrd03:Gi0-0-0-1", xrd04:Gi0-0-0-0"]
+
+    - endpoints: ["xrd04:Gi0-0-0-1", xrd07:Gi0-0-0-1"]
+
+    - endpoints: ["xrd05:Gi0-0-0-1", xrd04:Gi0-0-0-2"]
+
+    - endpoints: ["xrd05:Gi0-0-0-2", xrd06:Gi0-0-0-2"]
+
+    - endpoints: ["xrd06:Gi0-0-0-0", xrd07:Gi0-0-0-2"]
