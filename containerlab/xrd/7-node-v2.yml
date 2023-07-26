@@ -65,20 +65,20 @@ topology:
       startup-config: config/xrd07.cfg
 
   links:
-    - endpoints: ["xrd01:Gi0-0-0-1", xrd02:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-1", "xrd02:Gi0-0-0-0"]
 
-    - endpoints: ["xrd01:Gi0-0-0-2", xrd05:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-2", "xrd05:Gi0-0-0-0"]
 
-    - endpoints: ["xrd02:Gi0-0-0-1", xrd03:Gi0-0-0-0"]
+    - endpoints: ["xrd02:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
 
-    - endpoints: ["xrd02:Gi0-0-0-2", xrd06:Gi0-0-0-1"]
+    - endpoints: ["xrd02:Gi0-0-0-2", "xrd06:Gi0-0-0-1"]
 
-    - endpoints: ["xrd03:Gi0-0-0-1", xrd04:Gi0-0-0-0"]
+    - endpoints: ["xrd03:Gi0-0-0-1", "xrd04:Gi0-0-0-0"]
 
-    - endpoints: ["xrd04:Gi0-0-0-1", xrd07:Gi0-0-0-1"]
+    - endpoints: ["xrd04:Gi0-0-0-1", "xrd07:Gi0-0-0-1"]
 
-    - endpoints: ["xrd05:Gi0-0-0-1", xrd04:Gi0-0-0-2"]
+    - endpoints: ["xrd05:Gi0-0-0-1", "xrd04:Gi0-0-0-2"]
 
-    - endpoints: ["xrd05:Gi0-0-0-2", xrd06:Gi0-0-0-2"]
+    - endpoints: ["xrd05:Gi0-0-0-2", "xrd06:Gi0-0-0-2"]
 
-    - endpoints: ["xrd06:Gi0-0-0-0", xrd07:Gi0-0-0-2"]
+    - endpoints: ["xrd06:Gi0-0-0-0", "xrd07:Gi0-0-0-2"]
