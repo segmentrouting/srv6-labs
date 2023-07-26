@@ -26,9 +26,14 @@ https://containerlab.dev/install/
 docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
 ``` 
 4. Define/edit topology yml file
-5. Launch topology
+5. If using the linux bridge topology file run the create-bridges.sh script
+   - XRd's will connect to each other via linux bridge instances, which is handy for doing tcpdump, etc.)
+  ```
+  sudo ./create-bridges.sh
+  ```
+6. Launch topology
 ```
-sudo containerlab deploy -t 7-node.yml
+sudo containerlab deploy -t 7-node-linux-bridge.yml
 ```
 Example console output
 
