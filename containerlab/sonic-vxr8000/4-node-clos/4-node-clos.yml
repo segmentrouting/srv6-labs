@@ -29,6 +29,9 @@ topology:
       kind: linux
       mgmt_ipv4: 172.20.5.11
       mgmt_ipv6: 2001:172:20:5::11
+      binds:
+        - sonic01/config_db.json:/etc/sonic/config_db.json
+        #- sonic01/frr.conf:/etc/sonic/frr.conf 
 
     r2:
       kind: linux
@@ -36,6 +39,9 @@ topology:
         - r1
       mgmt_ipv4: 172.20.5.12
       mgmt_ipv6: 2001:172:20:5::12
+      binds:
+        - sonic02/config_db.json:/etc/sonic/config_db.json
+        #- sonic02/frr.conf:/etc/sonic/frr.conf 
 
     r3:
       kind: linux
@@ -44,6 +50,9 @@ topology:
         - r2
       mgmt_ipv4: 172.20.5.13
       mgmt_ipv6: 2001:172:20:5::13
+      binds:
+        - sonic03/config_db.json:/etc/sonic/config_db.json
+        #- sonic03/frr.conf:/etc/sonic/frr.conf 
 
     r4:
       kind: linux
@@ -53,6 +62,9 @@ topology:
         - r3
       mgmt_ipv4: 172.20.5.14
       mgmt_ipv6: 2001:172:20:5::14
+      binds:
+        - sonic04/config_db.json:/etc/sonic/config_db.json
+        #- sonic04/frr.conf:/etc/sonic/frr.conf 
 
     r1e0-r3e0:
       kind: bridge
