@@ -30,7 +30,7 @@ topology:
       mgmt_ipv4: 172.20.5.11
       mgmt_ipv6: 2001:172:20:5::11
       binds:
-        - sonic01/config_db.json:/etc/sonic/config_db.json
+        - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic01/config_db.json:/etc/sonic/config_db.json
         #- sonic01/frr/frr.conf:/etc/sonic/frr.conf 
 
     r2:
@@ -40,7 +40,7 @@ topology:
       mgmt_ipv4: 172.20.5.12
       mgmt_ipv6: 2001:172:20:5::12
       binds:
-        - sonic02/config_db.json:/etc/sonic/config_db.json
+        - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic02/config_db.json:/etc/sonic/config_db.json
         #- sonic02/frr/frr.conf:/etc/sonic/frr.conf 
 
     r3:
@@ -51,7 +51,7 @@ topology:
       mgmt_ipv4: 172.20.5.13
       mgmt_ipv6: 2001:172:20:5::13
       binds:
-        - sonic03/config_db.json:/etc/sonic/config_db.json
+        - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic03/config_db.json:/etc/sonic/config_db.json
         #- sonic03/frr/frr.conf:/etc/sonic/frr.conf 
 
     r4:
@@ -63,7 +63,7 @@ topology:
       mgmt_ipv4: 172.20.5.14
       mgmt_ipv6: 2001:172:20:5::14
       binds:
-        - sonic04/config_db.json:/etc/sonic/config_db.json
+        - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic04/config_db.json:/etc/sonic/config_db.json
         #- sonic04/frr/frr.conf:/etc/sonic/frr.conf 
 
     r1e0-r3e0:
