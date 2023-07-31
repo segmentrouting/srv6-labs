@@ -6,5 +6,5 @@
     - name: Copy configuration files
       copy:
         src: "{{ hostvars[inventory_hostname]['config_file'] }}"
-        dest: "{{ config_path }}/{{ config_file }}"
+        dest: "{{ config_path }}/{{ inventory_hostname }}"
         mode: 0644
