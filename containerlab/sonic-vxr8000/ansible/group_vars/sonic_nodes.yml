@@ -1,0 +1,3 @@
+---
+# Group variables for my_target_hosts group
+config_path: /etc/sonic
