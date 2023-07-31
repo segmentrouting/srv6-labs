@@ -17,10 +17,9 @@
         mode: 0644
 
     - name: Reload configuration
-      shell: |
-        sudo config reload
-        echo "y"
-      warn: false
-      args:
-        warn: false
+      expect:
+        command: sudo config reload
+        responses:
+          '.*yes or no.*': 'y'
+      ignore_errors: yes
       when: backup_result is not failed
