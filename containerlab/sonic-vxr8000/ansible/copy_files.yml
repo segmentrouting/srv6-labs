@@ -3,8 +3,25 @@
   hosts: my_target_hosts
   become: true
   tasks:
+
+    - name: Create a backup of the existing configuration file
+      command: mv /etc/sonic/config_db.json /etc/sonic/config_db.json.bak
+      args:
+        creates: /etc/sonic/config_db.json.bak
+      ignore_errors: yes
+      register: backup_result
+
     - name: Copy configuration files
       copy:
         src: "files/{{ inventory_hostname }}/config_db.json"
         dest: "/etc/sonic/config_db.json"
         mode: 0644
+        
+    - name: Reload configuration
+      shell: |
+        sudo config reload
+        echo "y"
+      warn: false
+      args:
+        warn: false
+      when: backup_result is not failed
