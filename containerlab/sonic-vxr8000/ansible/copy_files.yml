@@ -1,9 +1,8 @@
 ---
-- name: Copy configuration files to target hosts
+- name: Copy configuration files to target hosts with backup and config reload
   hosts: my_target_hosts
   become: true
   tasks:
-
     - name: Create a backup of the existing configuration file
       command: mv /etc/sonic/config_db.json /etc/sonic/config_db.json.bak
       args:
@@ -11,12 +10,12 @@
       ignore_errors: yes
       register: backup_result
 
-    - name: Copy configuration files
+    - name: Copy new configuration files
       copy:
         src: "files/{{ inventory_hostname }}/config_db.json"
         dest: "/etc/sonic/config_db.json"
         mode: 0644
-        
+
     - name: Reload configuration
       shell: |
         sudo config reload
