@@ -1,10 +1,10 @@
 ---
 - name: Copy configuration files to target hosts
-  hosts: sonic_nodes
+  hosts: my_target_hosts
   become: true
   tasks:
     - name: Copy configuration files
       copy:
-        src: "{{ hostvars[inventory_hostname]['config_file'] }}"
+        src: "{{ hostvars[inventory_hostname]/config_db.json }}"
         dest: "{{ config_path }}/{{ inventory_hostname }}"
         mode: 0644
