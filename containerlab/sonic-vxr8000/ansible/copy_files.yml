@@ -20,7 +20,7 @@
       expect:
         command: sudo config reload
         responses:
-          '.*yes or no.*': 'y'
+          '.*y/N.*': 'y'
       ignore_errors: yes
       when: backup_result is not failed
-      timeout: 60  # Set the timeout value to 60 seconds (you can adjust it as needed)
+      #timeout: 60  # Set the timeout value to 60 seconds (you can adjust it as needed)
