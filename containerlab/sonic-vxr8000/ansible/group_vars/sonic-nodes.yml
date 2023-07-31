@@ -1,0 +1,3 @@
+---
+# Group variables for sonic_nodes group
+config_path: /etc/sonic
