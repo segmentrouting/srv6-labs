@@ -5,6 +5,6 @@
   tasks:
     - name: Copy configuration files
       copy:
-        src: "{{ hostvars[inventory_hostname]/config_db.json }}"
-        dest: "{{ config_path }}/{{ inventory_hostname }}"
+        src: "files/{{ inventory_hostname }}/config_db.json"
+        dest: "/etc/sonic/config_db.json"
         mode: 0644
