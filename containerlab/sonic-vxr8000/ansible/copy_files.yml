@@ -23,12 +23,5 @@
           '.*y/N.*': 'y'
       ignore_errors: yes
       when: backup_result is not failed
-      register: reload_result
-
-    - name: Wait for the reload process to complete
-      async:
-        poll: 0
-        timeout: 180  # Set the async timeout value to 180 seconds (adjust as needed)
-      ignore_errors: yes
-      when: reload_result is not failed
-      become: false
+      async: 180  # Set the async timeout value to 180 seconds (adjust as needed)
+      poll: 0
