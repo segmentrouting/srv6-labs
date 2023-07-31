@@ -18,22 +18,35 @@
 
     - name: Reload configuration
       expect:
-        command: sudo config reload
+        # command: sudo config reload
+        command: sudo config load /etc/sonic/config_db.json
         responses:
           '.*y/N.*': 'y'
       ignore_errors: yes
       when: backup_result is not failed
-      async: 180  # Set the async timeout value to 180 seconds (adjust as needed)
+      async: 30  # Set the async timeout value to 180 seconds (adjust as needed)
       poll: 0
       register: reload_result
 
-    - name: Display 'config reload' output
-      debug:
-        var: reload_result.stdout_lines
-      when: reload_result.stdout_lines is defined
+    - name: Restart SwSS
+      expect:
+        command: sudo systemctl restart swss
+        responses:
+          '.*y/N.*': 'y'
+      ignore_errors: yes
+      when: backup_result is not failed
+      async: 60  # Set the async timeout value to 180 seconds (adjust as needed)
+      poll: 0
+      register: reload_result
+
+
+    # - name: Display 'config reload' output
+    #   debug:
+    #     var: reload_result.stdout_lines
+    #   when: reload_result.stdout_lines is defined
 
     - name: Save 'config reload' output to log file
       copy:
         content: "{{ reload_result.stdout }}"
-        dest: /path/to/your/log_file.log
+        dest: /home/brmcdoug/log_file.log
       when: reload_result.stdout is defined
