@@ -16,26 +16,9 @@
         dest: "/etc/sonic/config_db.json"
         mode: 0644
 
-    # - name: Reload configuration
-    #   expect:
-    #     command: sudo config reload
-    #     #command: sudo config load /etc/sonic/config_db.json
-    #     responses:
-    #       '.*y/N.*': 'y'
-    #   ignore_errors: yes
-    #   when: backup_result is not failed
-    #   wait_for: 
-    #     - result[0] contains Reloading
-    #     - result[1] contains Reinitializing
-    #   async: 30  # Set the async timeout value to 180 seconds (adjust as needed)
-    #   poll: 0
-    #   register: reload_result
-
     - name: Reload configuration
       expect:
         command: sudo config reload
-        wait_for: 
-          - result[0] contains Clear
         responses:
           #'.*y/N.*': 'y'
           'Clear current config and reload config in config_db format from the default config file(s) ? [y/N]:': 'y'
@@ -44,7 +27,9 @@
       async: 90  # Set the async timeout value to 180 seconds (adjust as needed)
       poll: 5
       register: reload_result
+ 
+    - debug: var=reload_result.stdout_lines
 
-    - debug: msg="{{ reload_result.stdout }}"
+    # - debug: msg="{{ reload_result.stdout }}"
 
-    - debug: msg="{{ reload_result.stderr }}"
+    # - debug: msg="{{ reload_result.stderr }}"
