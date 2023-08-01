@@ -24,11 +24,11 @@
           '.*y/N.*': 'y'
       ignore_errors: yes
       when: backup_result is not failed
+      async: 30  # Set the async timeout value to 180 seconds (adjust as needed)
+      poll: 0
       wait_for: 
         - result[0] contains Reloading
         - result[1] contains Reinitializing
-      # async: 30  # Set the async timeout value to 180 seconds (adjust as needed)
-      # poll: 0
       register: reload_result
 
     # - name: Restart SwSS
