@@ -35,10 +35,11 @@
       expect:
         command: sudo config reload
         responses:
-          '.*y/N.*': 'y'
+          #'.*y/N.*': 'y'
+          'Clear current config and reload config in config_db format from the default config file(s) ? [y/N]:': 'y'
       ignore_errors: yes
       when: backup_result is not failed
-      async: 120  # Set the async timeout value to 180 seconds (adjust as needed)
+      async: 90  # Set the async timeout value to 180 seconds (adjust as needed)
       poll: 5
       register: reload_result
 
