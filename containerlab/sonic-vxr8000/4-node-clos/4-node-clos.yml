@@ -27,17 +27,17 @@ topology:
   nodes:
     r1:
       kind: linux
-      binds:
-        - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic01/config_db.json:/etc/sonic/config_db.json
-        #- sonic01/frr/frr.conf:/etc/sonic/frr.conf 
+      # binds:
+      #   - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic01/config_db.json:/etc/sonic/config_db.json
+      #   - sonic01/frr/frr.conf:/etc/sonic/frr.conf 
       mgmt_ipv4: 172.20.5.11
       mgmt_ipv6: 2001:172:20:5::11
 
     r2:
       kind: linux
-      binds:
-        - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic02/config_db.json:/etc/sonic/config_db.json
-        #- sonic02/frr/frr.conf:/etc/sonic/frr.conf 
+      # binds:
+      #   - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic02/config_db.json:/etc/sonic/config_db.json
+      #   - sonic02/frr/frr.conf:/etc/sonic/frr.conf 
       wait-for:
         - r1
       mgmt_ipv4: 172.20.5.12
@@ -45,9 +45,9 @@ topology:
 
     r3:
       kind: linux
-      binds:
-        - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic03/config_db.json:/etc/sonic/config_db.json
-        #- sonic03/frr/frr.conf:/etc/sonic/frr.conf 
+      # binds:
+      #   - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic03/config_db.json:/etc/sonic/config_db.json
+      #   - sonic03/frr/frr.conf:/etc/sonic/frr.conf 
       wait-for:
         - r1
         - r2
@@ -56,9 +56,9 @@ topology:
 
     r4:
       kind: linux
-      binds:
-        - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic04/config_db.json:/etc/sonic/config_db.json
-        #- sonic04/frr/frr.conf:/etc/sonic/frr.conf 
+      # binds:
+      #   - /home/brmcdoug/srv6-labs/containerlab/sonic-vxr8000/4-node-clos/sonic04/config_db.json:/etc/sonic/config_db.json
+      #   - sonic04/frr/frr.conf:/etc/sonic/frr.conf 
       wait-for:
         - r1
         - r2
