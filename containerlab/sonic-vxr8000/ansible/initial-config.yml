@@ -18,8 +18,8 @@
 
     - name: Reload configuration
       expect:
-        # command: sudo config reload
-        command: sudo config load /etc/sonic/config_db.json
+        command: sudo config reload
+        #command: sudo config load /etc/sonic/config_db.json
         responses:
           '.*y/N.*': 'y'
       ignore_errors: yes
@@ -27,8 +27,8 @@
       wait_for: 
         - result[0] contains Reloading
         - result[1] contains Reinitializing
-      # async: 30  # Set the async timeout value to 180 seconds (adjust as needed)
-      # poll: 0
+      async: 30  # Set the async timeout value to 180 seconds (adjust as needed)
+      poll: 0
       register: reload_result
 
     # - name: Restart SwSS
