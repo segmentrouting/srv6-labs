@@ -25,12 +25,8 @@
           (.*)y/N(.*): "y"
       ignore_errors: yes
       when: backup_result is not failed
-      async: 90  # Set the async timeout value to 180 seconds (adjust as needed)
-      poll: 5
+      async: 300  # Set the async timeout value to 180 seconds (adjust as needed)
+      poll: 15
       register: reload_result
  
     - debug: var=reload_result.stdout_lines
-
-    # - debug: msg="{{ reload_result.stdout }}"
-
-    # - debug: msg="{{ reload_result.stderr }}"
