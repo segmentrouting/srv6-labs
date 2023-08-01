@@ -34,6 +34,8 @@
     - name: Reload configuration
       expect:
         command: sudo config reload
+        wait_for: 
+          - result[0] contains Clear
         responses:
           #'.*y/N.*': 'y'
           'Clear current config and reload config in config_db format from the default config file(s) ? [y/N]:': 'y'
