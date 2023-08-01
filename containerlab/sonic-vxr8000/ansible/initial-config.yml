@@ -35,8 +35,13 @@
       expect:
         command: sudo config reload
         responses:
-          '*y/N*': 'y'
+          '.*y/N.*': 'y'
       ignore_errors: yes
       when: backup_result is not failed
-      async: 180  # Set the async timeout value to 180 seconds (adjust as needed)
-      poll: 0
+      async: 60  # Set the async timeout value to 180 seconds (adjust as needed)
+      poll: 5
+      register: reload_result
+
+    - debug: msg="{{ reload_result.stdout }}"
+
+    - debug: msg="{{ reload_result.stderr }}"
