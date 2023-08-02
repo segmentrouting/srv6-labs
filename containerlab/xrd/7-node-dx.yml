@@ -1,3 +1,5 @@
+#   The 7-node-dx.yml launches a containerlab XRd topology where the underlying connectivity between  
+#   underlying connections between XRd nodes
 #      Topology
 #
 #     r2--r3--r4

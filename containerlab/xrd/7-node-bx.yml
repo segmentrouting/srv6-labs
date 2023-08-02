@@ -1,3 +1,6 @@
+#   The 7-node-bx.yml launches a containerlab XRd topology using linux bridge for the 
+#   underlying connections between XRd nodes
+#
 #      Topology
 #
 #     r2--r3--r4
