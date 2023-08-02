@@ -1,7 +1,7 @@
 ### Quick start
 The 7-node topology is based on https://github.com/jalapeno/SRv6_dCloud_Lab
 
-This lab has been tested on Ubuntu 20.04
+This lab has been tested on Ubuntu 20.04 and containerlab version 0.40.0
 
 1. Host server requirements
 
@@ -39,16 +39,17 @@ docker load -i xrd-control-plane-container-x64.dockerv1.tgz
   ```
   sudo ./create-bridges.sh
   ```
-1. Launch topology - note "7-node-bx.yml" uses linux bridge to connect XRd instances, "7-node-dx.yml" uses 
+5. Launch topology - note "7-node-bx.yml" uses linux bridge to connect XRd instances, "7-node-dx.yml" uses point-to-point veth-pairs
+
 ```
 sudo containerlab deploy -t 7-node-bx.yml
 ```
 Example console output
 
 ```
-brmcdoug@naja:~/srv6-labs/containerlab/xrd$ sudo containerlab40 deploy -t 7-node-v2.yml 
+brmcdoug@naja:~/srv6-labs/containerlab/xrd$ sudo containerlab deploy -t 7-node-bx.yml 
 INFO[0000] Containerlab v0.40.0 started                 
-INFO[0000] Parsing & checking topology file: 7-node-v2.yml 
+INFO[0000] Parsing & checking topology file: 7-node-bx.yml 
 INFO[0000] Creating lab directory: /home/brmcdoug/srv6-labs/containerlab/xrd/clab-xrd-7-node 
 INFO[0000] Creating container: "xrd07"                  
 INFO[0000] Creating container: "xrd06"                  
@@ -83,7 +84,16 @@ Run 'containerlab version upgrade' to upgrade or go check other installation opt
 brmcdoug@naja:~/srv6-labs/containerlab/xrd$ 
 ```
 
-3. ssh to routers
+6. Give the XRd instances 2-3 minutes to come up and be responsive. All the usual docker commands work:
+```
+### check status of instances:
+docker ps
+
+### docker exec access to xr cli:
+docker exec -it clab-xrd-7-node-xrd05 /pkg/bin/xr_cli.sh
+```
+
+7. ssh to routers
 ```
 ssh cisco@172.20.5.201
 pw = cisco123
