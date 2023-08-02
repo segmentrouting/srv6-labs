@@ -1,6 +1,8 @@
 ### Quick start
 The 7-node topology is based on https://github.com/jalapeno/SRv6_dCloud_Lab
 
+This lab has been tested on Ubuntu 20.04
+
 1. Host server requirements
 
    - verify that Open vSwitch is installed
@@ -15,7 +17,10 @@ sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
    - make sure KVM modules are installed and configured
      file /dev/kvm (the output should be /dev/kvm: character special)
 
-   - cpu and memory: recommend 20GB and 4 cores per router
+   - cpu and memory: XRd generally requires 2GB of memory and is fairly light on CPU. Run the 'host-check' script to get a sense for how many XRd instances you can run on your host/VM: 
+
+     https://github.com/segmentrouting/srv6-labs/blob/main/xrd-compose/util/host-check
+  
 
 2. Install Containerlab:
 ```
@@ -25,13 +30,13 @@ https://containerlab.dev/install/
 ```
 docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
 ``` 
-4. Define/edit topology yml file
-5. If using the linux bridge topology file run the create-bridges.sh script
+3. Define/edit topology yml file, example: 
+4. If using the linux bridge topology file run the create-bridges.sh script
    - XRd's will connect to each other via linux bridge instances, which is handy for doing tcpdump, etc.)
   ```
   sudo ./create-bridges.sh
   ```
-6. Launch topology
+1. Launch topology
 ```
 sudo containerlab deploy -t 7-node-linux-bridge.yml
 ```
