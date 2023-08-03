@@ -28,11 +28,11 @@
  
     - debug: var=reload_result.stdout_lines
 
-    - name: Access FRR config mode
+    - name: Enter configuration mode with vtysh
       expect:
         command: vtysh
         responses:
-        (.*)FRRouting(.*): 'conf t'
+          '.*sonic.*\(config\)#.*': 'conf t'
       ignore_errors: yes
       when: backup_result is not failed
 
