@@ -39,7 +39,7 @@
         command: vtysh
         responses:
           '.*FRRouting.*': 'conf t'
-      timeout: 75  # Set the timeout value to 60 seconds (adjust as needed)
+      timeout: 90  # Set the timeout value to 60 seconds (adjust as needed)
       ignore_errors: yes
       when: backup_result is not failed
 
@@ -50,8 +50,13 @@
 
     - name: Paste frr.conf contents into CLI
       expect:
-        command: "echo '{{ frr_conf_file.content | b64decode }}' | sudo config file -"
+        #command: "echo '{{ frr_conf_file.content | b64decode }}' | sudo config file -"
+        command: "echo '{{ frr_conf_file.content | b64decode }}' | vtysh -c 'conf t'"
+
         responses:
           '.*Configuration saved to /etc/frr/staticd.conf.*': 'exit'
       ignore_errors: yes
       when: backup_result is not failed
+      register: frr_result
+ 
+    - debug: var=frr_result.stdout_lines
