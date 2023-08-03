@@ -16,7 +16,7 @@
         dest: "/etc/sonic/config_db.json"
         mode: 0644
 
-     - name: Copy frr.conf files
+    - name: Copy frr.conf files
       copy:
         src: "files/{{ inventory_hostname }}/frr.conf"
         dest: "/etc/sonic/frr.conf"
