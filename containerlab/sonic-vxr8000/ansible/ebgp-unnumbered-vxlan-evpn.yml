@@ -32,7 +32,7 @@
     #   when: backup_result is not failed
     #   register: reload_result
  
-    - debug: var=reload_result.stdout_lines
+    # - debug: var=reload_result.stdout_lines
 
     - name: Enter FRR router configuration mode with vtysh
       expect:
