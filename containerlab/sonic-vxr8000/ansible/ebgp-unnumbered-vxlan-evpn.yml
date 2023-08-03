@@ -39,7 +39,7 @@
         command: vtysh
         responses:
           '.*FRRouting.*': 'conf t'
-      timeout: 60  # Set the timeout value to 60 seconds (adjust as needed)
+      timeout: 75  # Set the timeout value to 60 seconds (adjust as needed)
       ignore_errors: yes
       when: backup_result is not failed
 
