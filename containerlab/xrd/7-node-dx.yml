@@ -1,5 +1,6 @@
-#   The 7-node-dx.yml launches a containerlab XRd topology where the underlying connectivity between  
-#   underlying connections between XRd nodes
+#   The 7-node-dx.yml launches a containerlab XRd topology where the XRd instances are connected
+#   via point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
+#
 #      Topology
 #
 #     r2--r3--r4

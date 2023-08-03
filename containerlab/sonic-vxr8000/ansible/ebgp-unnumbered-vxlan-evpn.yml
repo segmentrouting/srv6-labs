@@ -1,0 +1,50 @@
+---
+- name: Copy config_db.json and FRR configuration files to target hosts with backup and config reload
+  hosts: sonic_nodes
+  become: true
+  tasks:
+    - name: Create a backup of the existing configuration file
+      command: mv /etc/sonic/config_db.json /etc/sonic/config_db.json.bak
+      args:
+        creates: /etc/sonic/config_db.json.bak
+      ignore_errors: yes
+      register: backup_result
+
+    - name: Copy new configuration files
+      copy:
+        src: "files/{{ inventory_hostname }}/config_db.json"
+        dest: "/etc/sonic/config_db.json"
+        mode: 0644
+
+    - name: Reload configuration
+      expect:
+        command: sudo config reload
+        responses:
+          (.*)y/N(.*): "y"
+        timeout: 150
+      ignore_errors: yes
+      when: backup_result is not failed
+      register: reload_result
+ 
+    - debug: var=reload_result.stdout_lines
+
+    - name: Access FRR config mode
+      expect:
+        command: vtysh
+        responses:
+        (.*)FRRouting(.*): conf t
+      ignore_errors: yes
+      when: backup_result is not failed
+
+    - name: Paste the contents of frr.conf
+      slurp:
+        src: "files/{{ inventory_hostname }}/frr.conf"
+      register: frr_conf_file
+
+    - name: Paste frr.conf contents into CLI
+      expect:
+        command: "echo '{{ frr_conf_file.content | b64decode }}' | sudo config file -"
+        responses:
+          '.*Configuration saved to /etc/frr/staticd.conf.*': 'exit'
+      ignore_errors: yes
+      when: backup_result is not failed
