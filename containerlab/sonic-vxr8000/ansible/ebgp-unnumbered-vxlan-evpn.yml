@@ -32,7 +32,7 @@
       expect:
         command: vtysh
         responses:
-        (.*)FRRouting(.*): conf t
+        (.*)FRRouting(.*): 'conf t'
       ignore_errors: yes
       when: backup_result is not failed
 
