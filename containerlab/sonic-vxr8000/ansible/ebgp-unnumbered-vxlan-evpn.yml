@@ -16,17 +16,17 @@
         dest: "/etc/sonic/config_db.json"
         mode: 0644
 
-    - name: Reload configuration
-      expect:
-        command: sudo config reload
-        responses:
-          (.*)y/N(.*): "y"
-        timeout: 150
-      ignore_errors: yes
-      when: backup_result is not failed
-      register: reload_result
+    # - name: Reload configuration
+    #   expect:
+    #     command: sudo config reload
+    #     responses:
+    #       (.*)y/N(.*): "y"
+    #     timeout: 150
+    #   ignore_errors: yes
+    #   when: backup_result is not failed
+    #   register: reload_result
  
-    - debug: var=reload_result.stdout_lines
+    # - debug: var=reload_result.stdout_lines
 
     - name: Enter configuration mode with vtysh
       expect:
