@@ -35,6 +35,17 @@
           '.*FRRouting.*': 'conf t'
       ignore_errors: yes
       when: backup_result is not failed
+      timeout: 40  # Set the timeout value to 60 seconds (adjust as needed)
+
+    - name: Check if frr.conf file exists for each host
+      find:
+        paths: "files/{{ inventory_hostname }}"
+        patterns: "frr.conf"
+      register: frr_conf_files
+
+    - name: Display found frr.conf files
+      debug:
+        var: frr_conf_files.files
 
     - name: Paste the contents of frr.conf
       slurp:
