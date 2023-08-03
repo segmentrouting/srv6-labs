@@ -3,18 +3,24 @@
   hosts: sonic_nodes
   become: true
   tasks:
-    # - name: Create a backup of the existing configuration file
-    #   command: mv /etc/sonic/config_db.json /etc/sonic/config_db.json.bak
-    #   args:
-    #     creates: /etc/sonic/config_db.json.bak
-    #   ignore_errors: yes
-    #   register: backup_result
+    - name: Create a backup of the existing configuration file
+      command: mv /etc/sonic/config_db.json /etc/sonic/config_db.json.bak
+      args:
+        creates: /etc/sonic/config_db.json.bak
+      ignore_errors: yes
+      register: backup_result
 
-    # - name: Copy new configuration files
-    #   copy:
-    #     src: "files/{{ inventory_hostname }}/config_db.json"
-    #     dest: "/etc/sonic/config_db.json"
-    #     mode: 0644
+    - name: Copy config_db.json files
+      copy:
+        src: "files/{{ inventory_hostname }}/config_db.json"
+        dest: "/etc/sonic/config_db.json"
+        mode: 0644
+
+     - name: Copy frr.conf files
+      copy:
+        src: "files/{{ inventory_hostname }}/frr.conf"
+        dest: "/etc/sonic/frr.conf"
+        mode: 0644
 
     # - name: Reload configuration
     #   expect:
@@ -28,20 +34,6 @@
  
     # - debug: var=reload_result.stdout_lines
 
-    - name: Check if frr.conf file exists for each host
-      find:
-        paths: "files/{{ inventory_hostname }}"
-        patterns: "*"
-      register: frr_conf_files
-
-    - name: Display found frr.conf files
-      debug:
-        var: frr_conf_files.files
-        
-    - name: Copy contents of frr.conf
-      slurp:
-        src: "files/{{ inventory_hostname }}/frr.conf"
-      register: frr_conf_file
 
     - name: Enter configuration mode with vtysh
       expect:
@@ -51,6 +43,26 @@
       timeout: 40  # Set the timeout value to 60 seconds (adjust as needed)
       ignore_errors: yes
       when: backup_result is not failed
+
+    # - name: Check if frr.conf file exists for each host
+    #   find:
+    #     paths: "files/{{ inventory_hostname }}"
+    #     patterns: "*"
+    #   register: frr_conf_files
+
+    # - name: Display found frr.conf files
+    #   debug:
+    #     var: frr_conf_files.files
+
+    # - name: Copy contents of frr.conf
+    #   slurp:
+    #     src: "files/{{ inventory_hostname }}/frr.conf"
+    #   register: frr_conf_file
+
+    - name: Copy contents of frr.conf
+      slurp:
+        src: "/etc/sonic/frr.conf"
+      register: frr_conf_file
 
     - name: Paste frr.conf contents into CLI
       expect:
