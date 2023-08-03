@@ -16,20 +16,6 @@
         dest: "/etc/sonic/config_db.json"
         mode: 0644
 
-    - name: Check if frr.conf file exists for each host
-      find:
-        paths: "files/{{ inventory_hostname }}"
-        patterns: "frr.conf"
-      register: frr_conf_files
-
-    - name: Display found frr.conf files
-      debug:
-        var: frr_conf_files.files
-    - name: Copy contents of frr.conf
-      slurp:
-        src: "files/{{ inventory_hostname }}/frr.conf"
-      register: frr_conf_file
-
     # - name: Reload configuration
     #   expect:
     #     command: sudo config reload
@@ -41,6 +27,21 @@
     #   register: reload_result
  
     # - debug: var=reload_result.stdout_lines
+
+    - name: Check if frr.conf file exists for each host
+      find:
+        paths: "files/{{ inventory_hostname }}"
+        patterns: "frr.conf"
+      register: frr_conf_files
+
+    - name: Display found frr.conf files
+      debug:
+        var: frr_conf_files.files
+        
+    - name: Copy contents of frr.conf
+      slurp:
+        src: "files/{{ inventory_hostname }}/frr.conf"
+      register: frr_conf_file
 
     - name: Enter configuration mode with vtysh
       expect:
