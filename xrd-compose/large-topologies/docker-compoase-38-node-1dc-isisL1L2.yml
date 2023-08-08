@@ -639,13 +639,6 @@ networks:
     xr_interfaces:
       - xrd21:Gi0/0/0/3
 
-  xrd24-host:
-    ipam:
-      config:
-        - subnet: 10.10.24.0/24
-    xr_interfaces:
-      - xrd24:Gi0/0/0/2
-
   xrd46-host:
     ipam:
       config:
