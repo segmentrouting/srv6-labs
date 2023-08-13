@@ -509,6 +509,9 @@ networks:
       - xrd24:Mg0/RP0/CPU0/0
       - xrd26:Mg0/RP0/CPU0/0
       - xrd25:Mg0/RP0/CPU0/0
+      - xrd27:Mg0/RP0/CPU0/0
+      - xrd28:Mg0/RP0/CPU0/0
+      - xrd29:Mg0/RP0/CPU0/0
       - xrd40:Mg0/RP0/CPU0/0
       - xrd41:Mg0/RP0/CPU0/0
       - xrd42:Mg0/RP0/CPU0/0
