@@ -13,43 +13,43 @@ topology:
       image: frrouting/frr:v8.4.1
       binds:
         - r2/daemons:/etc/frr/daemons
-        #- r2/frr.conf:/etc/frr/frr.conf
+        - r2/frr.conf:/etc/frr/frr.conf
     r3:
       kind: linux
       image: frrouting/frr:v8.4.1
       binds:
         - r3/daemons:/etc/frr/daemons
-        #- r3/frr.conf:/etc/frr/frr.conf
+        - r3/frr.conf:/etc/frr/frr.conf
     r4:
       kind: linux
       image: frrouting/frr:v8.4.1
       binds:
         - r4/daemons:/etc/frr/daemons
-        #- r4/frr.conf:/etc/frr/frr.conf
+        - r4/frr.conf:/etc/frr/frr.conf
     r5:
       kind: linux
       image: frrouting/frr:v8.4.1
       binds:
         - r5/daemons:/etc/frr/daemons
-        #- r5/frr.conf:/etc/frr/frr.conf
+        - r5/frr.conf:/etc/frr/frr.conf
     r6:
       kind: linux
       image: frrouting/frr:v8.4.1
       binds:
         - r6/daemons:/etc/frr/daemons
-        #- r6/frr.conf:/etc/frr/frr.conf
+        - r6/frr.conf:/etc/frr/frr.conf
     r7:
       kind: linux
       image: frrouting/frr:v8.4.1
       binds:
         - r7/daemons:/etc/frr/daemons
-        #- r7/frr.conf:/etc/frr/frr.conf
+        - r7/frr.conf:/etc/frr/frr.conf
     r8:
       kind: linux
       image: frrouting/frr:v8.4.1
       binds:
         - r8/daemons:/etc/frr/daemons
-        #- r8/frr.conf:/etc/frr/frr.conf
+        - r8/frr.conf:/etc/frr/frr.conf
 
 
     # PC1:
