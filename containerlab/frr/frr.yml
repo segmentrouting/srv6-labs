@@ -79,7 +79,7 @@ topology:
     - endpoints: ["r4:eth2", "r5:eth2"]  
     - endpoints: ["r4:eth3", "r6:eth1"]  
     - endpoints: ["r5:eth3", "r6:eth2"]  
-    - endpoints: ["65:eth3", "r8:eth1"]  
+    - endpoints: ["r6:eth3", "r8:eth1"]  
 
     # - endpoints: ["PC1:eth1", "router1:eth3"]
     # - endpoints: ["PC2:eth1", "router2:eth3"]
