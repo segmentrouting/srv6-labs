@@ -14,38 +14,38 @@ topology:
       kind: linux
       image: frrouting/frr:v8.4.1
       binds:
-        - router1/daemons:/etc/frr/daemons
-        #- router1/frr.conf:/etc/frr/frr.conf
+        - r1/daemons:/etc/frr/daemons
+        #- r1/frr.conf:/etc/frr/frr.conf
     r2:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
-        - router2/daemons:/etc/frr/daemons
-        #- router2/frr.conf:/etc/frr/frr.conf
+        - r2/daemons:/etc/frr/daemons
+        #- r2/frr.conf:/etc/frr/frr.conf
     r3:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
-        - router3/daemons:/etc/frr/daemons
-        #- router3/frr.conf:/etc/frr/frr.conf
+        - r3/daemons:/etc/frr/daemons
+        #- r3/frr.conf:/etc/frr/frr.conf
     r4:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
-        - router3/daemons:/etc/frr/daemons
-        #- router3/frr.conf:/etc/frr/frr.conf
+        - r4/daemons:/etc/frr/daemons
+        #- r4/frr.conf:/etc/frr/frr.conf
     r5:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
-        - router3/daemons:/etc/frr/daemons
-        #- router3/frr.conf:/etc/frr/frr.conf
+        - r5/daemons:/etc/frr/daemons
+        #- r5/frr.conf:/etc/frr/frr.conf
     r6:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
-        - router3/daemons:/etc/frr/daemons
-        #- router3/frr.conf:/etc/frr/frr.conf
+        - r6/daemons:/etc/frr/daemons
+        #- r6/frr.conf:/etc/frr/frr.conf
 
     # PC1:
     #   kind: linux
