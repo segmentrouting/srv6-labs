@@ -1,46 +1,46 @@
 # Topology
 #
-#          p2
+#          r2
 #         /  \
-#  ce5--pe1  pe4--ce6
+#   r5--r1    r4--r6
 #         \  /
-#          p3
+#          r3
 
 name: frrlab
 
 topology:
   nodes:
-    pe1:
+    r1:
       kind: linux
       image: frrouting/frr:v8.4.1
       binds:
         - router1/daemons:/etc/frr/daemons
         #- router1/frr.conf:/etc/frr/frr.conf
-    p2:
+    r2:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
         - router2/daemons:/etc/frr/daemons
         #- router2/frr.conf:/etc/frr/frr.conf
-    p3:
+    r3:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
         - router3/daemons:/etc/frr/daemons
         #- router3/frr.conf:/etc/frr/frr.conf
-    pe4:
+    r4:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
         - router3/daemons:/etc/frr/daemons
         #- router3/frr.conf:/etc/frr/frr.conf
-    ce5:
+    r5:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
         - router3/daemons:/etc/frr/daemons
         #- router3/frr.conf:/etc/frr/frr.conf
-    ce6:
+    r6:
       kind: linux
       image: frrouting/frr:v7.5.1
       binds:
@@ -58,12 +58,12 @@ topology:
     #   image: praqma/network-multitool:latest
 
   links:
-    - endpoints: ["pe1:eth1", "p2:eth1"]
-    - endpoints: ["pe1:eth2", "p3:eth1"]
-    - endpoints: ["pe1:eth3", "ce5:eth1"]
-    - endpoints: ["p2:eth2", "pe4:eth1"]
-    - endpoints: ["p3:eth2", "pe4:eth2"]  
-    - endpoints: ["pe4:eth3", "ce6:eth1"]   
+    - endpoints: ["r1:eth1", "r2:eth1"]
+    - endpoints: ["r1:eth2", "r3:eth1"]
+    - endpoints: ["r1:eth3", "r5:eth1"]
+    - endpoints: ["r2:eth2", "r4:eth1"]
+    - endpoints: ["r3:eth2", "r4:eth2"]  
+    - endpoints: ["r4:eth3", "r6:eth1"]   
 
     # - endpoints: ["PC1:eth1", "router1:eth3"]
     # - endpoints: ["PC2:eth1", "router2:eth3"]
