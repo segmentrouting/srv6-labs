@@ -37,7 +37,7 @@ ip addr add 2001:db8:3e8:8888::1/64 dev eth3
 
 ### Validate BGP ipv4 vpn
 
-On r1
+#### On r1
 ```
 show bgp vrf blue ipv4 uni 10.8.1.0/24
 ```
@@ -65,7 +65,7 @@ Paths: (2 available, best #2, vrf blue)
       Last update: Sun Sep 24 03:34:17 2023
 ```
 
-on r6
+#### on r6
 ```
 show bgp vrf blue ipv4 uni 10.7.1.0/24
 ```
@@ -92,4 +92,28 @@ Paths: (2 available, best #1, vrf blue)
       Remote label: 1616
       Remote SID: fc00:0:1::
       Last update: Sun Sep 24 03:34:16 2023
+```
+
+### validate PE l3vpn routes in Linux
+#### on r1
+```
+brmcdoug@naja:~$ docker exec -it clab-frrlab-r1 bash
+r1:/# 
+r1:/# 
+r1:/# 
+r1:/# ip route show vrf blue
+10.7.0.1 via 10.7.1.2 dev eth3 proto bgp metric 20 
+10.7.1.0/24 dev eth3 proto kernel scope link src 10.7.1.1 
+10.8.1.0/24  encap seg6 mode encap segs 1 [ fc00:0:6:65:: ] via 10.1.1.1 dev eth1 proto bgp metric 20 
+r1:/# 
+```
+
+#### on r6
+```
+brmcdoug@naja:~/srv6-labs/containerlab/frr$ docker exec -it clab-frrlab-r6 bash
+r6:/# ip route show vrf blue
+10.7.1.0/24  encap seg6 mode encap segs 1 [ fc00:0:1:65:: ] via 10.1.1.10 dev eth1 proto bgp metric 20 
+10.8.0.1 via 10.8.1.2 dev eth3 proto bgp metric 20 
+10.8.1.0/24 dev eth3 proto kernel scope link src 10.8.1.1 
+r6:/# 
 ```
