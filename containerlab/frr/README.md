@@ -6,6 +6,16 @@ https://www.brianlinkletter.com/2021/05/use-containerlab-to-emulate-open-source-
 sudo containerlab deploy -t frr.yml
 ```
 
+### Topology
+See topology diagram in *frr.yml*
+
+r1, r2, and r3 are eBGP peers with one another
+r4, r5, and r6 run ISIS and are in ASN 64512
+r2 and r4 are eBGP peers
+r3 and r5 are eBGP peers
+r7 is a CE node with r1 as its PE
+r8 is a CE node with r6 as its PE
+
 ### FRR VRFs
 VRFs must be added to FRR containers' underlying Linux per: https://docs.frrouting.org/en/latest/zebra.html#virtual-routing-and-forwarding
 
