@@ -24,3 +24,62 @@ ip link set dev blue up
 ip link set dev eth3 master blue
 ip addr add 2001:db8:3e8:8888::1/64 dev eth3
 ```
+
+### Validate BGP ipv4 vpn
+
+On r1
+```
+show bgp vrf blue ipv4 uni 10.8.1.0/24
+```
+```
+r1# show bgp vrf blue ipv4 uni 10.8.1.0/24
+BGP routing table entry for 10.8.1.0/24, version 3
+Paths: (2 available, best #2, vrf blue)
+  Advertised to non peer-group peers:
+  10.7.1.2 2001:db8:3e8:7777::2
+  Imported from 10.8.1.2:2:10.8.1.0/24
+  64702 64512
+    10.1.1.3 from 0.0.0.0 (10.7.1.1) vrf default(0) announce-nh-self
+      Origin incomplete, valid, sourced, local
+      Extended Community: RT:1:1
+      Remote label: 1616
+      Remote SID: fc00:0:6::
+      Last update: Sun Sep 24 03:34:17 2023
+  Imported from 10.8.1.2:2:10.8.1.0/24
+  64701 64512
+    10.1.1.1 from 0.0.0.0 (10.7.1.1) vrf default(0) announce-nh-self
+      Origin incomplete, valid, sourced, local, best (Older Path)
+      Extended Community: RT:1:1
+      Remote label: 1616
+      Remote SID: fc00:0:6::
+      Last update: Sun Sep 24 03:34:17 2023
+```
+
+on r6
+```
+show bgp vrf blue ipv4 uni 10.7.1.0/24
+```
+
+```
+r6# show bgp vrf blue ipv4 uni 10.7.1.0/24
+BGP routing table entry for 10.7.1.0/24, version 4
+Paths: (2 available, best #1, vrf blue)
+  Advertised to non peer-group peers:
+  10.8.1.2 2001:db8:3e8:8888::2
+  Imported from 10.7.1.1:2:10.7.1.0/24
+  64701 64700
+    10.0.0.4 (metric 20) from 0.0.0.0 (10.8.1.2) vrf default(0) announce-nh-self
+      Origin incomplete, localpref 100, valid, sourced, local, best (Router ID)
+      Extended Community: RT:1:1
+      Remote label: 1616
+      Remote SID: fc00:0:1::
+      Last update: Sun Sep 24 03:34:16 2023
+  Imported from 10.7.1.1:2:10.7.1.0/24
+  64702 64700
+    10.0.0.5 (metric 20) from 0.0.0.0 (10.8.1.2) vrf default(0) announce-nh-self
+      Origin incomplete, localpref 100, valid, sourced, local
+      Extended Community: RT:1:1
+      Remote label: 1616
+      Remote SID: fc00:0:1::
+      Last update: Sun Sep 24 03:34:16 2023
+```
