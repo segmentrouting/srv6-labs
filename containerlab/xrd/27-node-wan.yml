@@ -1,0 +1,88 @@
+#   The 27-node-wan.yml launches a containerlab XRd topology where the XRd instances are connected
+#   via point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
+#
+#   The 27 node topology is based on the blue and green nodes in this diagram: https://github.com/segmentrouting/srv6-labs/blob/main/xrd-compose/diagrams/43-node-two-DCs.png
+
+name: xrd-27-node
+
+mgmt:
+  network: mgt_net
+  ipv4_subnet: 172.20.5.0/24
+  ipv6_subnet: 2001:172:20:5::/80
+
+topology:
+  nodes:
+    xrd00:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.5.100
+      mgmt_ipv6: 2001:172:20:5::100
+      startup-config: ../../configs/xrd-large-topos/xrd00.cfg
+
+    xrd01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.5.101
+      mgmt_ipv6: 2001:172:20:5::101
+      startup-config: ../../configs/xrd-large-topos/xrd01.cfg
+
+    xrd02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.5.102
+      mgmt_ipv6: 2001:172:20:5::102
+      startup-config: ../../configs/xrd-large-topos/xrd02.cfg
+
+    xrd03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.5.103
+      mgmt_ipv6: 2001:172:20:5::103
+      startup-config: ../../configs/xrd-large-topos/xrd03.cfg
+
+    xrd04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.5.104
+      mgmt_ipv6: 2001:172:20:5::104
+      startup-config: ../../configs/xrd-large-topos/xrd04.cfg
+
+    xrd05:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.5.105
+      mgmt_ipv6: 2001:172:20:5::105
+      startup-config: ../../configs/xrd-large-topos/xrd05.cfg
+
+    xrd06:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.5.106
+      mgmt_ipv6: 2001:172:20:5::106
+      startup-config: ../../configs/xrd-large-topos/xrd06.cfg
+
+    xrd07:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.5.107
+      mgmt_ipv6: 2001:172:20:5::107
+      startup-config: ../../configs/xrd-large-topos/xrd07.cfg
+
+  links:
+    - endpoints: ["xrd01:Gi0-0-0-1", "xrd02:Gi0-0-0-0"]
+
+    - endpoints: ["xrd01:Gi0-0-0-2", "xrd05:Gi0-0-0-0"]
+
+    - endpoints: ["xrd02:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
+
+    - endpoints: ["xrd02:Gi0-0-0-2", "xrd06:Gi0-0-0-1"]
+
+    - endpoints: ["xrd03:Gi0-0-0-1", "xrd04:Gi0-0-0-0"]
+
+    - endpoints: ["xrd04:Gi0-0-0-1", "xrd07:Gi0-0-0-1"]
+
+    - endpoints: ["xrd05:Gi0-0-0-1", "xrd04:Gi0-0-0-2"]
+
+    - endpoints: ["xrd05:Gi0-0-0-2", "xrd06:Gi0-0-0-2"]
+
+    - endpoints: ["xrd06:Gi0-0-0-0", "xrd07:Gi0-0-0-2"]
