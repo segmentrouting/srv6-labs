@@ -1,34 +1,34 @@
-# The 4-node topology is comprised of routers xrd31 thru xrd34
+# The 4-node topology is comprised of routers xrd00 thru xrd03
 
 services:
 
 # XRd
-  xrd91:
-    xr_startup_cfg: xrd91.cfg
+  xrd00:
+    xr_startup_cfg: ../configs/4-node/xrd00.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
       - Gi0/0/0/2
       - Gi0/0/0/3
       - Mg0/RP0/CPU0/0
-  xrd92:
-    xr_startup_cfg: xrd92.cfg
+  xrd01:
+    xr_startup_cfg: ../configs/4-node/xrd01.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
       - Gi0/0/0/2
       - Gi0/0/0/3
       - Mg0/RP0/CPU0/0
-  xrd93:
-    xr_startup_cfg: xrd93.cfg
+  xrd02:
+    xr_startup_cfg: ../configs/4-node/xrd02.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
       - Gi0/0/0/2
       - Gi0/0/0/3
       - Mg0/RP0/CPU0/0
-  xrd94:
-    xr_startup_cfg: xrd94.cfg
+  xrd03:
+    xr_startup_cfg: ../configs/4-node/xrd03.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -36,13 +36,21 @@ services:
       - Gi0/0/0/3
       - Mg0/RP0/CPU0/0
 
+# Topology
+#  
+#  r02---r03
+#   | \  / |
+#   |  \/  |
+#   |  /\  |
+#   | /  \ |
+#  r00    r01
 
 xr_l2networks:
-  - ["xrd91:Gi0/0/0/0", "xrd92:Gi0/0/0/0"]
-  - ["xrd91:Gi0/0/0/1", "xrd93:Gi0/0/0/2"]
-  - ["xrd92:Gi0/0/0/2", "xrd94:Gi0/0/0/0"]
-  - ["xrd93:Gi0/0/0/1", "xrd94:Gi0/0/0/1"]
-
+  - ["xrd00:Gi0/0/0/0", "xrd02:Gi0/0/0/0"]
+  - ["xrd00:Gi0/0/0/1", "xrd03:Gi0/0/0/0"]
+  - ["xrd01:Gi0/0/0/0", "xrd02:Gi0/0/0/1"]
+  - ["xrd01:Gi0/0/0/1", "xrd03:Gi0/0/0/1"] 
+  - ["xrd02:Gi0/0/0/2", "xrd03:Gi0/0/0/2"]
 
 networks:
   mgmt:
@@ -55,15 +63,15 @@ networks:
     ipam:
       config:
         - subnet: 172.40.0.0/24
-  xrd91-host:
+  xrd00-host:
     ipam:
       config:
-        - subnet: 10.0.91.0/24
+        - subnet: 10.101.1.0/24
     xr_interfaces:
-      - xrd91:Gi0/0/0/2
-  xrd94-host:
+      - xrd00:Gi0/0/0/2
+  xrd01-host:
     ipam:
       config:
-        - subnet: 10.10.94.0/24
+        - subnet: 10.102.1.0/24
     xr_interfaces:
-      - xrd94:Gi0/0/0/2
+      - xrd01:Gi0/0/0/2
