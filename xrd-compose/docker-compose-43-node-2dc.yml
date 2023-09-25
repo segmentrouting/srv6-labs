@@ -5,7 +5,7 @@ services:
 
 # XRd containers
   xrd00:
-    xr_startup_cfg: config/xrd00.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd00.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -14,7 +14,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd01:
-    xr_startup_cfg: config/xrd01.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd01.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -23,7 +23,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd02:
-    xr_startup_cfg: config/xrd02.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd02.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -35,7 +35,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd03:
-    xr_startup_cfg: config/xrd03.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd03.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -47,7 +47,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd04:
-    xr_startup_cfg: config/xrd04.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd04.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -56,7 +56,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd05:
-    xr_startup_cfg: config/xrd05.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd05.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -66,7 +66,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd06:
-    xr_startup_cfg: config/xrd06.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd06.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -74,7 +74,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd07:
-    xr_startup_cfg: config/xrd07.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd07.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -85,7 +85,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd08:
-    xr_startup_cfg: config/xrd08.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd08.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -95,7 +95,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd09:
-    xr_startup_cfg: config/xrd09.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd09.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -104,7 +104,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd10:
-    xr_startup_cfg: config/xrd10.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd10.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -113,7 +113,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd11:
-    xr_startup_cfg: config/xrd11.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd11.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -125,7 +125,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd12:
-    xr_startup_cfg: config/xrd12.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd12.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -137,7 +137,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd13:
-    xr_startup_cfg: config/xrd13.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd13.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -146,7 +146,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd14:
-    xr_startup_cfg: config/xrd14.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd14.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -155,7 +155,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd15:
-    xr_startup_cfg: config/xrd15.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd15.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -164,7 +164,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd16:
-    xr_startup_cfg: config/xrd16.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd16.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -173,7 +173,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd17:
-    xr_startup_cfg: config/xrd17.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd17.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -181,7 +181,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd18:
-    xr_startup_cfg: config/xrd18.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd18.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -193,7 +193,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd19:
-    xr_startup_cfg: config/xrd19.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd19.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -205,7 +205,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd20:
-    xr_startup_cfg: config/xrd20.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd20.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -214,7 +214,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd21:
-    xr_startup_cfg: config/xrd21.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd21.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -223,7 +223,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd22:
-    xr_startup_cfg: config/xrd22.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd22.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -232,7 +232,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd23:
-    xr_startup_cfg: config/xrd23.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd23.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -241,7 +241,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd24:
-    xr_startup_cfg: config/xrd24.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd24.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -249,14 +249,14 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd25:
-    xr_startup_cfg: config/xrd25.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd25.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
       - Mg0/RP0/CPU0/0
 
   xrd26:
-    xr_startup_cfg: config/xrd26.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd26.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -265,7 +265,7 @@ services:
 # DC routers
 
   xrd40:
-    xr_startup_cfg: config/xrd40.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd40.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -276,7 +276,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd41:
-    xr_startup_cfg: config/xrd41.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd41.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -287,7 +287,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd42:
-    xr_startup_cfg: config/xrd42.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd42.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -298,7 +298,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd43:
-    xr_startup_cfg: config/xrd43.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd43.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -309,7 +309,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd44:
-    xr_startup_cfg: config/xrd44.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd44.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -320,7 +320,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd45:
-    xr_startup_cfg: config/xrd45.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd45.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -331,7 +331,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd46:
-    xr_startup_cfg: config/xrd46.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd46.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -342,7 +342,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd47:
-    xr_startup_cfg: config/xrd47.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd47.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -355,7 +355,7 @@ services:
 # DC02  routers
 
   xrd60:
-    xr_startup_cfg: config/xrd60.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd60.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -366,7 +366,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd61:
-    xr_startup_cfg: config/xrd61.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd61.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -377,7 +377,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd62:
-    xr_startup_cfg: config/xrd62.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd62.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -388,7 +388,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd63:
-    xr_startup_cfg: config/xrd63.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd63.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -399,7 +399,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd64:
-    xr_startup_cfg: config/xrd64.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd64.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -410,7 +410,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd65:
-    xr_startup_cfg: config/xrd65.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd65.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -421,7 +421,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd66:
-    xr_startup_cfg: config/xrd66.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd66.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -432,7 +432,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd67:
-    xr_startup_cfg: config/xrd67.cfg
+    xr_startup_cfg: ../configs/large-topo/xrd67.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1

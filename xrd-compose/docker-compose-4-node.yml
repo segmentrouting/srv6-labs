@@ -5,7 +5,7 @@ services:
 
 # XRd
   xrd00:
-    xr_startup_cfg: ../configs/4-node/xrd00.cfg
+    xr_startup_cfg: ../configs/xrd-4-node/xrd00.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -13,7 +13,7 @@ services:
       - Gi0/0/0/3
       - Mg0/RP0/CPU0/0
   xrd01:
-    xr_startup_cfg: ../configs/4-node/xrd01.cfg
+    xr_startup_cfg: ../configs/xrd-4-node/xrd01.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -21,7 +21,7 @@ services:
       - Gi0/0/0/3
       - Mg0/RP0/CPU0/0
   xrd02:
-    xr_startup_cfg: ../configs/4-node/xrd02.cfg
+    xr_startup_cfg: ../configs/xrd-4-node/xrd02.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -29,7 +29,7 @@ services:
       - Gi0/0/0/3
       - Mg0/RP0/CPU0/0
   xrd03:
-    xr_startup_cfg: ../configs/4-node/xrd03.cfg
+    xr_startup_cfg: ../configs/xrd-4-node/xrd03.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
