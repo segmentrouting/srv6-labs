@@ -1,4 +1,5 @@
-# The 4-node topology is comprised of routers xrd00 thru xrd03
+#  The 4-node topology is comprised of routers xrd00 thru xrd03
+#  ./xrd-compose -f docker-compose-4-node.yml -i ios-xr/xrd-control-plane:7.8.1 -l
 
 services:
 
