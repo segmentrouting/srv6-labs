@@ -55,10 +55,10 @@ xr_l2networks:
 networks:
   mgmt:
     xr_interfaces:
-      - xrd91:Mg0/RP0/CPU0/0
-      - xrd92:Mg0/RP0/CPU0/0
-      - xrd93:Mg0/RP0/CPU0/0
-      - xrd94:Mg0/RP0/CPU0/0
+      - xrd00:Mg0/RP0/CPU0/0
+      - xrd01:Mg0/RP0/CPU0/0
+      - xrd02:Mg0/RP0/CPU0/0
+      - xrd03:Mg0/RP0/CPU0/0
 
     ipam:
       config:
