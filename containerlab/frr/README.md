@@ -25,6 +25,8 @@ ip link add blue type vrf table 10
 ip link set dev blue up
 ip link set dev eth3 master blue
 ip addr add 2001:db8:3e8:7777::1/64 dev eth3
+sysctl net.ipv4.ip_forward=1
+sysctl net.ipv6.conf.all.forwarding=1
 ```
 
 #### r6
@@ -33,6 +35,14 @@ ip link add blue type vrf table 10
 ip link set dev blue up
 ip link set dev eth3 master blue
 ip addr add 2001:db8:3e8:8888::1/64 dev eth3
+sysctl net.ipv4.ip_forward=1
+sysctl net.ipv6.conf.all.forwarding=1
+```
+
+#### all nodes
+```
+sysctl net.ipv4.ip_forward=1
+sysctl net.ipv6.conf.all.forwarding=1
 ```
 
 ### Validate BGP ipv4 vpn
@@ -117,3 +127,10 @@ r6:/# ip route show vrf blue
 10.8.1.0/24 dev eth3 proto kernel scope link src 10.8.1.1 
 r6:/# 
 ```
+
+### tcpdump
+Enter container netns to run tcpdump
+```
+sudo ip netns exec clab-frrlab-r1 tcpdump -ni eth2
+```
+
