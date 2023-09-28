@@ -4,49 +4,57 @@ topology:
   nodes:
     r1:
       kind: linux
-      image: quay.io/frrouting/frr:master
+      #image: quay.io/frrouting/frr:master
+      image: ubuntu-frr-22.04:latest
       binds:
         - r1/daemons:/etc/frr/daemons
         - r1/frr.conf:/etc/frr/frr.conf
     r2:
       kind: linux
-      image: quay.io/frrouting/frr:master
+      #image: quay.io/frrouting/frr:master
+      image: ubuntu-frr-22.04:latest
       binds:
         - r2/daemons:/etc/frr/daemons
         - r2/frr.conf:/etc/frr/frr.conf
     r3:
       kind: linux
-      image: quay.io/frrouting/frr:master
+      #image: quay.io/frrouting/frr:master
+      image: ubuntu-frr-22.04:latest
       binds:
         - r3/daemons:/etc/frr/daemons
         - r3/frr.conf:/etc/frr/frr.conf
     r4:
       kind: linux
-      image: quay.io/frrouting/frr:master
+      #image: quay.io/frrouting/frr:master
+      image: ubuntu-frr-22.04:latest
       binds:
         - r4/daemons:/etc/frr/daemons
         - r4/frr.conf:/etc/frr/frr.conf
     r5:
       kind: linux
-      image: quay.io/frrouting/frr:master
+      #image: quay.io/frrouting/frr:master
+      image: ubuntu-frr-22.04:latest
       binds:
         - r5/daemons:/etc/frr/daemons
         - r5/frr.conf:/etc/frr/frr.conf
     r6:
       kind: linux
-      image: quay.io/frrouting/frr:master
+      #image: quay.io/frrouting/frr:master
+      image: ubuntu-frr-22.04:latest
       binds:
         - r6/daemons:/etc/frr/daemons
         - r6/frr.conf:/etc/frr/frr.conf
     r7:
       kind: linux
-      image: quay.io/frrouting/frr:master
+      #image: quay.io/frrouting/frr:master
+      image: ubuntu-frr-22.04:latest
       binds:
         - r7/daemons:/etc/frr/daemons
         - r7/frr.conf:/etc/frr/frr.conf
     r8:
       kind: linux
-      image: quay.io/frrouting/frr:master
+      #image: quay.io/frrouting/frr:master
+      image: ubuntu-frr-22.04:latest
       binds:
         - r8/daemons:/etc/frr/daemons
         - r8/frr.conf:/etc/frr/frr.conf
