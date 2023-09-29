@@ -1,5 +1,13 @@
 # srv6-labs
-A repository containing several types of SRv6 lab or demo projects. Project subdirectories include READMEs, scripts, configs, and other tools for building SRv6 test topologies and running various simulation or demo scenarios.
+A repository containing several types of SRv6 lab or demo projects.
+
+The repository is organized around network topology scenarios and the tools used to launch a given topology. For example:
+
+* clab-quickstart - contains topology definition yaml files and router configs for quickly getting up and running using the containerlab (clab) topology orchestrator. See also: https://containerlab.dev/
+  
+* kvm - prebuilt xml files and configs for launching virtual machine topologies using kvm
+
+Each project subdirectory includes READMEs, scripts, configs, and other tools for building SRv6 topologies and running various simulation or demo scenarios.
 
 ### Containerlab subdirectory
 Contains instructions, sample ymls, and configs for using Containerlab to build and launch sonic-vxr8000 or xrd network topologies
