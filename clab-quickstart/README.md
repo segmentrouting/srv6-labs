@@ -26,9 +26,22 @@ Instructions:
 docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
 ``` 
 
-6. Edit /etc/sysctl.conf and increase kernel.pid_max parameter: 
+6. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
    ```
-   sysctl -w kernel.pid_max=1048575
+   kernel.pid_max=1048575
+   ```
+   Then reset sysctl: 
+   ```
+   sudo sysctl -p
+   ```
+   Example:
+   ```
+    brmcdoug@ie-dev7:~/srv6-labs/clab-quickstart$ sudo sysctl -p
+    fs.inotify.max_user_watches = 131072
+    fs.inotify.max_user_instances = 131072
+    net.bridge.bridge-nf-call-iptables = 1
+    net.bridge.bridge-nf-call-ip6tables = 1
+    kernel.pid_max = 1048575
    ```
      
 7. Validate KVM modules are installed and configured:
