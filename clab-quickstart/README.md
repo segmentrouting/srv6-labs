@@ -65,6 +65,32 @@ docker load -i xrd-control-plane-container-x64.dockerv1.tgz
     ```
 
 #### Example terminal output
+brmcdoug@ie-dev7:~/srv6-labs/clab-quickstart$ sudo containerlab deploy -t 4-node-quickstart.yml
+INFO[0000] Containerlab v0.40.0 started                 
+INFO[0000] Parsing & checking topology file: 4-node-quickstart.yml 
+INFO[0000] Creating lab directory: /home/brmcdoug/srv6-labs/clab-quickstart/clab-4-node 
+INFO[0000] Creating docker network: Name="mgt_net", IPv4Subnet="172.20.1.0/24", IPv6Subnet="2001:172:20:1::/80", MTU="1500" 
+INFO[0000] Creating container: "xrd03"                  
+INFO[0000] Creating container: "xrd02"                  
+INFO[0000] Creating container: "xrd01"                  
+INFO[0000] Creating container: "xrd00"                  
+INFO[0005] Creating virtual wire: xrd01:Gi0-0-0-1 <--> xrd03:Gi0-0-0-1 
+INFO[0005] Creating virtual wire: xrd00:Gi0-0-0-1 <--> xrd03:Gi0-0-0-0 
+INFO[0005] Creating virtual wire: xrd01:Gi0-0-0-0 <--> xrd02:Gi0-0-0-1 
+INFO[0005] Creating virtual wire: xrd00:Gi0-0-0-0 <--> xrd02:Gi0-0-0-0 
+INFO[0005] Creating virtual wire: xrd02:Gi0-0-0-2 <--> xrd03:Gi0-0-0-2 
+INFO[0006] Adding containerlab host entries to /etc/hosts file 
+INFO[0006] 🎉 New containerlab version 0.45.1 is available! Release notes: https://containerlab.dev/rn/0.45/#0451
+Run 'containerlab version upgrade' to upgrade or go check other installation options at https://containerlab.dev/install/ 
++---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
+| # |       Name        | Container ID |             Image              |   Kind    |  State  |  IPv4 Address   |     IPv6 Address      |
++---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
+| 1 | clab-4-node-xrd00 | e6b6c1095560 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.100/24 | 2001:172:20:1::100/80 |
+| 2 | clab-4-node-xrd01 | ad061c7fd1e5 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.101/24 | 2001:172:20:1::101/80 |
+| 3 | clab-4-node-xrd02 | 5ba3f1cea735 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.102/24 | 2001:172:20:1::102/80 |
+| 4 | clab-4-node-xrd03 | 77830cd8f499 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.103/24 | 2001:172:20:1::103/80 |
++---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
+
 
 11. Give the XRd instances 2-3 minutes to come up and be responsive. All the usual docker commands work:
 ```
@@ -78,6 +104,17 @@ docker exec -it clab-xrd-7-node-xrd05 /pkg/bin/xr_cli.sh
 
 7. ssh to routers
 ```
-ssh cisco@172.20.5.201
-pw = cisco123
+xrd00:
+ssh cisco@172.20.1.100
+
+xrd01:
+ssh cisco@172.20.1.101
+
+xrd02:
+ssh cisco@172.20.1.102
+
+xrd03:
+ssh cisco@172.20.1.103
+
+pw for all = cisco123
 ```

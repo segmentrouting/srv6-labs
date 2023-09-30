@@ -13,7 +13,7 @@
 name: 4-node
 
 mgmt:
-  network: fixedips
+  network: mgt_net
   ipv4_subnet: 172.20.1.0/24
   ipv6_subnet: 2001:172:20:1::/80
 
