@@ -38,14 +38,14 @@ topology:
       image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.1.102
       mgmt_ipv6: 2001:172:20:1::102
-      startup-config: config/xrd01.cfg
+      startup-config: config/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.1.102
-      mgmt_ipv6: 2001:172:20:1::102
-      startup-config: config/xrd01.cfg
+      mgmt_ipv4: 172.20.1.103
+      mgmt_ipv6: 2001:172:20:1::103
+      startup-config: config/xrd03.cfg
 
   links:
     - endpoints: ["xrd00:Gi0-0-0-0", "xrd02:Gi0-0-0-0"]
