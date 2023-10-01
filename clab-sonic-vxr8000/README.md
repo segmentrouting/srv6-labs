@@ -1,11 +1,18 @@
-### Cisco vxr8000 running SONiC
+## clab sonic vxr8000
 
-Installation instructions
-=================================================================
+This repository contains instructions and sample yaml files for launching sonic running on the Cisco vxr8000 hardware emulator
+
+Requires:
+
+* Containerlab v0.40.0: https://containerlab.dev/
+* vxr8000 docker image
+* sonic-cisco-8000.bin 
+
+### install and launch 
 
 #### Many thanks to Rafal Skorka for providing the original instructions
 
-Note (July 21, 2023): SRv6 uSID support on SONiC vxr8000 is pending further development
+Note (Oct 1, 2023): SRv6 uSID support on SONiC vxr8000 is pending further development
 
 1. Host server requirements
 
@@ -23,17 +30,17 @@ sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
 
    - cpu and memory: recommend 20GB and 4 cores per router
 
-2. Install Containerlab:
+1. Install Containerlab v0.40.0:
 ```
 https://containerlab.dev/install/
 ```
 
-3. Install 8000 SONiC docker image
+1. Install 8000 SONiC docker image
 ```   
 docker load -i c8000-clab-sonic:27.tar.gz
 ```
 
-4. Copy sonic-cisco-8000.bin image to local storage (e.g. /sonic_images). Example:
+1. Copy sonic-cisco-8000.bin image to local storage (e.g. /sonic_images). Example:
 ```
 ls /opt/images/ | grep sonic
 
@@ -77,7 +84,7 @@ eth1 -> first front panel port  (Ethernet0)
 eth2 -> second front panel port (Ethernet4 or Ethernet8)
 ```
 
-#### NOTE: all X-node.yml topology files in this repo use Linux bridge to connect the clab routers. Be sure to create linux bridge instances prior to deploying the X-node.yml topologies:
+#### NOTE: if you wish to use Linux bridge to connect the clab routers, be sure to create linux bridge instances prior to deploying the X-node.yml topologies:
 
 ```
 sudo brctl addbr br1
@@ -120,7 +127,7 @@ docker logs -f clab-sonic-r1
 19:55:56 INFO Sim up
 Router up
 ```
-#### If you don't see "Router up" after 10 minutes, please share the "docker logs ..." output with Cisco team.
+#### If you don't see "Router up" after 10-15 minutes, please share the "docker logs ..." output with Cisco team.
 
 8. Test ssh to XR (either use SONiC default admin/YourPaSsWoRd or cisco/cisco123 login credentials)
 ```

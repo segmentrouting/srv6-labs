@@ -107,7 +107,7 @@ Paths: (2 available, best #1, vrf blue)
 ### validate PE l3vpn routes in Linux
 #### on r1
 ```
-brmcdoug@naja:~$ docker exec -it clab-frrlab-r1 bash
+brmcdoug@naja:~$ docker exec -it clab-frr-frr-1 bash
 r1:/# 
 r1:/# 
 r1:/# 
@@ -120,7 +120,7 @@ r1:/#
 
 #### on r6
 ```
-brmcdoug@naja:~/srv6-labs/containerlab/frr$ docker exec -it clab-frrlab-r6 bash
+brmcdoug@naja:~/srv6-labs/containerlab/frr$ docker exec -it clab-frr-frr-6 bash
 r6:/# ip route show vrf blue
 10.7.1.0/24  encap seg6 mode encap segs 1 [ fc00:0:1:65:: ] via 10.1.1.10 dev eth1 proto bgp metric 20 
 10.8.0.1 via 10.8.1.2 dev eth3 proto bgp metric 20 
@@ -131,6 +131,6 @@ r6:/#
 ### tcpdump
 Enter container netns to run tcpdump
 ```
-sudo ip netns exec clab-frrlab-r1 tcpdump -ni eth2
+sudo ip netns exec clab-frr-frr-1 tcpdump -ni eth2
 ```
 
