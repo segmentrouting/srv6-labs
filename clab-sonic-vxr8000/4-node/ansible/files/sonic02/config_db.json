@@ -1,7 +1,7 @@
 {
     "DEVICE_METADATA": {
         "localhost": {
-            "hwsku": "32x400Gb",
+            "hwsku": "32x100Gb",
             "mac": "78:EB:5A:63:F0:02",
             "platform": "x86_64-8201_32fh_o-r0",
             "synchronous_mode": "enable",
@@ -12,7 +12,7 @@
         }
     },
     "MGMT_INTERFACE": {
-        "eth0|172.20.5.12/24": {
+        "eth0|172.20.5.22/24": {
             "gwaddr": "172.20.5.1"
         }
     },
@@ -25,30 +25,30 @@
         "Ethernet0": {
             "ipv6_use_link_local_only": "enable"
         },
-        "Ethernet8|10.1.1.10/31": {},
+        "Ethernet4|10.1.1.10/31": {},
+        "Ethernet4": {
+            "ipv6_use_link_local_only": "enable"
+        },
+        "Ethernet8|10.1.1.12/31": {},
         "Ethernet8": {
             "ipv6_use_link_local_only": "enable"
         },
-        "Ethernet16|10.1.1.12/31": {},
+        "Ethernet12|10.1.1.14/31": {},
+        "Ethernet12": {
+            "ipv6_use_link_local_only": "enable"
+        },
         "Ethernet16": {
-            "ipv6_use_link_local_only": "enable"
-        },
-        "Ethernet24|10.1.1.14/31": {},
-        "Ethernet24": {
-            "ipv6_use_link_local_only": "enable"
-        },
-        "Ethernet32": {
             "vrf_name": "Vrf1"
         },
-        "Ethernet32|10.101.2.1/24": {},
-        "Ethernet32|2001:0:101:2::1/64": {},
-        "Ethernet40": {
+        "Ethernet16|10.101.2.1/24": {},
+        "Ethernet16|2001:0:101:2::1/64": {},
+        "Ethernet20": {
             "vrf_name": "Vrf2"
         },
-        "Ethernet40|10.102.2.1/24": {},
-        "Ethernet40|2001:0:102:2::1/64": {},
-        "Ethernet48": {},
-        "Ethernet56": {}
+        "Ethernet20|10.102.2.1/24": {},
+        "Ethernet20|2001:0:102:2::1/64": {},
+        "Ethernet24": {},
+        "Ethernet28": {}
     },
 
     "VRF": {

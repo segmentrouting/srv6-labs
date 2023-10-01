@@ -3,12 +3,12 @@ name: sonic
 topology:
   kinds:
     linux:
-        image: c8000-clab-sonic:27
+        image: c8000-clab-sonic:31
         binds: 
             - /opt/images:/images
         env:
             IMAGE: /images/sonic-cisco-8000.bin
-            PID: '8201-32FH'
+            PID: '8101-32FH'
   nodes:
     r1:
       kind: linux

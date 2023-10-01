@@ -6,45 +6,46 @@
 #   r1        r2
 #  / \        / \
 # h1 h2      h3 h4
+#
 
 name: c8201-sonic-4-node-clos
 
 mgmt:
-  network: fixedips
-  ipv4_subnet: 172.20.5.0/24
-  ipv6_subnet: 2001:172:20:5::/80
+  network: mgt_net
+  ipv4_subnet: 172.20.4.0/24
+  ipv6_subnet: 2001:172:20:4::/80
 
 topology:
   kinds:
     linux:
-      image: c8000-clab-sonic:27
+      image: c8000-clab-sonic:31
       binds: 
           - /home/cisco/images:/images
           #- /opt/images:/images
       env:
           IMAGE: /images/sonic-cisco-8000-clab.bin
-          PID: '8201-32FH'
+          PID: '8101-32FH'
 
   nodes:
     r1:
       kind: linux
-      mgmt_ipv4: 172.20.5.11
-      mgmt_ipv6: 2001:172:20:5::11
+      mgmt_ipv4: 172.20.4.101
+      mgmt_ipv6: 2001:172:20:4::101
 
     r2:
       kind: linux
       wait-for:
         - r1
-      mgmt_ipv4: 172.20.5.12
-      mgmt_ipv6: 2001:172:20:5::12
+      mgmt_ipv4: 172.20.4.102
+      mgmt_ipv6: 2001:172:20:4::102
 
     r3:
       kind: linux
       wait-for:
         - r1
         - r2
-      mgmt_ipv4: 172.20.5.13
-      mgmt_ipv6: 2001:172:20:5::13
+      mgmt_ipv4: 172.20.4.103
+      mgmt_ipv6: 2001:172:20:4::103
 
     r4:
       kind: linux
@@ -52,8 +53,8 @@ topology:
         - r1
         - r2
         - r3
-      mgmt_ipv4: 172.20.5.14
-      mgmt_ipv6: 2001:172:20:5::14
+      mgmt_ipv4: 172.20.4.104
+      mgmt_ipv6: 2001:172:20:4::104
 
     r1e0-r3e0:
       kind: bridge
