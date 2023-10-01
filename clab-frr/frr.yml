@@ -1,4 +1,4 @@
-name: frrlab
+name: frr
 
 mgmt:
   network: mgt_net
@@ -7,83 +7,83 @@ mgmt:
 
 topology:
   nodes:
-    r1:
+    frr-1:
       kind: linux
       #image: quay.io/frrouting/frr:master
       image: ubuntu-frr-22.04:latest
       binds:
-        - r1/daemons:/etc/frr/daemons
-        - r1/frr.conf:/etc/frr/frr.conf
+        - frr-1/daemons:/etc/frr/daemons
+        - frr-1/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.101
       mgmt_ipv6: 2001:172:20:2::101
 
-    r2:
+    frr-2:
       kind: linux
       #image: quay.io/frrouting/frr:master
       image: ubuntu-frr-22.04:latest
       binds:
-        - r2/daemons:/etc/frr/daemons
-        - r2/frr.conf:/etc/frr/frr.conf
+        - frr-2/daemons:/etc/frr/daemons
+        - frr-2/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.102
       mgmt_ipv6: 2001:172:20:2::102
 
-    r3:
+    frr-3:
       kind: linux
       #image: quay.io/frrouting/frr:master
       image: ubuntu-frr-22.04:latest
       binds:
-        - r3/daemons:/etc/frr/daemons
-        - r3/frr.conf:/etc/frr/frr.conf
+        - frr-3/daemons:/etc/frr/daemons
+        - frr-3/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.103
       mgmt_ipv6: 2001:172:20:2::103
       
-    r4:
+    frr-4:
       kind: linux
       #image: quay.io/frrouting/frr:master
       image: ubuntu-frr-22.04:latest
       binds:
-        - r4/daemons:/etc/frr/daemons
-        - r4/frr.conf:/etc/frr/frr.conf
+        - frr-4/daemons:/etc/frr/daemons
+        - frr-4/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.104
       mgmt_ipv6: 2001:172:20:2::104
       
-    r5:
+    frr-5:
       kind: linux
       #image: quay.io/frrouting/frr:master
       image: ubuntu-frr-22.04:latest
       binds:
-        - r5/daemons:/etc/frr/daemons
-        - r5/frr.conf:/etc/frr/frr.conf
+        - frr-5/daemons:/etc/frr/daemons
+        - frr-5/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.105
       mgmt_ipv6: 2001:172:20:2::105
       
-    r6:
+    frr-6:
       kind: linux
       #image: quay.io/frrouting/frr:master
       image: ubuntu-frr-22.04:latest
       binds:
-        - r6/daemons:/etc/frr/daemons
-        - r6/frr.conf:/etc/frr/frr.conf
+        - frr-6/daemons:/etc/frr/daemons
+        - frr-6/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.106
       mgmt_ipv6: 2001:172:20:2::106
       
-    r7:
+    frr-7:
       kind: linux
       #image: quay.io/frrouting/frr:master
       image: ubuntu-frr-22.04:latest
       binds:
-        - r7/daemons:/etc/frr/daemons
-        - r7/frr.conf:/etc/frr/frr.conf
+        - frr-7/daemons:/etc/frr/daemons
+        - frr-7/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.107
       mgmt_ipv6: 2001:172:20:2::107
       
-    r8:
+    frr-8:
       kind: linux
       #image: quay.io/frrouting/frr:master
       image: ubuntu-frr-22.04:latest
       binds:
-        - r8/daemons:/etc/frr/daemons
-        - r8/frr.conf:/etc/frr/frr.conf
+        - frr-8/daemons:/etc/frr/daemons
+        - frr-8/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.108
       mgmt_ipv6: 2001:172:20:2::108
     
@@ -108,15 +108,15 @@ topology:
 #          r3--r5
 
   links:
-    - endpoints: ["r1:eth1", "r2:eth1"]
-    - endpoints: ["r1:eth2", "r3:eth1"]
-    - endpoints: ["r1:eth3", "r7:eth1"]
-    - endpoints: ["r2:eth2", "r4:eth1"]
-    - endpoints: ["r3:eth2", "r5:eth1"]  
-    - endpoints: ["r4:eth2", "r5:eth2"]  
-    - endpoints: ["r4:eth3", "r6:eth1"]  
-    - endpoints: ["r5:eth3", "r6:eth2"]  
-    - endpoints: ["r6:eth3", "r8:eth1"]  
+    - endpoints: ["frr-1:eth1", "frr-2:eth1"]
+    - endpoints: ["frr-1:eth2", "frr-3:eth1"]
+    - endpoints: ["frr-1:eth3", "frr-7:eth1"]
+    - endpoints: ["frr-2:eth2", "frr-4:eth1"]
+    - endpoints: ["frr-3:eth2", "frr-5:eth1"]  
+    - endpoints: ["frr-4:eth2", "frr-5:eth2"]  
+    - endpoints: ["frr-4:eth3", "frr-6:eth1"]  
+    - endpoints: ["frr-5:eth3", "frr-6:eth2"]  
+    - endpoints: ["frr-6:eth3", "frr-8:eth1"]  
 
     # - endpoints: ["PC1:eth1", "router1:eth3"]
     # - endpoints: ["PC2:eth1", "router2:eth3"]
