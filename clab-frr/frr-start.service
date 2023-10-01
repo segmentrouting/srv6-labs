@@ -1,0 +1,9 @@
+[Unit]
+Start FRR service
+After=network-online.target
+
+[Service]
+ExecStart=/etc/systemd/system/frr-start-svc.sh
+
+[Install]
+WantedBy=multi-user.target
