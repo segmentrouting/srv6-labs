@@ -1,5 +1,10 @@
 name: frrlab
 
+mgmt:
+  network: mgt_net
+  ipv4_subnet: 172.20.2.0/24
+  ipv6_subnet: 2001:172:20:2::/80
+
 topology:
   nodes:
     r1:
@@ -9,6 +14,9 @@ topology:
       binds:
         - r1/daemons:/etc/frr/daemons
         - r1/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.101
+      mgmt_ipv6: 2001:172:20:2::101
+
     r2:
       kind: linux
       #image: quay.io/frrouting/frr:master
@@ -16,6 +24,9 @@ topology:
       binds:
         - r2/daemons:/etc/frr/daemons
         - r2/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.102
+      mgmt_ipv6: 2001:172:20:2::102
+
     r3:
       kind: linux
       #image: quay.io/frrouting/frr:master
@@ -23,6 +34,9 @@ topology:
       binds:
         - r3/daemons:/etc/frr/daemons
         - r3/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.103
+      mgmt_ipv6: 2001:172:20:2::103
+      
     r4:
       kind: linux
       #image: quay.io/frrouting/frr:master
@@ -30,6 +44,9 @@ topology:
       binds:
         - r4/daemons:/etc/frr/daemons
         - r4/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.104
+      mgmt_ipv6: 2001:172:20:2::104
+      
     r5:
       kind: linux
       #image: quay.io/frrouting/frr:master
@@ -37,6 +54,9 @@ topology:
       binds:
         - r5/daemons:/etc/frr/daemons
         - r5/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.105
+      mgmt_ipv6: 2001:172:20:2::105
+      
     r6:
       kind: linux
       #image: quay.io/frrouting/frr:master
@@ -44,6 +64,9 @@ topology:
       binds:
         - r6/daemons:/etc/frr/daemons
         - r6/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.106
+      mgmt_ipv6: 2001:172:20:2::106
+      
     r7:
       kind: linux
       #image: quay.io/frrouting/frr:master
@@ -51,6 +74,9 @@ topology:
       binds:
         - r7/daemons:/etc/frr/daemons
         - r7/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.107
+      mgmt_ipv6: 2001:172:20:2::107
+      
     r8:
       kind: linux
       #image: quay.io/frrouting/frr:master
@@ -58,6 +84,9 @@ topology:
       binds:
         - r8/daemons:/etc/frr/daemons
         - r8/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.108
+      mgmt_ipv6: 2001:172:20:2::108
+    
 
 
     # PC1:

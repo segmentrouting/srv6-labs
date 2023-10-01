@@ -1,0 +1,26 @@
+---
+
+# ansible-playbook -i hosts lab_destroy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
+- name: Destroy containerlab sonic instances
+  hosts: sonic_host_vms
+  become: true
+  tasks:
+
+    - name: run containerlab destroy on all host VMs
+      command: sudo containerlab destroy -t "{{ inventory_hostname }}/clab.yml"
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+      ignore_errors: yes
+
+    - name: delete vxlan tunnels on all host VMs
+      command: sudo clab tools vxlan delete
+      args:
+        chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+      ignore_errors: yes
+
+    - name: delete deploy log
+      command: sudo rm /home/cisco/deploy.log
+      ignore_errors: yes
+      delegate_to: localhost
+      run_once: true

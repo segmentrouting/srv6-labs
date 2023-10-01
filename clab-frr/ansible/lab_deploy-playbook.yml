@@ -1,0 +1,28 @@
+---
+
+# ansible-playbook -i hosts lab_deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
+- name: Setup lab and deploy SONiC containerlab nodes
+  hosts: frr_nodes
+  become: true
+  tasks:
+    - name: start frr service
+      command: systemctl start frr
+      # args:
+      #   chdir: /home/cisco/sonic-dcloud
+      ignore_errors: yes
+      
+    # - name: run containerlab deploy to launch sonic vxr8000 nodes
+    #   command: sudo containerlab deploy -t "{{ inventory_hostname }}/clab.yml"
+    #   args:
+    #     chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+    #   ignore_errors: yes
+
+    # - name: run vxlan shell script to interconnect containerlab nodes across VMs
+    #   command: "{{ inventory_hostname }}/vxlan.sh"
+    #   args:
+    #     chdir: /home/cisco/sonic-dcloud/1-SONiC_101/ansible/files/
+    #   ignore_errors: yes
+
+
+

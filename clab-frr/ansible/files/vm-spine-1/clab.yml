@@ -1,0 +1,32 @@
+name: c8101-sonic
+
+mgmt:
+  network: mgt_net
+  ipv4_subnet: 172.10.10.0/24
+  bridge: sonic_mgt_br
+
+topology:
+  kinds:
+    linux:
+      image: c8000-clab-sonic:30.1
+      binds: 
+          - /home/cisco/images:/images
+      env:
+          IMAGE: /images/sonic-cisco-8000.bin
+          PID: '8101-32H'
+
+  nodes:
+
+    spine-1:
+      kind: linux
+      mgmt_ipv4: 172.10.10.103
+
+  links:
+
+    - endpoints: ["spine-1:eth1", "host:spine-1-eth1"]
+    - endpoints: ["spine-1:eth2", "host:spine-1-eth2"]
+
+    - endpoints: ["spine-1:eth3", "host:spine-1-eth3"]
+    - endpoints: ["spine-1:eth4", "host:spine-1-eth4"]
+
+

@@ -1,0 +1,17 @@
+{
+    "DEVICE_METADATA": {
+        "localhost": {
+            "hwsku": "32x100Gb",
+            "platform": "x86_64-8201_32fh_o-r0",
+            "mac": "52:54:00:74:c1:01",
+            "hostname": "leaf-1",
+            "type": "LeafRouter",
+            "docker_routing_config_mode": "split"
+        }
+    },
+    "MGMT_INTERFACE": {
+        "eth0|172.10.10.101/24": {
+            "gwaddr": "172.10.10.1"
+        }
+    }
+}
