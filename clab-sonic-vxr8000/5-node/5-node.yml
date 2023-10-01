@@ -8,7 +8,7 @@
 name: c8101-sonic-5-node
 
 mgmt:
-  network: fixedips
+  network: mgt_net5
   ipv4_subnet: 172.20.5.0/24
   ipv6_subnet: 2001:172:20:5::/80
 

@@ -8,10 +8,10 @@
 # h1 h2      h3 h4
 #
 
-name: c8201-sonic-4-node-clos
+name: c8101-sonic-4-node
 
 mgmt:
-  network: mgt_net
+  network: mgt_net4
   ipv4_subnet: 172.20.4.0/24
   ipv6_subnet: 2001:172:20:4::/80
 
