@@ -1,0 +1,10 @@
+[sonic_nodes]
+sonic01 ansible_host=172.20.4.101
+sonic02 ansible_host=172.20.4.102
+sonic03 ansible_host=172.20.4.103
+sonic04 ansible_host=172.20.4.104
+
+[sonic_nodes:vars]
+config_file_name=config_db.json
+
+ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"

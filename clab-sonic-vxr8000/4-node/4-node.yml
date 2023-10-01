@@ -1,0 +1,106 @@
+# Topology - 2-stage CLOS where Leaf nodes r1 and r2 are have dual uplinks to Spine nodes r3 and r4
+#
+#     r3    r4
+#    // \\ // \\
+#   // //  \\  \\
+#   r1        r2
+#  / \        / \
+# h1 h2      h3 h4
+#
+
+name: c8101-sonic-4-node
+
+mgmt:
+  network: mgt_net4
+  ipv4_subnet: 172.20.4.0/24
+  ipv6_subnet: 2001:172:20:4::/80
+
+topology:
+  kinds:
+    linux:
+      image: c8000-clab-sonic:31
+      binds: 
+          #- /home/cisco/images:/images
+          - /opt/images:/images
+      env:
+          IMAGE: /images/sonic-cisco-8000.bin
+          PID: '8101-32H'
+
+  nodes:
+    r1:
+      kind: linux
+      mgmt_ipv4: 172.20.4.101
+      mgmt_ipv6: 2001:172:20:4::101
+
+    r2:
+      kind: linux
+      wait-for:
+        - r1
+      mgmt_ipv4: 172.20.4.102
+      mgmt_ipv6: 2001:172:20:4::102
+
+    r3:
+      kind: linux
+      wait-for:
+        - r1
+        - r2
+      mgmt_ipv4: 172.20.4.103
+      mgmt_ipv6: 2001:172:20:4::103
+
+    r4:
+      kind: linux
+      wait-for:
+        - r1
+        - r2
+        - r3
+      mgmt_ipv4: 172.20.4.104
+      mgmt_ipv6: 2001:172:20:4::104
+
+    r1e0-r3e0:
+      kind: bridge
+    r1e8-r3e8:
+      kind: bridge
+    r1e16-r4e0:
+      kind: bridge
+    r1e24-r4e8:
+      kind: bridge
+    r1e32-host1:
+      kind: bridge
+    r1e40-host2:
+      kind: bridge
+    r2e0-r3e16:
+      kind: bridge
+    r2e8-r3e24:
+      kind: bridge
+    r2e16-r4e16:
+      kind: bridge
+    r2e24-r4e24:
+      kind: bridge
+    r2e32-host3:
+      kind: bridge
+    r2e40-host4:
+      kind: bridge
+
+  links:
+    - endpoints: ["r1:eth1", "r1e0-r3e0:r1eth1"]
+    - endpoints: ["r3:eth1", "r1e0-r3e0:r3eth1"]
+    - endpoints: ["r1:eth2", "r1e8-r3e8:r1eth2"]
+    - endpoints: ["r3:eth2", "r1e8-r3e8:r3eth2"]
+    - endpoints: ["r1:eth3", "r1e16-r4e0:r1eth3"]
+    - endpoints: ["r4:eth1", "r1e16-r4e0:r4eth1"]
+    - endpoints: ["r1:eth4", "r1e24-r4e8:r1eth4"]
+    - endpoints: ["r4:eth2", "r1e24-r4e8:r4eth2"]
+    - endpoints: ["r1:eth5", "r1e32-host1:r1eth5"]
+    - endpoints: ["r1:eth6", "r1e40-host2:r1eth6"]
+
+    - endpoints: ["r2:eth1", "r2e0-r3e16:r2eth1"]
+    - endpoints: ["r3:eth3", "r2e0-r3e16:r3eth3"]
+    - endpoints: ["r2:eth2", "r2e8-r3e24:r2eth2"]
+    - endpoints: ["r3:eth4", "r2e8-r3e24:r3eth4"]
+    - endpoints: ["r2:eth3", "r2e16-r4e16:r2eth3"]
+    - endpoints: ["r4:eth3", "r2e16-r4e16:r4eth3"]
+    - endpoints: ["r2:eth4", "r2e24-r4e24:r2eth4"]
+    - endpoints: ["r4:eth4", "r2e24-r4e24:r4eth4"]
+    - endpoints: ["r2:eth5", "r2e32-host3:r2eth5"]
+    - endpoints: ["r2:eth6", "r2e40-host4:r2eth6"]
+

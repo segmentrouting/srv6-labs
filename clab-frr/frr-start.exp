@@ -1,0 +1,67 @@
+#!/usr/bin/expect
+
+# List of Docker containers
+set containers [list "clab-frr-frr-1" "clab-frr-frr-2" \
+"clab-frr-frr-3" "clab-frr-frr-4" "clab-frr-frr-5" \
+"clab-frr-frr-6" "clab-frr-frr-7" "clab-frr-frr-8"]
+
+# Loop through each container
+foreach container $containers {
+    # Connect to the Docker container
+    spawn docker exec -it $container bash
+
+    # Wait for the prompt
+    expect "#"
+
+    # Run commands inside the container
+    send "systemctl start frr\r"
+    expect "#"
+    send "sysctl net.ipv4.ip_forward=1\r"
+    expect "#"
+    send "sysctl net.ipv6.conf.all.forwarding=1\r"
+    expect "#"
+
+    # Exit the container
+    send "exit\r"
+    expect eof
+}
+
+# setup VRF on frr-1
+spawn docker exec -it clab-frr-frr-1 bash
+
+# Wait for the prompt
+expect "#"
+
+# Run commands inside the container
+send "ip link add blue type vrf table 10\r"
+expect "#"
+send "ip link set dev blue up\r"
+expect "#"
+send "ip link set dev eth3 master blue\r"
+expect "#"
+send "ip addr add 2001:db8:3e8:7777::1/64 dev eth3\r"
+expect "#"
+
+# Exit the container
+send "exit\r"
+expect eof
+
+# setup VRF on frr-6
+spawn docker exec -it clab-frr-frr-6 bash
+
+# Wait for the prompt
+expect "#"
+
+# Run commands inside the container
+send "ip link add blue type vrf table 10\r"
+expect "#"
+send "ip link set dev blue up\r"
+expect "#"
+send "ip link set dev eth3 master blue\r"
+expect "#"
+send "ip addr add 2001:db8:3e8:8888::1/64 dev eth3\r"
+expect "#"
+
+# Exit the container
+send "exit\r"
+expect eof
