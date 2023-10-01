@@ -20,8 +20,8 @@ topology:
     linux:
       image: c8000-clab-sonic:31
       binds: 
-          - /home/cisco/images:/images
-          #- /opt/images:/images
+          #- /home/cisco/images:/images
+          - /opt/images:/images
       env:
           IMAGE: /images/sonic-cisco-8000-clab.bin
           PID: '8101-32FH'
