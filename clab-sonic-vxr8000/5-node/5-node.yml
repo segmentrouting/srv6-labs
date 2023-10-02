@@ -15,7 +15,7 @@ mgmt:
 topology:
   kinds:
     linux:
-      image: c8000-clab-sonic:31
+      image: c8000-clab-sonic:30.1
       binds: 
           - /opt/images:/images
       env:
