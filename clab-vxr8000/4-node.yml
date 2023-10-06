@@ -13,35 +13,35 @@
 name: 4-node
 
 mgmt:
-  network: mgt_net
+  network: mgt_net6
   ipv4_subnet: 172.20.6.0/24
   ipv6_subnet: 2001:172:20:6::/80
 
 topology:
   nodes:
-    xrd00:
-      kind: cisco_xrd
+    8201-r1:
+      kind: linux
       image: 8201-32fh-clab:7.9.1
       mgmt_ipv4: 172.20.6.101
       mgmt_ipv6: 2001:172:20:6::101
       startup-config: config/8201-r1.cfg
 
-    xrd01:
-      kind: cisco_xrd
+    8201-r1:
+      kind: linux
       image: 8201-32fh-clab:7.9.1
       mgmt_ipv4: 172.20.6.102
       mgmt_ipv6: 2001:172:20:6::102
       startup-config: config/8201-r2.cfg
 
-    xrd02:
-      kind: cisco_xrd
+    8201-r1:
+      kind: linux
       image: 8201-32fh-clab:7.9.1
       mgmt_ipv4: 172.20.6.103
       mgmt_ipv6: 2001:172:20:6::103
       startup-config: config/8201-r3.cfg
 
-    xrd03:
-      kind: cisco_xrd
+    8201-r1:
+      kind: linux
       image: 8201-32fh-clab:7.9.1
       mgmt_ipv4: 172.20.7.104
       mgmt_ipv6: 2001:172:20:7::104
