@@ -43,8 +43,8 @@ topology:
     8201-r4:
       kind: linux
       image: 8201-32fh-clab:7.9.1
-      mgmt_ipv4: 172.20.7.104
-      mgmt_ipv6: 2001:172:20:7::104
+      mgmt_ipv4: 172.20.6.104
+      mgmt_ipv6: 2001:172:20:6::104
       startup-config: config/8201-r4.cfg
 
   links:
