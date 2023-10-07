@@ -1,30 +1,30 @@
-### Containerlab Cisco 8000 hardware emulator (vxr8000) topologies
+## Containerlab Cisco 8000 hardware emulator (vxr8000) topologies
 
-Instructions: 
+The sample 4-node topology in this repo consists of 4 emulated Cisco 8201-32FH nodes whose configurations are found in the ./config directory. The nodes are configured with ISIS, SR, SRv6, and iBGP running. 8201-r3 is a route-reflector with the other 3 nodes as clients. Please feel free to use this topology or add additional topologies and configurations, etc.
 
-1. Ubuntu 20.04 or 22.04 bare-metal or VM
-   
-2. Requires Openvswitch
+### Clab install and topology deployment instructions: 
+
+1. Requiress Ubuntu 20.04 or 22.04 bare-metal or VM and Openvswitch
    ```
    sudo apt-get install openvswitch-switch -y
    ```
    
-3. Install containerlab: https://containerlab.dev/install/
-   Or the quick and easy way:
+2. Install containerlab: https://containerlab.dev/install/
+   Testing has been done with clab v 0.40.0, so the quick and easy way:
    ```
    bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
    ```
 
-4. Acquire vxr8000 router image(s)
+3. Acquire vxr8000 router docker image(s)
 
-5. Load docker image(s):
-```
-docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
-``` 
-
-1. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
+4. Load docker image(s):
    ```
-   kernel.pid_max=1048575
+   docker load -i 8201-32fh-clab_7.9.1.tar.gz
+   ``` 
+
+5. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
+   ```
+   echo "kernel.pid_max=1048575" >> /etc/sysctl.conf
    ```
    Then reset sysctl: 
    ```
@@ -40,7 +40,7 @@ docker load -i xrd-control-plane-container-x64.dockerv1.tgz
     kernel.pid_max = 1048575
    ```
      
-2. Validate KVM modules are installed and configured:
+6. Validate KVM modules are installed and configured:
    ```
    file /dev/kvm
    ```
@@ -49,68 +49,75 @@ docker load -i xrd-control-plane-container-x64.dockerv1.tgz
    brmcdoug@ie-dev8:~$ file /dev/kvm
    /dev/kvm: character special (10/232)
    ```
-3. Optional: XRd generally requires 2GB of memory and is fairly light on CPU. Run the 'host-check' script to get a sense for how many XRd instances you can run on your host/VM: 
 
-     https://github.com/segmentrouting/srv6-labs/blob/main/utils/host-check
-
-4.  Modify the quickstart.yml file as needed
+7.  Modify the topology .yml file in this directory as needed
    
-5.   Deploy topology
+8.  Deploy topology
     ```
-    sudo containerlab deploy -t 4-node-quickstart.yml
+    sudo containerlab deploy -t 4-node.yml
     ```
 
-#### Example terminal output
-brmcdoug@ie-dev7:~/srv6-labs/clab-quickstart$ sudo containerlab deploy -t 4-node-quickstart.yml
+#### Example clab deploy terminal output
+brmcdoug@naja:~/srv6-labs/clab-vxr8000$ sudo containerlab deploy -t 4-node-v2.yml 
 INFO[0000] Containerlab v0.40.0 started                 
-INFO[0000] Parsing & checking topology file: 4-node-quickstart.yml 
-INFO[0000] Creating lab directory: /home/brmcdoug/srv6-labs/clab-quickstart/clab-4-node 
-INFO[0000] Creating docker network: Name="mgt_net", IPv4Subnet="172.20.1.0/24", IPv6Subnet="2001:172:20:1::/80", MTU="1500" 
-INFO[0000] Creating container: "xrd03"                  
-INFO[0000] Creating container: "xrd02"                  
-INFO[0000] Creating container: "xrd01"                  
-INFO[0000] Creating container: "xrd00"                  
-INFO[0005] Creating virtual wire: xrd01:Gi0-0-0-1 <--> xrd03:Gi0-0-0-1 
-INFO[0005] Creating virtual wire: xrd00:Gi0-0-0-1 <--> xrd03:Gi0-0-0-0 
-INFO[0005] Creating virtual wire: xrd01:Gi0-0-0-0 <--> xrd02:Gi0-0-0-1 
-INFO[0005] Creating virtual wire: xrd00:Gi0-0-0-0 <--> xrd02:Gi0-0-0-0 
-INFO[0005] Creating virtual wire: xrd02:Gi0-0-0-2 <--> xrd03:Gi0-0-0-2 
-INFO[0006] Adding containerlab host entries to /etc/hosts file 
-INFO[0006] 🎉 New containerlab version 0.45.1 is available! Release notes: https://containerlab.dev/rn/0.45/#0451
+INFO[0000] Parsing & checking topology file: 4-node-v2.yml 
+INFO[0000] Creating lab directory: /home/brmcdoug/srv6-labs/clab-vxr8000/clab-4-node 
+INFO[0000] Creating docker network: Name="mgt_net6", IPv4Subnet="172.20.6.0/24", IPv6Subnet="2001:172:20:6::/80", MTU="1500" 
+INFO[0000] Creating container: "8201-r4"                
+INFO[0000] Creating container: "8201-r1"                
+INFO[0000] Creating container: "8201-r2"                
+INFO[0000] Creating container: "8201-r3"                
+INFO[0006] Creating virtual wire: 8201-r2:FH0_0_0_0 <--> 8201-r3:FH0_0_0_2 
+INFO[0006] Creating virtual wire: 8201-r2:FH0_0_0_1 <--> 8201-r3:FH0_0_0_3 
+INFO[0007] Creating virtual wire: 8201-r1:FH0_0_0_0 <--> 8201-r3:FH0_0_0_0 
+INFO[0007] Creating virtual wire: 8201-r1:FH0_0_0_1 <--> 8201-r3:FH0_0_0_1 
+INFO[0008] Creating virtual wire: 8201-r3:FH0_0_0_5 <--> 8201-r4:FH0_0_0_5 
+INFO[0008] Creating virtual wire: 8201-r2:FH0_0_0_2 <--> 8201-r4:FH0_0_0_2 
+INFO[0008] Creating virtual wire: 8201-r1:FH0_0_0_3 <--> 8201-r4:FH0_0_0_1 
+INFO[0008] Creating virtual wire: 8201-r1:FH0_0_0_2 <--> 8201-r4:FH0_0_0_0 
+INFO[0008] Creating virtual wire: 8201-r2:FH0_0_0_3 <--> 8201-r4:FH0_0_0_3 
+INFO[0008] Creating virtual wire: 8201-r3:FH0_0_0_4 <--> 8201-r4:FH0_0_0_4 
+INFO[0009] Adding containerlab host entries to /etc/hosts file 
+INFO[0009] 🎉 New containerlab version 0.45.1 is available! Release notes: https://containerlab.dev/rn/0.45/#0451
 Run 'containerlab version upgrade' to upgrade or go check other installation options at https://containerlab.dev/install/ 
-+---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
-| # |       Name        | Container ID |             Image              |   Kind    |  State  |  IPv4 Address   |     IPv6 Address      |
-+---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
-| 1 | clab-4-node-xrd00 | e6b6c1095560 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.100/24 | 2001:172:20:1::100/80 |
-| 2 | clab-4-node-xrd01 | ad061c7fd1e5 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.101/24 | 2001:172:20:1::101/80 |
-| 3 | clab-4-node-xrd02 | 5ba3f1cea735 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.102/24 | 2001:172:20:1::102/80 |
-| 4 | clab-4-node-xrd03 | 77830cd8f499 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.103/24 | 2001:172:20:1::103/80 |
-+---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
++---+---------------------+--------------+----------------------+-------+---------+-----------------+-----------------------+
+| # |        Name         | Container ID |        Image         | Kind  |  State  |  IPv4 Address   |     IPv6 Address      |
++---+---------------------+--------------+----------------------+-------+---------+-----------------+-----------------------+
+| 1 | clab-4-node-8201-r1 | 91af805218d4 | 8201-32fh-clab:7.9.1 | linux | running | 172.20.6.101/24 | 2001:172:20:6::101/80 |
+| 2 | clab-4-node-8201-r2 | 78161e1dbafe | 8201-32fh-clab:7.9.1 | linux | running | 172.20.6.102/24 | 2001:172:20:6::102/80 |
+| 3 | clab-4-node-8201-r3 | 471943ff1519 | 8201-32fh-clab:7.9.1 | linux | running | 172.20.6.103/24 | 2001:172:20:6::103/80 |
+| 4 | clab-4-node-8201-r4 | e45359c0961f | 8201-32fh-clab:7.9.1 | linux | running | 172.20.6.104/24 | 2001:172:20:6::104/80 |
++---+---------------------+--------------+----------------------+-------+---------+-----------------+-----------------------+
 
+9.  Give the 8201 emulator instances 10-12 minutes to come up and be responsive. Monitor progress using docker logs commands:
 
-11. Give the XRd instances 2-3 minutes to come up and be responsive. All the usual docker commands work:
-```
-### check status of instances:
-docker ps
-docker logs -f 
+   ```
+   docker logs -f clab-4-node-8201-r1
+   ```
 
-### docker exec access to xr cli:
-docker exec -it clab-xrd-7-node-xrd05 /pkg/bin/xr_cli.sh
-```
+If the emulator build is successful the last few entries of docker logs will look like this:
 
-7. ssh to routers
-```
-xrd00:
-ssh cisco@172.20.1.100
+   ```
+   02:41:52 INFO R0:found 32 FourHundredGigE interfaces (as expected)
+   02:41:52 INFO R0:found all interfaces
+   02:41:52 INFO R0:loading config from /mnt/pacific/iosxr_config.txt cvac file.
+   02:42:26 INFO R0:applying XR config
+   02:42:30 INFO Sim up
+   Router up
+   ```
 
-xrd01:
-ssh cisco@172.20.1.101
+10. ssh to c8201 routers:
+   ```
+   ssh cisco@172.20.6.101
+   ssh cisco@172.20.6.102
+   ssh cisco@172.20.6.103
+   ssh cisco@172.20.6.104
+   pw = cisco123
+   ```
 
-xrd02:
-ssh cisco@172.20.1.102
+11. We can also use docker exec to access the routers' console port, or invoke XR cli:
 
-xrd03:
-ssh cisco@172.20.1.103
-
-pw for all = cisco123
-```
+   ```
+   docker exec -it clab-4-node-8201-r1 telnet 0 60000
+   docker exec -it clab-4-node-8201-r1 /pkg/bin/xr_cli.sh
+   ```
