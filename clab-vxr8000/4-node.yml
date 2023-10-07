@@ -18,34 +18,35 @@ mgmt:
   ipv6_subnet: 2001:172:20:6::/80
 
 topology:
+
+  kinds:
+    linux:
+      image: 8201-32fh-clab:7.9.1
+
   nodes:
     8201-r1:
       kind: linux
-      image: 8201-32fh-clab:7.9.1
       mgmt_ipv4: 172.20.6.101
       mgmt_ipv6: 2001:172:20:6::101
-      startup-config: config/8201-r1.cfg
+      binds: [config/8201-r1.cfg:/startup.cfg:ro]
 
     8201-r2:
       kind: linux
-      image: 8201-32fh-clab:7.9.1
       mgmt_ipv4: 172.20.6.102
       mgmt_ipv6: 2001:172:20:6::102
-      startup-config: config/8201-r2.cfg
+      binds: [config/8201-r2.cfg:/startup.cfg:ro]
 
     8201-r3:
       kind: linux
-      image: 8201-32fh-clab:7.9.1
       mgmt_ipv4: 172.20.6.103
       mgmt_ipv6: 2001:172:20:6::103
-      startup-config: config/8201-r3.cfg
+      binds: [config/8201-r3.cfg:/startup.cfg:ro]
 
     8201-r4:
       kind: linux
-      image: 8201-32fh-clab:7.9.1
       mgmt_ipv4: 172.20.6.104
       mgmt_ipv6: 2001:172:20:6::104
-      startup-config: config/8201-r4.cfg
+      binds: [config/8201-r4.cfg:/startup.cfg:ro]
 
   links:
     - endpoints: ["8201-r1:FH0_0_0_0", "8201-r3:FH0_0_0_0"]
