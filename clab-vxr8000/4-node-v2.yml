@@ -1,0 +1,63 @@
+#   The 4-node.yml launches a containerlab 8201-32FH topology where the router instances are connected
+#   via point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
+#
+#   Topology
+#  
+#  r02---r03
+#   | \  / |
+#   |  \/  |
+#   |  /\  |
+#   | /  \ |
+#  r00    r01
+
+name: 4-node
+
+mgmt:
+  network: mgt_net6
+  ipv4_subnet: 172.20.6.0/24
+  ipv6_subnet: 2001:172:20:6::/80
+
+topology:
+
+  kinds:
+    linux:
+      image: 8201-32fh-clab:7.9.1
+
+  nodes:
+    8201-r1:
+      kind: linux
+      mgmt_ipv4: 172.20.6.101
+      mgmt_ipv6: 2001:172:20:6::101
+      binds: [config/8201-r1.cfg:/startup.cfg:ro]
+
+    8201-r2:
+      kind: linux
+      mgmt_ipv4: 172.20.6.102
+      mgmt_ipv6: 2001:172:20:6::102
+      binds: [config/8201-r2.cfg:/startup.cfg:ro]
+
+    8201-r3:
+      kind: linux
+      mgmt_ipv4: 172.20.6.103
+      mgmt_ipv6: 2001:172:20:6::103
+      binds: [config/8201-r3.cfg:/startup.cfg:ro]
+
+    8201-r4:
+      kind: linux
+      mgmt_ipv4: 172.20.6.104
+      mgmt_ipv6: 2001:172:20:6::104
+      binds: [config/8201-r4.cfg:/startup.cfg:ro]
+
+  links:
+    - endpoints: ["8201-r1:FH0_0_0_0", "8201-r3:FH0_0_0_0"]
+    - endpoints: ["8201-r1:FH0_0_0_1", "8201-r3:FH0_0_0_1"]
+    - endpoints: ["8201-r1:FH0_0_0_2", "8201-r4:FH0_0_0_0"]
+    - endpoints: ["8201-r1:FH0_0_0_3", "8201-r4:FH0_0_0_1"]
+
+    - endpoints: ["8201-r2:FH0_0_0_0", "8201-r3:FH0_0_0_2"]
+    - endpoints: ["8201-r2:FH0_0_0_1", "8201-r3:FH0_0_0_3"]
+    - endpoints: ["8201-r2:FH0_0_0_2", "8201-r4:FH0_0_0_2"]
+    - endpoints: ["8201-r2:FH0_0_0_3", "8201-r4:FH0_0_0_3"]
+
+    - endpoints: ["8201-r3:FH0_0_0_4", "8201-r4:FH0_0_0_4"]
+    - endpoints: ["8201-r3:FH0_0_0_5", "8201-r4:FH0_0_0_5"]
