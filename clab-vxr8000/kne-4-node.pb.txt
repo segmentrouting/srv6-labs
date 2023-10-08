@@ -38,7 +38,7 @@ nodes: {
     model: "8201"
     os: "ios-xr"
     config: {
-        file: "8201-r2.cfg"
+        file: "config/8201-r2.cfg"
     }
     interfaces: {
         key: "eth1"
