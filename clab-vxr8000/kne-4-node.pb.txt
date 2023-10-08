@@ -11,15 +11,21 @@ nodes: {
         key: "eth1"
         value: {
           name: "FourHundredGigE0/0/0/0"
-        },
+        }
+    }
+    interfaces: {
         key: "eth2"
         value: {
           name: "FourHundredGigE0/0/0/1"
-        },
+        }
+    }
+    interfaces: {
         key: "eth3"
         value: {
           name: "FourHundredGigE0/0/0/2"
-        },
+        }
+    }
+    interfaces: {
         key: "eth4"
         value: {
           name: "FourHundredGigE0/0/0/3"
