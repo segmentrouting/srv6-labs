@@ -44,15 +44,21 @@ nodes: {
         key: "eth1"
         value: {
           name: "FourHundredGigE0/0/0/0"
-        },
+        }
+    }
+    interfaces: {
         key: "eth2"
         value: {
           name: "FourHundredGigE0/0/0/1"
-        },
+        }
+    }
+    interfaces: {
         key: "eth3"
         value: {
           name: "FourHundredGigE0/0/0/2"
-        },
+        }
+    }
+    interfaces: {
         key: "eth4"
         value: {
           name: "FourHundredGigE0/0/0/3"
@@ -71,23 +77,33 @@ nodes: {
         key: "eth1"
         value: {
           name: "FourHundredGigE0/0/0/0"
-        },
+        }
+    }
+    interfaces: {
         key: "eth2"
         value: {
           name: "FourHundredGigE0/0/0/1"
-        },
+        }
+    }
+    interfaces: {
         key: "eth3"
         value: {
           name: "FourHundredGigE0/0/0/2"
-        },
+        }
+    }
+    interfaces: {
         key: "eth4"
         value: {
           name: "FourHundredGigE0/0/0/3"
-        },
+        }
+    }
+    interfaces: {
         key: "eth5"
         value: {
           name: "FourHundredGigE0/0/0/4"
-        },
+        }
+    }
+    interfaces: {
         key: "eth6"
         value: {
           name: "FourHundredGigE0/0/0/5"
@@ -106,23 +122,33 @@ nodes: {
         key: "eth1"
         value: {
           name: "FourHundredGigE0/0/0/0"
-        },
+        }
+    }
+    interfaces: {
         key: "eth2"
         value: {
           name: "FourHundredGigE0/0/0/1"
-        },
+        }
+    }
+    interfaces: {
         key: "eth3"
         value: {
           name: "FourHundredGigE0/0/0/2"
-        },
+        }
+    }
+    interfaces: {
         key: "eth4"
         value: {
           name: "FourHundredGigE0/0/0/3"
-        },
+        }
+    }
+    interfaces: {
         key: "eth5"
         value: {
           name: "FourHundredGigE0/0/0/4"
-        },
+        }
+    }
+    interfaces: {
         key: "eth6"
         value: {
           name: "FourHundredGigE0/0/0/5"
