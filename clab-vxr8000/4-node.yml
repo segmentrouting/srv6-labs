@@ -1,7 +1,8 @@
 #   The 4-node.yml launches a containerlab 8201-32FH topology where the router instances are connected
-#   via point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
+#   via dual point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
 #
-#   Topology
+#
+#   Topology (2nd links not shown):
 #  
 #  r02---r03
 #   | \  / |
@@ -51,11 +52,13 @@ topology:
   links:
     - endpoints: ["8201-r1:FH0_0_0_0", "8201-r3:FH0_0_0_0"]
     - endpoints: ["8201-r1:FH0_0_0_1", "8201-r3:FH0_0_0_1"]
+
     - endpoints: ["8201-r1:FH0_0_0_2", "8201-r4:FH0_0_0_0"]
     - endpoints: ["8201-r1:FH0_0_0_3", "8201-r4:FH0_0_0_1"]
 
     - endpoints: ["8201-r2:FH0_0_0_0", "8201-r3:FH0_0_0_2"]
     - endpoints: ["8201-r2:FH0_0_0_1", "8201-r3:FH0_0_0_3"]
+    
     - endpoints: ["8201-r2:FH0_0_0_2", "8201-r4:FH0_0_0_2"]
     - endpoints: ["8201-r2:FH0_0_0_3", "8201-r4:FH0_0_0_3"]
 

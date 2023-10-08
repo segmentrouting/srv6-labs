@@ -1,16 +1,23 @@
-## Containerlab Cisco 8000 hardware emulator (vxr8000) topologies
+## Cisco 8000 hardware emulator (vxr8000) in Containerlab
 
-The sample 4-node topology in this repo consists of 4 emulated Cisco 8201-32FH nodes whose configurations are found in the ./config directory. The nodes are configured with ISIS, SR, SRv6, and iBGP running. 8201-r3 is a route-reflector with the other 3 nodes as clients. Please feel free to use this topology or add additional topologies and configurations, etc.
+Containerlab is an open-source tool for orchestrating and managing container-based networking labs. It starts the containers, builds a virtual wiring between them to create lab topologies of users choice and manages labs lifecycle: https://containerlab.dev/
 
-### Clab install and topology deployment instructions: 
+The sample 4-node topology in this repo consists of 4 emulated Cisco 8201-32FH nodes whose configurations are found in the *config* directory. The nodes are configured with basic ISIS, SR, SRv6, iBGP and streaming telemetry. 8201-r3 is a route-reflector with the other 3 nodes as clients. 
 
-1. Requiress Ubuntu 20.04 or 22.04 bare-metal or VM and Openvswitch
+Please feel free to use this topology or add additional topologies and configurations, etc.
+
+### Clab installation and topology deployment instructions: 
+
+1. Containerlab requiress Ubuntu 20.04 or 22.04 bare-metal or VM, Docker, and Openvswitch
+   
+   Docker installation: https://docs.docker.com/engine/install/ubuntu/
+   OVS installation:
    ```
    sudo apt-get install openvswitch-switch -y
    ```
    
 2. Install containerlab: https://containerlab.dev/install/
-   Testing has been done with clab v 0.40.0, so the quick and easy way:
+   SRv6-Labs testing has been done with clab v 0.40.0, so the quick and easy way to install is:
    ```
    bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
    ```
@@ -50,9 +57,9 @@ The sample 4-node topology in this repo consists of 4 emulated Cisco 8201-32FH n
    /dev/kvm: character special (10/232)
    ```
 
-7.  Modify the topology .yml file in this directory as needed
+7.  Modify configurations and the topology .yml file in this directory as needed. 
    
-8.  Deploy topology
+8.  Deploy your topology
     ```
     sudo containerlab deploy -t 4-node.yml
     ```
