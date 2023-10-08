@@ -1,0 +1,143 @@
+#   The kne-4-node.yml launches a 4-node 8201-32FH emulator topology using KNE. 
+#   The nodes get their configurations from those in the local config directory.
+#   In the provided example each node is dual connected to its neighbor per the
+#   topology diagram (single links shown):
+#  
+#  r02---r03
+#   | \  / |
+#   |  \/  |
+#   |  /\  |
+#   | /  \ |
+#  r00    r01
+
+name: "8201e"
+nodes: {
+    name: "8201-r1"
+    vendor: CISCO
+    model: "8201"
+    os: "ios-xr"
+    config: {
+        file: "config/8201-r1.cfg"
+    }
+    interfaces: {
+        key: "eth1"
+        value: {
+          name: "FourHundredGigE0/0/0/0"
+        },
+        key: "eth2"
+        value: {
+          name: "FourHundredGigE0/0/0/1"
+        },
+        key: "eth3"
+        value: {
+          name: "FourHundredGigE0/0/0/2"
+        },
+        key: "eth4"
+        value: {
+          name: "FourHundredGigE0/0/0/3"
+        }
+    }
+}
+nodes: {
+    name: "8201-r2"
+    vendor: CISCO
+    model: "8201"
+    os: "ios-xr"
+    config: {
+        file: "8201-r2.cfg"
+    }
+    interfaces: {
+        key: "eth1"
+        value: {
+          name: "FourHundredGigE0/0/0/0"
+        },
+        key: "eth2"
+        value: {
+          name: "FourHundredGigE0/0/0/1"
+        },
+        key: "eth3"
+        value: {
+          name: "FourHundredGigE0/0/0/2"
+        },
+        key: "eth4"
+        value: {
+          name: "FourHundredGigE0/0/0/3"
+        }
+    }
+}
+nodes: {
+    name: "8201-r3"
+    vendor: CISCO
+    model: "8201"
+    os: "ios-xr"
+    config: {
+        file: "config/8201-r3.cfg"
+    }
+    interfaces: {
+        key: "eth1"
+        value: {
+          name: "FourHundredGigE0/0/0/0"
+        },
+        key: "eth2"
+        value: {
+          name: "FourHundredGigE0/0/0/1"
+        },
+        key: "eth3"
+        value: {
+          name: "FourHundredGigE0/0/0/2"
+        },
+        key: "eth4"
+        value: {
+          name: "FourHundredGigE0/0/0/3"
+        },
+        key: "eth5"
+        value: {
+          name: "FourHundredGigE0/0/0/4"
+        },
+        key: "eth6"
+        value: {
+          name: "FourHundredGigE0/0/0/5"
+        }
+    }
+}
+nodes: {
+    name: "8201-r4"
+    vendor: CISCO
+    model: "8201"
+    os: "ios-xr"
+    config: {
+        file: "config/8201-r4.cfg"
+    }
+    interfaces: {
+        key: "eth1"
+        value: {
+          name: "FourHundredGigE0/0/0/0"
+        },
+        key: "eth2"
+        value: {
+          name: "FourHundredGigE0/0/0/1"
+        },
+        key: "eth3"
+        value: {
+          name: "FourHundredGigE0/0/0/2"
+        },
+        key: "eth4"
+        value: {
+          name: "FourHundredGigE0/0/0/3"
+        },
+        key: "eth5"
+        value: {
+          name: "FourHundredGigE0/0/0/4"
+        },
+        key: "eth6"
+        value: {
+          name: "FourHundredGigE0/0/0/5"
+        }
+    }
+}
+links: {
+    a_node: "8000e1"
+    a_int: "eth1"
+    z_node: "8000e2"
+    z_int: "eth1"
+}
