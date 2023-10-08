@@ -136,8 +136,49 @@ nodes: {
     }
 }
 links: {
-    a_node: "8000e1"
+    a_node: "8201-r1"
     a_int: "eth1"
-    z_node: "8000e2"
+    z_node: "8201-r3"
     z_int: "eth1"
+    a_node: "8201-r1"
+    a_int: "eth2"
+    z_node: "8201-r3"
+    z_int: "eth2"
+
+    a_node: "8201-r1"
+    a_int: "eth3"
+    z_node: "8201-r4"
+    z_int: "eth1"
+    a_node: "8201-r1"
+    a_int: "eth4"
+    z_node: "8201-r4"
+    z_int: "eth2"
+
+    a_node: "8201-r2"
+    a_int: "eth1"
+    z_node: "8201-r3"
+    z_int: "eth3"
+    a_node: "8201-r2"
+    a_int: "eth2"
+    z_node: "8201-r3"
+    z_int: "eth4"
+
+    a_node: "8201-r2"
+    a_int: "eth3"
+    z_node: "8201-r4"
+    z_int: "eth3"
+    a_node: "8201-r2"
+    a_int: "eth4"
+    z_node: "8201-r4"
+    z_int: "eth4"
+
+    a_node: "8201-r3"
+    a_int: "eth5"
+    z_node: "8201-r4"
+    z_int: "eth5"
+    a_node: "8201-r3"
+    a_int: "eth6"
+    z_node: "8201-r4"
+    z_int: "eth6"
+
 }
