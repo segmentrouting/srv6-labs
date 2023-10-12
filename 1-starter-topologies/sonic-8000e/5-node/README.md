@@ -2,7 +2,7 @@
 
 1. Deploy
 ```
-sudo containerlab deploy -t 4-node.yml
+sudo containerlab deploy -t clab-5-node-8000e.yml
 ```
 
 Ansible folder is currently under construction

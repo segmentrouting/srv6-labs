@@ -11,7 +11,7 @@ This topology uses linux bridge as for underlying router-to-router connectivity
 
 2. Deploy
 ```
-sudo containerlab deploy -t 4-node.yml
+sudo containerlab deploy -t clab-4-node-8000e.yml
 ```
 
 Ansible folder is currently under construction

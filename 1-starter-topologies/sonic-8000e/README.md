@@ -1,18 +1,18 @@
-## clab sonic vxr8000
+## Containerlab SONiC Cisco 8000 Emulator
 
-This repository contains instructions and sample yaml files for launching sonic running on the Cisco vxr8000 hardware emulator
+This repository contains instructions and sample yaml files for launching sonic running on the Cisco 8000 hardware emulator
 
 Requires:
 
 * Containerlab v0.40.0: https://containerlab.dev/
-* vxr8000 docker image
+* c8000 docker image
 * sonic-cisco-8000.bin 
 
 ### install and launch 
 
 #### Many thanks to Rafal Skorka for providing the original instructions
 
-Note (Oct 1, 2023): SRv6 uSID support on SONiC vxr8000 is pending further development
+Note (Oct 1, 2023): SRv6 uSID support on SONiC 8000e is pending further development
 
 1. Host server requirements
 
@@ -30,59 +30,52 @@ sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
 
    - cpu and memory: recommend 20GB and 4 cores per router
 
-1. Install Containerlab v0.40.0:
-```
-https://containerlab.dev/install/
-```
+2. Install containerlab: https://containerlab.dev/install/
+   Or the quick and easy way:
+   ```
+   bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
+   ```
 
-1. Install 8000 SONiC docker image
+3. Acquire and load 8000 SONiC docker image
 ```   
-docker load -i c8000-clab-sonic:27.tar.gz
+docker load -i c8000-clab-sonic:31.tar.gz
 ```
 
-1. Copy sonic-cisco-8000.bin image to local storage (e.g. /sonic_images). Example:
+4.  Copy sonic-cisco-8000.bin image to local storage (e.g. /sonic_images). Example:
 ```
 ls /opt/images/ | grep sonic
 
-c8000-clab-sonic:27.tar.gz
+c8000-clab-sonic:31.tar.gz
 sonic-cisco-8000.bin
 sonic-README
 sonic.tar
 ```
-
-5. Create a simple SONiC back-to-back clab topology file
-
-    - NOTE: we will be using 'linux' ContainerLab kind to boot sonic images
-
-cat example.yml
-```
-name: sonic
-
-topology:
-  kinds:
-    linux:
-        image: c8000-clab-sonic:27
-        binds: 
-            - /opt/images:/images
-        env:
-            IMAGE: /images/sonic-cisco-8000.bin
-            PID: '8201-32FH'
-  nodes:
-    r1:
-      kind: linux
-    r2:
-      kind: linux
-
-  links:
-    - endpoints: ["r1:eth1", "r2:eth1"]
-    - endpoints: ["r1:eth2", "r2:eth2"]
-```
-
-#### NOTE: Data interfaces naming convention 
-```
-eth1 -> first front panel port  (Ethernet0)
-eth2 -> second front panel port (Ethernet4 or Ethernet8)
-```
+5. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
+   ```
+   kernel.pid_max=1048575
+   ```
+   Then reset sysctl: 
+   ```
+   sudo sysctl -p
+   ```
+   Example:
+   ```
+    brmcdoug@ie-dev7:~/srv6-labs/clab-quickstart$ sudo sysctl -p
+    fs.inotify.max_user_watches = 131072
+    fs.inotify.max_user_instances = 131072
+    net.bridge.bridge-nf-call-iptables = 1
+    net.bridge.bridge-nf-call-ip6tables = 1
+    kernel.pid_max = 1048575
+   ```
+     
+6. Validate KVM modules are installed and configured:
+   ```
+   file /dev/kvm
+   ```
+   output should look something like:
+   ```
+   brmcdoug@ie-dev8:~$ file /dev/kvm
+   /dev
 
 #### NOTE: if you wish to use Linux bridge to connect the clab routers, be sure to create linux bridge instances prior to deploying the X-node.yml topologies:
 
@@ -94,27 +87,20 @@ sudo ip link set br2 up
 etc.
 ```
 
-6. Deploy topology
-```
-sudo containerlab deploy -t example.yml
-```
+8.  Change directory to the location of the topology you wish to work with
+    Example: 
+    ```
+    cd srv6-labs/1-starter-topologies/sonic-8000e/4-node
+    ```
+   
+9.  Deploy topology
+    ```
+    sudo containerlab deploy -t clab-4-node-8000e.yml
+    ```
  - example output:
-```
-cisco@vsonic:~/containerlab/vxrSONiC$ sudo containerlab deploy -t example.yml 
-INFO[0000] Containerlab v0.38.0 started                 
-INFO[0000] Parsing & checking topology file: example.yml 
-INFO[0000] Creating lab directory: /home/cisco/containerlab/vxrSONiC/clab-c8201-sonic-3-node 
-INFO[0000] Creating docker network: Name="clab", IPv4Subnet="172.20.20.0/24", IPv6Subnet="2001:172:20:20::/64", MTU="1500" 
-INFO[0000] Creating container: "r1"                     
-INFO[0000] Creating container: "r2"                     
-INFO[0002] Creating virtual wire: r1:eth1 <--> r2:eth1  
-INFO[0004] Adding containerlab host entries to /etc/hosts file 
-+---+----------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
-| # |            Name            | Container ID |        Image        | Kind  |  State  |  IPv4 Address  |     IPv6 Address     |
-+---+----------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
-| 1 | clab-c8201-sonic-r1 | ca825396c86e | c8000-clab-sonic:27 | linux | running | 172.20.20.2/24 | 2001:172:20:20::2/64 |
-| 2 | clab-c8201-sonic-r2 | bbda110e7e8f | c8000-clab-sonic:27 | linux | running | 172.20.20.3/24 | 2001:172:20:20::3/64 |
-+---+----------------------------+--------------+---------------------+-------+---------+----------------+----------------------+
+
+
+
 ```
    - NOTE: it may 10 or more minutes for SONiC to come up
 

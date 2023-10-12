@@ -22,9 +22,9 @@ These instructions roughly apply to all Starter scenarios when running in Contai
    Not yet available on public download; contact Cisco
 
 4. Load docker image(s):
-```
-docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
-``` 
+   ```
+   docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
+   ``` 
 
 5. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
    ```
@@ -60,7 +60,7 @@ docker load -i xrd-control-plane-container-x64.dockerv1.tgz
 8.  Change directory to the location of the topology you wish to work with
     Example: 
     ```
-    cd srv6-labs/1-starter-topologies-xrd
+    cd srv6-labs/1-starter-topologies/xrd
     ```
    
 9.  Deploy topology

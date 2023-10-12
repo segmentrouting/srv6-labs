@@ -15,19 +15,17 @@ The sample 4-node topology in this repo consists of 4 emulated Cisco 8201-32FH n
 
 Please feel free to use this topology or add additional topologies and configurations, etc.
 
-### KNE installation and topology deployment instructions: 
+[KNE Install Instructions](../README-kne.md)
 
-The SRv6-labs work using KNE has been tested on Ubuntu 20.04 bare metal
+1. Docker load image
+   ```
+   docker load -i 8101-32h_kne_206_latest.tar.gz 
+   ```
 
-"KNE is a Google initiative to develop tooling for quickly setting up topologies of containers running various device OSes."
-
-1. Installation and setup instructions:
-https://github.com/openconfig/kne/tree/main/docs
-
-2. When importing c8000 docker images into KNE/Kind cluster, KNE is expecting a specific image tag.  Example:
+2. Tag the c8000 docker images into KNE/Kind cluster, KNE is expecting a specific image tag.  Example:
 
    ```
-   docker tag 8201-32fh-kne:7.9.1 8000e:latest
+   docker tag 8101-32h_206:latest 8000e:latest
    ```
 
 3. Then Kind load:
@@ -53,35 +51,21 @@ https://github.com/openconfig/kne/tree/main/docs
    sudo sysctl -p
    ```
 
-6. Edit kne-4-node.pb.txt or create a new pb.txt file as needed
+6. Verify image is loaded:
+   ```
+   docker exec -it kne-control-plane crictl images
+   ```
+   Example:
+   ```
+   docker.io/library/8000e          latest           4cd1c6e59a5d3       6.37GB
+   ```
+
+7. Edit kne-4-node.pb.txt or create a new pb.txt file as needed
+
+8. Deploy KNE topology
+   ```
+   kne create kne-4-node-8000e.pb.txt 
+   ```
 
 #### Example KNE deploy terminal output
 
-
-
-If the emulator build is successful the last few entries of docker logs will look like this:
-
-   ```
-   02:41:52 INFO R0:found 32 FourHundredGigE interfaces (as expected)
-   02:41:52 INFO R0:found all interfaces
-   02:41:52 INFO R0:loading config from /mnt/pacific/iosxr_config.txt cvac file.
-   02:42:26 INFO R0:applying XR config
-   02:42:30 INFO Sim up
-   Router up
-   ```
-
-1.  ssh to c8201 routers:
-   ```
-   ssh cisco@172.20.6.101
-   ssh cisco@172.20.6.102
-   ssh cisco@172.20.6.103
-   ssh cisco@172.20.6.104
-   pw = cisco123
-   ```
-
-2.  We can also use docker exec to access the routers' console port, or invoke XR cli:
-
-   ```
-   docker exec -it clab-4-node-8201-r1 telnet 0 60000
-   docker exec -it clab-4-node-8201-r1 /pkg/bin/xr_cli.sh
-   ```

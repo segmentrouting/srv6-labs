@@ -10,19 +10,23 @@ The SRv6-labs work using KNE has been tested on Ubuntu 20.04 bare metal
 1. Installation and setup instructions:
 https://github.com/openconfig/kne/tree/main/docs
 
-2. When importing xrd docker images into KNE/Kind cluster, KNE is expecting a specific image tag.  Example:
+2. Load docker image
+   ```
+   docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
+   ```
+3. Tag docker image to be used by KNE/Kind cluster, KNE is expecting a specific image tag.  Example:
 
    ```
    docker tag ios-xr/xrd-control-plane:7.8.1 xrd:latest
    ```
 
-2. Then Kind load:
+4. Then Kind load:
    
    ```
    kind load docker-image xrd:latest --name=kne
    ```
 
-3. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
+5. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
    ```
    echo "kernel.pid_max=1048575" >> /etc/sysctl.conf
    ```
@@ -31,18 +35,18 @@ https://github.com/openconfig/kne/tree/main/docs
    sudo sysctl -p
    ```
 
-4. Verify image is loaded:
+6. Verify image is loaded:
    ```
    docker exec -it kne-control-plane crictl images
    ```
    Example:
    ```
-   docker.io/library/8000e          latest           4cd1c6e59a5d3       6.37GB
+   docker.io/library/xrd          latest           4cd1c6e59a5d3       6.37GB
    ```
 
-5. Edit kne-4-node.pb.txt or create a new pb.txt file as needed
+7. Edit kne-4-node.pb.txt or create a new pb.txt file as needed
 
-6. Deploy KNE topology
+8. Deploy KNE topology
    ```
    kne create kne-4-node-xrd.pb.txt 
    ```
