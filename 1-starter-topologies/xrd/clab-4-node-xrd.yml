@@ -3,12 +3,12 @@
 #
 #   Topology
 #  
-#  r02---r03
+#  r03---r04
 #   | \  / |
 #   |  \/  |
 #   |  /\  |
 #   | /  \ |
-#  r00    r01
+#  r01    r02
 
 name: 4-node
 
@@ -19,12 +19,6 @@ mgmt:
 
 topology:
   nodes:
-    xrd00:
-      kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.1.100
-      mgmt_ipv6: 2001:172:20:1::100
-      startup-config: config/xrd00.cfg
 
     xrd01:
       kind: cisco_xrd
@@ -47,9 +41,16 @@ topology:
       mgmt_ipv6: 2001:172:20:1::103
       startup-config: config/xrd03.cfg
 
+    xrd04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.1.104
+      mgmt_ipv6: 2001:172:20:1::104
+      startup-config: config/xrd04.cfg
+
   links:
-    - endpoints: ["xrd00:Gi0-0-0-0", "xrd02:Gi0-0-0-0"]
-    - endpoints: ["xrd00:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-0", "xrd02:Gi0-0-0-1"]
-    - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-2", "xrd03:Gi0-0-0-2"]
+    - endpoints: ["xrd01:Gi0-0-0-0", "xrd03:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-1", "xrd04:Gi0-0-0-0"]
+    - endpoints: ["xrd02:Gi0-0-0-0", "xrd03:Gi0-0-0-1"]
+    - endpoints: ["xrd02:Gi0-0-0-1", "xrd04:Gi0-0-0-1"]
+    - endpoints: ["xrd03:Gi0-0-0-2", "xrd04:Gi0-0-0-2"]
