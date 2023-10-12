@@ -2,7 +2,7 @@
 #   via point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
 #
 #   The 30 node topology is based on the blue and green nodes in this diagram:
-#   https://github.com/segmentrouting/srv6-labs/blob/main/xrd-compose/diagrams/43-node-two-DCs.png
+#   https://github.com/segmentrouting/srv6-labs/blob/main/2-large-topologies/clab-sp-core-and-dc/diagrams/43-node-two-DCs.png
 
 name: xrd-27-node
 
