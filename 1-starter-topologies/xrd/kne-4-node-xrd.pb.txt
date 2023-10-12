@@ -1,0 +1,127 @@
+name: "xrd-4-node"
+nodes: {
+    name: "xrd01"
+    vendor: CISCO
+    model: "xrd"
+    os: "ios-xr"
+    config: {
+        file: "config/xrd01.cfg"
+    }
+    interfaces: {
+        key: "eth1"
+        value: {
+          name: "GigabitEthernet0/0/0/0"
+        }
+    }
+    interfaces: {
+        key: "eth2"
+        value: {
+          name: "GigabitEthernet0/0/0/1"
+        }
+    }
+}
+nodes: {
+    name: "xrd02"
+    vendor: CISCO
+    model: "xrd"
+    os: "ios-xr"
+    config: {
+        file: "config/xrd02.cfg"
+    }
+    interfaces: {
+        key: "eth1"
+        value: {
+          name: "GigabitEthernet0/0/0/0"
+        }
+    }
+    interfaces: {
+        key: "eth2"
+        value: {
+          name: "GigabitEthernet0/0/0/1"
+        }
+    }
+}
+nodes: {
+    name: "xrd03"
+    vendor: CISCO
+    model: "xrd"
+    os: "ios-xr"
+    config: {
+        file: "config/xrd03.cfg"
+    }
+    interfaces: {
+        key: "eth1"
+        value: {
+          name: "GigabitEthernet0/0/0/0"
+        }
+    }
+    interfaces: {
+        key: "eth2"
+        value: {
+          name: "GigabitEthernet0/0/0/1"
+        }
+    }
+    interfaces: {
+        key: "eth3"
+        value: {
+          name: "GigabitEthernet0/0/0/2"
+        }
+    }
+}
+nodes: {
+    name: "xrd04"
+    vendor: CISCO
+    model: "xrd"
+    os: "ios-xr"
+    config: {
+        file: "config/xrd04.cfg"
+    }
+    interfaces: {
+        key: "eth1"
+        value: {
+          name: "GigabitEthernet0/0/0/0"
+        }
+    }
+    interfaces: {
+        key: "eth2"
+        value: {
+          name: "GigabitEthernet0/0/0/1"
+        }
+    }
+    interfaces: {
+        key: "eth3"
+        value: {
+          name: "GigabitEthernet0/0/0/2"
+        }
+    }
+}
+links: {
+    a_node: "xrd01"
+    a_int: "eth1"
+    z_node: "xrd03"
+    z_int: "eth1"
+}
+links: {
+    a_node: "xrd01"
+    a_int: "eth2"
+    z_node: "xrd04"
+    z_int: "eth1"
+}
+links: {
+    a_node: "xrd02"
+    a_int: "eth1"
+    z_node: "xrd03"
+    z_int: "eth2"
+}
+links: {
+    a_node: "xrd02"
+    a_int: "eth2"
+    z_node: "xrd04"
+    z_int: "eth2"
+}
+links: {
+    a_node: "xrd03"
+    a_int: "eth3"
+    z_node: "xrd04"
+    z_int: "eth3"
+}
