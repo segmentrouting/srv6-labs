@@ -6,6 +6,6 @@ This directory consists of several small SRv6 lab scenarios for getting started 
 SRv6-labs have been tested with Ubuntu 20.04 and 22.04 bare-metal and VM. Most likely other flavors of Linux will work
 
 #### Instructions
-[Containerlab Instructions](./clab-README.md)
+[Containerlab Instructions](./README-clab.md)
 
-[KNE Instructions](./kne-README.md)
+[KNE Instructions](./README-kne.md)

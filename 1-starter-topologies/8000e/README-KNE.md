@@ -36,7 +36,15 @@ https://github.com/openconfig/kne/tree/main/docs
    kind load docker-image 8000e:latest --name=kne
    ```
 
-4. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
+4. Verify image is loaded:
+   ```
+   docker exec -it kne-control-plane crictl images
+   ```
+   Example:
+   ```
+   docker.io/library/8000e          latest           4cd1c6e59a5d3       6.37GB
+   ```
+5. Edit /etc/sysctl.conf and increase kernel.pid_max parameter:
    ```
    echo "kernel.pid_max=1048575" >> /etc/sysctl.conf
    ```
@@ -45,7 +53,7 @@ https://github.com/openconfig/kne/tree/main/docs
    sudo sysctl -p
    ```
 
-5. Edit kne-4-node.pb.txt or create a new pb.txt file as needed
+6. Edit kne-4-node.pb.txt or create a new pb.txt file as needed
 
 #### Example KNE deploy terminal output
 
