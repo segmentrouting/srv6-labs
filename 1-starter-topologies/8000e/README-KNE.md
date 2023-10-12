@@ -69,3 +69,11 @@ Please feel free to use this topology or add additional topologies and configura
 
 #### Example KNE deploy terminal output
 
+
+
+7. Check containers:
+   ```
+   kubectl get pods -n xrd-4-node
+   kubectl logs -n xrd-4-node xrd01
+   ```
+   Example:
