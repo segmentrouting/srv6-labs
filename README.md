@@ -11,6 +11,9 @@ The repository is organized around network topology scenarios and the tools used
 
 Each project subdirectory includes READMEs, scripts, configs, and other tools for building SRv6 topologies and running various simulation or demo scenarios.
 
+### utils directory
+Utility scripts and other tools that might be useful on any of the SRv6 Labs in this repository
+
 ### xarchive directory
 Semi-archived instructions, scripts, sample ymls, and configs for using Cisco's 'xr-compose' tool to build and launch xrd network topologies. xr-compose leverages docker-compose under the hood
 
