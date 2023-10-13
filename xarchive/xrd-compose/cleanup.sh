@@ -47,3 +47,15 @@ docker volume rm xrd64
 docker volume rm xrd65
 docker volume rm xrd66
 docker volume rm xrd67
+
+docker volume rm xrd91
+docker volume rm xrd92
+docker volume rm xrd93
+docker volume rm xrd94
+
+docker volume rm xrd95
+docker volume rm xrd96
+docker volume rm xrd97
+docker volume rm xrd98
+docker volume rm xrd99
+docker volume rm xrd100

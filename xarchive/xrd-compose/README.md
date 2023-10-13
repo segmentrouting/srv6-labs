@@ -1,7 +1,7 @@
-## xr-compose is a script that leverages docker-compose to launch an XRd topology on baremetal, Ubuntu VM, or cloud instance 
+## Launch an XRd topology on baremetal, Ubuntu VM, or AWS instance 
 ### This doc is based on Ubuntu 20.04
 
-If using AWS I recommend EC2 instance t3a.xlarge or larger for a 6 node topology.
+If using AWS I recommend EC2 instance t3a.xlarge or larger for a 6 node topology
 
 1. Copy files from this repo to your host or VM
 2. Acquire and upload an XRd image:
@@ -49,24 +49,21 @@ sudo sysctl -p
 ```
 10. Run host check script to validate we have sufficient server/VM resources:  
 ```
-./util/host-check 
+./host-check 
 ```   
    You may see hugepages and IOMMU errors/warnings. I proceeded without addressing these.
   
 11. Optional: dry run script 
 ```
-./util/launch-xrd --dry-run localhost/ios-xr:7.7.1 --platform xrd
+./launch-xrd --dry-run localhost/ios-xr:7.7.1 --platform xrd
 ```
-12. cd into the desired topology directory and launch the topology. Examples: 
+12. Launch the topology 
 ``` 
-cd 6-node
-../xrd-compose -f docker-compose-6-node.yml -i localhost/ios-xr:7.7.1 -l
+./xr-compose -f docker-compose-6-node.yml -i localhost/ios-xr:7.7.1 -l
 
-cd 4-node
-../xrd-compose -f docker-compose-4-node.yml -i localhost/ios-xr:7.7.1 -l
+or
 
-cd 43-node
-../xrd-compose -f docker-compose-43-node-2dc.yml -i localhost/ios-xr:7.7.1 -l
+./xr-compose -f docker-compose-4-node.yml -i localhost/ios-xr:7.7.1 -l
   
 ```
 12. check containers: 
@@ -75,7 +72,7 @@ docker ps
 ```
 13. access XR cli (note, it will take a couple minutes for the containers to build, so cli won't be immediately available):
 ```
-docker exec -it xrd91 /pkg/bin/xr_cli.sh
+docker exec -it xrd27 /pkg/bin/xr_cli.sh
 ```
 
 14. Cleanup example: 4-node topology (or just run ./cleanup.sh script)
@@ -89,7 +86,7 @@ docker volume rm xrd94
 ```
 
 
-### 43 node topology
+### 27 node topology
 Tested on bare metal with 32 vCPU and 96G of memory.
 It does require some additional tuning:
 
