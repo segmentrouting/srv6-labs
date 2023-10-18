@@ -11,7 +11,7 @@
 #   | /  \ |
 #  r00    r01
 
-name: 4-node
+name: 4-node-8000e
 
 mgmt:
   network: mgt_net6
