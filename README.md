@@ -5,7 +5,7 @@ The repository is organized around network topology scenarios and the tools used
 
 * [1-starter-topologies](./1-starter-topologies/) - contains topology definition yaml files and router configs for quickly getting up and running using the Containerlab or KNE topology orchestrators. 
 
-* [2-large-topologies](./2-large-topologies/) - contains topology definition yaml files and router configs for running larger, more complex SRv6 scenarios using Containerlab or KNE
+* [2-use-case-topologies](./2-use-case-topologies/) - contains topology definition yaml files and router configs for running larger, more complex SRv6 scenarios using Containerlab, KNE, VXR, or xr-compose
 
 Each project subdirectory includes READMEs, scripts, configs, and other tools for building SRv6 topologies and running various simulation or demo scenarios.
 
