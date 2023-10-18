@@ -4,7 +4,7 @@
 #   The 30 node topology is based on the blue and green nodes in this diagram:
 #   https://github.com/segmentrouting/srv6-labs/blob/main/2-large-topologies/clab-sp-core-and-dc/diagrams/43-node-two-DCs.png
 
-name: xrd-27-node
+name: xrd-sp
 
 mgmt:
   network: mgt_net
