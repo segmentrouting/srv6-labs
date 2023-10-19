@@ -7,7 +7,7 @@ sudo containerlab deploy -t frr.yml
 ```
 
 ### Topology
-See topology diagram in *frr.yml*
+![Topology](frr-srv6-topo.png)
 
 r1, r2, and r3 are eBGP peers with one another
 r4, r5, and r6 run ISIS and are in ASN 64512

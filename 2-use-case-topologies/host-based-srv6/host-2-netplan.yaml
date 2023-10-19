@@ -1,0 +1,20 @@
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    ens4:
+      dhcp4: true
+    ens5:
+      addresses:
+        - 24.1.1.66/26
+        - fcbb:bb00:0100:2::2/64
+      routes:
+        - to: 24.1.1.0/26
+          via: 24.1.1.65 
+        - to: 24.1.1.128/26
+          via: 24.1.1.65
+        - to: 24.1.1.192/26
+          via: 24.1.1.65
+        - to: fcbb:bb00::/32
+          via: fcbb:bb00:100:2::1  
+          on-link: true
+  version: 2
