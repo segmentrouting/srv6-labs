@@ -36,9 +36,11 @@ foreach container $containers {
 spawn docker exec -it clab-frr-frr-1 bash
 
 # Wait for the prompt
-expect "#"
+expect "$"
 
 # Run commands inside the container
+send "sudo su\r"
+expect "#"
 send "ip link add blue type vrf table 10\r"
 expect "#"
 send "ip link set dev blue up\r"
@@ -47,6 +49,8 @@ send "ip link set dev eth3 master blue\r"
 expect "#"
 send "ip addr add 2001:db8:3e8:7777::1/64 dev eth3\r"
 expect "#"
+send "exit\r"
+expect "$"
 
 # Exit the container
 send "exit\r"
@@ -56,9 +60,11 @@ expect eof
 spawn docker exec -it clab-frr-frr-6 bash
 
 # Wait for the prompt
-expect "#"
+expect "$"
 
 # Run commands inside the container
+send "sudo su\r"
+expect "#"
 send "ip link add blue type vrf table 10\r"
 expect "#"
 send "ip link set dev blue up\r"
@@ -67,6 +73,8 @@ send "ip link set dev eth3 master blue\r"
 expect "#"
 send "ip addr add 2001:db8:3e8:8888::1/64 dev eth3\r"
 expect "#"
+send "exit\r"
+expect "$"
 
 # Exit the container
 send "exit\r"
