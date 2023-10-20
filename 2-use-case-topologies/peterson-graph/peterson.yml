@@ -89,7 +89,7 @@ topology:
       #   - frr-1/frr.conf:/etc/frr/frr.conf
       #   - frr-1/vtysh.conf:/etc/frr/vtysh.conf
       mgmt_ipv4: 172.20.15.211
-      mgmt_ipv6: 2001:172:20:2::211
+      mgmt_ipv6: 2001:172:20:15::211
 
     host01-xrd01:
       kind: bridge
