@@ -24,6 +24,8 @@ foreach container $containers {
     expect "#"
     send "systemctl start frr &\r"
     expect "#"
+    send "exit\r"
+    expect "$"
 
     # Exit the container
     send "exit\r"
