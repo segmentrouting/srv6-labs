@@ -1,0 +1,126 @@
+#   The peterson.yml launches a containerlab XRd topology where the XRd instances are connected
+#   in a Peterson Graph Topology: https://en.wikipedia.org/wiki/Petersen_graph
+#
+
+name: xrd-peterson
+
+mgmt:
+  network: pete_mgt_net
+  ipv4_subnet: 172.20.15.0/24
+  ipv6_subnet: 2001:172:20:15::/80
+
+topology:
+  nodes:
+    xrd01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.201
+      mgmt_ipv6: 2001:172:20:5::201
+      startup-config: config/xrd01.cfg
+
+    xrd02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.202
+      mgmt_ipv6: 2001:172:20:5::202
+      startup-config: config/xrd02.cfg
+
+    xrd03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.203
+      mgmt_ipv6: 2001:172:20:5::203
+      startup-config: config/xrd03.cfg
+
+    xrd04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.204
+      mgmt_ipv6: 2001:172:20:5::204
+      startup-config: config/xrd04.cfg
+
+    xrd05:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.205
+      mgmt_ipv6: 2001:172:20:5::205
+      startup-config: config/xrd05.cfg
+
+    xrd06:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.206
+      mgmt_ipv6: 2001:172:20:5::206
+      startup-config: config/xrd06.cfg
+
+    xrd07:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.207
+      mgmt_ipv6: 2001:172:20:5::207
+      startup-config: config/xrd07.cfg
+
+    xrd08:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.208
+      mgmt_ipv6: 2001:172:20:5::208
+      startup-config: config/xrd08.cfg
+
+    xrd09:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.209
+      mgmt_ipv6: 2001:172:20:5::209
+      startup-config: config/xrd09.cfg
+
+    xrd10:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.9.2
+      mgmt_ipv4: 172.20.5.210
+      mgmt_ipv6: 2001:172:20:5::210
+      startup-config: config/xrd10.cfg
+
+    host01:
+      kind: linux
+      image: ubuntu-frr-22.04:latest
+      # binds:
+      #   - frr-1/daemons:/etc/frr/daemons
+      #   - frr-1/frr.conf:/etc/frr/frr.conf
+      #   - frr-1/vtysh.conf:/etc/frr/vtysh.conf
+      mgmt_ipv4: 172.20.5.211
+      mgmt_ipv6: 2001:172:20:2::211
+
+    host01-xrd01:
+      kind: bridge
+
+  links:
+    - endpoints: ["xrd01:Gi0-0-0-0", "xrd02:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-2", "xrd04:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-3", "host01-xrd01:xrd01-Gi0-0-0-3"]
+    - endpoints: ["host01:eth1", "host01-xrd01:host01-eth1"]
+
+    - endpoints: ["xrd02:Gi0-0-0-1", "xrd05:Gi0-0-0-0"]
+
+    - endpoints: ["xrd02:Gi0-0-0-2", "xrd09:Gi0-0-0-0"]
+
+    - endpoints: ["xrd03:Gi0-0-0-1", "xrd06:Gi0-0-0-0"]
+
+    - endpoints: ["xrd03:Gi0-0-0-2", "xrd10:Gi0-0-0-0"]
+
+    - endpoints: ["xrd04:Gi0-0-0-1", "xrd07:Gi0-0-0-0"]
+
+    - endpoints: ["xrd04:Gi0-0-0-2", "xrd08:Gi0-0-0-0"]
+
+    - endpoints: ["xrd05:Gi0-0-0-1", "xrd06:Gi0-0-0-1"]
+
+    - endpoints: ["xrd05:Gi0-0-0-2", "xrd08:Gi0-0-0-1"]
+
+    - endpoints: ["xrd06:Gi0-0-0-2", "xrd07:Gi0-0-0-1"]
+
+    - endpoints: ["xrd07:Gi0-0-0-2", "xrd09:Gi0-0-0-1"]
+
+    - endpoints: ["xrd08:Gi0-0-0-2", "xrd10:Gi0-0-0-1"]
+
+    - endpoints: ["xrd09:Gi0-0-0-2", "xrd10:Gi0-0-0-2"]
