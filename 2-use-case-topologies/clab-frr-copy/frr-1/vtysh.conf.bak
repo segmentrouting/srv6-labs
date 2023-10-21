@@ -1,2 +1,2 @@
 service integrated-vtysh-config
-hostname r1
+hostname frr-1
