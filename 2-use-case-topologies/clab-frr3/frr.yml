@@ -1,0 +1,124 @@
+name: frr
+
+mgmt:
+  network: frr_mgt_net
+  ipv4_subnet: 172.20.2.0/24
+  ipv6_subnet: 2001:172:20:2::/80
+
+topology:
+  nodes:
+    frr-1:
+      kind: linux
+      #image: quay.io/frrouting/frr:master
+      image: frr-srv6-usid-ubuntu22:rev1.1
+      binds:
+        - frr-1/daemons:/etc/frr/daemons
+        - frr-1/frr.conf:/etc/frr/frr.conf
+        #- frr-1/vtysh.conf:/etc/frr/vtysh.conf
+      mgmt_ipv4: 172.20.2.101
+      mgmt_ipv6: 2001:172:20:2::101
+
+    frr-4:
+      kind: linux
+      #image: quay.io/frrouting/frr:master
+      image: frr-srv6-usid-ubuntu22:rev1.1
+      binds:
+        - frr-4/daemons:/etc/frr/daemons
+        - frr-4/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.104
+      mgmt_ipv6: 2001:172:20:2::104
+
+    frr-3:
+      kind: linux
+      #image: quay.io/frrouting/frr:master
+      image: frr-srv6-usid-ubuntu22:rev1.1
+      binds:
+        - frr-3/daemons:/etc/frr/daemons
+        - frr-3/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.103
+      mgmt_ipv6: 2001:172:20:2::103
+      
+    frr-9:
+      kind: linux
+      #image: quay.io/frrouting/frr:master
+      image: frr-srv6-usid-ubuntu22:rev1.1
+      binds:
+        - frr-9/daemons:/etc/frr/daemons
+        - frr-9/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.109
+      mgmt_ipv6: 2001:172:20:2::109
+      
+    frr-10:
+      kind: linux
+      #image: quay.io/frrouting/frr:master
+      image: frr-srv6-usid-ubuntu22:rev1.1
+      binds:
+        - frr-10/daemons:/etc/frr/daemons
+        - frr-10/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.110
+      mgmt_ipv6: 2001:172:20:2::110
+      
+    frr-11:
+      kind: linux
+      #image: quay.io/frrouting/frr:master
+      image: frr-srv6-usid-ubuntu22:rev1.1
+      binds:
+        - frr-11/daemons:/etc/frr/daemons
+        - frr-11/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.111
+      mgmt_ipv6: 2001:172:20:2::111
+      
+    frr-7:
+      kind: linux
+      #image: quay.io/frrouting/frr:master
+      image: frr-srv6-usid-ubuntu22:rev1.1
+      binds:
+        - frr-7/daemons:/etc/frr/daemons
+        - frr-7/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.107
+      mgmt_ipv6: 2001:172:20:2::107
+      
+    frr-8:
+      kind: linux
+      #image: quay.io/frrouting/frr:master
+      image: frr-srv6-usid-ubuntu22:rev1.1
+      binds:
+        - frr-8/daemons:/etc/frr/daemons
+        - frr-8/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.108
+      mgmt_ipv6: 2001:172:20:2::108
+    
+
+
+    # PC1:
+    #   kind: linux
+    #   image: praqma/network-multitool:latest
+    # PC2:
+    #   kind: linux
+    #   image: praqma/network-multitool:latest
+    # PC3:
+    #   kind: linux
+    #   image: praqma/network-multitool:latest
+
+# Topology
+#
+#          r2--r4
+#         /    |  \
+#   r7--r1     |   r6--r8
+#         \    |  /
+#          r3--r5
+
+  links:
+    - endpoints: ["frr-1:eth1", "frr-2:eth1"]
+    - endpoints: ["frr-1:eth2", "frr-3:eth1"]
+    - endpoints: ["frr-1:eth3", "frr-7:eth1"]
+    - endpoints: ["frr-2:eth2", "frr-4:eth1"]
+    - endpoints: ["frr-3:eth2", "frr-5:eth1"]  
+    - endpoints: ["frr-4:eth2", "frr-5:eth2"]  
+    - endpoints: ["frr-4:eth3", "frr-6:eth1"]  
+    - endpoints: ["frr-5:eth3", "frr-6:eth2"]  
+    - endpoints: ["frr-6:eth3", "frr-8:eth1"]  
+
+    # - endpoints: ["PC1:eth1", "router1:eth3"]
+    # - endpoints: ["PC2:eth1", "router2:eth3"]
+    # - endpoints: ["PC3:eth1", "router3:eth3"]
