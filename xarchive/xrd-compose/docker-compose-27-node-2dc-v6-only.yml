@@ -26,7 +26,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd01:
-    xr_startup_cfg: config/xrd01.cfg
+    xr_startup_cfg: config-v6-only/xrd01.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -35,7 +35,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd02:
-    xr_startup_cfg: config/xrd02.cfg
+    xr_startup_cfg: config-v6-only/xrd02.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -47,7 +47,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd03:
-    xr_startup_cfg: config/xrd03.cfg
+    xr_startup_cfg: config-v6-only/xrd03.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -59,7 +59,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd04:
-    xr_startup_cfg: config/xrd04.cfg
+    xr_startup_cfg: config-v6-only/xrd04.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -68,7 +68,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd05:
-    xr_startup_cfg: config/xrd05.cfg
+    xr_startup_cfg: config-v6-only/xrd05.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -78,7 +78,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd06:
-    xr_startup_cfg: config/xrd06.cfg
+    xr_startup_cfg: config-v6-only/xrd06.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -86,7 +86,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd07:
-    xr_startup_cfg: config/xrd07.cfg
+    xr_startup_cfg: config-v6-only/xrd07.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -97,7 +97,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd08:
-    xr_startup_cfg: config/xrd08.cfg
+    xr_startup_cfg: config-v6-only/xrd08.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -107,7 +107,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd09:
-    xr_startup_cfg: config/xrd09.cfg
+    xr_startup_cfg: config-v6-only/xrd09.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -116,7 +116,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd10:
-    xr_startup_cfg: config/xrd10.cfg
+    xr_startup_cfg: config-v6-only/xrd10.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -125,7 +125,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd11:
-    xr_startup_cfg: config/xrd11.cfg
+    xr_startup_cfg: config-v6-only/xrd11.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -137,7 +137,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd12:
-    xr_startup_cfg: config/xrd12.cfg
+    xr_startup_cfg: config-v6-only/xrd12.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -149,7 +149,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd13:
-    xr_startup_cfg: config/xrd13.cfg
+    xr_startup_cfg: config-v6-only/xrd13.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -158,7 +158,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd14:
-    xr_startup_cfg: config/xrd14.cfg
+    xr_startup_cfg: config-v6-only/xrd14.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -167,7 +167,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd15:
-    xr_startup_cfg: config/xrd15.cfg
+    xr_startup_cfg: config-v6-only/xrd15.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -176,7 +176,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd16:
-    xr_startup_cfg: config/xrd16.cfg
+    xr_startup_cfg: config-v6-only/xrd16.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -185,7 +185,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd17:
-    xr_startup_cfg: config/xrd17.cfg
+    xr_startup_cfg: config-v6-only/xrd17.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -193,7 +193,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd18:
-    xr_startup_cfg: config/xrd18.cfg
+    xr_startup_cfg: config-v6-only/xrd18.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -205,7 +205,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd19:
-    xr_startup_cfg: config/xrd19.cfg
+    xr_startup_cfg: config-v6-only/xrd19.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -217,7 +217,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd20:
-    xr_startup_cfg: config/xrd20.cfg
+    xr_startup_cfg: config-v6-only/xrd20.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -226,7 +226,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd21:
-    xr_startup_cfg: config/xrd21.cfg
+    xr_startup_cfg: config-v6-only/xrd21.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -235,7 +235,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd22:
-    xr_startup_cfg: config/xrd22.cfg
+    xr_startup_cfg: config-v6-only/xrd22.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -244,7 +244,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd23:
-    xr_startup_cfg: config/xrd23.cfg
+    xr_startup_cfg: config-v6-only/xrd23.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -253,7 +253,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd24:
-    xr_startup_cfg: config/xrd24.cfg
+    xr_startup_cfg: config-v6-only/xrd24.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -261,14 +261,14 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd25:
-    xr_startup_cfg: config/xrd25.cfg
+    xr_startup_cfg: config-v6-only/xrd25.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
       - Mg0/RP0/CPU0/0
 
   xrd26:
-    xr_startup_cfg: config/xrd26.cfg
+    xr_startup_cfg: config-v6-only/xrd26.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -277,7 +277,7 @@ services:
 # DC routers
 
   xrd40:
-    xr_startup_cfg: config/xrd40.cfg
+    xr_startup_cfg: config-v6-only/xrd40.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -288,7 +288,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd41:
-    xr_startup_cfg: config/xrd41.cfg
+    xr_startup_cfg: config-v6-only/xrd41.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -299,7 +299,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd42:
-    xr_startup_cfg: config/xrd42.cfg
+    xr_startup_cfg: config-v6-only/xrd42.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -310,7 +310,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd43:
-    xr_startup_cfg: config/xrd43.cfg
+    xr_startup_cfg: config-v6-only/xrd43.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -321,7 +321,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd44:
-    xr_startup_cfg: config/xrd44.cfg
+    xr_startup_cfg: config-v6-only/xrd44.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -332,7 +332,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd45:
-    xr_startup_cfg: config/xrd45.cfg
+    xr_startup_cfg: config-v6-only/xrd45.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -343,7 +343,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd46:
-    xr_startup_cfg: config/xrd46.cfg
+    xr_startup_cfg: config-v6-only/xrd46.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -354,7 +354,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd47:
-    xr_startup_cfg: config/xrd47.cfg
+    xr_startup_cfg: config-v6-only/xrd47.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -367,7 +367,7 @@ services:
 # DC02  routers
 
   xrd60:
-    xr_startup_cfg: config/xrd60.cfg
+    xr_startup_cfg: config-v6-only/xrd60.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -378,7 +378,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd61:
-    xr_startup_cfg: config/xrd61.cfg
+    xr_startup_cfg: config-v6-only/xrd61.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -389,7 +389,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd62:
-    xr_startup_cfg: config/xrd62.cfg
+    xr_startup_cfg: config-v6-only/xrd62.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -400,7 +400,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd63:
-    xr_startup_cfg: config/xrd63.cfg
+    xr_startup_cfg: config-v6-only/xrd63.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -411,7 +411,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd64:
-    xr_startup_cfg: config/xrd64.cfg
+    xr_startup_cfg: config-v6-only/xrd64.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -422,7 +422,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd65:
-    xr_startup_cfg: config/xrd65.cfg
+    xr_startup_cfg: config-v6-only/xrd65.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -433,7 +433,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd66:
-    xr_startup_cfg: config/xrd66.cfg
+    xr_startup_cfg: config-v6-only/xrd66.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
@@ -444,7 +444,7 @@ services:
       - Mg0/RP0/CPU0/0
 
   xrd67:
-    xr_startup_cfg: config/xrd67.cfg
+    xr_startup_cfg: config-v6-only/xrd67.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
