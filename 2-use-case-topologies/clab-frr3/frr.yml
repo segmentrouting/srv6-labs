@@ -102,22 +102,24 @@ topology:
 
 # Topology
 #
-#          r2--r4
+#          r4--r9
 #         /    |  \
-#   r7--r1     |   r6--r8
+#   r7--r1     |   r11--r8
 #         \    |  /
-#          r3--r5
+#          r3--r10
 
   links:
-    - endpoints: ["frr-1:eth1", "frr-2:eth1"]
+    - endpoints: ["frr-1:eth1", "frr-4:eth1"]
     - endpoints: ["frr-1:eth2", "frr-3:eth1"]
     - endpoints: ["frr-1:eth3", "frr-7:eth1"]
-    - endpoints: ["frr-2:eth2", "frr-4:eth1"]
-    - endpoints: ["frr-3:eth2", "frr-5:eth1"]  
-    - endpoints: ["frr-4:eth2", "frr-5:eth2"]  
-    - endpoints: ["frr-4:eth3", "frr-6:eth1"]  
-    - endpoints: ["frr-5:eth3", "frr-6:eth2"]  
-    - endpoints: ["frr-6:eth3", "frr-8:eth1"]  
+
+    - endpoints: ["frr-4:eth2", "frr-9:eth1"]
+    - endpoints: ["frr-3:eth2", "frr-10:eth1"]  
+
+    - endpoints: ["frr-9:eth3", "frr-10:eth3"]  
+    - endpoints: ["frr-9:eth2", "frr-11:eth1"]  
+    - endpoints: ["frr-10:eth2", "frr-11:eth2"]  
+    - endpoints: ["frr-11:eth3", "frr-8:eth1"]  
 
     # - endpoints: ["PC1:eth1", "router1:eth3"]
     # - endpoints: ["PC2:eth1", "router2:eth3"]
