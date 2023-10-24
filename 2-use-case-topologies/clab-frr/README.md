@@ -9,6 +9,7 @@ Instructions for loading docker images and installing containerlab can be found 
 ```
 sudo containerlab deploy -t frr.yml
 ```
+ - The nodes will boot with the frr.conf config files found in this project's subdirectories
 
 ### Topology
 ![Topology](frr-srv6-topo.png)
