@@ -179,6 +179,7 @@ sudo sysctl -p
 
 1. Full cleanout of stuff that frr might have in there by default 
 ```
+no router bgp 65100
 no ip prefix-list PL_LoopbackV4 seq 5 permit 10.1.0.1/32
 no route-map RM_SET_SRC6 permit 10
 no route-map RM_SET_SRC permit 10

@@ -1,0 +1,18 @@
+apiVersion: projectcalico.org/v3
+kind: BGPPeer
+metadata:
+  name: leaf-2
+spec:
+  peerIP: fcbb:bb00:100:2::1
+  asNumber: 100
+
+---
+apiVersion: projectcalico.org/v3
+kind: BGPFilter
+metadata:
+  name: my-filter
+spec:
+  exportV6:
+    - action: Accept
+      matchOperator: Equal
+      cidr: fcbb:bb00:100:2:a::/80

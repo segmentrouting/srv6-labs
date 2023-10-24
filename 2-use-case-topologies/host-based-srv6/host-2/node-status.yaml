@@ -1,0 +1,11 @@
+apiVersion: projectcalico.org/v3
+kind: CalicoNodeStatus
+metadata:
+  name: host-2-status
+spec:
+  classes:
+    - Agent
+    - BGP
+    - Routes
+  node: host-2
+  updatePeriodSeconds: 10
