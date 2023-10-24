@@ -14,7 +14,6 @@ topology:
       binds:
         - frr-1/daemons:/etc/frr/daemons
         - frr-1/frr.conf:/etc/frr/frr.conf
-        - frr-1/vtysh.conf:/etc/frr/vtysh.conf
       mgmt_ipv4: 172.20.2.101
       mgmt_ipv6: 2001:172:20:2::101
 
