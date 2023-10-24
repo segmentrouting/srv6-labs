@@ -10,7 +10,7 @@ topology:
     frr-1:
       kind: linux
       #image: quay.io/frrouting/frr:master
-      image: frr-srv6-usid-ubuntu22:rev1.1
+      image: frr-srv6-usid-ubuntu22:rev1.2
       binds:
         - frr-1/daemons:/etc/frr/daemons
         - frr-1/frr.conf:/etc/frr/frr.conf
@@ -21,7 +21,7 @@ topology:
     frr-2:
       kind: linux
       #image: quay.io/frrouting/frr:master
-      image: frr-srv6-usid-ubuntu22:rev1.1
+      image: frr-srv6-usid-ubuntu22:rev1.2
       binds:
         - frr-2/daemons:/etc/frr/daemons
         - frr-2/frr.conf:/etc/frr/frr.conf
@@ -31,7 +31,7 @@ topology:
     frr-3:
       kind: linux
       #image: quay.io/frrouting/frr:master
-      image: frr-srv6-usid-ubuntu22:rev1.1
+      image: frr-srv6-usid-ubuntu22:rev1.2
       binds:
         - frr-3/daemons:/etc/frr/daemons
         - frr-3/frr.conf:/etc/frr/frr.conf
@@ -41,7 +41,7 @@ topology:
     frr-4:
       kind: linux
       #image: quay.io/frrouting/frr:master
-      image: frr-srv6-usid-ubuntu22:rev1.1
+      image: frr-srv6-usid-ubuntu22:rev1.2
       binds:
         - frr-4/daemons:/etc/frr/daemons
         - frr-4/frr.conf:/etc/frr/frr.conf
@@ -51,7 +51,7 @@ topology:
     frr-5:
       kind: linux
       #image: quay.io/frrouting/frr:master
-      image: frr-srv6-usid-ubuntu22:rev1.1
+      image: frr-srv6-usid-ubuntu22:rev1.2
       binds:
         - frr-5/daemons:/etc/frr/daemons
         - frr-5/frr.conf:/etc/frr/frr.conf
@@ -61,7 +61,7 @@ topology:
     frr-6:
       kind: linux
       #image: quay.io/frrouting/frr:master
-      image: frr-srv6-usid-ubuntu22:rev1.1
+      image: frr-srv6-usid-ubuntu22:rev1.2
       binds:
         - frr-6/daemons:/etc/frr/daemons
         - frr-6/frr.conf:/etc/frr/frr.conf
@@ -71,7 +71,7 @@ topology:
     frr-7:
       kind: linux
       #image: quay.io/frrouting/frr:master
-      image: frr-srv6-usid-ubuntu22:rev1.1
+      image: frr-srv6-usid-ubuntu22:rev1.2
       binds:
         - frr-7/daemons:/etc/frr/daemons
         - frr-7/frr.conf:/etc/frr/frr.conf
@@ -81,7 +81,7 @@ topology:
     frr-8:
       kind: linux
       #image: quay.io/frrouting/frr:master
-      image: frr-srv6-usid-ubuntu22:rev1.1
+      image: frr-srv6-usid-ubuntu22:rev1.2
       binds:
         - frr-8/daemons:/etc/frr/daemons
         - frr-8/frr.conf:/etc/frr/frr.conf
