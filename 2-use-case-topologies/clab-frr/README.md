@@ -13,17 +13,17 @@ sudo containerlab deploy -t frr.yml
 ### Topology
 ![Topology](frr-srv6-topo.png)
 
-r1, r2, and r3 are eBGP peers with one another
-r4, r5, and r6 run ISIS and are in ASN 64512
-r2 and r4 are eBGP peers
-r3 and r5 are eBGP peers
-r7 is a CE node with r1 as its PE
-r8 is a CE node with r6 as its PE
+* r1, r2, and r3 are eBGP peers with one another
+* r4, r5, and r6 run ISIS and are in ASN 64512
+* r2 and r4 are eBGP peers
+* r3 and r5 are eBGP peers
+* r7 is a CE node with r1 as its PE
+* r8 is a CE node with r6 as its PE
 
-### FRR VRFs
+### FRR VRFs 
 VRFs must be added to FRR containers' underlying Linux per: https://docs.frrouting.org/en/latest/zebra.html#virtual-routing-and-forwarding
 
-2. Once the topology is up, run the frr-start.exp Expect script which will apply VRF settings and start FRR:
+2. Once the topology is up, run the *frr-start.exp* Expect script which will apply VRF settings and start FRR:
 
 ```
 ./frr-start.exp
@@ -69,9 +69,9 @@ docker exec -it clab-frr-frr-1 vtysh
 docker exec -it clab-frr-frr-1 bash  
 ```
 
-### Validate BGP ipv4 vpn
+### Validate BGP peering, routes, etc.
 
-#### On r1
+1. Access FRR vtysh on frr-1, then:
 ```
 show bgp ipv4 vpn 10.8.1.0/24
 or
@@ -93,7 +93,7 @@ Paths: (1 available, best #1)
       Last update: Tue Oct 24 19:57:40 2023
 ```
 
-#### on r6
+2. Access FRR vtysh on frr-6, then:
 ```
 show bgp ipv4 vpn 10.7.1.0/24
 or
@@ -116,8 +116,8 @@ Paths: (1 available, best #1, vrf blue)
       Last update: Tue Oct 24 19:57:40 2023
 ```
 
-### validate PE l3vpn routes in Linux
-#### on r1
+3. Validate PE l3vpn routes in Linux
+
 ```
 docker exec -it clab-frr-frr-1 ip route show vrf blue
 ```
@@ -129,7 +129,7 @@ cisco@topology-host:~$ docker exec -it clab-frr-frr-1 ip route show vrf blue
 10.8.1.0/24 nhid 52  encap seg6 mode encap segs 1 [ fc00:0:6:e001:: ] via inet6 2001:db8:3e8:70::1 dev eth1 proto bgp metric 20 
 ```
 
-### tcpdump
+### tcpdump to capture SRv6 encapsulated traffic
 1. Run a ping from CE frr-7
 
 ```
@@ -141,7 +141,7 @@ docker exec -it  clab-frr-frr-7 ping -i .3 10.8.1.1
 sudo ip netns exec clab-frr-frr-1 tcpdump -ni eth2
 ```
 
-*Note* tcpdump output may not display immediately. ctrl-c will stop the tcpdump and should show the output:
+*Note* tcpdump output may not display immediately. *ctrl-c* will stop the tcpdump and should show the output:
 ```
 isco@topology-host:~$ sudo ip netns exec clab-frr-frr-1 tcpdump -ni eth1
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
