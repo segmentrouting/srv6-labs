@@ -2,6 +2,34 @@
 
 # An expect script for setting up VRFs on FRR routers' underlying Linux 
 
+# List of Docker containers
+set containers [list "clab-frr-frr-1" "clab-frr-frr-2" \
+"clab-frr-frr-3" "clab-frr-frr-4" "clab-frr-frr-5" \
+"clab-frr-frr-6" "clab-frr-frr-7" "clab-frr-frr-8"]
+
+# Loop through each container
+foreach container $containers {
+    # Connect to the Docker container
+    spawn docker exec -it $container bash
+
+    # Wait for the prompt
+    expect "$"
+
+    # Run commands inside the container
+    send "sudo su\r"
+    expect "#"
+    send "sysctl -p\r"
+    expect "#" 
+    send "systemctl start frr &\r"
+    expect "#"
+    send "exit\r"
+    expect "$"
+
+    # Exit the container
+    send "exit\r"
+    expect eof
+}
+
 # setup VRF on frr-1
 spawn docker exec -it clab-frr-frr-1 bash
 
