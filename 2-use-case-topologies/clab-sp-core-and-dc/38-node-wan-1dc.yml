@@ -280,9 +280,9 @@ topology:
       mgmt_ipv6: 2001:172:20:1::147
       startup-config: config/xrd47.cfg
 
-    xrd46-host46:
+    xrd46-host:
       kind: bridge
-    xrd47-host47:
+    xrd47-host:
       kind: bridge
 
   links:
@@ -385,5 +385,5 @@ topology:
     - endpoints: ["xrd45:Gi0-0-0-2", "xrd46:Gi0-0-0-3"]
     - endpoints: ["xrd45:Gi0-0-0-3", "xrd47:Gi0-0-0-3"]
 
-    - endpoints: ["xrd46:Gi0-0-0-4", "xrd46-host46"]
-    - endpoints: ["xrd47:Gi0-0-0-4", "xrd47-host47"]
+    - endpoints: ["xrd46:Gi0-0-0-4", "xrd46-host:xrd46-Gi0-0-0-4"]
+    - endpoints: ["xrd47:Gi0-0-0-4", "xrd47-host:xrd47-Gi0-0-0-4"]
