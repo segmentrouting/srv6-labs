@@ -1,1 +1,1 @@
-### dual-stack configs
+### this directory contains dual-stack configs
