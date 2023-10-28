@@ -179,11 +179,11 @@ topology:
     - endpoints: ["xrd03:Gi0-0-0-1", "xrd07:Gi0-0-0-1"]
     - endpoints: ["xrd03:Gi0-0-0-2", "xrd15:Gi0-0-0-2"]
     - endpoints: ["xrd03:Gi0-0-0-3", "xrd18:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-4", "xrd6:Gi0-0-0-1"]
+    - endpoints: ["xrd03:Gi0-0-0-4", "xrd06:Gi0-0-0-1"]
 
     - endpoints: ["xrd04:Gi0-0-0-1", "xrd08:Gi0-0-0-3"]
     - endpoints: ["xrd04:Gi0-0-0-2", "xrd16:Gi0-0-0-2"]
-    - endpoints: ["xrd04:Gi0-0-0-3", "xrd6:Gi0-0-0-0"]
+    - endpoints: ["xrd04:Gi0-0-0-3", "xrd06:Gi0-0-0-0"]
 
     - endpoints: ["xrd06:Gi0-0-0-2", "xrd06-host:xrd06-Gi0-0-0-2"]
 
