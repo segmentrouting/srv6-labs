@@ -164,6 +164,9 @@ topology:
     xrd09-host:
       kind: bridge
 
+    xrd46-host:
+      kind: bridge
+
   links:
     - endpoints: ["xrd01:Gi0-0-0-0", "xrd04:Gi0-0-0-5"]
     - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-5"]
