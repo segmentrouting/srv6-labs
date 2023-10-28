@@ -223,4 +223,3 @@ topology:
     - endpoints: ["xrd43:Gi0-0-0-2", "xrd46:Gi0-0-0-1"]
 
     - endpoints: ["xrd46:Gi0-0-0-4", "xrd46-host:xrd46-Gi0-0-0-4"]
-    - endpoints: ["xrd46:Gi0-0-0-4", "xrd46-host:xrd06-Gi0-0-0-4"]
