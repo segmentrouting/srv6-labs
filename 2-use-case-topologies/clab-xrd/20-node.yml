@@ -200,7 +200,7 @@ topology:
     - endpoints: ["xrd08:Gi0-0-0-2", "xrd16:Gi0-0-0-1"]
 
     - endpoints: ["xrd09:Gi0-0-0-2", "xrd09-host:xrd09-Gi0-0-0-2"]
-    - endpoints: ["trex09:eth1","xrd09-host:eth1"]
+    - endpoints: ["trex09:eth1","xrd09-host:eth2"]
 
     - endpoints: ["xrd15:Gi0-0-0-0", "xrd16:Gi0-0-0-0"]
     - endpoints: ["xrd15:Gi0-0-0-3", "xrd17:Gi0-0-0-0"]
