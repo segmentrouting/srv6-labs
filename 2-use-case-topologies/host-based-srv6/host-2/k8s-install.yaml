@@ -89,7 +89,7 @@ sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
 rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 
 # install Cilium
-cilium install --version 1.14.2
+cilium install --version 1.14.3
 
 # Calico VPP
 https://docs.tigera.io/calico/latest/getting-started/kubernetes/vpp/getting-started
