@@ -2,7 +2,7 @@
 #   in a Peterson Graph Topology: https://en.wikipedia.org/wiki/Petersen_graph
 #
 
-name: xrd-peterson
+name: peterson
 
 mgmt:
   network: pete_mgt_net
@@ -91,15 +91,15 @@ topology:
       mgmt_ipv4: 172.20.15.211
       mgmt_ipv6: 2001:172:20:15::211
 
-    host01-xrd01:
+    xrd01-host:
       kind: bridge
 
   links:
     - endpoints: ["xrd01:Gi0-0-0-0", "xrd02:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-2", "xrd04:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-3", "host01-xrd01:xrd01-Gi0-0-0-3"]
-    - endpoints: ["host01:eth1", "host01-xrd01:host01-eth1"]
+    - endpoints: ["xrd01:Gi0-0-0-3", "xrd01-host:xrd01-Gi0-0-0-3"]
+    - endpoints: ["host01:eth1", "xrd01-host:host01-eth1"]
 
     - endpoints: ["xrd02:Gi0-0-0-1", "xrd05:Gi0-0-0-0"]
 

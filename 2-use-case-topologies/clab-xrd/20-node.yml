@@ -1,7 +1,7 @@
 #   The clab-srv6-mup.yml launches a containerlab XRd topology where the XRd instances are connected
 #   via point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
 
-name: xrd-20-node
+name: 20-node
 
 mgmt:
   network: mgt_net
@@ -10,7 +10,6 @@ mgmt:
 
 topology:
   nodes:
-
     xrd01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.11.1.200G
@@ -151,6 +150,14 @@ topology:
       mgmt_ipv6: 2001:172:20:1::146
       startup-config: 20-node-config/xrd46.cfg
 
+    trex06:
+      kind: linux
+      image: trexcisco/trex:latest
+
+    trex09:
+      kind: linux
+      image: trexcisco/trex:latest
+
     xrd06-host:
       kind: bridge
 
@@ -182,6 +189,7 @@ topology:
     - endpoints: ["xrd04:Gi0-0-0-3", "xrd06:Gi0-0-0-0"]
 
     - endpoints: ["xrd06:Gi0-0-0-2", "xrd06-host:xrd06-Gi0-0-0-2"]
+    - endpoints: ["trex06:eth1","xrd06-host:eth1"]
 
     - endpoints: ["xrd07:Gi0-0-0-0", "xrd08:Gi0-0-0-0"]
     - endpoints: ["xrd07:Gi0-0-0-2", "xrd15:Gi0-0-0-1"]
@@ -192,6 +200,7 @@ topology:
     - endpoints: ["xrd08:Gi0-0-0-2", "xrd16:Gi0-0-0-1"]
 
     - endpoints: ["xrd09:Gi0-0-0-2", "xrd09-host:xrd09-Gi0-0-0-2"]
+    - endpoints: ["trex09:eth1","xrd09-host:eth1"]
 
     - endpoints: ["xrd15:Gi0-0-0-0", "xrd16:Gi0-0-0-0"]
     - endpoints: ["xrd15:Gi0-0-0-3", "xrd17:Gi0-0-0-0"]
@@ -214,3 +223,4 @@ topology:
     - endpoints: ["xrd43:Gi0-0-0-2", "xrd46:Gi0-0-0-1"]
 
     - endpoints: ["xrd46:Gi0-0-0-4", "xrd46-host:xrd46-Gi0-0-0-4"]
+    - endpoints: ["xrd46:Gi0-0-0-4", "xrd46-host:xrd06-Gi0-0-0-4"]
