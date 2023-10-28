@@ -1,7 +1,8 @@
-### Quick start
+### Clab XRd
 The 7-node topology is based on https://github.com/jalapeno/SRv6_dCloud_Lab
+The 20-node topology is a subset of the [clab-sp-core-plus-dc](../clab-sp-core-and-dc/) topology
 
-This lab has been tested on Ubuntu 20.04 and containerlab version 0.40.0
+Both have been tested on Ubuntu 20.04, 22.04, and containerlab version 0.40.0
 
 1. Host server requirements
 
@@ -19,27 +20,25 @@ sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
 
    - cpu and memory: XRd generally requires 2GB of memory and is fairly light on CPU. Run the 'host-check' script to get a sense for how many XRd instances you can run on your host/VM: 
 
-     https://github.com/segmentrouting/srv6-labs/blob/main/xrd-compose/util/host-check
+     [host-check-script](../../utils/host-check)
   
 
-2. Install Containerlab:
+1. Install Containerlab:
 ```
 https://containerlab.dev/install/
 ```
-3. Load XRd docker image:
+1. Load XRd docker image:
 ```
 docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
 ``` 
-3. Define/edit topology yml file, example: 
-   
-   https://github.com/segmentrouting/srv6-labs/blob/main/containerlab/xrd/7-node-linux-bridge-interconnect.yml
+1. Define/edit topology yml file in this directory 
 
-4. If using the linux bridge topology file run the create-bridges.sh script prior to launching the topology
+2. If using the linux bridge topology file run the create-bridges.sh script prior to launching the topology
    - XRd's will connect to each other via linux bridge instances, which is handy for doing tcpdump, etc.)
   ```
   sudo ./create-bridges.sh
   ```
-5. Launch topology - note "7-node-bx.yml" uses linux bridge to connect XRd instances, "7-node-dx.yml" uses point-to-point veth-pairs
+1. Launch topology - note "7-node-bx.yml" uses linux bridge to connect XRd instances, "7-node-dx.yml" uses point-to-point veth-pairs
 
 ```
 sudo containerlab deploy -t 7-node-bx.yml
