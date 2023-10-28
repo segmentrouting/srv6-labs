@@ -1,0 +1,217 @@
+#   The clab-srv6-mup.yml launches a containerlab XRd topology where the XRd instances are connected
+#   via point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
+
+name: srv6-mup
+
+mgmt:
+  network: mgt_net
+  ipv4_subnet: 172.20.1.0/24
+  ipv6_subnet: 2001:172:20:1::/80
+
+topology:
+  nodes:
+
+    xrd01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.101
+      mgmt_ipv6: 2001:172:20:1::101
+      startup-config: 20-node-config/xrd01.cfg
+
+    xrd02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.102
+      mgmt_ipv6: 2001:172:20:1::102
+      startup-config: 20-node-config/xrd02.cfg
+
+    xrd03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.103
+      mgmt_ipv6: 2001:172:20:1::103
+      startup-config: 20-node-config/xrd03.cfg
+
+    xrd04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.104
+      mgmt_ipv6: 2001:172:20:1::104
+      startup-config: 20-node-config/xrd04.cfg
+
+    xrd07:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.107
+      mgmt_ipv6: 2001:172:20:1::107
+      startup-config: 20-node-config/xrd07.cfg
+
+    xrd08:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.108
+      mgmt_ipv6: 2001:172:20:1::108
+      startup-config: 20-node-config/xrd08.cfg
+
+    xrd09:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.109
+      mgmt_ipv6: 2001:172:20:1::109
+      startup-config: 20-node-config/xrd09.cfg
+
+    xrd15:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.115
+      mgmt_ipv6: 2001:172:20:1::115
+      startup-config: 20-node-config/xrd15.cfg
+
+    xrd16:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.116
+      mgmt_ipv6: 2001:172:20:1::116
+      startup-config: 20-node-config/xrd16.cfg
+
+    xrd17:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.117
+      mgmt_ipv6: 2001:172:20:1::117
+      startup-config: 20-node-config/xrd17.cfg
+
+    xrd18:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.118
+      mgmt_ipv6: 2001:172:20:1::118
+      startup-config: 20-node-config/xrd18.cfg
+
+    xrd26:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.126
+      mgmt_ipv6: 2001:172:20:1::126
+      startup-config: 20-node-config/xrd22.cfg
+
+    xrd28:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.128
+      mgmt_ipv6: 2001:172:20:1::128
+      startup-config: 20-node-config/xrd28.cfg
+
+    xrd29:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.129
+      mgmt_ipv6: 2001:172:20:1::129
+      startup-config: 20-node-config/xrd29.cfg
+
+    xrd30:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.130
+      mgmt_ipv6: 2001:172:20:1::130
+      startup-config: 20-node-config/xrd30.cfg
+
+    xrd40:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.140
+      mgmt_ipv6: 2001:172:20:1::140
+      startup-config: 20-node-config/xrd40.cfg
+
+    xrd41:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.141
+      mgmt_ipv6: 2001:172:20:1::141
+      startup-config: 20-node-config/xrd41.cfg
+
+    xrd42:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.142
+      mgmt_ipv6: 2001:172:20:1::142
+      startup-config: 20-node-config/xrd42.cfg
+
+    xrd43:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.143
+      mgmt_ipv6: 2001:172:20:1::143
+      startup-config: 20-node-config/xrd43.cfg
+
+    xrd46:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.8.1
+      mgmt_ipv4: 172.20.1.146
+      mgmt_ipv6: 2001:172:20:1::146
+      startup-config: 20-node-config/xrd46.cfg
+
+    xrd09-host:
+      kind: bridge
+
+  links:
+    - endpoints: ["xrd01:Gi0-0-0-0", "xrd04:Gi0-0-0-5"]
+    - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-5"]
+    - endpoints: ["xrd01:Gi0-0-0-2", "xrd41:Gi0-0-0-1"]
+    - endpoints: ["xrd01:Gi0-0-0-3", "xrd40:Gi0-0-0-1"]
+
+    - endpoints: ["xrd02:Gi0-0-0-0", "xrd04:Gi0-0-0-6"]
+    - endpoints: ["xrd02:Gi0-0-0-1", "xrd03:Gi0-0-0-6"]
+    - endpoints: ["xrd02:Gi0-0-0-2", "xrd41:Gi0-0-0-0"]
+    - endpoints: ["xrd02:Gi0-0-0-3", "xrd40:Gi0-0-0-0"]
+
+    - endpoints: ["xrd03:Gi0-0-0-0", "xrd04:Gi0-0-0-0"]
+    - endpoints: ["xrd03:Gi0-0-0-1", "xrd07:Gi0-0-0-1"]
+    - endpoints: ["xrd03:Gi0-0-0-2", "xrd15:Gi0-0-0-2"]
+
+    - endpoints: ["xrd04:Gi0-0-0-1", "xrd08:Gi0-0-0-3"]
+    - endpoints: ["xrd04:Gi0-0-0-2", "xrd16:Gi0-0-0-2"]
+
+    - endpoints: ["xrd07:Gi0-0-0-0", "xrd08:Gi0-0-0-0"]
+    - endpoints: ["xrd07:Gi0-0-0-2", "xrd15:Gi0-0-0-1"]
+    - endpoints: ["xrd07:Gi0-0-0-3", "xrd09:Gi0-0-0-0"]
+    - endpoints: ["xrd07:Gi0-0-0-5", "xrd25:Gi0-0-0-0"]
+
+    - endpoints: ["xrd08:Gi0-0-0-1", "xrd09:Gi0-0-0-1"]
+    - endpoints: ["xrd08:Gi0-0-0-2", "xrd16:Gi0-0-0-1"]
+
+    - endpoints: ["xrd09:Gi0-0-0-2", "xrd09-host:xrd09-Gi0-0-0-2"]
+
+    - endpoints: ["xrd15:Gi0-0-0-0", "xrd16:Gi0-0-0-0"]
+    - endpoints: ["xrd15:Gi0-0-0-3", "xrd17:Gi0-0-0-0"]
+
+    - endpoints: ["xrd16:Gi0-0-0-3", "xrd28:Gi0-0-0-0"]
+
+    - endpoints: ["xrd17:Gi0-0-0-1", "xrd29:Gi0-0-0-0"]
+
+    - endpoints: ["xrd28:Gi0-0-0-1", "xrd29:Gi0-0-0-1"]
+
+    - endpoints: ["xrd40:Gi0-0-0-2", "xrd42:Gi0-0-0-0"]
+    - endpoints: ["xrd40:Gi0-0-0-3", "xrd43:Gi0-0-0-0"]
+    - endpoints: ["xrd40:Gi0-0-0-4", "xrd44:Gi0-0-0-0"]
+    - endpoints: ["xrd40:Gi0-0-0-5", "xrd45:Gi0-0-0-0"]
+
+    - endpoints: ["xrd41:Gi0-0-0-2", "xrd42:Gi0-0-0-1"]
+    - endpoints: ["xrd41:Gi0-0-0-3", "xrd43:Gi0-0-0-1"]
+    - endpoints: ["xrd41:Gi0-0-0-4", "xrd44:Gi0-0-0-1"]
+    - endpoints: ["xrd41:Gi0-0-0-5", "xrd45:Gi0-0-0-1"]
+
+    - endpoints: ["xrd42:Gi0-0-0-2", "xrd46:Gi0-0-0-0"]
+    - endpoints: ["xrd42:Gi0-0-0-3", "xrd47:Gi0-0-0-0"]
+
+    - endpoints: ["xrd43:Gi0-0-0-2", "xrd46:Gi0-0-0-1"]
+    - endpoints: ["xrd43:Gi0-0-0-3", "xrd47:Gi0-0-0-1"]
+
+    - endpoints: ["xrd44:Gi0-0-0-2", "xrd46:Gi0-0-0-2"]
+    - endpoints: ["xrd44:Gi0-0-0-3", "xrd47:Gi0-0-0-2"]
+
+    - endpoints: ["xrd45:Gi0-0-0-2", "xrd46:Gi0-0-0-3"]
+    - endpoints: ["xrd45:Gi0-0-0-3", "xrd47:Gi0-0-0-3"]
+
+    - endpoints: ["xrd46:Gi0-0-0-4", "xrd46-host:xrd46-Gi0-0-0-4"]
+    - endpoints: ["xrd47:Gi0-0-0-4", "xrd47-host:xrd47-Gi0-0-0-4"]
