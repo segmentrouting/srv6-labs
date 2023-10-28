@@ -39,6 +39,13 @@ topology:
       mgmt_ipv6: 2001:172:20:1::104
       startup-config: 20-node-config/xrd04.cfg
 
+    xrd06:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.1.106
+      mgmt_ipv6: 2001:172:20:1::106
+      startup-config: 20-node-config/xrd06.cfg
+
     xrd07:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.11.1.200G
