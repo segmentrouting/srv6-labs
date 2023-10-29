@@ -36,10 +36,11 @@ net.ipv4.ip_forward = 1
 
 sudo sysctl --system
 
-sudo tee /etc/modules-load.d/containerd.conf lt;lt;EOF
+sudo nano /etc/modules-load.d/containerd.conf
+```
 overlay
 br_netfilter
-EOF
+```
 
 sudo sysctl --system
 
@@ -74,9 +75,6 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-kubectl taint nodes --all node-role.kubernetes.io/control-plane-
-
-
 
 # install Cilium CLI
 
@@ -90,6 +88,11 @@ rm cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 
 # install Cilium
 cilium install --version 1.14.3
+
+# after CNI untaint node
+
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+
 
 # Calico VPP
 https://docs.tigera.io/calico/latest/getting-started/kubernetes/vpp/getting-started
