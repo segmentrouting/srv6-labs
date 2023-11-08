@@ -81,6 +81,10 @@ topology:
       mgmt_ipv6: 2001:172:20:15::210
       startup-config: config/xrd10.cfg
 
+    trex01:
+      kind: linux
+      image: trexcisco/trex:latest
+
     xrd01-host:
       kind: bridge
     xrd02-host:
@@ -107,6 +111,7 @@ topology:
     - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-2", "xrd04:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-3", "xrd01-host:xrd01-Gi0-0-0-3"]
+    - endpoints: ["trex01:eth1","xrd01-host:trex01-eth1"]
 
     - endpoints: ["xrd02:Gi0-0-0-1", "xrd05:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-2", "xrd09:Gi0-0-0-0"]
