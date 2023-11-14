@@ -81,7 +81,18 @@ topology:
       mgmt_ipv6: 2001:172:20:15::210
       startup-config: config/xrd10.cfg
 
+    xrd11:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.211
+      mgmt_ipv6: 2001:172:20:15::211
+      startup-config: config/xrd11.cfg
+
     trex01:
+      kind: linux
+      image: trexcisco/trex:latest
+
+    trex09:
       kind: linux
       image: trexcisco/trex:latest
 
@@ -140,5 +151,7 @@ topology:
 
     - endpoints: ["xrd09:Gi0-0-0-2", "xrd10:Gi0-0-0-2"]
     - endpoints: ["xrd09:Gi0-0-0-3", "xrd09-host:xrd09-Gi0-0-0-3"]
+    - endpoints: ["trex09:eth1","xrd09-host:trex01-eth1"]
 
     - endpoints: ["xrd10:Gi0-0-0-3", "xrd10-host:xrd10-Gi0-0-0-3"]
+    - endpoints: ["xrd10:Gi0-0-0-4", "xrd11:Gi0-0-0-0"]
