@@ -17,7 +17,7 @@ services:
 
 # XRd containers
   xrd00:
-    xr_startup_cfg: config/xrd00.cfg
+    xr_startup_cfg: config-v6-only/xrd00.cfg
     xr_interfaces:
       - Gi0/0/0/0
       - Gi0/0/0/1
