@@ -1,12 +1,11 @@
-- name: Setup trex containers topology
-  hosts: trex
-  become: true
-  tasks:
+# ansible-playbook -i hosts deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
-    - name: containerlab deploy
-      command: sudo containerlab deploy -t ../frr.yml
-      ignore_errors: no
+- name: Run ubuntu-trex01 playbook
+  import_playbook: ubuntu-trex01.yml
+  ignore_errors: yes
 
-    - name: Run deploy playbook
-      import_playbook: lab_deploy-playbook.yml
-      ignore_errors: yes
+- name: Run ubuntu-trex09 playbook
+  import_playbook: ubuntu-trex09.yml
+  ignore_errors: yes
+
+

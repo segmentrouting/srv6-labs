@@ -88,24 +88,24 @@ topology:
       mgmt_ipv6: 2001:172:20:15::111
       startup-config: config/xrd11.cfg
 
-    trex01:
-      kind: linux
-      image: trexcisco/trex:latest
-      #mgmt_ipv4: 172.20.15.201
+    # trex01:
+    #   kind: linux
+    #   image: trexcisco/trex:latest
+    #   #mgmt_ipv4: 172.20.15.201
 
-    trex09:
-      kind: linux
-      image: trexcisco/trex:latest
-      #mgmt_ipv4: 172.20.15.209
+    # trex09:
+    #   kind: linux
+    #   image: trexcisco/trex:latest
+    #   #mgmt_ipv4: 172.20.15.209
 
     ubuntu01:
       kind: linux
-      image: ubuntu-trex:1.0
+      image: ubuntu-trex:1.1
       mgmt_ipv4: 172.20.15.201
 
     ubuntu09:
       kind: linux
-      image: ubuntu-trex:1.0
+      image: ubuntu-trex:1.1
       mgmt_ipv4: 172.20.15.209
 
     xrd01-host:
