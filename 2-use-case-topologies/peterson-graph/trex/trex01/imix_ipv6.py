@@ -1,4 +1,6 @@
 from trex_stl_lib.api import *
+import argparse
+
 
 # IMIX profile - involves 3 streams of UDP packets
 # 1 - 60 bytes
@@ -8,8 +10,8 @@ class STLImix(object):
 
     def __init__ (self):
         # default IP range
-        self.ip_range = {'src': {'start': "10.101.1.2", 'end': "10.101.1.254"},
-                         'dst': {'start': "10.101.9.1",  'end': "10.101.9.1"}}
+        self.ip_range = {'src': {'start': "16.0.0.1", 'end': "16.0.0.254"},
+                         'dst': {'start': "48.0.0.1",  'end': "48.0.0.254"}}
 
         # default IMIX properties
         self.imix_table = [ {'size': 60,   'pps': 28,  'isg':0 },
@@ -19,7 +21,10 @@ class STLImix(object):
 
     def create_stream (self, size, pps, isg, vm ):
         # Create base packet and pad it to size
-        base_pkt = Ether()/IP()/UDP()
+        base_pkt  = Ether()
+        base_pkt /= IPv6(src="fc00:0:101:1::2", dst="fc00:0:3:10:e009::")
+        base_pkt /= IP()
+        base_pkt /= UDP(sport=12345, dport=12345)
         pad = max(0, size - len(base_pkt)) * 'x'
 
         pkt = STLPktBuilder(pkt = base_pkt/pad,
@@ -30,8 +35,10 @@ class STLImix(object):
                          mode = STLTXCont(pps = pps))
 
 
-    def get_streams (self, direction = 0, **kwargs):
-
+    def get_streams (self, direction, tunables, **kwargs):
+        parser = argparse.ArgumentParser(description='Argparser for {}'.format(os.path.basename(__file__)), 
+                                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        args = parser.parse_args(tunables)
         if direction == 0:
             src = self.ip_range['src']
             dst = self.ip_range['dst']
@@ -41,18 +48,20 @@ class STLImix(object):
 
         # construct the base packet for the profile
         vm = STLVM()
-        
+
         # define two vars (src and dst)
         vm.var(name="src",min_value=src['start'],max_value=src['end'],size=4,op="inc")
         vm.var(name="dst",min_value=dst['start'],max_value=dst['end'],size=4,op="inc")
-        
+
         # write them
-        vm.write(fv_name="src",pkt_offset= "IP.src")
-        vm.write(fv_name="dst",pkt_offset= "IP.dst")
-        
-        # fix checksum
-        vm.fix_chksum()
-        
+        #vm.write(fv_name="src",pkt_offset= "IPv6.src", offset_fixup=12)
+        #vm.write(fv_name="dst",pkt_offset= "IPv6.dst", offset_fixup=12)
+        vm.write(fv_name="src",pkt_offset= "IP.src", offset_fixup=12)
+        vm.write(fv_name="dst",pkt_offset= "IP.dst", offset_fixup=12)
+
+        # fix UDP checksum in HW
+        vm.fix_chksum_hw(l3_offset='IPv6', l4_offset = 'UDP', l4_type=CTRexVmInsFixHwCs.L4_TYPE_UDP)
+
         # create imix streams
         return [self.create_stream(x['size'], x['pps'],x['isg'] , vm) for x in self.imix_table]
 

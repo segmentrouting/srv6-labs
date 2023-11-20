@@ -98,7 +98,7 @@ topology:
 
     ubuntu01:
       kind: linux
-      image: ubuntu:latest
+      image: ubuntu-trex:1.0
 
     xrd01-host:
       kind: bridge

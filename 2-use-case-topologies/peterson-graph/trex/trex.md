@@ -1,30 +1,34 @@
 ## trex setup
 
-### exec into container
+1. exec into container
 ```
 docker exec -it clab-peterson-trex01 bash
 ```
+2. replace container /etc/trex_cfg.yaml
 
-### config container and start trex daemon in stateless mode
+3. config container IP and start trex daemon in stateless mode
 ```
 ip addr add 10.101.1.2/24 dev eth1
+ip addr add fc00:0:101:1::2/64 dev eth1
 ip route del default via 172.20.15.1 dev eth0
 ip route add default via 10.101.1.1 dev eth1
+ip -6 route add fc00:0000::/32 via fc00:0:101:1::1
 ./t-rex-64 -i                               
 ```
 
-### access trex console in separate container bash session
+4. access trex console in separate container bash session
 ```
 docker exec -it clab-peterson-trex01 bash
 ./trex-console 
 ```
 
-### run a traffic test
+5. run a traffic test
 ```
-start -f srv6-labs/trex01-imix.py -m 10kpps --port 0
+start -f srv6/trex01-imix.py -m 10kpps --port 0
+start -f srv6/burst.py -m 10kpps --port 0
 ```
 
-### check traffic with tui
+6. check traffic with tui
 ```
 tui
 ```
