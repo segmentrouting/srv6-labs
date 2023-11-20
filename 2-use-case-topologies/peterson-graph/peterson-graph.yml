@@ -102,13 +102,11 @@ topology:
       kind: linux
       image: ubuntu-trex:1.1
       mgmt_ipv4: 172.20.15.201
-      cgroupns_mode: host
 
     ubuntu09:
       kind: linux
       image: ubuntu-trex:1.1
       mgmt_ipv4: 172.20.15.209
-      cgroupns_mode: host
 
     xrd01-host:
       kind: bridge
