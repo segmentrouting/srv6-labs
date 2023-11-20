@@ -1,0 +1,12 @@
+- name: Setup trex containers topology
+  hosts: trex
+  become: true
+  tasks:
+
+    - name: containerlab deploy
+      command: sudo containerlab deploy -t ../frr.yml
+      ignore_errors: no
+
+    - name: Run deploy playbook
+      import_playbook: lab_deploy-playbook.yml
+      ignore_errors: yes

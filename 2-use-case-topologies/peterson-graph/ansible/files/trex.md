@@ -24,8 +24,8 @@ docker exec -it clab-peterson-trex01 bash
 
 5. run a traffic test
 ```
-start -f srv6/trex01-imix.py -m 10kpps --port 0
-start -f srv6/burst.py -m 10kpps --port 0
+start -f srv6/imix.py -m 10kpps --port 0
+start -f srv6/srv6.py --port 0
 ```
 
 6. check traffic with tui
