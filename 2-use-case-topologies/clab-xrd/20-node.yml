@@ -153,10 +153,16 @@ topology:
     frr06:
       kind: linux
       image: frrouting/frr:latest
+        - frr06/daemons:/etc/frr/daemons
+        - frr06/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.206
 
     frr09:
       kind: linux
       image: frrouting/frr:latest
+        - frr09/daemons:/etc/frr/daemons
+        - frr09/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.2.209
 
     xrd06-host:
       kind: bridge
