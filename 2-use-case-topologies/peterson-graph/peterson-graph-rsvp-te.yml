@@ -2,7 +2,7 @@
 #   in a Peterson Graph Topology: https://en.wikipedia.org/wiki/Petersen_graph
 #
 
-name: peterson
+name: peterson-rsvp
 
 mgmt:
   network: pete_mgt_net
