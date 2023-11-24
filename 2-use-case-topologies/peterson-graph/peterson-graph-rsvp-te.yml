@@ -1,0 +1,171 @@
+#   The peterson.yml launches a containerlab XRd topology where the XRd instances are connected
+#   in a Peterson Graph Topology: https://en.wikipedia.org/wiki/Petersen_graph
+#
+
+name: peterson
+
+mgmt:
+  network: pete_mgt_net
+  ipv4_subnet: 172.20.15.0/24
+  ipv6_subnet: 2001:172:20:15::/80
+
+topology:
+  nodes:
+    xrd01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.101
+      mgmt_ipv6: 2001:172:20:15::101
+      startup-config: config-rsvp-te/xrd01.cfg
+
+    xrd02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.102
+      mgmt_ipv6: 2001:172:20:15::102
+      startup-config: config-rsvp-te/xrd02.cfg
+
+    xrd03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.103
+      mgmt_ipv6: 2001:172:20:15::103
+      startup-config: config-rsvp-te/xrd03.cfg
+
+    xrd04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.104
+      mgmt_ipv6: 2001:172:20:15::104
+      startup-config: config-rsvp-te/xrd04.cfg
+
+    xrd05:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.105
+      mgmt_ipv6: 2001:172:20:15::105
+      startup-config: config-rsvp-te/xrd05.cfg
+
+    xrd06:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.106
+      mgmt_ipv6: 2001:172:20:15::106
+      startup-config: config-rsvp-te/xrd06.cfg
+
+    xrd07:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.107
+      mgmt_ipv6: 2001:172:20:15::107
+      startup-config: config-rsvp-te/xrd07.cfg
+
+    xrd08:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.108
+      mgmt_ipv6: 2001:172:20:15::108
+      startup-config: config-rsvp-te/xrd08.cfg
+
+    xrd09:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.109
+      mgmt_ipv6: 2001:172:20:15::109
+      startup-config: config-rsvp-te/xrd09.cfg
+
+    xrd10:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.110
+      mgmt_ipv6: 2001:172:20:15::110
+      startup-config: config-rsvp-te/xrd10.cfg
+
+    xrd11:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.1.200G
+      mgmt_ipv4: 172.20.15.111
+      mgmt_ipv6: 2001:172:20:15::111
+      startup-config: config-rsvp-te/xrd11.cfg
+
+    # trex01:
+    #   kind: linux
+    #   image: trexcisco/trex:latest
+    #   #mgmt_ipv4: 172.20.15.201
+
+    # trex09:
+    #   kind: linux
+    #   image: trexcisco/trex:latest
+    #   #mgmt_ipv4: 172.20.15.209
+
+    ubuntu01:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt_ipv4: 172.20.15.201
+
+    ubuntu09:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt_ipv4: 172.20.15.209
+
+    xrd01-host:
+      kind: bridge
+    xrd02-host:
+      kind: bridge
+    xrd03-host:
+      kind: bridge
+    xrd04-host:
+      kind: bridge
+    xrd05-host:
+      kind: bridge
+    xrd06-host:
+      kind: bridge
+    xrd07-host:
+      kind: bridge
+    xrd08-host:
+      kind: bridge
+    xrd09-host:
+      kind: bridge
+    xrd10-host:
+      kind: bridge
+
+  links:
+    - endpoints: ["xrd01:Gi0-0-0-0", "xrd02:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-2", "xrd04:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-3", "xrd01-host:xrd01-Gi0-0-0-3"]
+    #- endpoints: ["trex01:eth1","xrd01-host:trex01-eth1"]
+    - endpoints: ["ubuntu01:eth1","xrd01-host:ubuntu01-eth1"]
+
+    - endpoints: ["xrd02:Gi0-0-0-1", "xrd05:Gi0-0-0-0"]
+    - endpoints: ["xrd02:Gi0-0-0-2", "xrd09:Gi0-0-0-0"]
+    - endpoints: ["xrd02:Gi0-0-0-3", "xrd02-host:xrd02-Gi0-0-0-3"]
+
+    - endpoints: ["xrd03:Gi0-0-0-1", "xrd06:Gi0-0-0-0"]
+    - endpoints: ["xrd03:Gi0-0-0-2", "xrd10:Gi0-0-0-0"]
+    - endpoints: ["xrd03:Gi0-0-0-3", "xrd03-host:xrd03-Gi0-0-0-3"]
+
+    - endpoints: ["xrd04:Gi0-0-0-1", "xrd07:Gi0-0-0-0"]
+    - endpoints: ["xrd04:Gi0-0-0-2", "xrd08:Gi0-0-0-0"]
+    - endpoints: ["xrd04:Gi0-0-0-3", "xrd04-host:xrd04-Gi0-0-0-3"]
+
+    - endpoints: ["xrd05:Gi0-0-0-1", "xrd06:Gi0-0-0-1"]
+    - endpoints: ["xrd05:Gi0-0-0-2", "xrd08:Gi0-0-0-1"]
+    - endpoints: ["xrd05:Gi0-0-0-3", "xrd05-host:xrd05-Gi0-0-0-3"]
+
+    - endpoints: ["xrd06:Gi0-0-0-2", "xrd07:Gi0-0-0-1"]
+    - endpoints: ["xrd06:Gi0-0-0-3", "xrd06-host:xrd06-Gi0-0-0-3"]
+
+    - endpoints: ["xrd07:Gi0-0-0-2", "xrd09:Gi0-0-0-1"]
+    - endpoints: ["xrd07:Gi0-0-0-3", "xrd07-host:xrd07-Gi0-0-0-3"]
+
+    - endpoints: ["xrd08:Gi0-0-0-2", "xrd10:Gi0-0-0-1"]
+    - endpoints: ["xrd08:Gi0-0-0-3", "xrd08-host:xrd08-Gi0-0-0-3"]
+
+    - endpoints: ["xrd09:Gi0-0-0-2", "xrd10:Gi0-0-0-2"]
+    - endpoints: ["xrd09:Gi0-0-0-3", "xrd09-host:xrd09-Gi0-0-0-3"]
+    #- endpoints: ["trex09:eth1","xrd09-host:trex09-eth1"]
+    - endpoints: ["ubuntu09:eth1","xrd09-host:ubuntu09-eth1"]
+
+    - endpoints: ["xrd10:Gi0-0-0-3", "xrd10-host:xrd10-Gi0-0-0-3"]
+    - endpoints: ["xrd10:Gi0-0-0-4", "xrd11:Gi0-0-0-0"]

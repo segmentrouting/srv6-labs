@@ -1,0 +1,536 @@
+hostname NCS55A1
+group TE-scale-test
+ interface 'tunnel-te.*'
+  load-interval 30
+  auto-bw
+   bw-limit min 5000 max 10000
+   overflow threshold 5 min 10000 limit 2
+   adjustment-threshold 3 min 10000
+   underflow threshold 5 min 10000 limit 2
+   application 5
+  !
+  signalled-bandwidth 5000
+  autoroute announce
+   metric 1
+  !
+  destination 10.0.0.0
+  fast-reroute
+  record-route
+  path-selection
+   metric igp
+   tiebreaker min-fill
+  !
+  path-option 1 dynamic
+ !
+end-group
+!
+ipv4 unnumbered mpls traffic-eng Loopback0
+!
+ipv4 access-list ECN
+ 10 permit ipv4 host 10.20.0.17 host 10.10.0.33 counter ECN_Packets
+ 20 permit ipv4 any any
+!
+ipv4 access-list hadoop
+ 10 permit ipv4 host 10.10.0.5 any
+!
+ipv4 access-list user-traffic
+ 10 permit ipv4 host 10.10.0.4 any
+!
+class-map match-any ECN
+ match access-group ipv4 ECN 
+ end-class-map
+! 
+class-map match-any hadoop
+ match access-group ipv4 hadoop 
+ end-class-map
+! 
+class-map match-any normal
+ match dscp cs2 
+ end-class-map
+! 
+class-map match-any critical
+ match dscp cs6 
+ end-class-map
+! 
+class-map match-any priority
+ match dscp cs4 
+ end-class-map
+! 
+class-map match-any best-effort
+ match dscp default 
+ end-class-map
+! 
+class-map match-any user-traffic
+ match access-group ipv4 user-traffic 
+ end-class-map
+! 
+policy-map CBF
+ class best-effort
+  set mpls experimental imposition 0
+ ! 
+ class normal
+  set mpls experimental imposition 2
+ ! 
+ class priority
+  set mpls experimental imposition 4
+ ! 
+ class critical
+  set mpls experimental imposition 6
+ ! 
+ class user-traffic
+  set forward-class 1
+  set mpls experimental imposition 4
+ ! 
+ class hadoop
+  set forward-class 2
+  set mpls experimental imposition 0
+ ! 
+ class class-default
+  set forward-class 3
+  set mpls experimental imposition 2
+ ! 
+ end-policy-map
+! 
+policy-map ECN
+ class ECN
+  random-detect ecn 
+  random-detect 100 packets 1100 packets 
+  bandwidth percent 100 
+ ! 
+ class class-default
+ ! 
+ end-policy-map
+! 
+prefix-set ALL-PREFIXES-V4
+  0.0.0.0/0 le 32
+end-set
+!
+prefix-set ALL-PREFIXES-V6
+  ::/0 le 128
+end-set
+!
+route-policy pass
+  pass
+end-policy
+!
+route-policy multipath
+  set path-selection multipath advertise
+end-policy
+!
+route-policy ACCEPT-ALL-V4
+  if destination in ALL-PREFIXES-V4 then
+    pass
+  endif
+end-policy
+!
+route-policy ACCEPT-ALL-V6
+  if destination in ALL-PREFIXES-V6 then
+    pass
+  endif
+end-policy
+!
+router isis 13414
+ is-type level-2-only
+ net 49.0901.0000.0000.0007.00
+ distribute link-state level 2
+ nsf ietf
+ address-family ipv4 unicast
+  metric-style wide
+  metric-style wide level 2
+  advertise link attributes
+  mpls traffic-eng level-2-only
+  mpls traffic-eng router-id Loopback0
+  maximum-paths 32
+ 	
+ !
+ address-family ipv6 unicast
+  metric-style wide
+  advertise link attributes
+  maximum-paths 32
+  redistribute connected level-2
+ !
+ interface Loopback0
+  passive 
+  address-family ipv4 unicast
+  !
+  address-family ipv6 unicast
+  !
+ !
+ interface HundredGigE0/0/0/0
+  circuit-type level-2-only
+  point-to-point
+  hello-password hmac-md5 encrypted 07292D455E3D1100351B1908
+  address-family ipv4 unicast
+   metric 1
+  !
+  address-family ipv6 unicast
+   metric 1
+  !
+ !
+!
+router bgp 13414
+ nsr
+ bfd minimum-interval 1000
+ bgp bestpath as-path multipath-relax
+ address-family ipv4 unicast
+  additional-paths receive
+  additional-paths send
+  maximum-paths ebgp 64
+  maximum-paths ibgp 64
+  additional-paths selection route-policy multipath
+  network 10.0.0.7/32
+  network 10.20.0.0/22
+ !
+ address-family vpnv4 unicast
+ !
+ address-family ipv6 unicast
+  additional-paths receive
+  additional-paths send
+  maximum-paths ebgp 64
+  maximum-paths ibgp 64
+  additional-paths selection route-policy multipath
+  network 10::7/128
+ !
+ address-family vpnv6 unicast
+ !
+ address-family l2vpn vpls-vpws
+ !
+ address-family ipv4 flowspec
+ !
+ address-family ipv6 flowspec
+ !
+ neighbor-group TRANSIT
+  address-family ipv4 unicast
+   multipath
+   route-policy pass in
+   route-policy pass out
+   remove-private-AS
+  !
+  address-family ipv6 unicast
+   multipath
+   route-policy pass in
+   route-policy pass out
+   remove-private-AS
+  !
+ !
+ neighbor-group TRANSIT4
+  address-family ipv4 unicast
+   multipath
+   route-policy ACCEPT-ALL-V4 in
+   route-policy ACCEPT-ALL-V4 out
+   remove-private-AS
+  !
+ !
+ neighbor-group TRANSIT6
+  address-family ipv6 unicast
+   multipath
+   route-policy ACCEPT-ALL-V6 in
+   route-policy ACCEPT-ALL-V6 out
+   remove-private-AS
+  !
+ !
+ neighbor 10.0.0.5
+  remote-as 13414
+  password encrypted 00404A420A552F1C560059420C2E290F16381E032B0111663E2F7145243716324F726F6B192F13
+  update-source Loopback0
+  address-family ipv4 unicast
+   route-policy pass in
+   route-policy pass out
+   next-hop-self
+  !
+  address-family vpnv4 unicast
+  !
+  address-family ipv6 unicast
+   route-policy pass in
+   route-policy pass out
+   next-hop-self
+  !
+  address-family vpnv6 unicast
+  !
+  address-family l2vpn vpls-vpws
+  !       
+  address-family ipv4 flowspec
+  !
+  address-family ipv6 flowspec
+  !
+ !
+ neighbor 10.20.0.2
+  remote-as 1032
+  use neighbor-group TRANSIT4
+ !
+ neighbor 10.20.0.3
+  remote-as 1033
+  use neighbor-group TRANSIT4
+ !
+ neighbor 10.20.0.4
+  remote-as 1034
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.5
+  remote-as 1035
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.6
+  remote-as 1036
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.7
+  remote-as 1037
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.8
+  remote-as 1038
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.9
+  remote-as 1039
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.10
+  remote-as 1040
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.11
+  remote-as 1041
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.12
+  remote-as 1042
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.13
+  remote-as 1043
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.14
+  remote-as 1044
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.15
+  remote-as 1045
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.16
+  remote-as 1046
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10.20.0.17
+  remote-as 1047
+  use neighbor-group TRANSIT4
+  shutdown
+ !
+ neighbor 10:20:20:20::2
+  remote-as 1032
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::3
+  remote-as 1033
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::4
+  remote-as 1034
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::5
+  remote-as 1035
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::6
+  remote-as 1036
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::7
+  remote-as 1037
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::8
+  remote-as 1038
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::9
+  remote-as 1039
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::10
+  remote-as 1040
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::11
+  remote-as 1041
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::12
+  remote-as 1042
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::13
+  remote-as 1043
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::14
+  remote-as 1044
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::15
+  remote-as 1045
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::16
+  remote-as 1046
+  use neighbor-group TRANSIT6
+ !
+ neighbor 10:20:20:20::17
+  remote-as 1047
+  use neighbor-group TRANSIT6
+ !        
+!
+rsvp
+ interface HundredGigE0/0/0/0
+  bandwidth percentage 80
+ !
+!
+mpls traffic-eng
+ interface HundredGigE0/0/0/0
+ !
+ named-tunnels
+  tunnel-te BE
+   path-option 1
+    preference 0
+    computation dynamic
+   !
+   auto-bw
+    bw-limit min 500000 max 10000000
+    overflow threshold 5 min 100000 limit 2
+    adjustment-threshold 3 min 100000
+    underflow threshold 5 min 100000 limit 2
+    application 5
+    auto-capacity
+     merge-bandwidth 1000000
+     split-bandwidth 1000000
+     max-clones 16
+     min-clones 4
+     nominal-bandwidth 100000
+    !
+   !
+   priority 7 7
+   signalled-bandwidth 500000
+   autoroute announce
+    metric 1
+    include-ipv6
+   !
+   destination 10.0.0.0
+   fast-reroute
+   record-route
+   forward-class 3
+   load-interval 30
+   path-selection
+    metric igp
+    tiebreaker min-fill
+   !
+  !
+  tunnel-te HIPRI
+   path-option 1
+    preference 0
+    computation dynamic
+   !
+   auto-bw
+    bw-limit min 500000 max 10000000
+    overflow threshold 5 min 100000 limit 2
+    adjustment-threshold 3 min 100000
+    underflow threshold 5 min 100000 limit 2
+    application 5
+    auto-capacity
+     merge-bandwidth 1000000
+     split-bandwidth 1000000
+     max-clones 16
+     min-clones 4
+     nominal-bandwidth 100000
+    !
+   !
+   priority 7 7
+   signalled-bandwidth 500000
+   autoroute announce
+    metric 1
+    include-ipv6
+   !
+   destination 10.0.0.0
+   fast-reroute
+   record-route
+   forward-class 1
+   load-interval 30
+   path-selection
+    metric igp
+    tiebreaker min-fill
+   !
+  !
+  tunnel-te LOPRI
+   path-option 1
+    preference 0
+    computation dynamic
+   !
+   auto-bw
+    bw-limit min 500000 max 10000000
+    overflow threshold 5 min 100000 limit 2
+    adjustment-threshold 3 min 100000
+    underflow threshold 5 min 100000 limit 2
+    application 5
+    auto-capacity
+     merge-bandwidth 1000000
+     split-bandwidth 1000000
+     max-clones 16
+     min-clones 4
+     nominal-bandwidth 100000
+    !     
+   !
+   priority 7 7
+   signalled-bandwidth 500000
+   autoroute announce
+    metric 1
+    include-ipv6
+   !
+   destination 10.0.0.0
+   fast-reroute
+   record-route
+   forward-class 2
+   load-interval 30
+   path-selection
+    metric igp
+    tiebreaker min-fill
+   !
+  !
+ !
+!
+mpls ldp
+ router-id 10.0.0.7
+ interface HundredGigE0/0/0/0
+ !
+!
+flowspec
+ address-family ipv4
+  local-install interface-all
+ !
+ address-family ipv6
+  local-install interface-all
+ !
+!
+lldp
+!
+ssh server rate-limit 600
+ssh server session-limit 100
+ssh server v2
+ssh server vrf default
+ssh server netconf vrf default
+end
