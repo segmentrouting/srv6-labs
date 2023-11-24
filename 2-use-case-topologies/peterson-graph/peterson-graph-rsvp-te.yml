@@ -140,6 +140,7 @@ topology:
     - endpoints: ["xrd02:Gi0-0-0-1", "xrd05:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-2", "xrd09:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-3", "xrd02-host:xrd02-Gi0-0-0-3"]
+    - endpoints: ["ubuntu01:eth2","xrd02-host:ubuntu01-eth2"]
 
     - endpoints: ["xrd03:Gi0-0-0-1", "xrd06:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-2", "xrd10:Gi0-0-0-0"]
@@ -166,6 +167,7 @@ topology:
     - endpoints: ["xrd09:Gi0-0-0-3", "xrd09-host:xrd09-Gi0-0-0-3"]
     #- endpoints: ["trex09:eth1","xrd09-host:trex09-eth1"]
     - endpoints: ["ubuntu09:eth1","xrd09-host:ubuntu09-eth1"]
+    - endpoints: ["ubuntu01:eth9","xrd09-host:ubuntu01-eth9"]
 
     - endpoints: ["xrd10:Gi0-0-0-3", "xrd10-host:xrd10-Gi0-0-0-3"]
     - endpoints: ["xrd10:Gi0-0-0-4", "xrd11:Gi0-0-0-0"]

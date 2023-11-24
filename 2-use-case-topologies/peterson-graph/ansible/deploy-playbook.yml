@@ -4,8 +4,8 @@
   import_playbook: ubuntu-trex01.yml
   ignore_errors: yes
 
-- name: Run ubuntu-trex09 playbook
-  import_playbook: ubuntu-trex09.yml
-  ignore_errors: yes
+# - name: Run ubuntu-trex09 playbook
+#   import_playbook: files/ubuntu09/ubuntu09-playbook.yml
+#   ignore_errors: yes
 
 
