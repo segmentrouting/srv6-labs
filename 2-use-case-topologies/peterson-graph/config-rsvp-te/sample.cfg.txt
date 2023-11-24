@@ -231,7 +231,6 @@ router bgp 13414
  !
  neighbor 10.0.0.5
   remote-as 13414
-  password encrypted 00404A420A552F1C560059420C2E290F16381E032B0111663E2F7145243716324F726F6B192F13
   update-source Loopback0
   address-family ipv4 unicast
    route-policy pass in
@@ -258,87 +257,7 @@ router bgp 13414
   remote-as 1032
   use neighbor-group TRANSIT4
  !
- neighbor 10.20.0.3
-  remote-as 1033
-  use neighbor-group TRANSIT4
- !
- neighbor 10.20.0.4
-  remote-as 1034
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.5
-  remote-as 1035
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.6
-  remote-as 1036
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.7
-  remote-as 1037
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.8
-  remote-as 1038
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.9
-  remote-as 1039
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.10
-  remote-as 1040
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.11
-  remote-as 1041
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.12
-  remote-as 1042
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.13
-  remote-as 1043
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.14
-  remote-as 1044
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.15
-  remote-as 1045
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.16
-  remote-as 1046
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10.20.0.17
-  remote-as 1047
-  use neighbor-group TRANSIT4
-  shutdown
- !
- neighbor 10:20:20:20::2
-  remote-as 1032
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::3
-  remote-as 1033
-  use neighbor-group TRANSIT6
+   use neighbor-group TRANSIT6
  !
  neighbor 10:20:20:20::4
   remote-as 1034
@@ -347,56 +266,7 @@ router bgp 13414
  neighbor 10:20:20:20::5
   remote-as 1035
   use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::6
-  remote-as 1036
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::7
-  remote-as 1037
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::8
-  remote-as 1038
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::9
-  remote-as 1039
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::10
-  remote-as 1040
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::11
-  remote-as 1041
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::12
-  remote-as 1042
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::13
-  remote-as 1043
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::14
-  remote-as 1044
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::15
-  remote-as 1045
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::16
-  remote-as 1046
-  use neighbor-group TRANSIT6
- !
- neighbor 10:20:20:20::17
-  remote-as 1047
-  use neighbor-group TRANSIT6
- !        
-!
+
 rsvp
  interface HundredGigE0/0/0/0
   bandwidth percentage 80
