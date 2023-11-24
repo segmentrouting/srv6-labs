@@ -1,0 +1,1982 @@
+#!/usr/bin/env python3
+# ------------------------------------------------------------------------------
+# xr-compose - Translates 'XR-YAML' into full docker-compose YAML to be used
+#              for launching topologies of XR Docker containers
+#
+# Copyright (c) 2020-2022 by Cisco Systems, Inc.
+# All rights reserved.
+# ------------------------------------------------------------------------------
+
+"""
+Translates 'XR-YAML' into full docker-compose YAML to be used for launching
+topologies of XR Docker containers
+
+"""
+
+import argparse
+import os
+import sys
+import logging
+import subprocess
+import enum
+import re
+import typing
+
+from collections import OrderedDict
+from typing import Any, Dict, Iterable, List, Optional, Union
+
+import yaml
+
+
+# --------------
+# Global variables
+# --------------
+
+LOGGER = logging.getLogger()
+
+# Defualt input and output files
+DEFAULT_INPUT = "docker-compose.xr.yml"
+DEFAULT_OUTPUT = "docker-compose.yml"
+
+# Default docker-compose YAML version if unspecified in the input file.
+DEFAULT_YAML_VERSION = "2.4"
+
+# Valid interface name strings
+GI_IF_RE = r"Gi0/0/0/(\d+)"
+MG_IF_RE = r"Mg0/RP0/CPU0/(\d+)"
+
+# Env vars
+STARTUP_CONFIG_ENV = "XR_EVERY_BOOT_CONFIG"
+BOOT_SCRIPT_ENV = "XR_EVERY_BOOT_SCRIPT"
+INTERFACES_ENV = "XR_INTERFACES"
+MGMT_INTERFACES_ENV = "XR_MGMT_INTERFACES"
+
+# Paths inside container
+STARTUP_CONFIG_PATH = "/etc/xrd/startup.cfg"
+BOOT_SCRIPT_PATH = "/etc/xrd/boot_script"
+PROVISION_VOLUME_PATH = "/xr-storage/"
+
+# XR YAML keywords that may be included in input YAML
+NON_XR = "non_xr"
+XR_KEYWORD_PREFIX = "xr_"
+XR_STARTUP_CFG = "xr_startup_cfg"
+XR_BOOT_SCRIPT = "xr_boot_script"
+XR_INTERFACES = "xr_interfaces"
+XR_CHECKSUM_INTERFACES = "xr_checksum_interfaces"
+XR_SNOOP_V4_INTERFACES = "xr_snoop_v4_interfaces"
+XR_SNOOP_V6_INTERFACES = "xr_snoop_v6_interfaces"
+XR_SNOOP_V4_DEFAULT_ROUTE_INTERFACES = "xr_snoop_v4_default_route"
+XR_SNOOP_V6_DEFAULT_ROUTE_INTERFACES = "xr_snoop_v4_default_route"
+XR_L2NETWORKS = "xr_l2networks"
+
+# Lists of XR keywords that are valid on particular YAML constructs
+VALID_XR_SERVICE_KEYWORDS = [
+    XR_INTERFACES,
+    XR_STARTUP_CFG,
+    XR_BOOT_SCRIPT,
+    XR_CHECKSUM_INTERFACES,
+    XR_SNOOP_V4_INTERFACES,
+    XR_SNOOP_V6_INTERFACES,
+    XR_SNOOP_V4_DEFAULT_ROUTE_INTERFACES,
+    XR_SNOOP_V6_DEFAULT_ROUTE_INTERFACES,
+]
+VALID_NETWORK_KEYWORDS = [XR_INTERFACES]
+VALID_TOP_LEVEL_KEYWORDS = [XR_L2NETWORKS]
+
+
+# --------------
+# Exceptions
+# --------------
+
+
+class Error(Exception):
+    """
+    Errors for the XR compose script
+
+    """
+
+
+class InputDoesNotExistError(Error):
+    """
+    The input file does not exist.
+
+    """
+
+    def __init__(self, input_file: str):
+        super().__init__()
+        self.input_file = input_file
+
+    def __str__(self) -> str:
+        return "Input file {} does not exist!".format(self.input_file)
+
+
+class DockerObjectsRemainingError(Error):
+    """
+    Docker objects are still running that would be left unmanaged if the ouptut
+    file was overwritten
+
+    """
+
+    def __init__(
+        self,
+        containers: List[str],
+        networks: List[str],
+        volumes: List[str],
+        output_file: str,
+    ):
+        super().__init__()
+        self.containers = containers
+        self.networks = networks
+        self.volumes = volumes
+        self.output_file = output_file
+
+    def __str__(self) -> str:
+        return (
+            "The following Docker objects referred to by the output file "
+            "{} are still running:\n"
+            "Containers:\n  {}\n"
+            "Named networks:\n  {}\n"
+            "Volumes:\n  {}\n".format(
+                self.output_file,
+                "\n  ".join(self.containers),
+                "\n  ".join(self.networks),
+                "\n  ".join(self.volumes),
+            )
+        )
+
+
+class InputYAMLXRError(Error):
+    """
+    The input YAML contained errors with XR keywords and constructs.
+
+    """
+
+    def __init__(self, input_file: str, errors: List[Exception]):
+        super().__init__()
+        self.input_file = input_file
+        self.errors = errors
+
+    def __str__(self) -> str:
+        return "Input file {} contains the following errors:\n   {}".format(
+            self.input_file,
+            "\n   ".join([str(error) for error in self.errors]),
+        )
+
+
+class NonXRServiceXRKeywordError(Error):
+    """
+    A service marked as non-XR contains an XR keyword.
+
+    """
+
+    def __init__(self, service_name: str):
+        super().__init__()
+        self.service_name = service_name
+
+    def __str__(self) -> str:
+        return (
+            "Non-XR service {} contains an keyword starting with "
+            "'xr_'.".format(self.service_name)
+        )
+
+
+class InvalidXRKeywordError(Error):
+    """
+    An XR service contains an invalid XR keyword.
+
+    """
+
+    def __init__(self, object_name: str, xr_keyword: str):
+        super().__init__()
+        self.object_name = object_name
+        self.xr_keyword = xr_keyword
+
+    def __str__(self) -> str:
+        return "Compose object {} contains an invalid XR keyword {}.".format(
+            self.object_name, self.xr_keyword
+        )
+
+
+class InvalidXRInterfaceError(Error):
+    """
+    An XR Interface has an invalid name.
+
+    """
+
+    def __init__(
+        self, interface_name: str, interface: Optional["Interface"] = None
+    ):
+        super().__init__()
+        self.interface_name = interface_name
+        self.interface = interface
+
+    def __str__(self) -> str:
+        return "Invalid interface name {}.".format(self.interface_name)
+
+
+class DuplicateInterfaceError(Error):
+    """
+    An XR service has duplicate interfaces
+
+    """
+
+    def __init__(self, service_name: str, interface_name: str):
+        super().__init__()
+        self.interface_name = interface_name
+        self.service_name = service_name
+
+    def __str__(self) -> str:
+        return "Service {} has a duplicate interface {}.".format(
+            self.service_name, self.interface_name
+        )
+
+
+class XRL2NetworkNonListError(Error):
+    """
+    The XR L2Networks section is not a list
+
+    """
+
+    def __str__(self) -> str:
+        return (
+            "The XR L2Networks section must contain a list of lists of "
+            "interfaces that define separate networks."
+        )
+
+
+class NonExistentServiceError(Error):
+    """
+    A network section mentions a nonexistent service
+
+    """
+
+    def __init__(self, network_name: str, service_name: str):
+        super().__init__()
+        self.network_name = network_name
+        self.service_name = service_name
+
+    def __str__(self) -> str:
+        return "{} mentions service {} that does not exist.".format(
+            self.network_name, self.service_name
+        )
+
+
+class NonExistentInterfaceError(Error):
+    """
+    A network section mentions a nonexistent interface
+
+    """
+
+    def __init__(
+        self, network_section: str, service_name: str, interface_name: str
+    ):
+        super().__init__()
+        self.network_section = network_section
+        self.service_name = service_name
+        self.interface_name = interface_name
+
+    def __str__(self) -> str:
+        return (
+            "The {} section mentions interface {} that does not exist on "
+            "service {}.".format(
+                self.network_section, self.interface_name, self.service_name
+            )
+        )
+
+
+class DoubleNetworkError(Error):
+    """
+    An interface is included in more than one network
+
+    """
+
+    def __init__(self, interface_name: str):
+        super().__init__()
+        self.interface_name = interface_name
+
+    def __str__(self) -> str:
+        return (
+            "The interface {} is mentioned in more than one "
+            "network.".format(self.interface_name)
+        )
+
+
+class XRNetworkInterfacesNonListError(Error):
+    """
+    The XR interfaces section in an XR network is not a list
+
+    """
+
+    def __init__(self, network_name: str):
+        super().__init__()
+        self.network_name = network_name
+
+    def __str__(self) -> str:
+        return (
+            "The XR interfaces section in network {} must contain a list "
+            "of interfaces.".format(self.network_name)
+        )
+
+
+class XRServiceInterfacesNonListError(Error):
+    """
+    The XR interfaces section in an XR service is not a list
+
+    """
+
+    def __init__(self, service_name: str):
+        super().__init__()
+        self.service_name = service_name
+
+    def __str__(self) -> str:
+        return (
+            "The XR interfaces section in service {} must contain a list "
+            "of interfaces.".format(self.service_name)
+        )
+
+
+class XRStartupConfigNonStringError(Error):
+    """
+    The XR startup config is not a string
+    """
+
+    def __init__(self, service_name: str):
+        super().__init__()
+        self.service_name = service_name
+
+    def __str__(self) -> str:
+        return (
+            "The XR startup config section in service {} must only "
+            "contain the path to the startup config file.".format(
+                self.service_name
+            )
+        )
+
+
+class EnvVarExistsError(Error):
+    """
+    An env var that should be generated already exists
+
+    """
+
+    def __init__(self, env_var: str):
+        super().__init__()
+        self.env_var = env_var
+
+    def __str__(self) -> str:
+        return (
+            "The environment variable {} is generated by this script and "
+            "may not be specified.".format(self.env_var)
+        )
+
+
+class VolumeExistsError(Error):
+    """
+    An env var that should be generated already exists
+
+    """
+
+    def __init__(self, volume_name: str):
+        super().__init__()
+        self.volume_name = volume_name
+
+    def __str__(self) -> str:
+        return (
+            "The volume {} is generated by this script and "
+            "may not be specified.".format(self.volume_name)
+        )
+
+
+class NetworkExistsError(Error):
+    """
+    A network that should be generated already exists
+
+    """
+
+    def __init__(self, network_name: str):
+        super().__init__()
+        self.network_name = network_name
+
+    def __str__(self) -> str:
+        return (
+            "The network {} is generated by this script and "
+            "may not be specified.".format(self.network_name)
+        )
+
+
+class MissingImageError(Error):
+    """
+    A service has no appopriate image to use - none was specified in YAML or
+    in the CLI
+
+    """
+
+    def __init__(self, service_name: str):
+        super().__init__()
+        self.service_name = service_name
+
+    def __str__(self) -> str:
+        return (
+            "No image was specified for service {}.\nImages may be specified "
+            "via:\n"
+            "  - -i/--image CLI argument (see --help usage)\n"
+            "  - Using the image keyword to specify images individually in "
+            "input YAML".format(self.service_name)
+        )
+
+
+class InputYAMLError(Error):
+    """
+    There was a YAML error in the input.
+
+    """
+
+    def __init__(self, error_str: str):
+        super().__init__()
+        self.error_str = error_str
+
+    def __str__(self) -> str:
+        return "The input YAML contains syntax errors: {}".format(
+            self.error_str
+        )
+
+
+# --------------
+# Classes
+# --------------
+
+
+class InterfaceType(enum.Enum):
+    """
+    Enumeration of the possible interface types
+
+    """
+
+    GI = "GigabitEthernet"
+    MGMT = "MgmtEth"
+
+
+class ChecksumOffload(enum.Enum):
+    """
+    Enumeration of possible checksum offload states for an interface
+
+    """
+
+    UNDETERMINED = "Undetermined"
+    ENABLED = "Enabled"
+    DISABLED = "Disabled"
+
+
+class Interface:
+    """
+    Class to represent an interface in an XR container
+
+    Attributes:
+        name:
+            Name of the interface
+
+        name_abbrev:
+            Abbreviated name to use in Docker network object names.
+
+        network:
+            Network instance that this interface belongs to
+
+        service:
+            Service instance that this interface belongs to
+            This will be filled in when an Interface is added to a service.
+
+        type:
+            Enum representing the type of interface
+
+        port:
+            Port number for GigabitEthernet interfaces
+
+        chksum_offload:
+            Enum representing whether checksum offload counteract should be
+            enabled or disabled for this service, or whether it is undecided.
+
+        snoop_v4:
+            Bool indicating whether or not XRd should snoop the IPv4 address of
+            the interface and add corresponding XR config.
+
+        snoop_v6:
+            Bool indicating whether or not XRd should snoop the IPv6 address of
+            the interface and add corresponding XR config.
+
+        snoop_v4_default_route:
+            Bool indicating whether or not XRd should snoop the IPv4 default
+            route of the interface and add corresponding XR config.
+
+        snoop_v6_default_route:
+            Bool indicating whether or not XRd should snoop the IPv4 default
+            route of the interface and add corresponding XR config.
+    """
+
+    def __init__(self, interface: Union[str, Dict[str, Dict[str, bool]]]):
+        """
+        Initialises an Interface instance and sanitises the name
+
+        :param interface:
+            Either the XR name of the interface, or a dictionary mapping
+            XR interface name to a dictionary of flags and their boolean values.
+
+        Raises:
+            InvalidXRInterfaceError
+                The interface name is not valid
+
+        """
+        self.chksum_offload: ChecksumOffload = ChecksumOffload.UNDETERMINED
+        self.snoop_v4: bool = False
+        self.snoop_v6: bool = False
+        self.snoop_v4_default_route: bool = False
+        self.snoop_v6_default_route: bool = False
+        if isinstance(interface, str):
+            self.name = interface
+        else:
+            interface_keys = interface.keys()
+            if len(interface_keys) != 1:
+                raise ValueError(
+                    f"Interface {interface} must have exactly one name."
+                )
+            self.name = list(interface_keys)[0]
+            flags = interface[self.name]
+            for flag, value in flags.items():
+                if flag == "chksum":
+                    self.chksum_offload = (
+                        ChecksumOffload.ENABLED
+                        if value
+                        else ChecksumOffload.DISABLED
+                    )
+                elif flag in {
+                    "snoop_v4",
+                    "snoop_v6",
+                    "snoop_v4_default_route",
+                    "snoop_v6_default_route",
+                }:
+                    setattr(self, flag, value)
+
+        self.name_abbrev: Optional[str] = None
+        self.network: Optional[Network] = None
+        self.service: Optional[Service] = None
+        self.type: Optional[InterfaceType] = None
+        self.port: Optional[str] = None
+
+    def sanitise(self) -> None:
+        """
+        Checks whether the interface name is valid, and generates
+        a name abbreviation to use for Docker network object names
+
+        Raises:
+            InvalidXRInterfaceError
+                The interface name is not valid
+
+        """
+        if self.name is None:
+            raise InvalidXRInterfaceError("None")
+
+        for exp, iftype, abbrev in (
+            (GI_IF_RE, InterfaceType.GI, "gi"),
+            (MG_IF_RE, InterfaceType.MGMT, "mg"),
+        ):
+            match = re.match(exp, self.name)
+            if match:
+                self.type = iftype
+                self.port = match.group(1)
+                self.name_abbrev = "{}{}".format(abbrev, self.port)
+
+        if self.type is None:
+            raise InvalidXRInterfaceError(self.name, self)
+
+    @property
+    def is_mgmt(self) -> bool:
+        return self.name.startswith("Mg")
+
+    @property
+    def flags(self) -> List[str]:
+        flags = [f"xr_name={self.name}"]
+        if self.chksum_offload is ChecksumOffload.ENABLED:
+            flags.append("chksum")
+        if self.snoop_v4:
+            flags.append("snoop_v4")
+        if self.snoop_v6:
+            flags.append("snoop_v6")
+        if self.snoop_v4_default_route:
+            flags.append("snoop_v4_default_route")
+        if self.snoop_v6_default_route:
+            flags.append("snoop_v6_default_route")
+        return flags
+
+
+def generate_topo_id_name(topo_id: Optional[str], base_name: str) -> str:
+    """
+    Append the topology ID to the name '<name>-<topo_id>'.  If there is
+    no topology ID then simply return the name.
+
+    Arguments:
+            topo_id:
+                Topology ID to be suffixed to the container name (may be None)
+            base_name:
+                The name of the object without the topology identified.
+    """
+    if topo_id is not None:
+        return "{}-{}".format(base_name, topo_id)
+    return base_name
+
+
+class Service:
+    """
+    Class to represent an XR container service:
+
+    Attributes:
+        service_name:
+            Name of the service from the input YAML
+            (Note: not the same as the container name)
+
+        container_name:
+            Name that will be given to the running Docker container
+
+        interface_dict:
+            Ordered dictionary of interface name to Interface instance
+            that this service contains
+
+        startup_cfg:
+            Path to startup config that should be used for this XR
+            container service
+
+        boot_script:
+            Path to boot script that should be used for this XR
+            container service
+
+    """
+
+    def __init__(
+        self,
+        service_name: str,
+        topo_id: Optional[str],
+        startup_cfg: Optional[str] = None,
+        boot_script: Optional[str] = None,
+        interfaces: Optional[List[Interface]] = None,
+    ):
+        """
+        Initialises a Service instance.
+
+        Arguments:
+             service_name:
+                Name of the service
+
+             topo_id:
+                Topology ID to be suffixed to the container name
+
+            startup_cfg:
+                Path to startup config for this service
+
+            boot_script:
+                Path to boot script that should be used for this XR
+                container service
+
+            interfaces:
+                List of Interface instances
+
+        """
+        self.topo_id = topo_id
+        self.service_name = service_name
+        self.container_name = generate_topo_id_name(topo_id, self.service_name)
+        self.startup_cfg = startup_cfg
+        self.boot_script = boot_script
+        self.interface_dict = (
+            OrderedDict((i.name, i) for i in interfaces)
+            if interfaces
+            else OrderedDict()
+        )
+        for interface in self.interfaces:
+            LOGGER.debug(
+                "Adding interface %s to service %s",
+                interface.name,
+                self.service_name,
+            )
+            interface.service = self
+
+    def get_interface(self, interface_name: str) -> Optional[Interface]:
+        """
+        Returns the interface with the given name, or none if it doesn't exist
+
+        """
+        return self.interface_dict.get(interface_name)
+
+    @property
+    def interfaces(self) -> Iterable[Interface]:
+        """
+        Used to iterate over the Interface instances in this service
+
+        """
+        return self.interface_dict.values()
+
+
+class Network:
+    """
+
+    Class to represent a network of XR containers
+
+    Class variables:
+        network_id:
+            Incremented for each network created, and
+            used to create unique container interface
+            prefixes
+
+    Attributes:
+        name:
+            Name of the network
+
+        interfaces:
+           List of Interface instances that are in this network
+
+        generated:
+           Boolean indicating whether this network existed input YAML
+           or has been generated from the xr_l2networks section, or for
+           a lone XR interface.
+
+        container_prefix:
+            Prefix used for interfaces in this network inside containers.
+
+        topo_id:
+            Unique identifier for this topology
+
+        name:
+            Optional - should only be specified for networks that are
+            defined as Docker networks in input YAML
+
+    """
+
+    network_id = 0
+
+    def __init__(
+        self,
+        generated: bool,
+        topo_id: Optional[str],
+        name: Optional[str] = None,
+    ):
+        """
+        Arguments:
+            generated:
+                True if this has been generated and did not exist in
+                input YAML
+
+            topo_id:
+                Unique identifier for this topology
+
+            name:
+                Name of the network - only applicable for networks
+                defined in the input YAML
+
+        """
+        self.topo_id = topo_id
+        self.generated = generated
+        self.container_prefix = "xr-{}".format(Network.network_id)
+        Network.network_id += 1
+        self.name = name
+        self.interfaces: List[Interface] = []
+
+    def generate_name(self) -> None:
+        """
+        Generate a name for the network. Should be called once all interfaces
+        have been added, and only for networks where generated is True.
+
+        """
+        assert self.generated
+        # It is possible to get here without any interfaces in the network
+        # list if there were errors in the declared interfaces
+        if not self.interfaces:
+            return
+
+        # TYPE SAFETY: self.interfaces is appended to in parse_xr_network and
+        # find_lone_interfaces, both of which get the interfaces from a
+        # service. The service is set on the interface in the Service's init,
+        # so each interface should have service set here
+        if len(self.interfaces) > 1:
+            assert self.interfaces[0].service is not None
+            assert self.interfaces[1].service is not None
+            name = "{}-{}-{}-{}".format(
+                self.interfaces[0].service.service_name,
+                self.interfaces[0].name_abbrev,
+                self.interfaces[1].service.service_name,
+                self.interfaces[1].name_abbrev,
+            )
+        else:
+            assert self.interfaces[0].service is not None
+            name = "{}-{}".format(
+                self.interfaces[0].service.service_name,
+                self.interfaces[0].name_abbrev,
+            )
+        self.name = generate_topo_id_name(self.topo_id, name)
+
+
+class XRCompose:
+    """
+    Class to perform the main jobs of converting input XR YAML into
+    output full docker-compose YAML
+
+    Attributes:
+        topo_id:
+            Topology ID used for this instance, that will be suffixed to
+            container, network and volume names.
+
+        input_file:
+            Name of the input YAML file
+
+        output_file:
+            Name of the output YAML file
+
+        yaml:
+            The YAML output, which is extracted from the input file, edited,
+            and then rewritten to the output file
+
+        networks:
+            List of networks in the topology
+
+        services:
+            List of services in the topology
+
+        errors:
+            List of errors found during parsing of input YAML
+
+        image:
+            Image to be used in each XR container
+
+        mounts:
+            List of paths to be mounted into each XR container
+
+    """
+
+    def __init__(
+        self,
+        topo_id: Optional[str] = None,
+        input_file: Optional[str] = None,
+        output_file: Optional[str] = None,
+        image: Optional[str] = None,
+        mounts: Optional[List[str]] = None,
+        *,
+        privileged: bool = False,
+        cgroups_v2: bool = False,
+    ):
+        """
+        Initialise the XRCompose class.
+
+        Raises:
+            InputDoesNotExistError
+                The input file does not exist
+
+            DockerObjectsRemainingError
+                There are remaining running Docker objects managed by the
+                specified output YAML file
+
+        Arguments:
+            topo_id:
+                Topology ID, if one was specified in input arguments.
+
+            input_file:
+                Input file, if one was specified in input arguments.
+
+            output_file:
+                Output file, if one was specified in input arguments
+
+            image:
+                XR image name, asspecified as a CLI argument. It may be
+                overriden in the YAML on a per-service basis.
+
+            mounts:
+                Optional list of paths to be mounted into each XR container
+
+            privileged:
+                Run in privileged mode
+
+        """
+        self.topo_id = topo_id
+        self.input_file = input_file if input_file else DEFAULT_INPUT
+        LOGGER.debug("Input file name is %s", self.input_file)
+        self.output_file = output_file if output_file else DEFAULT_OUTPUT
+        LOGGER.debug("Output file name is %s", self.output_file)
+        self.mounts = mounts if mounts else []
+        self.privileged = privileged
+        self.cgroups_v2 = cgroups_v2
+
+        self.image = image
+
+        self.check_input_and_output()
+
+        # Load the input YAML
+        with open(self.input_file) as file:
+            try:
+                self.yaml = yaml.safe_load(file)
+            except yaml.YAMLError as e:
+                raise InputYAMLError(str(e)) from e
+
+        self.networks: List[Network] = []
+        self.services: List[Service] = []
+        self.errors: List[Exception] = []
+
+    # -------------------------------------------------------------------
+    # Methods related to checking input arguments
+    # -------------------------------------------------------------------
+    def check_running_docker_objects(self) -> None:
+        """
+        Checks whether containers, networks, or volumes from the exisiting
+        docker-compose YAML are currently running
+
+        Raises:
+            DockerObjectsRemainingError
+                There are reamining running Docker objects managed by the
+                specified output YAML file
+
+        """
+        # First try and load the output YAML - if it is invalid, we can't
+        # check its artefacts, so should just carry on with trying to generate
+        # new output YAML
+        with open(self.output_file) as file:
+            try:
+                output_yaml = yaml.safe_load(file)
+            except yaml.YAMLError:
+                LOGGER.info(
+                    "Unable to check whether the output YAML still manages "
+                    "running Docker objects as it contains invalid syntax."
+                )
+                return
+
+        # Check for running containers using docker-compose ps. This ensures
+        # that containers without a specified name are detected. Docker-compose
+        # is not covered by the python API. Don't include the last empty line.
+        try:
+            docker_compose_out = subprocess.check_output(
+                ["docker-compose", "-f", self.output_file, "ps"],
+                universal_newlines=True,
+            )
+        except subprocess.CalledProcessError:
+            LOGGER.info(
+                "Unable to check whether the output YAML still manages "
+                "running Docker objects as it is not valid docker-compose"
+            )
+            return
+
+        containers = []
+        try:
+            containers = [
+                line.split()[0] for line in docker_compose_out.splitlines()[2:]
+            ]
+        except Exception:
+            LOGGER.info(
+                "Unable to check whether the output YAML still manages "
+                "running Docker containers due to unexpected error"
+            )
+
+        # Docker-compose ps doesn't cover networks or volumes, so check these
+        # separately. If there is an error running the command, log it, but
+        # don't treat it as an error as this isn't essential functionality
+        try:
+            all_volumes = subprocess.check_output(
+                ["docker", "volume", "ls", "--format", "{{.Name}}"],
+                universal_newlines=True,
+            ).split("\n")
+        except subprocess.CalledProcessError as e:
+            LOGGER.info(
+                "Unable to check whether the output YAML still manages "
+                "running Docker volumes due to an unexpected "
+                "error:\n  %s",
+                e.output,
+            )
+
+        volumes = [v for v in output_yaml["volumes"] if v in all_volumes]
+
+        try:
+            all_networks = subprocess.check_output(
+                ["docker", "network", "ls", "--format", "{{.Name}}"],
+                universal_newlines=True,
+            ).split("\n")
+        except subprocess.CalledProcessError as e:
+            LOGGER.info(
+                "Unable to check whether the output YAML still manages named"
+                "running Docker networks due to an unexpected "
+                "error:\n  %s",
+                e.output,
+            )
+
+        # Docker networks defined in the input XR-YAML may not have names, in
+        # which case it isn't possible to tell whether they are still running
+        # as docker network ls only shows network names, which are auto
+        # generated by Docker if not specifieds
+        networks = [
+            n.get("name")
+            for n in output_yaml["networks"].values()
+            if n.get("name") in all_networks
+        ]
+
+        # For any objects still running, raise error
+        if containers or networks or volumes:
+            raise DockerObjectsRemainingError(
+                containers, networks, volumes, self.output_file
+            )
+
+    def check_input_and_output(self) -> None:
+        """
+        Performs the following checks to determine whether YAML generation
+        should go ahead:
+         - Does the input file exist?
+         - Will deleting the output file leave any unmanaged running Docker
+           objects
+
+        Raises:
+            InputDoesNotExistError
+                The input file does not exist
+
+            DockerObjectsRemainingError
+                There are reamining running Docker objects managed by the
+                specified output YAML file
+
+        """
+        if not os.path.exists(self.input_file):
+            raise InputDoesNotExistError(self.input_file)
+
+        if os.path.exists(self.output_file):
+            self.check_running_docker_objects()
+
+    # -------------------------------------------------------------------
+    # Methods related to parsing the input YAML
+    # -------------------------------------------------------------------
+
+    def parse_service_interfaces(
+        self, service_name: str, service_yaml: Dict[str, Any]
+    ) -> List[Interface]:
+        """
+        For the given service YAML, if the XR interfaces Keyword is present,
+        parse and return a list of Interface instances. Any errors are added
+        to the class attribute errors list, and the XR interfaces keyword
+        is deleted from the service YAML.
+
+        """
+        xr_interfaces: typing.Dict[str, Interface] = OrderedDict()
+        if XR_INTERFACES not in service_yaml:
+            return list(xr_interfaces.values())
+
+        if not isinstance(service_yaml[XR_INTERFACES], list):
+            self.errors.append(XRServiceInterfacesNonListError(service_name))
+            return list(xr_interfaces.values())
+
+        for interface in service_yaml[XR_INTERFACES]:
+            xr_interface = Interface(interface)
+            try:
+                xr_interface.sanitise()
+            except InvalidXRInterfaceError as e:
+                self.errors.append(e)
+                # Still include in the list of interfaces, to
+                # avoid other errors due to this interface
+                # being referenced and not existing
+                # Do not check for duplicates as we are
+                # already reporting an error for this interface.
+                if xr_interface.name not in xr_interfaces:
+                    xr_interfaces[xr_interface.name] = xr_interface
+            else:
+                if xr_interface.name in xr_interfaces:
+                    self.errors.append(
+                        DuplicateInterfaceError(
+                            service_name, xr_interface.name
+                        )
+                    )
+                else:
+                    xr_interfaces[xr_interface.name] = xr_interface
+
+        del service_yaml[XR_INTERFACES]
+
+        return list(xr_interfaces.values())
+
+    def _parse_service_file(
+        self, service_yaml: Dict[str, Any], service_name: str, file_kw: str
+    ) -> Optional[str]:
+        """
+        For the given service YAML, if the XR startup config Keyword is
+        present, parse and edit to contain a path relative to the output
+        file if necessary.
+
+        Returns:
+            The startup config path to use in the output YAML
+
+        Arguments:
+            service_yaml:
+                Service YAML dictionary
+
+            service_name:
+                Name of this service
+
+            file_kw:
+                The keyword corresponding to the file to parse out of the
+                service YAML
+
+        """
+        if file_kw not in service_yaml:
+            return None
+
+        path = service_yaml[file_kw]
+        del service_yaml[file_kw]
+
+        if not isinstance(path, str):
+            raise XRStartupConfigNonStringError(service_name)
+
+        # Do not tamper with absolute paths or paths starting with a $
+        if path.startswith("/") or path.startswith("$"):
+            LOGGER.debug(
+                "Path to be mounted %s for service %s is absolute and "
+                "therefore not altered",
+                path,
+                service_name,
+            )
+            return path
+
+        # Relative paths are assumed relative to the location of the input
+        # file, and will need to be converted to relative to the output file
+        # if the output file and input file are in different locations
+        output_abspath = os.path.abspath(self.output_file)
+        LOGGER.debug(
+            "Path to be mounted %s for service %s is relative and will be "
+            "altered to be relative to output file %s",
+            path,
+            service_name,
+            self.output_file,
+        )
+
+        # Get absolute path to the config and express it as a relative path
+        # from the output file
+        path = os.path.relpath(
+            "{}/{}".format(
+                os.path.dirname(os.path.abspath(self.input_file)), path
+            ),
+            start=os.path.dirname(output_abspath),
+        )
+
+        if not path.startswith("."):
+            path = "./{}".format(path)
+        return path
+
+    def parse_service_startup_cfg(
+        self, service_yaml: Dict[str, Any], service_name: str
+    ) -> Optional[str]:
+        """
+        For the given service YAML, if the XR startup config Keyword is
+        present, parse and edit to contain a path relative to the output
+        file if necessary.
+
+        Returns:
+            The startup config path to use in the output YAML
+
+        Arguments:
+            service_yaml:
+                Service YAML dictionary
+
+            service_name:
+                Name of this service
+
+        """
+        return self._parse_service_file(
+            service_yaml, service_name, XR_STARTUP_CFG
+        )
+
+    def parse_service_boot_script(
+        self, service_yaml: Dict[str, Any], service_name: str
+    ) -> Optional[str]:
+        """
+        For the given service YAML, if the XR boot script keyword is
+        present, parse and edit to contain a path relative to the output
+        file if necessary.
+
+        Returns:
+            The boot script path to use in the output YAML
+
+        Arguments:
+            service_yaml:
+                Service YAML dictionary
+
+            service_name:
+                Name of this service
+
+        """
+        return self._parse_service_file(
+            service_yaml, service_name, XR_BOOT_SCRIPT
+        )
+
+    def parse_services(self) -> None:
+        """
+        Walks services in the input YAML to police the input YAML grammar and
+        create Service and Interface classes
+
+        """
+        for service_name, service in self.yaml.get("services", {}).items():
+            # TYPE SAFETY: service_name is a key in a yaml dictionary, so it's
+            # a string
+            if not isinstance(service_name, str):
+                raise TypeError(service_name)
+
+            LOGGER.debug("Parsing service %s", service_name)
+
+            # Service may have no content
+            if service is None:
+                continue
+
+            # Ignore non_xr services
+            if NON_XR in service:
+                is_non_xr_service = service[NON_XR]
+                del service[NON_XR]
+                if is_non_xr_service:
+                    LOGGER.debug(
+                        "Ignoring service %s due to %s keyword",
+                        service_name,
+                        NON_XR,
+                    )
+                    for key in [
+                        k for k in service if k.startswith(XR_KEYWORD_PREFIX)
+                    ]:
+                        self.errors.append(
+                            NonXRServiceXRKeywordError(service_name)
+                        )
+                    continue
+
+            # Check for invalid keywords starting 'xr_', but proceed
+            # to try and find as many errors as possible
+            for key in service:
+                if (
+                    key.startswith(XR_KEYWORD_PREFIX)
+                    and key not in VALID_XR_SERVICE_KEYWORDS
+                ):
+                    self.errors.append(
+                        InvalidXRKeywordError(service_name, key)
+                    )
+
+            # Sanitise interface name and create interface instance
+            xr_interfaces = self.parse_service_interfaces(
+                service_name, service
+            )
+
+            startup_cfg_path = self.parse_service_startup_cfg(
+                service, service_name
+            )
+
+            boot_script_path = self.parse_service_boot_script(
+                service, service_name
+            )
+
+            self.services.append(
+                Service(
+                    service_name,
+                    self.topo_id,
+                    startup_cfg=startup_cfg_path,
+                    boot_script=boot_script_path,
+                    interfaces=xr_interfaces,
+                )
+            )
+
+    def get_service(self, service_name: str) -> Optional[Service]:
+        """
+        Walk the list of services and return the one with the supplied name,
+        or None if one was not found
+
+        """
+        for service in self.services:
+            if service.service_name == service_name:
+                return service
+        return None
+
+    def parse_xr_network_interface(
+        self, intf_str: str, network_name: Optional[str]
+    ) -> Interface:
+        """
+        Given a string that should be of the form "service:interface" defining
+        an interface in a network, sanitise it, and return the corresponding
+        Interface instance
+
+        Raises:
+            InvalidXRInterfaceError
+                The format of the string is incorrect
+
+            NonExistentServiceError:
+                The service does not exist
+
+            NonExistentInterfaceError:
+                The interface does not exist
+
+            DoubleNetworkError
+                The interface is already in another network
+
+        Arguments:
+            intf_str:
+                The interface string to parse
+
+            network_name:
+                The name of this network, if it was a predefined Docker network
+
+        """
+        if ":" not in intf_str:
+            raise InvalidXRInterfaceError(intf_str)
+
+        service_name, interface_name = intf_str.split(":")
+        service = self.get_service(service_name)
+        if service is None:
+            raise NonExistentServiceError(
+                XR_L2NETWORKS if network_name is None else network_name,
+                service_name,
+            )
+
+        interface = service.get_interface(interface_name)
+        if interface is None:
+            raise NonExistentInterfaceError(
+                XR_L2NETWORKS if network_name is None else network_name,
+                service_name,
+                interface_name,
+            )
+
+        if interface.network is not None:
+            raise DoubleNetworkError(intf_str)
+
+        return interface
+
+    def parse_xr_network(
+        self, network_yaml: List[str], network_name: Optional[str] = None
+    ) -> None:
+        """
+        Handle the parsing and creation of an xr network based on a set of
+        interfaces, appending any errors to the error list
+
+        Arguments:
+            network_yaml:
+                List of <service name>:<interface name> strings
+
+            network_name:
+                Optional, and should be only be specified for predefined
+                Docker networks that have XR interfaces added
+
+        """
+        network = Network(network_name is None, self.topo_id, network_name)
+        for item in network_yaml:
+            try:
+                interface = self.parse_xr_network_interface(item, network_name)
+            except Error as e:
+                self.errors.append(e)
+            else:
+                # TYPE SAFETY: self.parse_xr_network_interface above gets a
+                # Service object, then gets the relevant interface from that.
+                # In the Service init, where the interfaces on that Service
+                # are set, it sets the service attribute on all those
+                # interfaces, so interface.service must not be None
+                assert interface.service is not None
+
+                # Set up links between classes
+                network.interfaces.append(interface)
+                interface.network = network
+
+                # If an interface is part of a non-generated, non-L2 network,
+                # and the checksum offload counteract behavior is
+                # undetermined, it should be enabled
+                if (
+                    interface.chksum_offload is ChecksumOffload.UNDETERMINED
+                    and network.generated is False
+                ):
+                    interface.chksum_offload = ChecksumOffload.ENABLED
+                    LOGGER.debug(
+                        "Interface %s on service %s has had checksum offload counteract "
+                        "enabled by default as it is in a non-L2 network",
+                        interface.name,
+                        interface.service.service_name,
+                    )
+
+        if network_name is None:
+            network.generate_name()
+        LOGGER.debug(
+            "Network %s contains interfaces %s",
+            network.name,
+            ", ".join([i.name for i in network.interfaces]),
+        )
+
+        self.networks.append(network)
+
+    def parse_xr_l2networks(self) -> None:
+        """
+        Walks xr_l2networks in the input YAML to police the input YAML grammar
+        and create Network classes
+
+        """
+        LOGGER.debug("Parsing l2networks")
+        l2networks = self.yaml.get(XR_L2NETWORKS)
+
+        if l2networks is None:
+            # No defined networks, return
+            return
+
+        # This should contain a plain list of lists
+        if l2networks is not None and not isinstance(l2networks, list):
+            self.errors.append(XRL2NetworkNonListError())
+            return
+
+        # TYPE SAFETY: If l2networks were None, we'd have returned already
+        assert l2networks is not None
+
+        for l2network in l2networks:
+            if not isinstance(l2network, list):
+                self.errors.append(XRL2NetworkNonListError())
+            else:
+                self.parse_xr_network(l2network)
+
+        if l2networks is not None:
+            del self.yaml[XR_L2NETWORKS]
+
+    def parse_networks(self) -> None:
+        """
+        Walks networks in the input YAML to police the input YAML grammar
+        and create Network classes
+
+        """
+        for network_name, network in self.yaml.get("networks", {}).items():
+            # Network may have no contents
+            if network is None:
+                continue
+
+            # Check for invalid keywords starting 'xr_', but proceed
+            # to try and find as many errors as possible
+            for key in network:
+                if (
+                    key.startswith(XR_KEYWORD_PREFIX)
+                    and key not in VALID_NETWORK_KEYWORDS
+                ):
+                    self.errors.append(InvalidXRKeywordError("networks", key))
+
+            if XR_INTERFACES in network:
+                if not isinstance(network[XR_INTERFACES], list):
+                    self.errors.append(
+                        XRNetworkInterfacesNonListError(network_name)
+                    )
+                else:
+                    LOGGER.debug("Parsing network %s", network_name)
+                    self.parse_xr_network(network[XR_INTERFACES], network_name)
+
+                del network[XR_INTERFACES]
+
+    def find_lone_interfaces(self) -> None:
+        """
+        Walk services and their interfaces to find lone interfaces and create
+        networks for them
+
+        """
+        for service, interface in (
+            (s, i)
+            for s in self.services
+            for i in s.interfaces
+            if i.network is None
+        ):
+            LOGGER.debug(
+                "Create network for lone interface %s:%s",
+                service.service_name,
+                interface.name,
+            )
+            network = Network(True, self.topo_id)
+            network.interfaces.append(interface)
+            interface.network = network
+            network.generate_name()
+            self.networks.append(network)
+
+    # -------------------------------------------------------------------
+    # Methods related to writing the output YAML
+    # -------------------------------------------------------------------
+    def add_provision_volume(self, service: Service) -> None:
+        """
+        Generate a volume to be used to persist data for the given service
+
+        Raises:
+            VolumeExistsError
+                A volume that is to be generated in the output YAML
+                already exists
+
+        """
+        if "volumes" not in self.yaml:
+            self.yaml["volumes"] = {}
+
+        volume_name = generate_topo_id_name(self.topo_id, service.service_name)
+        if volume_name in self.yaml["volumes"]:
+            raise VolumeExistsError(volume_name)
+        LOGGER.debug(
+            "Creating volume %s in YAML for service %s",
+            volume_name,
+            service.service_name,
+        )
+        self.yaml["volumes"][volume_name] = {"name": volume_name}
+
+        service_yaml = self.yaml["services"][service.service_name]
+        if "volumes" not in service_yaml:
+            service_yaml["volumes"] = []
+        service_yaml["volumes"].append(
+            "{}:{}".format(volume_name, PROVISION_VOLUME_PATH)
+        )
+
+    def add_startup_cfg(self, service: Service) -> None:
+        """
+        Add the bind mount and env var required for startup cfg to a service
+
+        Raises:
+            EnvVarExistsError
+                An env var that is to be generated in the output YAML
+                already exists
+
+        """
+        LOGGER.debug(
+            "Adding startup config to YAML at path %s for service %s",
+            service.startup_cfg,
+            service.service_name,
+        )
+        service_yaml = self.yaml["services"][service.service_name]
+        if "volumes" not in service_yaml:
+            service_yaml["volumes"] = []
+
+        service_yaml["volumes"].append(
+            {
+                "type": "bind",
+                "source": service.startup_cfg,
+                "target": STARTUP_CONFIG_PATH,
+            }
+        )
+
+        if "environment" not in service_yaml:
+            service_yaml["environment"] = {}
+        if STARTUP_CONFIG_ENV in service_yaml["environment"]:
+            raise EnvVarExistsError(STARTUP_CONFIG_ENV)
+
+        service_yaml["environment"][STARTUP_CONFIG_ENV] = STARTUP_CONFIG_PATH
+
+    def add_boot_script(self, service: Service) -> None:
+        """
+        Add the bind mount and env var required for the boot script to a
+        service
+
+        Raises:
+            EnvVarExistsError
+                An env var that is to be generated in the output YAML
+                already exists
+
+        """
+        LOGGER.debug(
+            "Adding boot script to YAML at path %s for service %s",
+            service.startup_cfg,
+            service.service_name,
+        )
+        service_yaml = self.yaml["services"][service.service_name]
+        if "volumes" not in service_yaml:
+            service_yaml["volumes"] = []
+
+        service_yaml["volumes"].append(
+            {
+                "type": "bind",
+                "source": service.boot_script,
+                "target": BOOT_SCRIPT_PATH,
+            }
+        )
+
+        if "environment" not in service_yaml:
+            service_yaml["environment"] = {}
+        if BOOT_SCRIPT_ENV in service_yaml["environment"]:
+            raise EnvVarExistsError(BOOT_SCRIPT_ENV)
+
+        service_yaml["environment"][BOOT_SCRIPT_ENV] = BOOT_SCRIPT_PATH
+
+    def add_xr_parameters(self, service: Service) -> None:
+        """
+        Add the necessary XR parameters to an XR service
+
+        """
+        LOGGER.debug(
+            "Adding XR parameters to YAML for service %s", service.service_name
+        )
+        service_yaml = self.yaml["services"][service.service_name]
+
+        if self.privileged:
+            service_yaml["privileged"] = True
+        else:
+            service_yaml["cap_drop"] = ["all"]
+            service_yaml.setdefault("cap_add", []).extend(
+                [
+                    "CHOWN",
+                    "DAC_OVERRIDE",
+                    "FSETID",
+                    "FOWNER",
+                    "MKNOD",
+                    "NET_RAW",
+                    "SETGID",
+                    "SETUID",
+                    "SETFCAP",
+                    "SETPCAP",
+                    "NET_BIND_SERVICE",
+                    "SYS_CHROOT",
+                    "KILL",
+                    "AUDIT_WRITE",
+                    "SYS_NICE",
+                    "SYS_ADMIN",
+                    "SYS_RESOURCE",
+                    "NET_ADMIN",
+                    "SYS_PTRACE",
+                    "IPC_LOCK",
+                    # @@@GDPlane: required for DPDK to use interfaces
+                    "SYS_RAWIO",
+                ]
+            )
+            # AppArmor and SELinux are not supported with the default docker
+            # profiles.
+            service_yaml.setdefault("security_opt", []).extend(
+                ["apparmor:unconfined", "label:disable"]
+            )
+            service_yaml.setdefault("devices", []).extend(
+                ["/dev/fuse", "/dev/net/tun"]
+            )
+            if not self.cgroups_v2:
+                service_yaml.setdefault("volumes", []).append(
+                    {
+                        "type": "bind",
+                        "source": "/sys/fs/cgroup",
+                        "target": "/sys/fs/cgroup",
+                        "read_only": True,
+                    }
+                )
+
+    def add_service_networks(self, service: Service) -> None:
+        """
+        Link a service to networks in YAML and set the environment variables
+        required to specify which XR interfaces correspond to which linux
+        interfaces
+
+        Raises:
+            EnvVarExistsError
+                An env var that is to be generated in the output YAML
+                already exists
+
+        """
+        xr_interfaces = []
+        xr_mgmt_interfaces = []
+
+        service_yaml = self.yaml["services"][service.service_name]
+
+        if "networks" not in service_yaml:
+            service_yaml["networks"] = {}
+
+        for interface in service.interfaces:
+            # TYPE SAFETY: find_lone_interfaces is always called before this,
+            # which sets the network on any interfaces where it's not yet been
+            # set, so can assume that it's been set by this point
+            assert interface.network is not None
+            if interface.network.name not in service_yaml["networks"]:
+                service_yaml["networks"][interface.network.name] = None
+
+        if "environment" not in service_yaml:
+            service_yaml["environment"] = {}
+
+        # Set interfaces
+        if list(service.interfaces):
+            if INTERFACES_ENV in service_yaml["environment"]:
+                raise EnvVarExistsError(INTERFACES_ENV)
+            if MGMT_INTERFACES_ENV in service_yaml["environment"]:
+                raise EnvVarExistsError(MGMT_INTERFACES_ENV)
+            for interface in service.interfaces:
+                # TYPE SAFETY: find_lone_interfaces is always called before this,
+                # which sets the network on any interfaces where it's not yet been
+                # set, so can assume that it's been set by this point
+                assert interface.network is not None
+                entry = "linux:{}0,{}".format(
+                    interface.network.container_prefix,
+                    ",".join(interface.flags),
+                )
+                if interface.is_mgmt:
+                    xr_mgmt_interfaces.append(entry)
+                else:
+                    xr_interfaces.append(entry)
+
+            if xr_interfaces:
+                service_yaml["environment"][INTERFACES_ENV] = ";".join(
+                    xr_interfaces
+                )
+            if xr_mgmt_interfaces:
+                service_yaml["environment"][MGMT_INTERFACES_ENV] = ";".join(
+                    xr_mgmt_interfaces
+                )
+
+    def add_mounts(self, service: Service) -> None:
+        """
+        Add mounts that were specified in CLI to an XR service
+
+        """
+        service_yaml = self.yaml["services"][service.service_name]
+        if "volumes" not in service_yaml:
+            service_yaml["volumes"] = []
+
+        LOGGER.debug(
+            "Adding mounts %s to YAML for service %s",
+            ", ".join(self.mounts),
+            service.service_name,
+        )
+        for mount in self.mounts:
+            if ":" in mount:
+                src, tgt = mount.split(":")
+            else:
+                src = mount
+                tgt = mount
+            service_yaml["volumes"].append(
+                {"type": "bind", "source": src, "target": tgt}
+            )
+
+    def write_services(self) -> None:
+        """
+        Walk through services and write the required into the YAML content
+        to bring up the full Docker compose topology
+
+        Raises:
+            EnvVarExistsError
+                An env var that is to be generated in the output YAML
+                already exists
+
+            VolumeExistsError
+                A volume that is to be generated in the output YAML
+                already exists
+
+        """
+        for service in self.services:
+            LOGGER.debug("Writing service %s to YAML", service.service_name)
+            # Startup config
+            if service.startup_cfg is not None:
+                self.add_startup_cfg(service)
+
+            # Boot script
+            if service.boot_script is not None:
+                self.add_boot_script(service)
+
+            # Persistence volume
+            self.add_provision_volume(service)
+
+            # Set up network links
+            self.add_service_networks(service)
+
+            # Add in extra mounts if specified as CLI input
+            if self.mounts:
+                self.add_mounts(service)
+
+            service_yaml = self.yaml["services"][service.service_name]
+            if "image" not in service_yaml:
+                if self.image is None:
+                    raise MissingImageError(service.service_name)
+                service_yaml["image"] = self.image
+
+            if "container_name" not in service_yaml:
+                service_yaml["container_name"] = service.container_name
+
+            for item in ["stdin_open", "tty"]:
+                if item not in service_yaml:
+                    service_yaml[item] = True
+
+            # Add XR parameters for an XR container service
+            self.add_xr_parameters(service)
+
+    def write_networks(self) -> None:
+        """
+        Walk through networks and create any that don't already
+        exist.
+
+        Raises:
+            NetworkExistsError
+                A network that is to be generated in the output YAML
+                already exists
+
+        """
+        if "networks" not in self.yaml:
+            self.yaml["networks"] = {}
+        for network in self.networks:
+            # TYPE SAFETY: By this point, the network name was either set
+            # originally, or has already been set by generate_name()
+            assert network.name is not None
+            if network.name in self.yaml["networks"] and network.generated:
+                raise NetworkExistsError(network.name)
+            if network.name not in self.yaml["networks"]:
+                self.yaml["networks"][network.name] = {}
+
+            LOGGER.debug("Writing network %s to YAML", network.name)
+            self.yaml["networks"][network.name]["driver_opts"] = {
+                "com.docker.network.container_iface_prefix": network.container_prefix
+            }
+            if network.generated:
+                self.yaml["networks"][network.name]["name"] = network.name
+                self.yaml["networks"][network.name]["internal"] = True
+
+    def generate(self) -> None:
+        """
+        Generates output Docker compose YAML from the input XR YAML,
+        logging information and errors.
+
+        Raises:
+            InputYAMLXRError:
+                Raised if there were any XR errors in the input
+
+            EnvVarExistsError
+                An env var that is to be generated in the output YAML
+                already exists
+
+            VolumeExistsError
+                A volume that is to be generated in the output YAML
+                already exists
+
+            NetworkExistsError
+                A network that is to be generated in the output YAML
+                already exists
+
+        """
+
+        # Parse input YAML and build up lists of service and network classes
+        # Errors will be added to the errors list attribute so that as many
+        # as possible can be found and reported to the user at once, rather
+        # than raising individual errors
+        self.parse_services()
+        self.parse_xr_l2networks()
+        self.parse_networks()
+
+        # Once all defined XR services and networks have been parsed, need to
+        # genreate networks for lone interfaces that were not mentioned in
+        # any network
+        self.find_lone_interfaces()
+
+        if self.errors:
+            raise InputYAMLXRError(self.input_file, self.errors)
+
+        # Fill in the YAML content with the full Docker-compose YAML
+        # required to launch this topology. If anything goes wrong here,
+        # report it and exit
+        self.write_services()
+        self.write_networks()
+
+        # The user must specify the version if our default is unsuitable.
+        if "version" not in self.yaml:
+            self.yaml["version"] = DEFAULT_YAML_VERSION
+
+        LOGGER.info(
+            "Writing output docker-compose YAML to %s", self.output_file
+        )
+        with open(self.output_file, "w") as file:
+            yaml.safe_dump(self.yaml, file, default_flow_style=False)
+
+    def launch(self) -> None:
+        """
+        Launch the topology. May be called after generate() has been called
+        successfully to generate the output docker-compose YAML and write it
+        to the output file.
+
+        Raises:
+            subprocess.CalledProcessError
+                Raised if the launch command does not succeed
+
+        """
+        LOGGER.info("Launching docker-compose topology...")
+        subprocess.run(
+            ["docker-compose", "-f", self.output_file, "up", "-d"], check=True
+        )
+
+
+# --------------
+# Main
+# --------------
+
+
+def parse_input_args() -> argparse.Namespace:
+    """
+    Parse script args.
+
+    """
+    parser = argparse.ArgumentParser(
+        description="Run xr-compose to translate input YAML into the full "
+        "YAML required to run docker-compose topologies. Note "
+        "that an image must be specified with -i, if images are "
+        "not specified in the YAML input for each service."
+    )
+    parser.add_argument(
+        "-f",
+        "--input-file",
+        metavar="FILE",
+        help="Specify an alternative input file.",
+    )
+    parser.add_argument(
+        "-o",
+        "--output-file",
+        metavar="FILE",
+        help="Specify an alternative output file.",
+    )
+    parser.add_argument(
+        "-i",
+        "--image",
+        help="Name/ID of loaded XRd image to launch. This will be overridden "
+        "by any images specified in the input YAML.",
+    )
+    parser.add_argument(
+        "-t",
+        "--topo-id",
+        metavar="STR",
+        help="Specify a topology instance identifier used to suffix "
+        "container, volume, and network names.",
+    )
+    parser.add_argument(
+        "-l",
+        "--launch",
+        action="store_true",
+        help="Launch a topology from the generated docker-compose YAML.",
+    )
+    parser.add_argument(
+        "-m",
+        "--mount",
+        metavar="PATH",
+        nargs="+",
+        dest="mounts",
+        help="A space separated list of paths to mount into each XR container. "
+        "Relative paths will be treated as relative to the input YAML "
+        "file. Each path can be of the form '<src>' or '<src>:<tgt>'.",
+    )
+    parser.add_argument(
+        "-d", "--debug", action="store_true", help="Enable debug output"
+    )
+    parser.add_argument(
+        "--privileged", action="store_true", help="Launch in privileged mode"
+    )
+    parser.add_argument(
+        "--cgroups-version",
+        type=int,
+        default=1,
+        choices=[1, 2],
+        help="Specify cgroup version used by the host (defaults to 1)",
+    )
+
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_input_args()
+
+    # Set up logging
+    level = logging.DEBUG if args.debug else logging.INFO
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(level)
+    formatter = logging.Formatter("%(levelname)s - %(message)s", "%H:%M:%S")
+    handler.setFormatter(formatter)
+    LOGGER.addHandler(handler)
+    LOGGER.setLevel(level)
+
+    try:
+        # Initialise the XRCompose structure. This will complete verification
+        # of the input arguments
+        xr_compose = XRCompose(
+            args.topo_id,
+            args.input_file,
+            args.output_file,
+            args.image,
+            args.mounts if args.mounts else None,
+            privileged=args.privileged,
+            cgroups_v2=(args.cgroups_version == 2),
+        )
+
+        # Generate output YAML from the input YAML
+        xr_compose.generate()
+
+        if args.launch:
+            xr_compose.launch()
+    except Error as exc:
+        LOGGER.error(str(exc))
+        sys.exit(1)
