@@ -177,4 +177,4 @@ topology:
 
     - endpoints: ["xrd10:Gi0-0-0-3", "xrd10-host:xrd10-Gi0-0-0-3"]
     - endpoints: ["xrd10:Gi0-0-0-4", "xrd11:Gi0-0-0-0"]
-    - endpoints: ["ubuntu01:eth10","xrd010-host:ubuntu01-eth10"]
+    - endpoints: ["ubuntu01:eth10","xrd10-host:ubuntu01-eth10"]
