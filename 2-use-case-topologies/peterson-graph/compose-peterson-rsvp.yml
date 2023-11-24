@@ -169,69 +169,69 @@ networks:
   xrd01-host:
     ipam:
       config:
-        - subnet: 10.101.1.0/24
+        - subnet: 10.10.1.0/24
     xr_interfaces:
       - xrd01:Gi0/0/0/3
 
   xrd02-host:
     ipam:
       config:
-        - subnet: 10.101.2.0/24
+        - subnet: 10.10.2.0/24
     xr_interfaces:
       - xrd02:Gi0/0/0/3
 
   xrd03-host:
     ipam:
       config:
-        - subnet: 10.101.3.0/24
+        - subnet: 10.10.3.0/24
     xr_interfaces:
       - xrd03:Gi0/0/0/3
 
   xrd04-host:
     ipam:
       config:
-        - subnet: 10.101.4.0/24
+        - subnet: 10.10.4.0/24
     xr_interfaces:
       - xrd04:Gi0/0/0/3
 
   xrd05-host:
     ipam:
       config:
-        - subnet: 10.101.5.0/24
+        - subnet: 10.10.5.0/24
     xr_interfaces:
       - xrd05:Gi0/0/0/3
 
   xrd06-host:
     ipam:
       config:
-        - subnet: 10.101.6.0/24
+        - subnet: 10.10.6.0/24
     xr_interfaces:
       - xrd06:Gi0/0/0/3
 
   xrd07-host:
     ipam:
       config:
-        - subnet: 10.101.7.0/24
+        - subnet: 10.10.7.0/24
     xr_interfaces:
       - xrd07:Gi0/0/0/3
 
   xrd08-host:
     ipam:
       config:
-        - subnet: 10.101.8.0/24
+        - subnet: 10.10.8.0/24
     xr_interfaces:
       - xrd08:Gi0/0/0/3
 
   xrd09-host:
     ipam:
       config:
-        - subnet: 10.101.9.0/24
+        - subnet: 10.10.9.0/24
     xr_interfaces:
       - xrd09:Gi0/0/0/3
 
   xrd10-host:
     ipam:
       config:
-        - subnet: 10.101.10.0/24
+        - subnet: 10.10.10.0/24
     xr_interfaces:
       - xrd10:Gi0/0/0/3
