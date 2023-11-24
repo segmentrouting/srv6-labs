@@ -1,4 +1,4 @@
-# ansible-playbook -i hosts deploy-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+# ansible-playbook -i hosts deploy-playbook-rsvp.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
 
 - name: Run ubuntu-trex01 playbook
   import_playbook: ubuntu-trex01-rsvp.yml

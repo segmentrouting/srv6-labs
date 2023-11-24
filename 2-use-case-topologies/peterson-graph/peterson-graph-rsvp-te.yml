@@ -13,77 +13,77 @@ topology:
   nodes:
     xrd01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.101
       mgmt_ipv6: 2001:172:20:15::101
       startup-config: config-rsvp-te/xrd01.cfg
 
     xrd02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.102
       mgmt_ipv6: 2001:172:20:15::102
       startup-config: config-rsvp-te/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.103
       mgmt_ipv6: 2001:172:20:15::103
       startup-config: config-rsvp-te/xrd03.cfg
 
     xrd04:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.104
       mgmt_ipv6: 2001:172:20:15::104
       startup-config: config-rsvp-te/xrd04.cfg
 
     xrd05:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.105
       mgmt_ipv6: 2001:172:20:15::105
       startup-config: config-rsvp-te/xrd05.cfg
 
     xrd06:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.106
       mgmt_ipv6: 2001:172:20:15::106
       startup-config: config-rsvp-te/xrd06.cfg
 
     xrd07:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.107
       mgmt_ipv6: 2001:172:20:15::107
       startup-config: config-rsvp-te/xrd07.cfg
 
     xrd08:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.108
       mgmt_ipv6: 2001:172:20:15::108
       startup-config: config-rsvp-te/xrd08.cfg
 
     xrd09:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.109
       mgmt_ipv6: 2001:172:20:15::109
       startup-config: config-rsvp-te/xrd09.cfg
 
     xrd10:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.110
       mgmt_ipv6: 2001:172:20:15::110
       startup-config: config-rsvp-te/xrd10.cfg
 
     xrd11:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-vrouter:7.8.2
       mgmt_ipv4: 172.20.15.111
       mgmt_ipv6: 2001:172:20:15::111
       startup-config: config-rsvp-te/xrd11.cfg
@@ -145,23 +145,29 @@ topology:
     - endpoints: ["xrd03:Gi0-0-0-1", "xrd06:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-2", "xrd10:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-3", "xrd03-host:xrd03-Gi0-0-0-3"]
+    - endpoints: ["ubuntu01:eth3","xrd03-host:ubuntu01-eth3"]
 
     - endpoints: ["xrd04:Gi0-0-0-1", "xrd07:Gi0-0-0-0"]
     - endpoints: ["xrd04:Gi0-0-0-2", "xrd08:Gi0-0-0-0"]
     - endpoints: ["xrd04:Gi0-0-0-3", "xrd04-host:xrd04-Gi0-0-0-3"]
+    - endpoints: ["ubuntu01:eth4","xrd04-host:ubuntu01-eth4"]
 
     - endpoints: ["xrd05:Gi0-0-0-1", "xrd06:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-2", "xrd08:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-3", "xrd05-host:xrd05-Gi0-0-0-3"]
+    - endpoints: ["ubuntu01:eth5","xrd05-host:ubuntu01-eth5"]
 
     - endpoints: ["xrd06:Gi0-0-0-2", "xrd07:Gi0-0-0-1"]
     - endpoints: ["xrd06:Gi0-0-0-3", "xrd06-host:xrd06-Gi0-0-0-3"]
+    - endpoints: ["ubuntu01:eth6","xrd06-host:ubuntu01-eth6"]
 
     - endpoints: ["xrd07:Gi0-0-0-2", "xrd09:Gi0-0-0-1"]
     - endpoints: ["xrd07:Gi0-0-0-3", "xrd07-host:xrd07-Gi0-0-0-3"]
+    - endpoints: ["ubuntu01:eth7","xrd07-host:ubuntu01-eth7"]
 
     - endpoints: ["xrd08:Gi0-0-0-2", "xrd10:Gi0-0-0-1"]
     - endpoints: ["xrd08:Gi0-0-0-3", "xrd08-host:xrd08-Gi0-0-0-3"]
+    - endpoints: ["ubuntu01:eth8","xrd08-host:ubuntu01-eth8"]
 
     - endpoints: ["xrd09:Gi0-0-0-2", "xrd10:Gi0-0-0-2"]
     - endpoints: ["xrd09:Gi0-0-0-3", "xrd09-host:xrd09-Gi0-0-0-3"]
@@ -171,3 +177,4 @@ topology:
 
     - endpoints: ["xrd10:Gi0-0-0-3", "xrd10-host:xrd10-Gi0-0-0-3"]
     - endpoints: ["xrd10:Gi0-0-0-4", "xrd11:Gi0-0-0-0"]
+    - endpoints: ["ubuntu01:eth10","xrd010-host:ubuntu01-eth10"]
