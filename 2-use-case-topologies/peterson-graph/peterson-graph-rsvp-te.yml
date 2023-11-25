@@ -88,25 +88,25 @@ topology:
       mgmt_ipv6: 2001:172:20:15::111
       startup-config: config-rsvp-te/xrd11.cfg
 
-    # trex01:
-    #   kind: linux
-    #   image: trexcisco/trex:latest
-    #   #mgmt_ipv4: 172.20.15.201
-
-    # trex09:
-    #   kind: linux
-    #   image: trexcisco/trex:latest
-    #   #mgmt_ipv4: 172.20.15.209
-
-    ubuntu01:
+    trex01:
       kind: linux
-      image: ubuntu-trex:1.1
-      mgmt_ipv4: 172.20.15.201
+      image: trexcisco/trex:latest
+      #mgmt_ipv4: 172.20.15.201
 
-    ubuntu09:
+    trex09:
       kind: linux
-      image: ubuntu-trex:1.1
-      mgmt_ipv4: 172.20.15.209
+      image: trexcisco/trex:latest
+      #mgmt_ipv4: 172.20.15.209
+
+    # ubuntu01:
+    #   kind: linux
+    #   image: ubuntu-trex:1.1
+    #   mgmt_ipv4: 172.20.15.201
+
+    # ubuntu09:
+    #   kind: linux
+    #   image: ubuntu-trex:1.1
+    #   mgmt_ipv4: 172.20.15.209
 
     xrd01-host:
       kind: bridge
@@ -134,47 +134,56 @@ topology:
     - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-2", "xrd04:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-3", "xrd01-host:xrd01-Gi0-0-0-3"]
-    #- endpoints: ["trex01:eth1","xrd01-host:trex01-eth1"]
-    - endpoints: ["ubuntu01:eth1","xrd01-host:ubuntu01-eth1"]
+    - endpoints: ["trex01:eth1","xrd01-host:trex01-eth1"]
+    #- endpoints: ["ubuntu01:eth1","xrd01-host:ubuntu01-eth1"]
 
     - endpoints: ["xrd02:Gi0-0-0-1", "xrd05:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-2", "xrd09:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-3", "xrd02-host:xrd02-Gi0-0-0-3"]
-    - endpoints: ["ubuntu01:eth2","xrd02-host:ubuntu01-eth2"]
+    - endpoints: ["trex01:eth2","xrd02-host:trex01-eth2"]
+    #- endpoints: ["ubuntu01:eth2","xrd02-host:ubuntu01-eth2"]
 
     - endpoints: ["xrd03:Gi0-0-0-1", "xrd06:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-2", "xrd10:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-3", "xrd03-host:xrd03-Gi0-0-0-3"]
-    - endpoints: ["ubuntu01:eth3","xrd03-host:ubuntu01-eth3"]
+    - endpoints: ["trex01:eth3","xrd03-host:trex01-eth3"]
+    #- endpoints: ["ubuntu01:eth3","xrd03-host:ubuntu01-eth3"]
 
     - endpoints: ["xrd04:Gi0-0-0-1", "xrd07:Gi0-0-0-0"]
     - endpoints: ["xrd04:Gi0-0-0-2", "xrd08:Gi0-0-0-0"]
     - endpoints: ["xrd04:Gi0-0-0-3", "xrd04-host:xrd04-Gi0-0-0-3"]
-    - endpoints: ["ubuntu01:eth4","xrd04-host:ubuntu01-eth4"]
+    - endpoints: ["trex01:eth4","xrd04-host:trex01-eth4"]
+    #- endpoints: ["ubuntu01:eth4","xrd04-host:ubuntu01-eth4"]
 
     - endpoints: ["xrd05:Gi0-0-0-1", "xrd06:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-2", "xrd08:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-3", "xrd05-host:xrd05-Gi0-0-0-3"]
-    - endpoints: ["ubuntu01:eth5","xrd05-host:ubuntu01-eth5"]
+    - endpoints: ["trex01:eth5","xrd05-host:trex01-eth4"]
+    #- endpoints: ["ubuntu01:eth5","xrd05-host:ubuntu01-eth5"]
 
     - endpoints: ["xrd06:Gi0-0-0-2", "xrd07:Gi0-0-0-1"]
     - endpoints: ["xrd06:Gi0-0-0-3", "xrd06-host:xrd06-Gi0-0-0-3"]
-    - endpoints: ["ubuntu01:eth6","xrd06-host:ubuntu01-eth6"]
+    - endpoints: ["trex01:eth6","xrd06-host:trex01-eth6"]
+    #- endpoints: ["ubuntu01:eth6","xrd06-host:ubuntu01-eth6"]
 
     - endpoints: ["xrd07:Gi0-0-0-2", "xrd09:Gi0-0-0-1"]
     - endpoints: ["xrd07:Gi0-0-0-3", "xrd07-host:xrd07-Gi0-0-0-3"]
-    - endpoints: ["ubuntu01:eth7","xrd07-host:ubuntu01-eth7"]
+    - endpoints: ["trex01:eth7","xrd07-host:trex01-eth7"]
+    #- endpoints: ["ubuntu01:eth7","xrd07-host:ubuntu01-eth7"]
 
     - endpoints: ["xrd08:Gi0-0-0-2", "xrd10:Gi0-0-0-1"]
     - endpoints: ["xrd08:Gi0-0-0-3", "xrd08-host:xrd08-Gi0-0-0-3"]
-    - endpoints: ["ubuntu01:eth8","xrd08-host:ubuntu01-eth8"]
+    - endpoints: ["trex01:eth8","xrd08-host:trex01-eth8"]
+    #- endpoints: ["ubuntu01:eth8","xrd08-host:ubuntu01-eth8"]
 
     - endpoints: ["xrd09:Gi0-0-0-2", "xrd10:Gi0-0-0-2"]
     - endpoints: ["xrd09:Gi0-0-0-3", "xrd09-host:xrd09-Gi0-0-0-3"]
-    #- endpoints: ["trex09:eth1","xrd09-host:trex09-eth1"]
-    - endpoints: ["ubuntu09:eth1","xrd09-host:ubuntu09-eth1"]
-    - endpoints: ["ubuntu01:eth9","xrd09-host:ubuntu01-eth9"]
+    - endpoints: ["trex01:eth9","xrd09-host:trex01-eth9"]
+    - endpoints: ["trex09:eth1","xrd09-host:trex09-eth1"]
+    #- endpoints: ["ubuntu09:eth1","xrd09-host:ubuntu09-eth1"]
+    #- endpoints: ["ubuntu01:eth9","xrd09-host:ubuntu01-eth9"]
 
     - endpoints: ["xrd10:Gi0-0-0-3", "xrd10-host:xrd10-Gi0-0-0-3"]
     - endpoints: ["xrd10:Gi0-0-0-4", "xrd11:Gi0-0-0-0"]
-    - endpoints: ["ubuntu01:eth10","xrd10-host:ubuntu01-eth10"]
+    - endpoints: ["trex01:eth10","xrd10-host:trex01-eth10"]
+    #- endpoints: ["ubuntu01:eth10","xrd10-host:ubuntu01-eth10"]

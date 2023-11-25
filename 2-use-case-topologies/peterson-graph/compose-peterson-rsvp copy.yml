@@ -1,0 +1,65 @@
+# ./xr-compose -f compose-peterson-rsvp.yml -i localhost/ios-xr/xrd-vrouter:7.8.1 -l
+
+services:
+# Ubuntu containers
+  source:
+    non_xr: true
+    image: ubuntu-trex:1.1
+    container_name: ubuntu-trex01
+    stdin_open: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    #command: /bin/sh -c "ip route add 10.0.0.0/8 via 10.0.95.1 && /bin/sh"
+    networks:
+      xrd01-host:
+        #ipv4_address: 10.10.1.2/24
+      xrd02-host:
+        #ipv4_address: 10.10.2.2/24
+
+# XRd containers
+
+  xrd01:
+    xr_startup_cfg: config-rsvp-te/xrd01.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Mg0/RP0/CPU0/0
+
+  xrd02:
+    xr_startup_cfg: config-rsvp-te/xrd02.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Mg0/RP0/CPU0/0
+
+xr_l2networks:
+  - ["xrd01:Gi0/0/0/0", "xrd02:Gi0/0/0/0"]
+  - ["xrd01:Gi0/0/0/1", "xrd02:Gi0/0/0/1"]
+
+networks:
+  mgmt:
+    xr_interfaces:
+      - xrd01:Mg0/RP0/CPU0/0
+      - xrd02:Mg0/RP0/CPU0/0
+    ipam:
+      config:
+        - subnet: 172.20.14.0/24
+
+  xrd01-host:
+    # ipam:
+    #   config:
+    #     - subnet: 10.10.1.0/24
+    xr_interfaces:
+      - xrd01:Gi0/0/0/2
+
+  xrd02-host:
+    # ipam:
+    #   config:
+    #     - subnet: 10.10.2.0/24
+    xr_interfaces:
+      - xrd02:Gi0/0/0/2
+
+

@@ -1,0 +1,146 @@
+networks:
+  mgmt:
+    driver_opts:
+      com.docker.network.container_iface_prefix: xr-2
+    ipam:
+      config:
+      - subnet: 172.20.14.0/24
+  xrd01-gi0-xrd02-gi0:
+    driver_opts:
+      com.docker.network.container_iface_prefix: xr-0
+    internal: true
+    name: xrd01-gi0-xrd02-gi0
+  xrd01-gi1-xrd02-gi1:
+    driver_opts:
+      com.docker.network.container_iface_prefix: xr-1
+    internal: true
+    name: xrd01-gi1-xrd02-gi1
+  xrd01-host:
+    driver_opts:
+      com.docker.network.container_iface_prefix: xr-3
+  xrd02-host:
+    driver_opts:
+      com.docker.network.container_iface_prefix: xr-4
+services:
+  source:
+    cap_add:
+    - NET_ADMIN
+    container_name: ubuntu-trex01
+    image: ubuntu-trex:1.1
+    networks:
+      xrd01-host: null
+      xrd02-host: null
+    stdin_open: true
+    tty: true
+  xrd01:
+    cap_add:
+    - CHOWN
+    - DAC_OVERRIDE
+    - FSETID
+    - FOWNER
+    - MKNOD
+    - NET_RAW
+    - SETGID
+    - SETUID
+    - SETFCAP
+    - SETPCAP
+    - NET_BIND_SERVICE
+    - SYS_CHROOT
+    - KILL
+    - AUDIT_WRITE
+    - SYS_NICE
+    - SYS_ADMIN
+    - SYS_RESOURCE
+    - NET_ADMIN
+    - SYS_PTRACE
+    - IPC_LOCK
+    - SYS_RAWIO
+    cap_drop:
+    - all
+    container_name: xrd01
+    devices:
+    - /dev/fuse
+    - /dev/net/tun
+    environment:
+      XR_EVERY_BOOT_CONFIG: /etc/xrd/startup.cfg
+      XR_INTERFACES: "pci:00:06.0;pci:00:08.0;pci:00:09.0"
+      XR_MGMT_INTERFACES: linux:xr-20,xr_name=Mg0/RP0/CPU0/0,chksum
+    image: ios-xr/xrd-vrouter:7.8.2
+    networks:
+      mgmt: null
+      xrd01-gi0-xrd02-gi0: null
+      xrd01-gi1-xrd02-gi1: null
+      xrd01-host: null
+    security_opt:
+    - apparmor:unconfined
+    - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+    - source: ./config-rsvp-te/xrd01.cfg
+      target: /etc/xrd/startup.cfg
+      type: bind
+    - xrd01:/xr-storage/
+    - read_only: true
+      source: /sys/fs/cgroup
+      target: /sys/fs/cgroup
+      type: bind
+  xrd02:
+    cap_add:
+    - CHOWN
+    - DAC_OVERRIDE
+    - FSETID
+    - FOWNER
+    - MKNOD
+    - NET_RAW
+    - SETGID
+    - SETUID
+    - SETFCAP
+    - SETPCAP
+    - NET_BIND_SERVICE
+    - SYS_CHROOT
+    - KILL
+    - AUDIT_WRITE
+    - SYS_NICE
+    - SYS_ADMIN
+    - SYS_RESOURCE
+    - NET_ADMIN
+    - SYS_PTRACE
+    - IPC_LOCK
+    - SYS_RAWIO
+    cap_drop:
+    - all
+    container_name: xrd02
+    devices:
+    - /dev/fuse
+    - /dev/net/tun
+    environment:
+      XR_EVERY_BOOT_CONFIG: /etc/xrd/startup.cfg
+      XR_INTERFACES: "pci:00:03.0;pci:00:04.0;pci:00:05.0"
+      XR_MGMT_INTERFACES: linux:xr-20,xr_name=Mg0/RP0/CPU0/0,chksum
+    image: ios-xr/xrd-vrouter:7.8.2
+    networks:
+      mgmt: null
+      xrd01-gi0-xrd02-gi0: null
+      xrd01-gi1-xrd02-gi1: null
+      xrd02-host: null
+    security_opt:
+    - apparmor:unconfined
+    - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+    - source: ./config-rsvp-te/xrd02.cfg
+      target: /etc/xrd/startup.cfg
+      type: bind
+    - xrd02:/xr-storage/
+    - read_only: true
+      source: /sys/fs/cgroup
+      target: /sys/fs/cgroup
+      type: bind
+version: '2.4'
+volumes:
+  xrd01:
+    name: xrd01
+  xrd02:
+    name: xrd02
