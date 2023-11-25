@@ -158,7 +158,7 @@ topology:
     - endpoints: ["xrd05:Gi0-0-0-1", "xrd06:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-2", "xrd08:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-3", "xrd05-host:xrd05-Gi0-0-0-3"]
-    - endpoints: ["trex01:eth5","xrd05-host:trex01-eth4"]
+    - endpoints: ["trex01:eth5","xrd05-host:trex01-eth5"]
     #- endpoints: ["ubuntu01:eth5","xrd05-host:ubuntu01-eth5"]
 
     - endpoints: ["xrd06:Gi0-0-0-2", "xrd07:Gi0-0-0-1"]
