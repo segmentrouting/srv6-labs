@@ -166,6 +166,14 @@ topology:
         - 20-node-config/frr09/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.1.209
 
+    frr96:
+      kind: linux
+      image: frrouting/frr:latest
+      binds:
+        - 20-node-config/frr96/daemons:/etc/frr/daemons
+        - 20-node-config/frr96/frr.conf:/etc/frr/frr.conf
+      mgmt_ipv4: 172.20.1.296
+
     xrd06-host:
       kind: bridge
 
@@ -173,6 +181,9 @@ topology:
       kind: bridge
 
     xrd46-host:
+      kind: bridge
+
+    frr96-host:
       kind: bridge
 
   links:
@@ -208,7 +219,7 @@ topology:
     - endpoints: ["xrd08:Gi0-0-0-2", "xrd16:Gi0-0-0-1"]
 
     - endpoints: ["xrd09:Gi0-0-0-2", "xrd09-host:xrd09-Gi0-0-0-2"]
-    - endpoints: ["frr09:eth1","xrd09-host:frr09-eth2"]
+    - endpoints: ["frr09:eth1","xrd09-host:frr09-eth1"]
 
     - endpoints: ["xrd15:Gi0-0-0-0", "xrd16:Gi0-0-0-0"]
     - endpoints: ["xrd15:Gi0-0-0-3", "xrd17:Gi0-0-0-0"]
@@ -231,3 +242,7 @@ topology:
     - endpoints: ["xrd43:Gi0-0-0-2", "xrd46:Gi0-0-0-1"]
 
     - endpoints: ["xrd46:Gi0-0-0-4", "xrd46-host:xrd46-Gi0-0-0-4"]
+
+    - endpoints: ["frr96:eth1","frr96-host:frr96-eth1"]
+    - endpoints: ["frr06:eth2","frr96-host:frr06-eth2"]
+    - endpoints: ["frr09:eth2","frr96-host:frr09-eth2"]

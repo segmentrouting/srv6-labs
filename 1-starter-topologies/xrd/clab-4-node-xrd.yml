@@ -48,9 +48,19 @@ topology:
       mgmt_ipv6: 2001:172:20:1::104
       startup-config: config/xrd04.cfg
 
+    xrd01-host:
+      kind: bridge
+
+    xrd02-host:
+      kind: bridge
+
   links:
     - endpoints: ["xrd01:Gi0-0-0-0", "xrd03:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-1", "xrd04:Gi0-0-0-0"]
+    - endpoints: ["xrd01:Gi0-0-0-2", "xrd01-host:xrd01-Gi0-0-0-2"]
+
     - endpoints: ["xrd02:Gi0-0-0-0", "xrd03:Gi0-0-0-1"]
     - endpoints: ["xrd02:Gi0-0-0-1", "xrd04:Gi0-0-0-1"]
+    - endpoints: ["xrd02:Gi0-0-0-2", "xrd02-host:xrd02-Gi0-0-0-2"]
+
     - endpoints: ["xrd03:Gi0-0-0-2", "xrd04:Gi0-0-0-2"]

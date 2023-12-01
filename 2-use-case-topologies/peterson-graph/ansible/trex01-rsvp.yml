@@ -95,7 +95,11 @@
       command: "docker cp files/trex01/trex_cfg.yaml clab-peterson-rsvp-trex01:/etc/trex_cfg.yaml"
       ignore_errors: yes
 
+    - name: copy imix program to trex01
+      command: "docker cp files/trex01/imix.py clab-peterson-rsvp-trex01:/var/trex/v2.41/imix.py"
+      ignore_errors: yes
+
     # - name: start trex
-    #   command: "docker exec -it clab-peterson-rsvp-trex01 /opt/trex/v3.04/t-rex-64 -i &"
+    #   command: "docker exec -it clab-peterson-rsvp-trex01 ./t-rex-64 -i &"
     #   ignore_errors: yes
 

@@ -8,8 +8,8 @@ class STLImix(object):
 
     def __init__ (self):
         # default IP range
-        self.ip_range = {'src': {'start': "10.101.1.2", 'end': "10.101.1.254"},
-                         'dst': {'start': "10.101.2.2",  'end': "10.101.2.254"}}
+        self.ip_range = {'src': {'start': "10.101.1.2", 'end': "10.101.10.254"},
+                         'dst': {'start': "10.101.1.2",  'end': "10.101.10.254"}}
 
         # default IMIX properties
         self.imix_table = [ {'size': 60,   'pps': 28,  'isg':0 },
