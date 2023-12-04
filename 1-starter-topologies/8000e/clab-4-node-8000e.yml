@@ -15,8 +15,8 @@ name: 4-node-8000e
 
 mgmt:
   network: mgt_net6
-  ipv4_subnet: 172.20.6.0/24
-  ipv6_subnet: 2001:172:20:6::/80
+  ipv4-subnet: 172.20.6.0/24
+  ipv6_subnet: 2001:db8:20:6::/64
 
 topology:
 
@@ -28,25 +28,25 @@ topology:
     8201-r1:
       kind: linux
       mgmt_ipv4: 172.20.6.101
-      mgmt_ipv6: 2001:172:20:6::101
+      mgmt_ipv6: 2001:db8:20:6::101
       binds: [config/8201-r1.cfg:/startup.cfg:ro]
 
     8201-r2:
       kind: linux
       mgmt_ipv4: 172.20.6.102
-      mgmt_ipv6: 2001:172:20:6::102
+      mgmt_ipv6: 2001:db8:20:6::102
       binds: [config/8201-r2.cfg:/startup.cfg:ro]
 
     8201-r3:
       kind: linux
       mgmt_ipv4: 172.20.6.103
-      mgmt_ipv6: 2001:172:20:6::103
+      mgmt_ipv6: 2001:db8:20:6::103
       binds: [config/8201-r3.cfg:/startup.cfg:ro]
 
     8201-r4:
       kind: linux
       mgmt_ipv4: 172.20.6.104
-      mgmt_ipv6: 2001:172:20:6::104
+      mgmt_ipv6: 2001:db8:20:6::104
       binds: [config/8201-r4.cfg:/startup.cfg:ro]
 
   links:

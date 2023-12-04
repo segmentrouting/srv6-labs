@@ -15,7 +15,7 @@ name: 4-node
 mgmt:
   network: mgt_net
   ipv4-subnet: 172.20.1.0/24
-  ipv6-subnet: 2001:db8:20:1::/80
+  ipv6-subnet: 2001:db8:20:1::/64
 
 topology:
   nodes:
@@ -48,19 +48,19 @@ topology:
       mgmt-ipv6: 2001:db8:20:1::104
       startup-config: config/xrd04.cfg
 
-    xrd01-host:
-      kind: bridge
+    # xrd01-host:
+    #   kind: bridge
 
-    xrd02-host:
-      kind: bridge
+    # xrd02-host:
+    #   kind: bridge
 
   links:
     - endpoints: ["xrd01:Gi0-0-0-0", "xrd03:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-1", "xrd04:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-2", "xrd01-host:xrd01-Gi0-0-0-2"]
+    #- endpoints: ["xrd01:Gi0-0-0-2", "xrd01-host:xrd01-Gi0-0-0-2"]
 
     - endpoints: ["xrd02:Gi0-0-0-0", "xrd03:Gi0-0-0-1"]
     - endpoints: ["xrd02:Gi0-0-0-1", "xrd04:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-2", "xrd02-host:xrd02-Gi0-0-0-2"]
+    #- endpoints: ["xrd02:Gi0-0-0-2", "xrd02-host:xrd02-Gi0-0-0-2"]
 
     - endpoints: ["xrd03:Gi0-0-0-2", "xrd04:Gi0-0-0-2"]
