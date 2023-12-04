@@ -7,6 +7,8 @@ The repository is organized around network topology scenarios and the tools used
 
 * [2-use-case-topologies](./2-use-case-topologies/) - contains topology definition yaml files and router configs for running larger, more complex SRv6 scenarios using Containerlab, KNE, VXR, or xr-compose
 
+* Note: the KNE examples are still a work in progress 
+
 Each project subdirectory includes READMEs, scripts, configs, and other tools for building SRv6 topologies and running various simulation or demo scenarios.
 
 For more info on Containerlab and KNE: 
@@ -14,7 +16,7 @@ https://containerlab.dev/
 https://github.com/openconfig/kne
 
 ### utils directory
-Utility scripts and other tools that might be useful on any of the SRv6 Labs in this repository
+Utility scripts and other tools that might be useful on any of the SRv6 Labs in this repository. The host-check script among other things provides an estimate on the number of XRd instances you can run based on your host/VM's CPU and memory counts.
 
 ### xarchive directory
 Semi-archived instructions, scripts, sample ymls, and configs for using Cisco's 'xr-compose' tool to build and launch xrd network topologies. xr-compose leverages docker-compose under the hood
