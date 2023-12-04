@@ -50,12 +50,12 @@ These instructions roughly apply to all Starter scenarios when running in Contai
    ```
    output should look something like:
    ```
-   brmcdoug@ie-dev8:~$ file /dev/kvm
+   brmcdoug@ie-dev7:~$ file /dev/kvm
    /dev/kvm: character special (10/232)
    ```
 7. Optional: XRd generally requires 2GB of memory and is fairly light on CPU. Run the 'host-check' script to get a sense for how many XRd instances you can run on your host/VM: 
 
-     https://github.com/segmentrouting/srv6-labs/blob/main/utils/host-check
+     https://github.com/segmentrouting/srv6-labs/utils/host-check
 
 8.  Change directory to the location of the topology you wish to work with
     Example: 
@@ -69,34 +69,9 @@ These instructions roughly apply to all Starter scenarios when running in Contai
     ```
 
 #### Example terminal output
-brmcdoug@ie-dev7:~/srv6-labs/clab-quickstart$ sudo containerlab deploy -t 4-node-quickstart.yml
-INFO[0000] Containerlab v0.40.0 started                 
-INFO[0000] Parsing & checking topology file: 4-node-quickstart.yml 
-INFO[0000] Creating lab directory: /home/brmcdoug/srv6-labs/clab-quickstart/clab-4-node 
-INFO[0000] Creating docker network: Name="mgt_net", IPv4Subnet="172.20.1.0/24", IPv6Subnet="2001:172:20:1::/80", MTU="1500" 
-INFO[0000] Creating container: "xrd03"                  
-INFO[0000] Creating container: "xrd02"                  
-INFO[0000] Creating container: "xrd01"                  
-INFO[0000] Creating container: "xrd00"                  
-INFO[0005] Creating virtual wire: xrd01:Gi0-0-0-1 <--> xrd03:Gi0-0-0-1 
-INFO[0005] Creating virtual wire: xrd00:Gi0-0-0-1 <--> xrd03:Gi0-0-0-0 
-INFO[0005] Creating virtual wire: xrd01:Gi0-0-0-0 <--> xrd02:Gi0-0-0-1 
-INFO[0005] Creating virtual wire: xrd00:Gi0-0-0-0 <--> xrd02:Gi0-0-0-0 
-INFO[0005] Creating virtual wire: xrd02:Gi0-0-0-2 <--> xrd03:Gi0-0-0-2 
-INFO[0006] Adding containerlab host entries to /etc/hosts file 
-INFO[0006] 🎉 New containerlab version 0.45.1 is available! Release notes: https://containerlab.dev/rn/0.45/#0451
-Run 'containerlab version upgrade' to upgrade or go check other installation options at https://containerlab.dev/install/ 
-+---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
-| # |       Name        | Container ID |             Image              |   Kind    |  State  |  IPv4 Address   |     IPv6 Address      |
-+---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
-| 1 | clab-4-node-xrd00 | e6b6c1095560 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.100/24 | 2001:172:20:1::100/80 |
-| 2 | clab-4-node-xrd01 | ad061c7fd1e5 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.101/24 | 2001:172:20:1::101/80 |
-| 3 | clab-4-node-xrd02 | 5ba3f1cea735 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.102/24 | 2001:172:20:1::102/80 |
-| 4 | clab-4-node-xrd03 | 77830cd8f499 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.103/24 | 2001:172:20:1::103/80 |
-+---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
 
 
-10. Give the XRd instances 2-3 minutes to come up and be responsive. All the usual docker commands work:
+1.  Give the XRd instances 2-3 minutes to come up and be responsive. All the usual docker commands work:
 
 #### check status of instances:
 ```
@@ -105,12 +80,12 @@ docker logs -f
 ```
 #### docker exec access to xr cli:
 ```
-docker exec -it clab-xrd-7-node-xrd05 /pkg/bin/xr_cli.sh
+docker exec -it clab-xrd-4-node-xrd01 /pkg/bin/xr_cli.sh
 ```
 
 11. ssh to routers
 ```
-xrd02:
+xrd01:
 ssh cisco@172.20.1.101
 
 xrd02:
