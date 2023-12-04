@@ -9,6 +9,8 @@ These instructions roughly apply to all Starter scenarios when running in Contai
 2. Install containerlab: https://containerlab.dev/install/
    Or the quick and easy way:
    ```
+   bash -c "$(curl -sL https://get.containerlab.dev)"
+
    bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
    ```
 
@@ -34,15 +36,6 @@ These instructions roughly apply to all Starter scenarios when running in Contai
    ```
    sudo sysctl -p
    ```
-   Example:
-   ```
-    brmcdoug@ie-dev7:~/srv6-labs/clab-quickstart$ sudo sysctl -p
-    fs.inotify.max_user_watches = 131072
-    fs.inotify.max_user_instances = 131072
-    net.bridge.bridge-nf-call-iptables = 1
-    net.bridge.bridge-nf-call-ip6tables = 1
-    kernel.pid_max = 1048575
-   ```
      
 6. Validate KVM modules are installed and configured:
    ```
@@ -50,12 +43,12 @@ These instructions roughly apply to all Starter scenarios when running in Contai
    ```
    output should look something like:
    ```
-   brmcdoug@ie-dev7:~$ file /dev/kvm
+   brmcdoug@dev7:~$ file /dev/kvm
    /dev/kvm: character special (10/232)
    ```
 7. Optional: XRd generally requires 2GB of memory and is fairly light on CPU. Run the 'host-check' script to get a sense for how many XRd instances you can run on your host/VM: 
 
-     https://github.com/segmentrouting/srv6-labs/utils/host-check
+    https://github.com/segmentrouting/srv6-labs/blob/main/utils/host-check
 
 8.  Change directory to the location of the topology you wish to work with
     Example: 
