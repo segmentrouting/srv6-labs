@@ -22,7 +22,7 @@ Please feel free to use this topology or add additional topologies and configura
    bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
    ```
 
-3. Acquire 8000e docker image(s)
+3. Acquire 8000e docker image(s) - contact Cisco account team to get access to Cisco 8000 ContainerLab docker images
 
 4. Load docker image(s):
    ```
@@ -39,7 +39,7 @@ Please feel free to use this topology or add additional topologies and configura
    ```
    Example:
    ```
-    brmcdoug@ie-dev7:~/srv6-labs/clab-quickstart$ sudo sysctl -p
+    brmcdoug@dev7:~/srv6-labs/clab-quickstart$ sudo sysctl -p
     fs.inotify.max_user_watches = 131072
     fs.inotify.max_user_instances = 131072
     net.bridge.bridge-nf-call-iptables = 1

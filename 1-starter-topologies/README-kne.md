@@ -37,7 +37,7 @@ https://github.com/openconfig/kne/tree/main/docs
 
 6. Verify image is loaded:
    ```
-   docker exec -it kne-control-plane crictl images
+   docker exec -it kne-control-plane crictl images | grep xrd
    ```
    Example:
    ```
@@ -53,7 +53,7 @@ https://github.com/openconfig/kne/tree/main/docs
 
 #### Example truncated KNE deploy terminal output
 
-brmcdoug@naja:~/srv6-labs/1-starter-topologies/xrd$ kne create kne-4-node-xrd.pb.txt 
+brmcdoug@dev7:~/srv6-labs/1-starter-topologies/xrd$ kne create kne-4-node-xrd.pb.txt 
 <snip>
 I1011 03:34:39.183264   15449 cisco.go:195] Created Cisco xrd node resource xrd04 pod
 I1011 03:34:39.486990   15449 cisco.go:199] Created Cisco xrd node resource xrd04 services
@@ -77,13 +77,31 @@ Log files can be found in:
    ```
    Example:
    ```
-   brmcdoug@naja:~/srv6-labs/1-starter-topologies/xrd$ kubectl get pods -n xrd-4-node
+   brmcdoug@dev7:~/srv6-labs/1-starter-topologies/xrd$ kubectl get pods -n xrd-4-node
    NAME    READY   STATUS    RESTARTS   AGE
    xrd01   1/1     Running   0          3m18s
    xrd02   1/1     Running   0          3m18s
    xrd03   1/1     Running   0          3m17s
    xrd04   1/1     Running   0          3m16s
    ```
+
+8. Get K8s/KNE assigned management IPs
+```
+kubectl get svc -n xrd-4-node
+```
+Example output
+```
+NAME            TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                                                                    AGE
+service-xrd01   LoadBalancer   10.96.122.131   172.18.0.52   22:32100/TCP,9339:32429/TCP,9340:30215/TCP,9337:30411/TCP,9559:32520/TCP   9m33s
+service-xrd02   LoadBalancer   10.96.114.99    172.18.0.53   9337:32535/TCP,9559:32189/TCP,22:31135/TCP,9339:30655/TCP,9340:31422/TCP   9m32s
+service-xrd03   LoadBalancer   10.96.246.149   172.18.0.50   9340:32704/TCP,9337:31273/TCP,9559:31143/TCP,22:32060/TCP,9339:30962/TCP   9m33s
+service-xrd04   LoadBalancer   10.96.14.132    172.18.0.51   9559:30262/TCP,22:32481/TCP,9339:32200/TCP,9340:32007/TCP,9337:31769/TCP   9m33s
+```
+9. ssh to xrd nodes:
+```
+ssh cisco@172.18.0.52
+pw = cisco123
+```
 
 #### To delete KNE topology:
 ```
