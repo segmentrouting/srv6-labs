@@ -13,6 +13,8 @@ The kne-4-node.yml launches a 4-node 8201-32FH emulator topology using KNE. The 
 
 The sample 4-node topology in this repo consists of 4 emulated Cisco 8201-32FH nodes whose configurations are found in the *config* directory. The nodes are configured with basic ISIS, SR, SRv6, iBGP and streaming telemetry. 8201-r3 is a route-reflector with the other 3 nodes as clients. 
 
+* Note: the 8000 hardware emulator nodes require 4 vCPU and 20GB of memory each
+
 Please feel free to use this topology or add additional topologies and configurations, etc.
 
 [KNE Install Instructions](../README-kne.md)

@@ -10,8 +10,6 @@ These instructions roughly apply to all Starter scenarios when running in Contai
    Or the quick and easy way:
    ```
    bash -c "$(curl -sL https://get.containerlab.dev)"
-
-   bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
    ```
 
 3. Acquire dockerized router image(s):

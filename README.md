@@ -7,7 +7,7 @@ The repository is organized around network topology scenarios and the tools used
 
 * [2-use-case-topologies](./2-use-case-topologies/) - contains topology definition yaml files and router configs for running larger, more complex SRv6 scenarios using Containerlab, KNE, VXR, or xr-compose
 
-* Note: the KNE examples are still a work in progress 
+* Note: some of the KNE examples are still a work in progress 
 
 Each project subdirectory includes READMEs, scripts, configs, and other tools for building SRv6 topologies and running various simulation or demo scenarios.
 

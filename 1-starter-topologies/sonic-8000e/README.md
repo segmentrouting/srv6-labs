@@ -1,4 +1,4 @@
-## Containerlab SONiC Cisco 8000 Emulator
+## Containerlab SONiC Cisco 8000 Emulator (8000e)
 
 This repository contains instructions and sample yaml files for launching sonic running on the Cisco 8000 hardware emulator
 
@@ -16,6 +16,8 @@ Note (Oct 1, 2023): SRv6 uSID support on SONiC 8000e is pending further developm
 
 1. Host server requirements
 
+   Resources: 8000 hardware emulator nodes require 4 vCPU and 20GB of memory each
+
    - verify that Open vSwitch is installed
      ovs-vsctl --version
 ```
@@ -30,13 +32,13 @@ sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
 
    - cpu and memory: recommend 20GB and 4 cores per router
 
-2. Install containerlab: https://containerlab.dev/install/
+1. Install containerlab: https://containerlab.dev/install/
    Or the quick and easy way:
    ```
    bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
    ```
 
-3. Acquire and load 8000 SONiC docker image - contact Cisco account team to get access to Cisco 8000 SONiC docker images
+2. Acquire and load 8000 SONiC docker image - contact Cisco account team to get access to Cisco 8000 SONiC docker images
 ```   
 docker load -i c8000-clab-sonic:31.tar.gz
 ```
