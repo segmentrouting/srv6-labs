@@ -36,12 +36,12 @@ sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
    bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
    ```
 
-3. Acquire and load 8000 SONiC docker image
+3. Acquire and load 8000 SONiC docker image - contact Cisco account team to get access to Cisco 8000 SONiC docker images
 ```   
 docker load -i c8000-clab-sonic:31.tar.gz
 ```
 
-4.  Copy sonic-cisco-8000.bin image to local storage (e.g. /sonic_images). Example:
+1.  Copy sonic-cisco-8000.bin image to local storage (e.g. /sonic_images). Example:
 ```
 ls /opt/images/ | grep sonic
 
