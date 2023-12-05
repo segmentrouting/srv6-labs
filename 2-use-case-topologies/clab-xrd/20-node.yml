@@ -172,7 +172,7 @@ topology:
       binds:
         - 20-node-config/frr96/daemons:/etc/frr/daemons
         - 20-node-config/frr96/frr.conf:/etc/frr/frr.conf
-      mgmt-ipv4: 172.20.1.296
+      mgmt-ipv4: 172.20.1.196
 
     xrd06-host:
       kind: bridge

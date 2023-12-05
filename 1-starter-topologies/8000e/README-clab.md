@@ -21,7 +21,7 @@ Please feel free to use this topology or add additional topologies and configura
 2. Install containerlab: https://containerlab.dev/install/
    SRv6-Labs testing has been done with clab v 0.40.0, so the quick and easy way to install is:
    ```
-   bash -c "$(curl -sL https://get.containerlab.dev)" -- -v 0.40.0
+   bash -c "$(curl -sL https://get.containerlab.dev)" 
    ```
 
 3. Acquire 8000e docker image(s) - contact Cisco account team to get access to Cisco 8000 ContainerLab docker images
