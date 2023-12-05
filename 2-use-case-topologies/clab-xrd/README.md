@@ -72,13 +72,13 @@ Run 'containerlab version upgrade' to upgrade or go check other installation opt
 +---+-----------------------+--------------+-------------------------------------+-----------+---------+-----------------+-----------------------+
 | # |         Name          | Container ID |                Image                |   Kind    |  State  |  IPv4 Address   |     IPv6 Address      |
 +---+-----------------------+--------------+-------------------------------------+-----------+---------+-----------------+-----------------------+
-| 1 | clab-xrd-7-node-xrd01 | 5777f7218f15 | ios-xr/xrd-control-plane:7.11.1.04E | cisco_xrd | running | 172.20.5.201/24 | 2001:172:20:5::201/80 |
-| 2 | clab-xrd-7-node-xrd02 | b023d96c53a8 | ios-xr/xrd-control-plane:7.11.1.04E | cisco_xrd | running | 172.20.5.202/24 | 2001:172:20:5::202/80 |
-| 3 | clab-xrd-7-node-xrd03 | 7cfd48828184 | ios-xr/xrd-control-plane:7.11.1.04E | cisco_xrd | running | 172.20.5.203/24 | 2001:172:20:5::203/80 |
-| 4 | clab-xrd-7-node-xrd04 | b0ecdbb779d9 | ios-xr/xrd-control-plane:7.11.1.04E | cisco_xrd | running | 172.20.5.204/24 | 2001:172:20:5::204/80 |
-| 5 | clab-xrd-7-node-xrd05 | d47b764f2300 | ios-xr/xrd-control-plane:7.11.1.04E | cisco_xrd | running | 172.20.5.205/24 | 2001:172:20:5::205/80 |
-| 6 | clab-xrd-7-node-xrd06 | 60f56b56474e | ios-xr/xrd-control-plane:7.11.1.04E | cisco_xrd | running | 172.20.5.206/24 | 2001:172:20:5::206/80 |
-| 7 | clab-xrd-7-node-xrd07 | 87ff17bcc9e3 | ios-xr/xrd-control-plane:7.11.1.04E | cisco_xrd | running | 172.20.5.207/24 | 2001:172:20:5::207/80 |
+| 1 | clab-xrd-7-node-xrd01 | 5777f7218f15 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.5.201/24 | 2001:172:20:5::201/80 |
+| 2 | clab-xrd-7-node-xrd02 | b023d96c53a8 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.5.202/24 | 2001:172:20:5::202/80 |
+| 3 | clab-xrd-7-node-xrd03 | 7cfd48828184 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.5.203/24 | 2001:172:20:5::203/80 |
+| 4 | clab-xrd-7-node-xrd04 | b0ecdbb779d9 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.5.204/24 | 2001:172:20:5::204/80 |
+| 5 | clab-xrd-7-node-xrd05 | d47b764f2300 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.5.205/24 | 2001:172:20:5::205/80 |
+| 6 | clab-xrd-7-node-xrd06 | 60f56b56474e | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.5.206/24 | 2001:172:20:5::206/80 |
+| 7 | clab-xrd-7-node-xrd07 | 87ff17bcc9e3 | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.5.207/24 | 2001:172:20:5::207/80 |
 +---+-----------------------+--------------+-------------------------------------+-----------+---------+-----------------+-----------------------+
 brmcdoug@naja:~/srv6-labs/containerlab/xrd$ 
 ```

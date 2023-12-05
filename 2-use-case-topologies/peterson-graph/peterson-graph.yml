@@ -13,100 +13,100 @@ topology:
   nodes:
     xrd01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.101
       mgmt_ipv6: 2001:172:20:15::101
       startup-config: config/xrd01.cfg
 
     xrd02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.102
       mgmt_ipv6: 2001:172:20:15::102
       startup-config: config/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.103
       mgmt_ipv6: 2001:172:20:15::103
       startup-config: config/xrd03.cfg
 
     xrd04:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.104
       mgmt_ipv6: 2001:172:20:15::104
       startup-config: config/xrd04.cfg
 
     xrd05:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.105
       mgmt_ipv6: 2001:172:20:15::105
       startup-config: config/xrd05.cfg
 
     xrd06:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.106
       mgmt_ipv6: 2001:172:20:15::106
       startup-config: config/xrd06.cfg
 
     xrd07:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.107
       mgmt_ipv6: 2001:172:20:15::107
       startup-config: config/xrd07.cfg
 
     xrd08:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.108
       mgmt_ipv6: 2001:172:20:15::108
       startup-config: config/xrd08.cfg
 
     xrd09:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.109
       mgmt_ipv6: 2001:172:20:15::109
       startup-config: config/xrd09.cfg
 
     xrd10:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.110
       mgmt_ipv6: 2001:172:20:15::110
       startup-config: config/xrd10.cfg
 
     xrd11:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.1.200G
+      image: ios-xr/xrd-control-plane:7.9.2
       mgmt_ipv4: 172.20.15.111
       mgmt_ipv6: 2001:172:20:15::111
       startup-config: config/xrd11.cfg
 
-    # trex01:
-    #   kind: linux
-    #   image: trexcisco/trex:latest
-    #   #mgmt_ipv4: 172.20.15.201
-
-    # trex09:
-    #   kind: linux
-    #   image: trexcisco/trex:latest
-    #   #mgmt_ipv4: 172.20.15.209
-
-    ubuntu01:
+    trex01:
       kind: linux
-      image: ubuntu-trex:1.1
-      mgmt_ipv4: 172.20.15.201
+      image: trexcisco/trex:latest
+      #mgmt_ipv4: 172.20.15.201
 
-    ubuntu09:
+    trex09:
       kind: linux
-      image: ubuntu-trex:1.1
-      mgmt_ipv4: 172.20.15.209
+      image: trexcisco/trex:latest
+      #mgmt_ipv4: 172.20.15.209
+
+    # ubuntu01:
+    #   kind: linux
+    #   image: ubuntu-trex:1.1
+    #   mgmt_ipv4: 172.20.15.201
+
+    # ubuntu09:
+    #   kind: linux
+    #   image: ubuntu-trex:1.1
+    #   mgmt_ipv4: 172.20.15.209
 
     xrd01-host:
       kind: bridge
