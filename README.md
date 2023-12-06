@@ -12,7 +12,9 @@ The repository is organized around network topology scenarios and the tools used
 Each project subdirectory includes READMEs, scripts, configs, and other tools for building SRv6 topologies and running various simulation or demo scenarios.
 
 For more info on Containerlab and KNE: 
+
 https://containerlab.dev/
+
 https://github.com/openconfig/kne
 
 ### utils directory

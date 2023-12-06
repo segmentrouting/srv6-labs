@@ -13,58 +13,58 @@ name: xrd-7-node
 
 mgmt:
   network: fixedips
-  ipv4_subnet: 172.20.6.0/24
-  ipv6_subnet: 2001:172:20:6::/80
+  ipv4-subnet: 172.20.6.0/24
+  ipv6-subnet: 2001:172:20:6::/80
 
 topology:
   nodes:
     xrd01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.5.201
-      mgmt_ipv6: 2001:172:20:5::201
+      mgmt-ipv4: 172.20.5.201
+      mgmt-ipv6: 2001:172:20:5::201
       startup-config: 7-node-config/xrd01.cfg
 
     xrd02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.5.202
-      mgmt_ipv6: 2001:172:20:5::202
+      mgmt-ipv4: 172.20.5.202
+      mgmt-ipv6: 2001:172:20:5::202
       startup-config: 7-node-config/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.5.203
-      mgmt_ipv6: 2001:172:20:5::203
+      mgmt-ipv4: 172.20.5.203
+      mgmt-ipv6: 2001:172:20:5::203
       startup-config: 7-node-config/xrd03.cfg
 
     xrd04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.5.204
-      mgmt_ipv6: 2001:172:20:5::204
+      mgmt-ipv4: 172.20.5.204
+      mgmt-ipv6: 2001:172:20:5::204
       startup-config: 7-node-config/xrd04.cfg
 
     xrd05:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.5.205
-      mgmt_ipv6: 2001:172:20:5::205
+      mgmt-ipv4: 172.20.5.205
+      mgmt-ipv6: 2001:172:20:5::205
       startup-config: 7-node-config/xrd05.cfg
 
     xrd06:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.5.206
-      mgmt_ipv6: 2001:172:20:5::206
+      mgmt-ipv4: 172.20.5.206
+      mgmt-ipv6: 2001:172:20:5::206
       startup-config: 7-node-config/xrd06.cfg
 
     xrd07:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.9.2
-      mgmt_ipv4: 172.20.5.207
-      mgmt_ipv6: 2001:172:20:5::207
+      mgmt-ipv4: 172.20.5.207
+      mgmt-ipv6: 2001:172:20:5::207
       startup-config: 7-node-config/xrd07.cfg
 
   links:

@@ -5,8 +5,8 @@ name: xrd-sp
 
 mgmt:
   network: mgt_net
-  ipv4_subnet: 172.20.1.0/24
-  ipv6_subnet: 2001:172:20:1::/80
+  ipv4-subnet: 172.20.1.0/24
+  ipv6-subnet: 2001:172:20:1::/80
 
 topology:
   nodes:
@@ -14,211 +14,211 @@ topology:
     xrd01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.101
-      mgmt_ipv6: 2001:172:20:1::101
+      mgmt-ipv4: 172.20.1.101
+      mgmt-ipv6: 2001:172:20:1::101
       startup-config: config/xrd01.cfg
 
     xrd02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.102
-      mgmt_ipv6: 2001:172:20:1::102
+      mgmt-ipv4: 172.20.1.102
+      mgmt-ipv6: 2001:172:20:1::102
       startup-config: config/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.103
-      mgmt_ipv6: 2001:172:20:1::103
+      mgmt-ipv4: 172.20.1.103
+      mgmt-ipv6: 2001:172:20:1::103
       startup-config: config/xrd03.cfg
 
     xrd04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.104
-      mgmt_ipv6: 2001:172:20:1::104
+      mgmt-ipv4: 172.20.1.104
+      mgmt-ipv6: 2001:172:20:1::104
       startup-config: config/xrd04.cfg
 
     xrd05:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.105
-      mgmt_ipv6: 2001:172:20:1::105
+      mgmt-ipv4: 172.20.1.105
+      mgmt-ipv6: 2001:172:20:1::105
       startup-config: config/xrd05.cfg
 
     xrd06:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.106
-      mgmt_ipv6: 2001:172:20:1::106
+      mgmt-ipv4: 172.20.1.106
+      mgmt-ipv6: 2001:172:20:1::106
       startup-config: config/xrd06.cfg
 
     xrd07:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.107
-      mgmt_ipv6: 2001:172:20:1::107
+      mgmt-ipv4: 172.20.1.107
+      mgmt-ipv6: 2001:172:20:1::107
       startup-config: config/xrd07.cfg
 
     xrd08:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.108
-      mgmt_ipv6: 2001:172:20:1::108
+      mgmt-ipv4: 172.20.1.108
+      mgmt-ipv6: 2001:172:20:1::108
       startup-config: config/xrd08.cfg
 
     xrd09:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.109
-      mgmt_ipv6: 2001:172:20:1::109
+      mgmt-ipv4: 172.20.1.109
+      mgmt-ipv6: 2001:172:20:1::109
       startup-config: config/xrd09.cfg
 
     xrd10:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.110
-      mgmt_ipv6: 2001:172:20:1::110
+      mgmt-ipv4: 172.20.1.110
+      mgmt-ipv6: 2001:172:20:1::110
       startup-config: config/xrd10.cfg
 
     xrd11:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.111
-      mgmt_ipv6: 2001:172:20:1::111
+      mgmt-ipv4: 172.20.1.111
+      mgmt-ipv6: 2001:172:20:1::111
       startup-config: config/xrd11.cfg
 
     xrd12:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.112
-      mgmt_ipv6: 2001:172:20:1::112
+      mgmt-ipv4: 172.20.1.112
+      mgmt-ipv6: 2001:172:20:1::112
       startup-config: config/xrd12.cfg
 
     xrd13:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.113
-      mgmt_ipv6: 2001:172:20:1::113
+      mgmt-ipv4: 172.20.1.113
+      mgmt-ipv6: 2001:172:20:1::113
       startup-config: config/xrd13.cfg
 
     xrd14:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.114
-      mgmt_ipv6: 2001:172:20:1::114
+      mgmt-ipv4: 172.20.1.114
+      mgmt-ipv6: 2001:172:20:1::114
       startup-config: config/xrd14.cfg
 
     xrd15:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.115
-      mgmt_ipv6: 2001:172:20:1::115
+      mgmt-ipv4: 172.20.1.115
+      mgmt-ipv6: 2001:172:20:1::115
       startup-config: config/xrd15.cfg
 
     xrd16:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.116
-      mgmt_ipv6: 2001:172:20:1::116
+      mgmt-ipv4: 172.20.1.116
+      mgmt-ipv6: 2001:172:20:1::116
       startup-config: config/xrd16.cfg
 
     xrd17:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.117
-      mgmt_ipv6: 2001:172:20:1::117
+      mgmt-ipv4: 172.20.1.117
+      mgmt-ipv6: 2001:172:20:1::117
       startup-config: config/xrd17.cfg
 
     xrd18:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.118
-      mgmt_ipv6: 2001:172:20:1::118
+      mgmt-ipv4: 172.20.1.118
+      mgmt-ipv6: 2001:172:20:1::118
       startup-config: config/xrd18.cfg
 
     xrd19:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.119
-      mgmt_ipv6: 2001:172:20:1::119
+      mgmt-ipv4: 172.20.1.119
+      mgmt-ipv6: 2001:172:20:1::119
       startup-config: config/xrd19.cfg
 
     xrd20:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.120
-      mgmt_ipv6: 2001:172:20:1::120
+      mgmt-ipv4: 172.20.1.120
+      mgmt-ipv6: 2001:172:20:1::120
       startup-config: config/xrd20.cfg
 
     xrd21:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.121
-      mgmt_ipv6: 2001:172:20:1::121
+      mgmt-ipv4: 172.20.1.121
+      mgmt-ipv6: 2001:172:20:1::121
       startup-config: config/xrd21.cfg
 
     xrd22:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.122
-      mgmt_ipv6: 2001:172:20:1::122
+      mgmt-ipv4: 172.20.1.122
+      mgmt-ipv6: 2001:172:20:1::122
       startup-config: config/xrd22.cfg
 
     xrd23:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.123
-      mgmt_ipv6: 2001:172:20:1::123
+      mgmt-ipv4: 172.20.1.123
+      mgmt-ipv6: 2001:172:20:1::123
       startup-config: config/xrd23.cfg
 
     xrd24:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.124
-      mgmt_ipv6: 2001:172:20:1::124
+      mgmt-ipv4: 172.20.1.124
+      mgmt-ipv6: 2001:172:20:1::124
       startup-config: config/xrd24.cfg
 
     xrd25:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.125
-      mgmt_ipv6: 2001:172:20:1::125
+      mgmt-ipv4: 172.20.1.125
+      mgmt-ipv6: 2001:172:20:1::125
       startup-config: config/xrd25.cfg
 
     xrd26:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.126
-      mgmt_ipv6: 2001:172:20:1::126
+      mgmt-ipv4: 172.20.1.126
+      mgmt-ipv6: 2001:172:20:1::126
       startup-config: config/xrd22.cfg
 
     xrd27:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.127
-      mgmt_ipv6: 2001:172:20:1::127
+      mgmt-ipv4: 172.20.1.127
+      mgmt-ipv6: 2001:172:20:1::127
       startup-config: config/xrd27.cfg
 
     xrd28:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.128
-      mgmt_ipv6: 2001:172:20:1::128
+      mgmt-ipv4: 172.20.1.128
+      mgmt-ipv6: 2001:172:20:1::128
       startup-config: config/xrd28.cfg
 
     xrd29:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.129
-      mgmt_ipv6: 2001:172:20:1::129
+      mgmt-ipv4: 172.20.1.129
+      mgmt-ipv6: 2001:172:20:1::129
       startup-config: config/xrd29.cfg
 
     xrd30:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.8.1
-      mgmt_ipv4: 172.20.1.130
-      mgmt_ipv6: 2001:172:20:1::130
+      mgmt-ipv4: 172.20.1.130
+      mgmt-ipv6: 2001:172:20:1::130
       startup-config: config/xrd30.cfg
 
     # xrd13-host50:
