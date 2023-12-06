@@ -13,126 +13,122 @@ topology:
   nodes:
     xrd01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.101
       mgmt-ipv6: 2001:172:20:15::101
       startup-config: config/xrd01.cfg
 
     xrd02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.102
       mgmt-ipv6: 2001:172:20:15::102
       startup-config: config/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.103
       mgmt-ipv6: 2001:172:20:15::103
       startup-config: config/xrd03.cfg
 
     xrd04:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.104
       mgmt-ipv6: 2001:172:20:15::104
       startup-config: config/xrd04.cfg
 
     xrd05:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.105
       mgmt-ipv6: 2001:172:20:15::105
       startup-config: config/xrd05.cfg
 
     xrd06:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.106
       mgmt-ipv6: 2001:172:20:15::106
       startup-config: config/xrd06.cfg
 
     xrd07:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.107
       mgmt-ipv6: 2001:172:20:15::107
       startup-config: config/xrd07.cfg
 
     xrd08:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.108
       mgmt-ipv6: 2001:172:20:15::108
       startup-config: config/xrd08.cfg
 
     xrd09:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.109
       mgmt-ipv6: 2001:172:20:15::109
       startup-config: config/xrd09.cfg
 
     xrd10:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.110
       mgmt-ipv6: 2001:172:20:15::110
       startup-config: config/xrd10.cfg
 
     xrd11:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.9.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.15.111
       mgmt-ipv6: 2001:172:20:15::111
       startup-config: config/xrd11.cfg
 
-    trex01:
-      kind: linux
-      image: trexcisco/trex:latest
-      binds: ansible/files/trex01/trex_cfg.yaml
-      startup-config: |
-        ip addr add 10.101.1.2/24 dev eth1
-        ip addr add fc00:0:101:1::2/64 dev eth1
-        ip route add 10.0.0.0/8 via 10.101.1.1 dev eth1
-        ip -6 route add fc00:0000::/32 via fc00:0:101:1::1 dev eth1
-      cmd: /var/trex/v2.41/t-rex-64 -i
-
-    trex02:
-      kind: linux
-      image: trexcisco/trex:latest
-      binds: ansible/files/trex02/trex_cfg.yaml
-
-    trex03:
-      kind: linux
-      image: trexcisco/trex:latest
-      binds: ansible/files/trex03/trex_cfg.yaml
-
-    trex04:
-      kind: linux
-      image: trexcisco/trex:latest
-      binds: ansible/files/trex04/trex_cfg.yaml
-
-    trex05:
-      kind: linux
-      image: trexcisco/trex:latest
-      binds: ansible/files/trex05/trex_cfg.yaml
-
-    trex09:
-      kind: linux
-      image: trexcisco/trex:latest
-      binds: ansible/files/trex09/trex_cfg.yaml
-
-    # ubuntu01:
+    # trex01:
     #   kind: linux
-    #   image: ubuntu-trex:1.1
-    #   mgmt-ipv4: 172.20.15.201
+    #   image: trexcisco/trex:latest
+    #   binds: 
+    #     - ansible/files/trex01/trex_cfg.yaml:/etc/trex_cfg.yaml
+    #   startup-config: |
+    #     ip addr add 10.101.1.2/24 dev eth1
+    #     ip addr add fc00:0:101:1::2/64 dev eth1
+    #     ip route add 10.0.0.0/8 via 10.101.1.1 dev eth1
+    #     ip -6 route add fc00:0000::/32 via fc00:0:101:1::1 dev eth1
+    #   cmd: /var/trex/v2.41/t-rex-64 -i
 
-    # ubuntu09:
+    # trex02:
     #   kind: linux
-    #   image: ubuntu-trex:1.1
-    #   mgmt-ipv4: 172.20.15.209
+    #   image: trexcisco/trex:latest
+    #   binds: 
+    #     - ansible/files/trex02/trex_cfg.yaml:/etc/trex_cfg.yaml
+
+    # trex03:
+    #   kind: linux
+    #   image: trexcisco/trex:latest
+    #   binds: 
+    #     - ansible/files/trex03/trex_cfg.yaml:/etc/trex_cfg.yaml
+
+    # trex04:
+    #   kind: linux
+    #   image: trexcisco/trex:latest
+    #   binds: 
+    #     - ansible/files/trex04/trex_cfg.yaml:/etc/trex_cfg.yaml
+
+    # trex05:
+    #   kind: linux
+    #   image: trexcisco/trex:latest
+    #   binds: 
+    #     - ansible/files/trex05/trex_cfg.yaml:/etc/trex_cfg.yaml
+
+    # trex09:
+    #   kind: linux
+    #   image: trexcisco/trex:latest
+    #   binds: 
+    #     - ansible/files/trex09/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     xrd01-host:
       kind: bridge
@@ -160,28 +156,27 @@ topology:
     - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-2", "xrd04:Gi0-0-0-0"]
     - endpoints: ["xrd01:Gi0-0-0-3", "xrd01-host:xrd01-Gi0-0-0-3"]
-    - endpoints: ["trex01:eth1","xrd01-host:trex01-eth1"]
-    #- endpoints: ["ubuntu01:eth1","xrd01-host:ubuntu01-eth1"]
+    #- endpoints: ["trex01:eth1","xrd01-host:trex01-eth1"]
 
     - endpoints: ["xrd02:Gi0-0-0-1", "xrd05:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-2", "xrd09:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-3", "xrd02-host:xrd02-Gi0-0-0-3"]
-    - endpoints: ["trex02:eth1","xrd01-host:trex02-eth1"]
+    #- endpoints: ["trex02:eth1","xrd01-host:trex02-eth1"]
 
     - endpoints: ["xrd03:Gi0-0-0-1", "xrd06:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-2", "xrd10:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-3", "xrd03-host:xrd03-Gi0-0-0-3"]
-    - endpoints: ["trex03:eth1","xrd01-host:trex03-eth1"]
+    #- endpoints: ["trex03:eth1","xrd01-host:trex03-eth1"]
 
     - endpoints: ["xrd04:Gi0-0-0-1", "xrd07:Gi0-0-0-0"]
     - endpoints: ["xrd04:Gi0-0-0-2", "xrd08:Gi0-0-0-0"]
     - endpoints: ["xrd04:Gi0-0-0-3", "xrd04-host:xrd04-Gi0-0-0-3"]
-    - endpoints: ["trex04:eth1","xrd01-host:trex04-eth1"]
+    #- endpoints: ["trex04:eth1","xrd01-host:trex04-eth1"]
 
     - endpoints: ["xrd05:Gi0-0-0-1", "xrd06:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-2", "xrd08:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-3", "xrd05-host:xrd05-Gi0-0-0-3"]
-    - endpoints: ["trex05:eth1","xrd01-host:trex05-eth1"]
+    #- endpoints: ["trex05:eth1","xrd01-host:trex05-eth1"]
 
     - endpoints: ["xrd06:Gi0-0-0-2", "xrd07:Gi0-0-0-1"]
     - endpoints: ["xrd06:Gi0-0-0-3", "xrd06-host:xrd06-Gi0-0-0-3"]
@@ -194,8 +189,7 @@ topology:
 
     - endpoints: ["xrd09:Gi0-0-0-2", "xrd10:Gi0-0-0-2"]
     - endpoints: ["xrd09:Gi0-0-0-3", "xrd09-host:xrd09-Gi0-0-0-3"]
-    - endpoints: ["trex09:eth1","xrd09-host:trex09-eth1"]
-    #- endpoints: ["ubuntu09:eth1","xrd09-host:ubuntu09-eth1"]
+    #- endpoints: ["trex09:eth1","xrd09-host:trex09-eth1"]
 
     - endpoints: ["xrd10:Gi0-0-0-3", "xrd10-host:xrd10-Gi0-0-0-3"]
     - endpoints: ["xrd10:Gi0-0-0-4", "xrd11:Gi0-0-0-0"]
