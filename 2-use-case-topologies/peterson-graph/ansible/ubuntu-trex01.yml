@@ -1,14 +1,18 @@
+# Test 1: congest link from xrd01 to xrd02 by running traffic 
+# xrd09 -> xrd01
+# xrd03 -> xrd02
+
 - name: Setup ubuntu-trex01 container
   hosts: localhost
   become: true
   tasks:
 
     - name: add eth1 v4 addr
-      command: "docker exec -it clab-peterson-ubuntu01 ip addr add 10.101.1.2/24 dev eth1"
+      command: "docker exec -it clab-peterson-trex01 ip addr add 10.101.1.2/24 dev eth1"
       ignore_errors: yes
 
     - name: add eth1 v6 addr
-      command: "docker exec -it clab-peterson-ubuntu01 ip addr add fc00:0:101:1::2/64 dev eth1"
+      command: "docker exec -it clab-peterson-trex01 ip addr add fc00:0:101:1::2/64 dev eth1"
       ignore_errors: yes
 
     - name: add eth2 v4 addr

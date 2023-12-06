@@ -91,12 +91,26 @@ topology:
     trex01:
       kind: linux
       image: trexcisco/trex:latest
-      #mgmt-ipv4: 172.20.15.201
+
+    trex02:
+      kind: linux
+      image: trexcisco/trex:latest
+
+    trex03:
+      kind: linux
+      image: trexcisco/trex:latest
+
+    trex04:
+      kind: linux
+      image: trexcisco/trex:latest
+
+    trex05:
+      kind: linux
+      image: trexcisco/trex:latest
 
     trex09:
       kind: linux
       image: trexcisco/trex:latest
-      #mgmt-ipv4: 172.20.15.209
 
     # ubuntu01:
     #   kind: linux
@@ -140,18 +154,22 @@ topology:
     - endpoints: ["xrd02:Gi0-0-0-1", "xrd05:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-2", "xrd09:Gi0-0-0-0"]
     - endpoints: ["xrd02:Gi0-0-0-3", "xrd02-host:xrd02-Gi0-0-0-3"]
+    - endpoints: ["trex02:eth1","xrd01-host:trex02-eth1"]
 
     - endpoints: ["xrd03:Gi0-0-0-1", "xrd06:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-2", "xrd10:Gi0-0-0-0"]
     - endpoints: ["xrd03:Gi0-0-0-3", "xrd03-host:xrd03-Gi0-0-0-3"]
+    - endpoints: ["trex03:eth1","xrd01-host:trex03-eth1"]
 
     - endpoints: ["xrd04:Gi0-0-0-1", "xrd07:Gi0-0-0-0"]
     - endpoints: ["xrd04:Gi0-0-0-2", "xrd08:Gi0-0-0-0"]
     - endpoints: ["xrd04:Gi0-0-0-3", "xrd04-host:xrd04-Gi0-0-0-3"]
+    - endpoints: ["trex04:eth1","xrd01-host:trex04-eth1"]
 
     - endpoints: ["xrd05:Gi0-0-0-1", "xrd06:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-2", "xrd08:Gi0-0-0-1"]
     - endpoints: ["xrd05:Gi0-0-0-3", "xrd05-host:xrd05-Gi0-0-0-3"]
+    - endpoints: ["trex05:eth1","xrd01-host:trex05-eth1"]
 
     - endpoints: ["xrd06:Gi0-0-0-2", "xrd07:Gi0-0-0-1"]
     - endpoints: ["xrd06:Gi0-0-0-3", "xrd06-host:xrd06-Gi0-0-0-3"]
