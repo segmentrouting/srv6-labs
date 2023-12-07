@@ -13,45 +13,65 @@ topology:
       image: trexcisco/trex:latest
       binds: 
         - ansible/files/trex01/trex_cfg.yaml:/etc/trex_cfg.yaml
-      startup-config: |
-        ip addr add 10.101.1.2/24 dev eth1
-        ip addr add fc00:0:101:1::2/64 dev eth1
-        ip route add 10.0.0.0/8 via 10.101.1.1 dev eth1
-        ip -6 route add fc00:0000::/32 via fc00:0:101:1::1 dev eth1
-      cmd: /var/trex/v2.41/t-rex-64 -i
+        - ansible/files/trex01/imix.py:/var/trex/v2.41/imix.py
 
     trex02:
       kind: linux
       image: trexcisco/trex:latest
       binds: 
         - ansible/files/trex02/trex_cfg.yaml:/etc/trex_cfg.yaml
+        - ansible/files/trex02/imix.py:/var/trex/v2.41/imix.py
 
     trex03:
       kind: linux
       image: trexcisco/trex:latest
       binds: 
         - ansible/files/trex03/trex_cfg.yaml:/etc/trex_cfg.yaml
+        - ansible/files/trex03/imix.py:/var/trex/v2.41/imix.py
 
     trex04:
       kind: linux
       image: trexcisco/trex:latest
       binds: 
         - ansible/files/trex04/trex_cfg.yaml:/etc/trex_cfg.yaml
+        - ansible/files/trex04/imix.py:/var/trex/v2.41/imix.py
 
     trex05:
       kind: linux
       image: trexcisco/trex:latest
       binds: 
         - ansible/files/trex05/trex_cfg.yaml:/etc/trex_cfg.yaml
+        - ansible/files/trex05/imix.py:/var/trex/v2.41/imix.py
 
     trex09:
       kind: linux
       image: trexcisco/trex:latest
       binds: 
         - ansible/files/trex09/trex_cfg.yaml:/etc/trex_cfg.yaml
+        - ansible/files/trex09/imix.py:/var/trex/v2.41/imix.py
 
     xrd01-host:
       kind: bridge
 
+    xrd02-host:
+      kind: bridge
+
+    xrd03-host:
+      kind: bridge
+
+    xrd04-host:
+      kind: bridge
+
+    xrd05-host:
+      kind: bridge
+
+    xrd09-host:
+      kind: bridge
+
   links:
-    - endpoints: ["trex99:eth1","xrd01-host:trex99-eth1"]
+    - endpoints: ["trex01:eth1","xrd01-host:trex01-eth1"]
+    - endpoints: ["trex02:eth1","xrd02-host:trex02-eth1"]
+    - endpoints: ["trex03:eth1","xrd03-host:trex03-eth1"]
+    - endpoints: ["trex04:eth1","xrd04-host:trex04-eth1"]
+    - endpoints: ["trex05:eth1","xrd05-host:trex05-eth1"]
+    - endpoints: ["trex09:eth1","xrd09-host:trex09-eth1"]
