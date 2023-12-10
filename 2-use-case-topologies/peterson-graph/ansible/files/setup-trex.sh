@@ -5,24 +5,41 @@
 # xrd03 -> xrd02
 
 # IP addresses and routes
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.2/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.3/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.4/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.5/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.6/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.7/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.8/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.9/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.10/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.11/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.12/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.13/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.14/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.15/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add 10.101.1.16/24 dev eth1
-docker exec -it clab-trex-trex01 ip addr add fc00:0:101:1::2/64 dev eth1
-docker exec -it clab-trex-trex01 ip route add 10.0.0.0/8 via 10.101.1.1 dev eth1
-docker exec -it clab-trex-trex01 ip -6 route add fc00:0000::/32 via fc00:0:101:1::1 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.2/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.3/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.4/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.5/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.6/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.7/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.8/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.9/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.10/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.11/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.12/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.13/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.14/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.15/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.16/24 dev eth1
+
+
+## ubuntu trex
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.32/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.2.32/24 dev eth2
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.3.32/24 dev eth3
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.4.32/24 dev eth4
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.5.32/24 dev eth5
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.6.32/24 dev eth6
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.7.32/24 dev eth7
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.8.32/24 dev eth8
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.9.32/24 dev eth9
+docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.10.32/24 dev eth10
+
+
+
+
+docker exec -it clab-ubtrex-ubtrex01 ip addr add fc00:0:101:1::2/64 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip route add 10.0.0.0/8 via 10.101.1.1 dev eth1
+docker exec -it clab-ubtrex-ubtrex01 ip -6 route add fc00:0000::/32 via fc00:0:101:1::1 dev eth1
 
 docker exec -it clab-trex-trex02 ip addr add 10.101.2.2/24 dev eth1
 docker exec -it clab-trex-trex02 ip addr add 10.101.2.3/24 dev eth1

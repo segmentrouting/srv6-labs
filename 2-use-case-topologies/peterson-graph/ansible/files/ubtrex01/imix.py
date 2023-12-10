@@ -1,4 +1,6 @@
-from trex_stl_lib.api import *
+#from trex_stl_lib.api import *
+import stl_path
+from trex.stl.api import *
 
 # IMIX profile - involves 3 streams of UDP packets
 # 1 - 60 bytes
