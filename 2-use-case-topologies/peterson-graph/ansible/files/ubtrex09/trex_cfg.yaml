@@ -3,17 +3,17 @@
   version       : 2
   low_end       : true
   #interfaces    : ["eth1", "eth2", "eth3", "eth4", "eth5", "eth6", "eth7", "eth8", "eth9", "eth10"]   # list of the interfaces to bind run ./dpdk_nic_bind.py --status
-  interfaces    : ["eth1", "veth0"]   # list of the interfaces to bind run ./dpdk_nic_bind.py --status
+  interfaces    : ["eth1", "eth2"]   # list of the interfaces to bind run ./dpdk_nic_bind.py --status
   port_info     :  # set eh mac addr
 
-                 - ip         : 10.101.9.176
+                 - ip         : 10.101.9.109
                    default_gw : 10.101.9.1
 
                 #  - ip         : 10.101.2.2
                 #    default_gw : 10.101.2.1
 
-                #  - ip         : 10.101.3.2
-                #    default_gw : 10.101.3.1            
+                 - ip         : 10.101.3.109
+                   default_gw : 10.101.3.1            
 
                 #  - ip         : 10.101.4.2
                 #    default_gw : 10.101.4.1
