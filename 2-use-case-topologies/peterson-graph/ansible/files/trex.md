@@ -2,7 +2,7 @@
 
 1. exec into container
 ```
-docker exec -it clab-peterson-trex01 bash
+docker exec -it clab-ubtrex-ubtrex01 bash
 ```
 2. replace container /etc/trex_cfg.yaml
 

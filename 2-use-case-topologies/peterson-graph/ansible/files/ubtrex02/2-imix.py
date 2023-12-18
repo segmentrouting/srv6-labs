@@ -8,8 +8,8 @@ class STLImix(object):
 
     def __init__ (self):
         # default IP range
-        self.ip_range = {'src': {'start': "10.101.7.144", 'end': "10.101.7.159"},
-                         'dst': {'start': "10.101.8.160",  'end': "10.101.8.175"}}
+        self.ip_range = {'src': {'start': "10.101.2.101", 'end': "10.101.2.120"},
+                        'dst': {'start': "10.101.3.101",  'end': "10.101.10.108"}}
 
         # default IMIX properties
         self.imix_table = [ {'size': 60,   'pps': 28,  'isg':0 },
@@ -35,6 +35,7 @@ class STLImix(object):
         if direction == 0:
             src = self.ip_range['src']
             dst = self.ip_range['dst']
+
         else:
             src = self.ip_range['dst']
             dst = self.ip_range['src']
@@ -55,8 +56,6 @@ class STLImix(object):
         
         # create imix streams
         return [self.create_stream(x['size'], x['pps'],x['isg'] , vm) for x in self.imix_table]
-
-
 
 # dynamic load - used for trex console or simulator
 def register():

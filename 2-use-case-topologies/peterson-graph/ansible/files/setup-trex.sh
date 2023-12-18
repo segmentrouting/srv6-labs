@@ -1,12 +1,6 @@
 #/bin/sh
 
-# Test 1: congest link from xrd01 to xrd02 by running traffic 
-# xrd09 -> xrd01
-# xrd03 -> xrd02
-
 # IP addresses and routes
-
-
 
 ## ubuntu trex 01
 docker exec -it clab-ubtrex-ubtrex01 ip addr add 10.101.1.101/24 dev eth1

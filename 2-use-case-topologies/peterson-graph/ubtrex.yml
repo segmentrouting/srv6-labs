@@ -1,4 +1,4 @@
-name: ubtrex
+name: trex
 
 mgmt:
   network: trexmgt_net
@@ -13,70 +13,70 @@ topology:
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex01/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex01/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex01/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex02:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex02/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex02/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex02/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex03:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex03/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex03/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex03/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex04:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex04/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex04/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex04/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex05:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex05/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex05/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex05/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex06:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex06/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex06/imix.py:/opt/trex/v3.04/imix.py
+       # - ansible/files/ubtrex06/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex07:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex07/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex07/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex07/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex08:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex08/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex08/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex08/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex09:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex09/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex09/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex09/imix.py:/opt/trex/v3.04/imix.py
 
     ubtrex10:
       kind: linux
       image: ubuntu-trex:1.1
       binds: 
         - ansible/files/ubtrex10/trex_cfg.yaml:/etc/trex_cfg.yaml
-        - ansible/files/ubtrex10/imix.py:/opt/trex/v3.04/imix.py
+        #- ansible/files/ubtrex10/imix.py:/opt/trex/v3.04/imix.py
 
     xrd01-host:
       kind: bridge
