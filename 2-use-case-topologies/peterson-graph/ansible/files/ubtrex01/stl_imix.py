@@ -1,5 +1,6 @@
 import stl_path
-from trex.stl.api import *
+#from trex.stl.api import *
+from trex_stl_lib.api import *
 
 import time
 import json
@@ -42,7 +43,8 @@ def imix_test (server, mult):
         print("Mapped ports to sides {0} <--> {1}".format(dir_0, dir_1))
 
         # load IMIX profile
-        profile = STLProfile.load_py(os.path.join(stl_path.STL_PROFILES_PATH, 'imix.py'))
+        #profile = STLProfile.load_py(os.path.join(stl_path.STL_PROFILES_PATH, 'imix7-8.py'))
+        profile = STLProfile.load_py('imix7-8.py')
         streams = profile.get_streams()
 
         # add both streams to ports
