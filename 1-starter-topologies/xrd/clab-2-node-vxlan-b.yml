@@ -1,0 +1,48 @@
+#   clab-2-node-vxlan-a.yml is to be paired on a separate physical host or VM with clab-2-node-vxlan-b.yml.
+#   the two 2-node topologies will be linked via host-to-host vxlan tunnels
+#
+#   Router Topology
+#  
+#  r03---r04
+#   | \  / |
+#   |  \/  |
+#   |  /\  |
+#   | /  \ |
+#  r01    r02
+
+name: 2-node-b
+
+mgmt:
+  network: mgt_net
+  ipv4-subnet: 172.20.22.0/24
+  ipv6-subnet: 2001:db8:20:22::/64
+
+topology:
+  nodes:
+
+    xrd02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.22.102
+      mgmt-ipv6: 2001:db8:20:22::102
+      startup-config: config/xrd02.cfg
+
+    xrd04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.22.104
+      mgmt-ipv6: 2001:db8:20:22::104
+      startup-config: config/xrd04.cfg
+
+    # xrd01-host:
+    #   kind: bridge
+
+    # xrd02-host:
+    #   kind: bridge
+
+  links:
+
+    - endpoints: ["xrd02:Gi0-0-0-1", "xrd04:Gi0-0-0-1"]
+    - endpoints: ["xrd02:Gi0-0-0-0", "host:xrd02-Gi0-0-0-0"]
+
+    - endpoints: ["xrd04:Gi0-0-0-0", "host:xrd04-Gi0-0-0-0"]
