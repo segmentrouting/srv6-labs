@@ -1,6 +1,9 @@
 #   clab-2-node-vxlan-a.yml is to be paired on a separate physical host or VM with clab-2-node-vxlan-b.yml.
 #   the two 2-node topologies will be linked via host-to-host vxlan tunnels
 #
+# clab tools vxlan create --remote 198.18.133.100 --id 10 --link xrd04-Gi0-0-0-0
+# clab tools vxlan create --remote 198.18.133.100 --id 20 --link xrd02-Gi0-0-0-0
+
 #   Router Topology
 #  
 #  r03---r04
