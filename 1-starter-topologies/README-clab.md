@@ -115,3 +115,56 @@ ssh cisco@172.20.1.104
 
 pw for all = cisco123
 ```
+
+### Containerlab interconnecting a topology across multiple hosts or host VMs
+https://containerlab.dev/lab-examples/multinode/#vxlan-tunneling
+
+The 2-node-vxlan yaml files in this directory will create the equivalent of the 4-node topology but spread across a pair of hosts or host-VMs using containerlab's vxlan tunneling utility.
+
+1. Follow the same instructions as above for loading images, etc.
+   
+2. Deploy the two yamls on two separate hosts/VMs which have IP reachability to one another
+   Host A:
+   ```
+   sudo containerlab deploy -t clab-2-node-vxlan-a.yml
+   ```
+   Host B:
+   ```
+   sudo containerlab deploy -t clab-2-node-vxlan-b.yml
+   ```
+
+3. create the vxlan tunnels on Host A (replace IP 198.18.133.101 with Host B's IP):
+
+   Host A:
+   ```
+   sudo clab tools vxlan create --remote 198.18.133.101 --id 10 --link xrd01-Gi0-0-0-1
+   sudo clab tools vxlan create --remote 198.18.133.101 --id 20 --link xrd03-Gi0-0-0-1
+   ```
+
+4. create the vxlan tunnels on Host B (replace IP 198.18.133.100 with Host A's IP):
+
+   Host B:
+   ```
+   sudo clab tools vxlan create --remote 198.18.133.100 --id 10 --link xrd04-Gi0-0-0-0
+   sudo clab tools vxlan create --remote 198.18.133.100 --id 20 --link xrd02-Gi0-0-0-0
+   ```
+
+5. This also works over an IPv6 host-to-host network:
+
+   Host A:
+   ```
+   sudo clab tools vxlan create --remote 2001:db8:1:1::2 --id 10 --link xrd01-Gi0-0-0-1
+   sudo clab tools vxlan create --remote 2001:db8:1:1::2 --id 20 --link xrd03-Gi0-0-0-1
+   ```
+
+   Host B:
+   ```
+   sudo clab tools vxlan create --remote 2001:db8:1:1::1 --id 10 --link xrd04-Gi0-0-0-0
+   sudo clab tools vxlan create --remote 2001:db8:1:1::1 --id 20 --link xrd02-Gi0-0-0-0
+   ```
+
+6. With IPv6 vxlan tunnels in place the hosts' NIC/vNIC will need their MTU bumped up higher than 1500 for the routers to form ISIS adjacencies:
+
+   ```
+   sudo ip link set dev ens192 mtu 3000
+   ```
