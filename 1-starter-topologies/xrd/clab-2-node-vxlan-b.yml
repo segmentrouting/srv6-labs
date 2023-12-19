@@ -17,7 +17,7 @@ name: 2-node-b
 
 mgmt:
   network: mgt_net
-  ipv4-subnet: 172.20.22.0/24
+  #ipv4-subnet: 172.20.22.0/24
   ipv6-subnet: 2001:db8:20:22::/64
 
 topology:
@@ -26,14 +26,14 @@ topology:
     xrd02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.22.102
+      #mgmt-ipv4: 172.20.22.102
       mgmt-ipv6: 2001:db8:20:22::102
       startup-config: config/xrd02.cfg
 
     xrd04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.22.104
+      #mgmt-ipv4: 172.20.22.104
       mgmt-ipv6: 2001:db8:20:22::104
       startup-config: config/xrd04.cfg
 
