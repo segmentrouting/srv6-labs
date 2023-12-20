@@ -120,6 +120,22 @@ docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.105/24 dev eth1
 docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.106/24 dev eth1
 docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.107/24 dev eth1
 docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.108/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.109/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.110/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.111/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.112/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.113/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.114/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.115/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.116/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.117/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.118/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.119/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.120/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.121/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.122/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.123/24 dev eth1
+docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.2.124/24 dev eth1
 
 docker exec -it clab-ubtrex-ubtrex02 ip addr add 10.101.6.102/24 dev eth2
 docker exec -it clab-ubtrex-ubtrex02 ip addr add fc00:0:101:2::102/64 dev eth1
