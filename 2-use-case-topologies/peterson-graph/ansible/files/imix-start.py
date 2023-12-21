@@ -31,7 +31,7 @@ e.reset()
 e.start_line (" -f 5-imix.py -m 2mbps --port 0")
 
 # trex06
-f = STLClient(server = "172.20.99.7106")
+f = STLClient(server = "172.20.99.106")
 f.connect()
 f.reset()
 f.start_line (" -f 6-imix.py -m 11mbps --port 0")
