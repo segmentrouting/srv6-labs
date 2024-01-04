@@ -35,16 +35,15 @@ cd trex
 python3 imix-start.py
 ```
 
-4. Enable xrd01 to advertise its host prefix with extcomm color
+4. Enable ODN steering from sources to xrd01 host prefix by advertising it with extcomm color
 
 ```
-ssh 
+ssh clab-peterson-xrd01
 ```
-
+Apply config:
 ```
   router bgp 65000
   address-family ipv4 unicast
    next-hop-self
-   encapsulation-type srv6
    route-policy steer out
 ```
