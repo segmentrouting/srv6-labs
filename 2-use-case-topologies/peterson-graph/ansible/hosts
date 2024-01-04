@@ -1,9 +1,0 @@
-[localhost]
-localhost ansible_connection=local
-
-[trex]
-ubuntu-trex01 ansible_host=172.20.15.201
-
-ubuntu-trex09 ansible_host=172.20.15.209
-
-ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
