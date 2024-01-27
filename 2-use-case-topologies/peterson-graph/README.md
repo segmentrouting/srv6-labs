@@ -38,12 +38,15 @@ python3 imix-start.py
 4. Enable ODN steering from sources to xrd01 host prefix by advertising it with extcomm color
 
 ```
-ssh clab-peterson-xrd01
+ssh cisco@clab-peterson-xrd01
 ```
 Apply config:
 ```
-  router bgp 65000
+router bgp 65000
+ neighbor-group xrd-ipv6-peer
   address-family ipv4 unicast
-   next-hop-self
    route-policy steer out
+  !
+ !
+!
 ```
