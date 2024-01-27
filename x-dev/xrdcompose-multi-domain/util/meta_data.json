@@ -1,0 +1,960 @@
+{
+    "nodes":  
+    [
+        {
+            "node": "xrd00",
+            "key": "2_0_0_0000.0000.0000",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd01",
+            "key": "2_0_0_0000.0000.0001",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd02",
+            "key": "2_0_0_0000.0000.0002",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd03",
+            "key": "2_0_0_0000.0000.0003",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd04",
+            "key": "2_0_0_0000.0000.0004",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd05",
+            "key": "2_0_0_0000.0000.0005",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd06",
+            "key": "2_0_0_0000.0000.0006",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd07",
+            "key": "2_0_0_0000.0000.0007",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd08",
+            "key": "2_0_0_0000.0000.0008",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd09",
+            "key": "2_0_0_0000.0000.0009",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd10",
+            "key": "2_0_0_0000.0000.0010",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd11",
+            "key": "2_0_0_0000.0000.0011",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd12",
+            "key": "2_0_0_0000.0000.0012",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd13",
+            "key": "2_0_0_0000.0000.0013",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd14",
+            "key": "2_0_0_0000.0000.0014",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        },
+        {
+            "node": "xrd15",
+            "key": "2_0_0_0000.0000.0015",
+            "country_code": "FRA",
+            "location_id": "CDG001"
+        }
+    ],
+  
+    "links":
+    [
+      {
+        "key": "2_0_0_0_0000.0000.0000_10.1.1.0_0000.0000.0002_10.1.1.1",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0000_10.1.1.2_0000.0000.0003_10.1.1.3",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0001_10.1.1.10_0000.0000.0003_10.1.1.11",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0001_10.1.1.8_0000.0000.0002_10.1.1.9",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0002_10.1.1.16_0000.0000.0003_10.1.1.17",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0002_10.1.1.18_0000.0000.0011_10.1.1.19",
+        "latency": 25,
+        "percent_util_out": 65,
+        "country_codes": [
+          "FRA",
+          "BEL",
+          "DEU"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0002_10.1.1.1_0000.0000.0000_10.1.1.0",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0002_10.1.1.20_0000.0000.0004_10.1.1.21",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "FRA",
+          "GBR"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0002_10.1.1.22_0000.0000.0019_10.1.1.23",
+        "latency": 18,
+        "percent_util_out": 50,
+        "country_codes": [
+        "FRA",
+        "ITA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0002_10.1.1.24_0000.0000.0023_10.1.1.25",
+        "latency": 25,
+        "percent_util_out": 45,
+        "country_codes": [
+          "FRA",
+          "ESP"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0002_10.1.1.9_0000.0000.0001_10.1.1.8",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0003_10.1.1.11_0000.0000.0001_10.1.1.10",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0003_10.1.1.17_0000.0000.0002_10.1.1.16",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "FRA"
+      ]
+    },      
+    {
+        "key": "2_0_0_0_0000.0000.0003_10.1.1.26_0000.0000.0005_10.1.1.27",
+        "latency": 9,
+        "percent_util_out": 35,
+        "country_codes": [
+          "FRA",
+          "GBR"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0003_10.1.1.28_0000.0000.0012_10.1.1.29",
+        "latency": 30,
+        "percent_util_out": 30,
+        "country_codes": [
+        "DEU",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0003_10.1.1.30_0000.0000.0018_10.1.1.31",
+        "latency": 30,
+        "percent_util_out": 30,
+        "country_codes": [
+          "ITA",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0003_10.1.1.32_0000.0000.0022_10.1.1.33",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0003_10.1.1.3_0000.0000.0000_10.1.1.2",
+        "latency": 30,
+        "percent_util_out": 35,
+        "country_codes": [
+        "ESP",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0004_10.1.1.21_0000.0000.0002_10.1.1.20",
+        "latency": 8,
+        "percent_util_out": 45,
+        "country_codes": [
+          "GBR",
+          "BEL",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0004_10.1.1.34_0000.0000.0005_10.1.1.35",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "GBR"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0004_10.1.1.36_0000.0000.0008_10.1.1.37",
+        "latency": 9,
+        "percent_util_out": 55,
+        "country_codes": [
+          "NLD",
+          "GBR"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0004_10.1.1.38_0000.0000.0006_10.1.1.39",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "GBR"
+      ]
+    },      
+    {
+        "key": "2_0_0_0_0000.0000.0005_10.1.1.106_0000.0000.0026_10.1.1.107",
+        "latency": 1,
+        "percent_util_out": 15,
+        "country_codes": [
+          "GBR"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0005_10.1.1.27_0000.0000.0003_10.1.1.26",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "GBR",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0005_10.1.1.35_0000.0000.0004_10.1.1.34",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "GBR"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0005_10.1.1.40_0000.0000.0007_10.1.1.41",
+        "latency": 11,
+        "percent_util_out": 40,
+        "country_codes": [
+        "NLD",
+        "GBR",
+        "BEL"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0005_10.1.1.42_0000.0000.0006_10.1.1.43",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "GBR"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0006_10.1.1.39_0000.0000.0004_10.1.1.38",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "GBR"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0006_10.1.1.43_0000.0000.0005_10.1.1.42",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "GBR"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0007_10.1.1.108_0000.0000.0025_10.1.1.109",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0007_10.1.1.41_0000.0000.0005_10.1.1.40",
+        "latency": 11,
+        "percent_util_out": 40,
+        "country_codes": [
+        "NLD",
+        "GBR"
+      ]
+    },   
+    {
+        "key": "2_0_0_0_0000.0000.0007_10.1.1.44_0000.0000.0008_10.1.1.45",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0007_10.1.1.46_0000.0000.0012_10.1.1.47",
+        "latency": 20,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "DEU"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0007_10.1.1.48_0000.0000.0010_10.1.1.49",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0007_10.1.1.50_0000.0000.0009_10.1.1.51",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0008_10.1.1.37_0000.0000.0004_10.1.1.36",
+        "latency": 9,
+        "percent_util_out": 55,
+        "country_codes": [
+          "NLD",
+          "BEL",
+          "GBR"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0008_10.1.1.45_0000.0000.0007_10.1.1.44",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0008_10.1.1.52_0000.0000.0009_10.1.1.53",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0008_10.1.1.54_0000.0000.0010_10.1.1.55",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0008_10.1.1.56_0000.0000.0011_10.1.1.57",
+        "latency": 18,
+        "percent_util_out": 50,
+        "country_codes": [
+        "NLD",
+        "DEU"
+      ]
+    },      
+    {
+        "key": "2_0_0_0_0000.0000.0009_10.1.1.51_0000.0000.0007_10.1.1.50",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0009_10.1.1.53_0000.0000.0008_10.1.1.52",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0010_10.1.1.49_0000.0000.0007_10.1.1.48",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0010_10.1.1.55_0000.0000.0008_10.1.1.54",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0011_10.1.1.19_0000.0000.0002_10.1.1.18",
+        "latency": 25,
+        "percent_util_out": 65,
+        "country_codes": [
+          "DEU",
+          "BEL",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0011_10.1.1.57_0000.0000.0008_10.1.1.56",
+        "latency": 18,
+        "percent_util_out": 50,
+        "country_codes": [
+        "DEU",
+        "NLD"
+      ]
+    },  
+    {
+        "key": "2_0_0_0_0000.0000.0011_10.1.1.58_0000.0000.0012_10.1.1.59",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "DEU"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0011_10.1.1.60_0000.0000.0016_10.1.1.61",
+        "latency": 20,
+        "percent_util_out": 30,
+        "country_codes": [
+          "DEU",
+          "CZE",
+          "SLO",
+          "HUN"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0011_10.1.1.62_0000.0000.0019_10.1.1.63",
+        "latency": 30,
+        "percent_util_out": 50,
+        "country_codes": [
+        "DEU",
+        "AUT",
+        "ITA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0011_10.1.1.64_0000.0000.0013_10.1.1.65",
+        "latency": 1,
+        "percent_util_out": 65,
+        "country_codes": [
+          "DEU"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0011_10.1.1.66_0000.0000.0014_10.1.1.67",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "DEU"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0012_10.1.1.29_0000.0000.0003_10.1.1.28",
+        "latency": 30,
+        "percent_util_out": 30,
+        "country_codes": [
+          "DEU",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0012_10.1.1.47_0000.0000.0007_10.1.1.46",
+        "latency": 20,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "DEU"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0012_10.1.1.59_0000.0000.0011_10.1.1.58",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "DEU"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0012_10.1.1.68_0000.0000.0018_10.1.1.69",
+        "latency": 40,
+        "percent_util_out": 30,
+        "country_codes": [
+        "DEU",
+        "SUI",
+        "ITA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0012_10.1.1.70_0000.0000.0015_10.1.1.71",
+        "latency": 35,
+        "percent_util_out": 20,
+        "country_codes": [
+          "DEU",
+          "POL",
+          "SLO",
+          "HUN"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0013_10.1.1.65_0000.0000.0011_10.1.1.64",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "DEU"
+      ]
+    },  
+    {
+        "key": "2_0_0_0_0000.0000.0014_10.1.1.67_0000.0000.0011_10.1.1.66",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "DEU"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0015_10.1.1.71_0000.0000.0012_10.1.1.70",
+        "latency": 35,
+        "percent_util_out": 20,
+        "country_codes": [
+          "DEU",
+          "POL",
+          "SLO",
+          "HUN"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0015_10.1.1.76_0000.0000.0016_10.1.1.77",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "HUN"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0015_10.1.1.78_0000.0000.0018_10.1.1.79",
+        "latency": 25,
+        "percent_util_out": 20,
+        "country_codes": [
+        "HUN",
+        "AUT",
+        "ITA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0015_10.1.1.80_0000.0000.0017_10.1.1.81",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "HUN"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0016_10.1.1.61_0000.0000.0011_10.1.1.60",
+        "latency": 20,
+        "percent_util_out": 30,
+        "country_codes": [
+        "HUN",
+        "SLO",
+        "CZE",
+        "DEU"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0016_10.1.1.77_0000.0000.0015_10.1.1.76",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "HUN"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0016_10.1.1.82_0000.0000.0019_10.1.1.83",
+        "latency": 20,
+        "percent_util_out": 30,
+        "country_codes": [
+        "HUN",
+        "CRO",
+        "ITA"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0016_10.1.1.84_0000.0000.0017_10.1.1.85",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "HUN"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0017_10.1.1.81_0000.0000.0015_10.1.1.80",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+        "HUN"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0017_10.1.1.85_0000.0000.0016_10.1.1.84",
+        "latency": 1,
+        "percent_util_out": 35,
+        "country_codes": [
+          "HUN"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0018_10.1.1.31_0000.0000.0003_10.1.1.30",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0018_10.1.1.69_0000.0000.0012_10.1.1.68",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0018_10.1.1.79_0000.0000.0015_10.1.1.78",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0018_10.1.1.86_0000.0000.0019_10.1.1.87",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0018_10.1.1.88_0000.0000.0022_10.1.1.89",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0018_10.1.1.90_0000.0000.0021_10.1.1.91",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0018_10.1.1.92_0000.0000.0020_10.1.1.93",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },   
+    {
+        "key": "2_0_0_0_0000.0000.0019_10.1.1.23_0000.0000.0002_10.1.1.22",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0019_10.1.1.63_0000.0000.0011_10.1.1.62",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0019_10.1.1.87_0000.0000.0018_10.1.1.86",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0019_10.1.1.94_0000.0000.0023_10.1.1.95",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0019_10.1.1.96_0000.0000.0021_10.1.1.97",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0019_10.1.1.98_0000.0000.0020_10.1.1.99",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0020_10.1.1.93_0000.0000.0018_10.1.1.92",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0020_10.1.1.99_0000.0000.0019_10.1.1.98",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0021_10.1.1.91_0000.0000.0018_10.1.1.90",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0021_10.1.1.97_0000.0000.0019_10.1.1.96",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0021_10.1.1.91_0000.0000.0018_10.1.1.90",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0022_10.1.1.102_0000.0000.0024_10.1.1.103",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0022_10.1.1.33_0000.0000.0003_10.1.1.32",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0022_10.1.1.89_0000.0000.0018_10.1.1.88",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0023_10.1.1.101_0000.0000.0022_10.1.1.100",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0023_10.1.1.104_0000.0000.0024_10.1.1.105",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    }, 
+    {
+        "key": "2_0_0_0_0000.0000.0023_10.1.1.25_0000.0000.0002_10.1.1.24",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0023_10.1.1.95_0000.0000.0019_10.1.1.94",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0024_10.1.1.103_0000.0000.0022_10.1.1.102",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0024_10.1.1.105_0000.0000.0023_10.1.1.104",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+        "key": "2_0_0_0_0000.0000.0025_10.1.1.109_0000.0000.0007_10.1.1.108",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+          "NLD",
+          "FRA"
+        ]
+      },
+      {
+        "key": "2_0_0_0_0000.0000.0026_10.1.1.107_0000.0000.0005_10.1.1.106",
+        "latency": 10,
+        "percent_util_out": 35,
+        "country_codes": [
+        "NLD",
+        "FRA"
+      ]
+    }
+    ]
+  }
+
+
+  
+

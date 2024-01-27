@@ -1,0 +1,43 @@
+apiVersion: cilium.io/v2
+kind: CiliumNode
+metadata:
+  creationTimestamp: "2023-02-16T02:49:57Z"
+  generation: 3
+  labels:
+    beta.kubernetes.io/arch: amd64
+    beta.kubernetes.io/os: linux
+    kubernetes.io/arch: amd64
+    kubernetes.io/hostname: ubuntu00
+    kubernetes.io/os: linux
+    node-role.kubernetes.io/control-plane: ""
+    node.kubernetes.io/exclude-from-external-load-balancers: ""
+  name: ubuntu00
+  ownerReferences:
+  - apiVersion: v1
+    kind: Node
+    name: ubuntu00
+    uid: 4e61f3a6-7198-48d1-a388-24dd217688ab
+  resourceVersion: "853"
+  uid: cbe15021-2a11-4006-8621-96bed0c94cdc
+spec:
+  addresses:
+  - ip: 192.168.122.170
+    type: InternalIP
+  - ip: 10.11.66.190
+    type: CiliumInternalIP
+  alibaba-cloud: {}
+  azure: {}
+  encryption: {}
+  eni: {}
+  health:
+    ipv4: 10.11.66.90
+  ingress: {}
+  ipam:
+    podCIDRs:
+    - 10.11.66.0/24
+status:
+  alibaba-cloud: {}
+  azure: {}
+  eni: {}
+  ipam:
+    operator-status: {}

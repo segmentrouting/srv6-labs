@@ -1,0 +1,22 @@
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    ens8:
+      dhcp4: true
+    
+    host-to-vpp: 
+      addresses: 
+        - 10.11.46.2/24
+        - fc00:0:46:2::2/64
+      routes:
+        - to: 10.0.0.0/24
+          via: 10.11.46.1
+        - to: 10.10.66.0/24
+          via: 10.11.46.1
+        - to: 10.11.66.0/24
+          via: 10.11.46.1
+        - to: fc00:0::/32
+          via: fc00:0:46:2::1
+    vpp-in: {}
+
+  version: 2

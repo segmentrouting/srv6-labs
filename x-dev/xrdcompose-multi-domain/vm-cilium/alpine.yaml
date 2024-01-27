@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine
+  namespace: default
+spec:
+  containers:
+  - image: docker.io/iejalapeno/alpine:latest
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
+    imagePullPolicy: IfNotPresent
+    name: alpine
+  restartPolicy: Always

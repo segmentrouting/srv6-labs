@@ -1,0 +1,162 @@
+#------------------------------------------------------------------------------
+# xr-compose-template.xr.yml
+#
+# Copyright (c) 2020-2022 by Cisco Systems, Inc.
+# All rights reserved.
+#------------------------------------------------------------------------------
+
+# Introduction
+# ------------
+# This file documents the schema for the input YAML file to be passed to the
+# xr-compose script.
+#
+# xr-compose translates the XR keywords documented in this template to the full
+# docker-compose YAML that is used to bring up topologies of XRd Docker
+# containers.
+#
+# This file is not intended as a bootable sample topology, e.g. it does not
+# refer to real config file paths.
+#
+# See samples/ for some fully-formed examples that can be booted.
+#
+
+# Notes
+# -----
+#  - Any docker-compose fields are valid e.g. 'image' and 'container_name'
+#    fields may be specified for an XR service.
+#
+#  - See the docker-compose reference
+#    (https://docs.docker.com/compose/compose-file/) for more information on
+#    the docker-compose YAML schema.
+#
+#  - The added XR keywords all start with 'xr_', with the one exception of the
+#    'non_xr' field.
+#
+#  - XR keywords will be expanded out to valid docker-compose YAML by
+#    xr-compose.
+#
+#  - Boilerplate docker-compose fields such as 'version', 'stdin_open', 'tty',
+#    and 'privileged' that are required for each container will be filled in
+#    with default values if not specified.
+#
+#  - Each container will have a volume generated to store data that should be
+#    persistent across multiple boots.
+#
+
+services:
+  xr-1:
+    # The loaded XRd image must be specified either here or using the '--image'
+    # CLI option to xr-compose.
+    image: ios-xr:7.4.1
+    # A container name will be generated from the service name and the topology
+    # identifier if one is not specified.
+    # The topology identifier may be specified as an input argument to
+    # xr-compose, otherwise being generated with the format <username>-<cwd>.
+    container_name: xr-1
+    # Optionally specify a path to startup XR config for this service. Relative
+    # paths are interpreted as relative to the input YAML file.
+    xr_startup_cfg: /path/to/config_file_xr1
+    # Optionally specify a path to a boot script to be run after all startup
+    # configuration has been applied
+    xr_boot_script: /path/to/boot_script
+    # Optionally specify XR interfaces for this service to have. Valid
+    # interfaces are currently:
+    # - GigabitEthernet interfaces:
+    #     Gi0/0/0/x
+    # - MgmtEthernet interfaces:
+    #     Mg0/RP0/CPU0/0
+    # The following optional per-interface flags may be set:
+    # - chksum: This interface should have checksum offload counteract enabled.
+    #     This defaults to True for any interfaces in non-L2 networks
+    #     (predefined Docker network), in anticipation of XR to non-XR
+    #     connectivity which requires the counteract behavior.
+    # - snoop_v[4|6]: This interface should have XR interface IPv4/v6 address
+    #     configuration added to it, using the IP addresses assigned by the
+    #     container orchestrator. Defaults to False.
+    # - snoop_v[4|6]_default_route: This interface should have XR IPv4/6
+    #     default route configuration added, using the default route assigned
+    #     by the container orchestrator. Defaults to False.
+    xr_interfaces:
+      - Gi0/0/0/0:
+          snoop_v4: True
+          snoop_v6: True
+      - Gi0/0/0/1:
+          chksum: False
+      - Gi0/0/0/2:
+          chksum: False
+      - Mg0/RP0/CPU0/0:
+          snoop_v4: True
+          snoop_v6: True
+          snoop_v4_default_route: True
+          snoop_v6_default_route: True
+    # Specified IP addresses for XR interfaces 'reserve' this address within
+    # the Docker network. The same address will need to be configured in XR
+    # on the interface.
+    networks:
+      mgmt:
+        ipv4_address: 17.19.0.2
+  xr-2:
+    image: ios-xr:7.4.1
+    xr_startup_cfg: /path/to/config_file_xr2
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Mg0/RP0/CPU0/0
+  xr-3:
+    image: ios-xr:7.4.1
+    xr_startup_cfg: /path/to/config_file_xr3
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+  xr-4:
+    image: ios-xr:7.4.1
+    xr_startup_cfg: /path/to/config_file_xr4
+    xr_interfaces:
+      - Gi0/0/0/0
+  ubuntu-1:
+    # Services annotated with the 'non_xr' keyword will be left unchanged by
+    # xr-compose.
+    non_xr: true
+    image: ubuntu:20.04
+    container_name: ubuntu-1
+    tty: true
+    stdin_open: true
+    cap_add:
+       - NET_ADMIN
+    networks:
+      xrd-1-ubuntu-1:
+        ipv4_address: 10.0.0.2
+
+# Specify L2 connections for XR interfaces, to be set up using Docker networks.
+# Each interface may be included in at most one network, and each network
+# may include at most one interface from any given XR service.
+# Interfaces not added to any network will have their own Docker network
+# created to supply an interface, but will not be connected to any
+# other containers.
+# Note that the syntax here corresponds to a list of lists - a list of networks,
+# each represented as a list of interfaces belonging to specified containers.
+xr_l2networks:
+  - ["xr-1:Gi0/0/0/0", "xr-2:Gi0/0/0/0"]
+  - ["xr-1:Gi0/0/0/1", "xr-3:Gi0/0/0/0"]
+  - ["xr-2:Gi0/0/0/1", "xr-3:Gi0/0/0/1", "xr-4:Gi0/0/0/0"]
+
+networks:
+  mgmt:
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
+    # Interfaces may be added to predefined Docker networks, if they
+    # are not included in any xr_l2network. This may be desirable
+    # for linking non-XR containers to XR containers, and for ensuring
+    # the network subnet matches the interface IP address, so that management
+    # interfaces are accessible.
+    xr_interfaces:
+      - xr-1:Mg0/RP0/CPU0/0
+      - xr-2:Mg0/RP0/CPU0/0
+  xrd-1-ubuntu-1:
+    ipam:
+      config:
+        - subnet 10.0.0.0/16
+    xr_interfaces:
+      - xr-1:Gi0/0/0/2

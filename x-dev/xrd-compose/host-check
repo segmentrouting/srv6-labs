@@ -1,0 +1,1437 @@
+#!/usr/bin/env python3
+# -------------------------------------------------------------------------------
+# host-check - Checks that a host is set up correctly for running XR Docker
+#
+# Copyright (c) 2020-2022 by Cisco Systems, Inc.
+# All rights reserved.
+# -------------------------------------------------------------------------------
+
+# pylint: disable=subprocess-run-check
+
+"""
+Script to check that the host setup is sufficient for running XR Docker
+containers.
+"""
+
+import argparse
+import enum
+import functools
+import glob
+import os
+import re
+import shlex
+import subprocess
+import sys
+import textwrap
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    NamedTuple,
+    NoReturn,
+    Optional,
+    Tuple,
+    Union,
+    Mapping,
+)
+
+
+# -------------------------------------------------------------------------------
+# Globals
+# -------------------------------------------------------------------------------
+
+INOTIFY_RECOMMENDED = 64000
+INOTIFY_PER_CONTAINER = 4000
+
+SUPPORTED_ARCHES = ["x86_64"]
+
+XRD_RAM_GB_PER_CONTAINER = 2
+GDP_RAM_GB_PER_CONTAINER = 5
+
+SHARED_MEM_MAX_PAGE_SIZE_GB = 2
+
+MIN_CPU_CORES_AVAILABLE = 2
+
+HUGEPAGE_MEMORY_GB = 3
+ACCEPTED_HUGEPAGE_SIZES_MB = [2, 1024]
+
+MIN_MEMLOCK_GB = 2
+
+REGULAR_STYLE = 0
+BOLD_STYLE = 1
+
+DASHED_LINE = (
+    "------------------------------------------------------------------"
+)
+DOUBLE_DASHED_LINE = (
+    "=================================================================="
+)
+
+# -------------------------------------------------------------------------------
+# Colours
+# -------------------------------------------------------------------------------
+
+
+def _colour(string: str, colour_code: int, style: int = REGULAR_STYLE) -> str:
+    if (
+        hasattr(sys.stdout, "isatty")
+        and sys.stdout.isatty()
+        and os.environ.get("TERM") != "dumb"
+    ):
+        return f"\033[{style};{colour_code}m{string}\033[0m"
+    else:
+        return string
+
+
+def white(string: str) -> str:
+    return string
+
+
+def red(string: str) -> str:
+    return _colour(string, 31, BOLD_STYLE)
+
+
+def green(string: str) -> str:
+    return _colour(string, 32)
+
+
+def yellow(string: str) -> str:
+    return _colour(string, 33)
+
+
+def cyan(string: str) -> str:
+    return _colour(string, 36)
+
+
+def purple(string: str) -> str:
+    return _colour(string, 35)
+
+
+# -------------------------------------------------------------------------------
+# Helpers
+# -------------------------------------------------------------------------------
+
+_CMD = Union[str, List[str]]
+
+
+def run_cmd(
+    cmd: _CMD,
+    *,
+    timeout: int = 5,
+    check: bool = True,
+    **kwargs: Any,
+) -> Tuple[str, str]:
+    """
+    Run a subprocess command.
+
+    :param cmd:
+        Command to run (as a list of strings, unless 'shell=True' is given).
+    :param kwargs:
+        Other keyword arguments passed to 'subprocess.run()'.
+    :raise subprocess.SubprocessError:
+        If calling the command fails or times out.
+    :return:
+        A tuple of the stdout and stderr from the command.
+    """
+    # Don't try to pass in `universal_newlines`, because if it's set to false,
+    # this function would return bytes rather than strings.
+    if "universal_newlines" in kwargs:
+        raise TypeError(
+            "run_cmd() got unexpected keyword 'universal_newlines'"
+        )
+
+    default_kwargs = dict(
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        universal_newlines=True,
+        timeout=timeout,
+        check=check,
+    )
+    kwargs = {**default_kwargs, **kwargs}
+
+    ret = subprocess.run(cmd, **kwargs)
+    return ret.stdout, ret.stderr
+
+
+def cmd_is_ok(cmd: _CMD, *args: Any, **kwargs: Any) -> bool:
+    """
+    Run a command and return True if returning zero or False if the command
+    errors.
+
+    A single string command is taken as a shell command whereas a list is a
+    direct command where the first element is the executable.
+    """
+    is_shell = isinstance(cmd, str)
+    try:
+        run_cmd(cmd, *args, shell=is_shell, **kwargs)
+        return True
+    except subprocess.SubprocessError:
+        return False
+
+
+def print_heading(heading: str) -> None:
+    """
+    Print a heading with borders.
+
+    :param heading:
+        The heading to print.
+    """
+    print(
+        "==============================\n"
+        + heading
+        + "\n=============================="
+    )
+
+
+def print_subheading(subheading: str) -> None:
+    """
+    Print a subheading with borders.
+
+    :param subheading:
+        The subheading to print.
+    """
+    print("\n" + subheading + "\n-----------------------")
+
+
+def print_without_newline(string: str) -> None:
+    """
+    Print a string but don't add a newline afterwards.
+
+    :param string:
+        The string to print.
+    """
+    print(string, end="")
+
+
+def _is_module_installed(module: str) -> bool:
+    """
+    Check if a module is named in any of the listed modules.
+    """
+    return cmd_is_ok(f"grep -q /{module}.ko /lib/modules/*/modules.*")
+
+
+def _is_module_builtin(module: str) -> bool:
+    """
+    Check if a module is listed as a builtin kernel module
+    """
+    return cmd_is_ok(f"grep -q /{module}.ko /lib/modules/*/modules.builtin")
+
+
+def _is_module_loaded(module: str) -> bool:
+    """
+    Check if a module is loaded (with modprobe) using lsmod.
+
+    NOTE: Be careful that the module may using underscores instead of hyphens
+    in lsmod (uses /proc/modules for data.)
+    """
+    return cmd_is_ok(f"lsmod | grep -q '^{module} '")
+
+
+# -------------------------------------------------------------------------------
+# Checks
+# -------------------------------------------------------------------------------
+
+
+class CheckState(enum.Enum):
+    """The result state of a check."""
+
+    SUCCESS = "success"
+    WARNING = "warning"
+    SKIPPED = "skipped"
+    FAILED = "failed"
+    NEUTRAL = "neutral"
+
+    def is_error(self) -> bool:
+        return self in [
+            CheckState.FAILED,
+            CheckState.SKIPPED,
+            CheckState.WARNING,
+        ]
+
+
+CheckFuncReturn = Optional[Tuple[CheckState, str]]
+
+# -------------------------------------
+# Base checks
+# -------------------------------------
+
+
+def check_arch() -> CheckFuncReturn:
+    """Check the architecture is as required."""
+    try:
+        output, _ = run_cmd(["uname", "-m"])
+        arch = output.strip()
+        if arch not in SUPPORTED_ARCHES:
+            return (
+                CheckState.FAILED,
+                f"The CPU architecture is {arch}, but XRd only supports: "
+                f"{', '.join(SUPPORTED_ARCHES)}.",
+            )
+    except subprocess.SubprocessError:
+        return (
+            CheckState.WARNING,
+            "Unable to check the CPU architecture with 'uname -m'.\n"
+            "XRd supports the following architectures: "
+            f"{', '.join(SUPPORTED_ARCHES)}.",
+        )
+
+    return CheckState.SUCCESS, arch
+
+
+def check_cpu_cores() -> CheckFuncReturn:
+    """Check the number of available CPU cores is sufficient."""
+    expected_cpus_msg = (
+        f"At least {MIN_CPU_CORES_AVAILABLE} CPU cores are required."
+    )
+    cmd = "lscpu"
+    try:
+        output, _ = run_cmd([cmd])
+        match = re.search(r"CPU\(s\):\s+(\d+)\s+", output)
+        if not match:
+            return (
+                CheckState.WARNING,
+                f"Unable to parse the output from {cmd!r} -\n"
+                "unable to check the number of available CPU cores.\n"
+                + expected_cpus_msg,
+            )
+        available_cpus = int(match.group(1))
+        if available_cpus < MIN_CPU_CORES_AVAILABLE:
+            return (
+                CheckState.FAILED,
+                f"The number of available CPU cores is {available_cpus},\n"
+                f"but at least {MIN_CPU_CORES_AVAILABLE} CPU cores are required.",
+            )
+    except subprocess.SubprocessError:
+        return (
+            CheckState.WARNING,
+            f"Error running {cmd!r} to check the number of available CPU cores.\n"
+            + expected_cpus_msg,
+        )
+
+    return CheckState.SUCCESS, str(available_cpus)
+
+
+def check_kernel_version() -> CheckFuncReturn:
+    """Check kernel version is recent enough."""
+    try:
+        output, _ = run_cmd(["uname", "-r"])
+        version = ".".join(output.strip().split(".")[:2])
+        version_tuple = tuple(int(x) for x in version.split("."))
+
+    except Exception:
+        return (
+            CheckState.WARNING,
+            "Unable to check the kernel version - must be at least version 4.0",
+        )
+
+    if version_tuple < (4, 0):
+        return (
+            CheckState.FAILED,
+            f"The kernel version is {version}, but at least version 4.0 is required.",
+        )
+
+    # Check for RHEL/CentOS 8.3 kernel version
+
+    if ".el8" in output and "4.18.0-240." in output:
+        return (
+            CheckState.FAILED,
+            "The operating system appears to be RHEL/CentOS 8.3 "
+            "(kernel version 4.18.0-240),\n"
+            "which is not supported due to a kernel bug.\n"
+            "Please upgrade/downgrade to a RHEL/CentOS "
+            "version higher or lower than 8.3",
+        )
+
+    return CheckState.SUCCESS, version
+
+
+def check_base_kernel_modules() -> CheckFuncReturn:
+    """Check the required base kernel modules are installed (not necessarily loaded)."""
+
+    base_modules = ("dummy", "nf_tables")
+    missing_modules = [
+        mod for mod in base_modules if not _is_module_installed(mod)
+    ]
+
+    if len(missing_modules) > 0:
+        return (
+            CheckState.FAILED,
+            "Missing kernel module(s): "
+            + ", ".join(missing_modules)
+            + "\n(checked in /lib/modules/*/modules.*)."
+            + "\nIt may be possible to install using your distro's package manager.",
+        )
+
+    return CheckState.SUCCESS, "Installed module(s): " + ", ".join(
+        base_modules
+    )
+
+
+def check_cgroups_version() -> CheckFuncReturn:
+    """Check the cgroups version is supported."""
+    try:
+        cmd = "stat -fc %T /sys/fs/cgroup/"
+        output, _ = run_cmd(shlex.split(cmd))
+        cgroupfs = str(output.strip())
+    except subprocess.SubprocessError:
+        return (
+            CheckState.WARNING,
+            f"Error running {cmd!r} to determine the cgroups\n"
+            "version - /sys/fs/cgroup is expected to be a cgroup v1 mount.",
+        )
+
+    if cgroupfs == "cgroup2fs":
+        version = 2
+        return (
+            CheckState.FAILED,
+            f"Cgroups version {version} is in use, but this is not supported by XRd.\n"
+            "Please use cgroups version 1.",
+        )
+
+    elif cgroupfs != "tmpfs":
+        return (
+            CheckState.FAILED,
+            "Unrecognised /sys/fs/cgroup mount, cgroups must be version 1.",
+        )
+
+    else:
+        version = 1
+        return CheckState.SUCCESS, f"v{version}"
+
+
+def check_systemd_mounts() -> CheckFuncReturn:
+    """Check the required systemd mounts are present."""
+    expected_mounts_msg = (
+        "/sys/fs/cgroup must be mounted (read-only or read-write) and\n"
+        "/sys/fs/cgroup/systemd must be mounted read-write."
+    )
+    try:
+        output, _ = run_cmd(["mount"])
+    except subprocess.SubprocessError:
+        return (
+            CheckState.WARNING,
+            "Error running 'mount' to check the required systemd mounts exist.\n"
+            + expected_mounts_msg,
+        )
+
+    mounts = []
+    for line in output.splitlines():
+        match = re.match(
+            r"\S+ on (?P<path>/\S*) type \S+ \((?P<mode>rw|ro),", line
+        )
+        if match:
+            mounts.append(match.groups())
+
+    if "/sys/fs/cgroup" not in [m[0] for m in mounts]:
+        return (
+            CheckState.FAILED,
+            "/sys/fs/cgroup mount not found.\n" + expected_mounts_msg,
+        )
+
+    if ("/sys/fs/cgroup/systemd", "rw") not in mounts:
+        return (
+            CheckState.FAILED,
+            "/sys/fs/cgroup/systemd not read-write mounted on host.\n"
+            + expected_mounts_msg,
+        )
+
+    return (
+        CheckState.SUCCESS,
+        "/sys/fs/cgroup and /sys/fs/cgroup/systemd mounted correctly.",
+    )
+
+
+def check_inotify_limits(setting: str) -> CheckFuncReturn:
+    """Check that the inotify limits are sufficiently high."""
+    fix_msg = (
+        f"This can be addressed by adding 'fs.inotify.{setting}={INOTIFY_RECOMMENDED}'\n"
+        f"to /etc/sysctl.conf or in a dedicated conf file under /etc/sysctl.d/.\n"
+        f"For a temporary fix, run:\n"
+        f"  sysctl -w fs.inotify.{setting}={INOTIFY_RECOMMENDED}"
+    )
+    path = f"/proc/sys/fs/inotify/{setting}"
+    try:
+        with open(path, "r") as f:
+            val = int(f.read().strip())
+    except Exception:
+        return (
+            CheckState.WARNING,
+            f"Failed to check inotify resource limits by reading\n"
+            f"{path}.\n"
+            f"The kernel parameter fs.inotify.{setting} should be set to at least {INOTIFY_PER_CONTAINER}\n"
+            f"(sufficient for a single instance) - the recommended value is {INOTIFY_RECOMMENDED}.\n"
+            + fix_msg,
+        )
+
+    if val < INOTIFY_PER_CONTAINER:
+        return (
+            CheckState.FAILED,
+            f"The kernel parameter fs.inotify.{setting} is set to {val} but\n"
+            f"should be at least {INOTIFY_PER_CONTAINER} (sufficient for a single instance) - the\n"
+            f"recommended value is {INOTIFY_RECOMMENDED}.\n" + fix_msg,
+        )
+    elif val < INOTIFY_RECOMMENDED:
+        return (
+            CheckState.WARNING,
+            f"The kernel parameter fs.inotify.{setting} is set to {val} -\n"
+            f"this is expected to be sufficient for {val // INOTIFY_PER_CONTAINER} XRd instance(s).\n"
+            f"The recommended value is {INOTIFY_RECOMMENDED}.\n" + fix_msg,
+        )
+    else:
+        return (
+            CheckState.SUCCESS,
+            f"{val} - this is expected to be sufficient for "
+            f"{val // INOTIFY_PER_CONTAINER} XRd instance(s).",
+        )
+
+
+def check_core_pattern() -> CheckFuncReturn:
+    """XR monitors core files if core pattern is a file path and not a pipe."""
+    path = "/proc/sys/kernel/core_pattern"
+    try:
+        with open(path, "r") as f:
+            if f.readline().lstrip().startswith("|"):
+                managed_by = "the host"
+            else:
+                managed_by = "XR"
+    except Exception:
+        return (
+            CheckState.NEUTRAL,
+            f"Failed to read {path} - unable to determine\n"
+            f"whether core files are managed by XR or the host.",
+        )
+    return CheckState.NEUTRAL, f"core files managed by {managed_by}"
+
+
+def check_userspace_aslr() -> CheckFuncReturn:
+    """Check ASLR is enabled."""
+    recommendation = (
+        "It is recommended for this kernel parameter to be set to 2 (full\n"
+        "randomization) for security reasons. This can be done by adding\n"
+        "'kernel.randomize_va_space=2' to /etc/sysctl.conf or in a dedicated conf\n"
+        "file under /etc/sysctl.d/.\n"
+        "For a temporary fix, run:\n"
+        "  sysctl -w kernel.randomize_va_space=2"
+    )
+    path = "/proc/sys/kernel/randomize_va_space"
+    try:
+        with open(path, "r") as f:
+            val = int(f.read().strip())
+    except Exception:
+        return (
+            CheckState.WARNING,
+            f"Failed to read {path}, which controls ASLR\n"
+            f"(Address-Space Layout Randomization).\n" + recommendation,
+        )
+
+    if val != 2:
+        return (
+            CheckState.WARNING,
+            f"The kernel paramater kernel.randomize_va_space, which controls ASLR\n"
+            f"(Address-Space Layout Randomization), is set to {val}.\n"
+            + recommendation,
+        )
+
+    return CheckState.SUCCESS, "full randomization"
+
+
+def _apparmor_is_enabled() -> bool:
+    """True if AppArmor is enabled."""
+    try:
+        with open("/sys/module/apparmor/parameters/enabled") as f:
+            contents = f.read().rstrip()
+    except FileNotFoundError:
+        # If the file is not found apparmor is not installed.
+        return False
+
+    return contents == "Y"
+
+
+def _selinux_is_enabled() -> bool:
+    """True if SELinux is enabled."""
+    try:
+        with open("/etc/selinux/config") as f:
+            contents = f.read()
+    except FileNotFoundError:
+        # If the file is not found selinux is not installed.
+        return False
+
+    return "SELINUX=enforcing" in contents.splitlines()
+
+
+def check_linux_security_modules() -> CheckFuncReturn:
+    """Inform if LSMs AppArmor/SELinux are enabled on the host system."""
+    msgs = []
+
+    if _apparmor_is_enabled():
+        msgs.append(
+            "AppArmor is enabled. XRd is currently unable to run with the\n"
+            "default docker profile, but can be run with\n"
+            "'--security-opt apparmor=unconfined' or equivalent."
+        )
+    if _selinux_is_enabled():
+        msgs.append(
+            "SELinux is enabled. XRd is currently unable to run with the\n"
+            "default policy, but can be run with\n"
+            "'--security-opt label=disable' or equivalent."
+        )
+
+    if not msgs:
+        msgs.append("No LSMs are enabled")
+
+    return CheckState.NEUTRAL, "\n".join(msgs)
+
+
+# -------------------------------------
+# Platform checks
+# -------------------------------------
+
+
+def check_ram(ram_req: int) -> CheckFuncReturn:
+    """Check there is sufficient RAM."""
+    # -b displays the available RAM in bytes
+    cmd = "free -b"
+    xrd_expected_usage_str = f"Each XRd instance is expected to require {ram_req} GiB of RAM for normal use."
+
+    try:
+        output = run_cmd(shlex.split(cmd))[0]
+    except subprocess.SubprocessError:
+        return (
+            CheckState.WARNING,
+            f"The command {cmd!r} failed - unable to determine the available RAM on\n"
+            f"the host.\n" + xrd_expected_usage_str,
+        )
+
+    # Try to parse the available GiB (2^30 bytes)
+    # The available memory is displayed in bytes in the last column of the
+    # first row of the command output (after headings). Do not include swap,
+    # as in general users running XRd should not be depending on swap
+    # (although it may be OK in lab cases), but point out that swap may be
+    # available.
+    try:
+        free_mem = int(output.split("\n")[1].split()[-1]) / (2**30)
+    except Exception:
+        return (
+            CheckState.WARNING,
+            f"Failed to parse the output from {cmd!r} - unable to determine the\n"
+            f"available RAM on the host.\n" + xrd_expected_usage_str,
+        )
+
+    if free_mem < ram_req:
+        return (
+            CheckState.WARNING,
+            f"The available RAM on the host ({free_mem:.1f} GiB) may be insufficient to "
+            f"run XRd.\n"
+            f"{xrd_expected_usage_str}\n"
+            f"Note that this does not include any swap that may be available.",
+        )
+
+    return (
+        CheckState.SUCCESS,
+        f"Available RAM is {free_mem:.1f} GiB.\n"
+        f"This is estimated to be sufficient for {int(free_mem / ram_req)} "
+        f"XRd instance(s), although memory\n"
+        f"usage depends on the running configuration.\n"
+        f"Note that any swap that may be available is not included.",
+    )
+
+
+def check_cpu_extensions() -> CheckFuncReturn:
+    """Check the required CPU extensions are installed."""
+    required_cpu_exts = {"ssse3", "sse4_1", "sse4_2"}
+    found_cpu_exts = set()
+    cmd = "lscpu"
+    try:
+        output, _ = run_cmd(cmd)
+        match = re.search(r"Flags:\s+(.+)", output)
+        if not match:
+            return (
+                CheckState.WARNING,
+                f"Unable to parse the output from {cmd!r} - unable to check\n"
+                f"for the required CPU extensions: "
+                + ", ".join(sorted(required_cpu_exts))
+                + "\nAll of these extensions must be installed.",
+            )
+        cpu_exts = match.group(1).split(" ")
+        for ext in required_cpu_exts:
+            if ext in cpu_exts:
+                found_cpu_exts.add(ext)
+
+        missing_cpu_exts = required_cpu_exts - found_cpu_exts
+        if len(missing_cpu_exts) > 0:
+            return (
+                CheckState.FAILED,
+                "Missing CPU extension(s): "
+                + ", ".join(sorted(missing_cpu_exts))
+                + "\nPlease install the missing extension(s).",
+            )
+    except subprocess.SubprocessError:
+        return (
+            CheckState.WARNING,
+            f"Unable to parse the output from {cmd!r} - unable to check\n"
+            f"for the required CPU extensions: "
+            + ", ".join(sorted(required_cpu_exts))
+            + "\nAll of these extensions must be installed.",
+        )
+
+    return CheckState.SUCCESS, ", ".join(sorted(found_cpu_exts))
+
+
+def _calc_hugepage_size_and_mem(
+    hugepages_lines: List[str],
+) -> Tuple[int, float]:
+    """Calculates the hugepage size and memory, given the hugepage data."""
+    # Returns a list of one string in the format 'label: value unit'
+    hugepages_size_line = [s for s in hugepages_lines if "Hugepagesize" in s]
+    hugepages_size_string = (
+        hugepages_size_line[0].split(":")[-1].strip().split(" ")
+    )
+    hugepages_size = int(hugepages_size_string[0])
+    hugepages_size_unit = hugepages_size_string[1]
+
+    # Convert size to MiB
+    if hugepages_size_unit == "kB":
+        hugepages_size = hugepages_size // 1024
+    elif hugepages_size_unit == "MB":
+        pass
+    elif hugepages_size_unit == "GB":
+        hugepages_size *= 1024
+
+    # Returns a list of one string in the format 'label: value'
+    hugepages_free_line = [f for f in hugepages_lines if "Free" in f]
+    hugepages_free = int(hugepages_free_line[0].split(":")[-1])
+    hugepages_memory = (
+        hugepages_free * hugepages_size
+    ) / 1024  # calculate available memory in GiB
+
+    return hugepages_size, hugepages_memory
+
+
+def _1gb_hugepages_supported() -> bool:
+    """
+    Checks whether 1GiB hugepages are supported.
+
+    :raise OSError:
+        If unable to read the required file.
+    """
+    output, _ = run_cmd("lscpu")
+    match = re.search(r"Flags:\s+(.+)", output)
+    if not match:
+        return False
+    cpu_exts = match.group(1).split(" ")
+    if "pdpe1gb" in cpu_exts:
+        return True
+    return False
+
+
+def check_hugepages() -> CheckFuncReturn:
+    """Check hugepages are enabled with the required settings."""
+    path = "/proc/meminfo"
+    msgs = []
+    try:
+        with open(path, "r") as file:
+            hugepages_lines = [
+                L for L in file.readlines() if L.startswith("Huge")
+            ]
+            # Returns a list of one string in the format 'label: value'
+            hugepages_total_line = [t for t in hugepages_lines if "Total" in t]
+            hugepages_total = int(hugepages_total_line[0].split(":")[-1])
+
+            if hugepages_total == 0:
+                return (
+                    CheckState.FAILED,
+                    "Hugepages are not enabled. These are required for XRd to function correctly."
+                    "\nTo enable hugepages, see the instructions at:"
+                    "\nhttps://www.kernel.org/doc/Documentation/vm/hugetlbpage.txt.",
+                )
+            else:
+                (
+                    hugepages_size,
+                    hugepages_memory,
+                ) = _calc_hugepage_size_and_mem(hugepages_lines)
+
+            if hugepages_size not in ACCEPTED_HUGEPAGE_SIZES_MB:
+                msgs.append(
+                    f"{hugepages_size}MiB hugepages are available, but XRd requires\n"
+                    f"1GiB (recommended) or 2MiB hugepages."
+                )
+            if hugepages_memory < HUGEPAGE_MEMORY_GB:
+                msgs.append(
+                    f"Only {hugepages_memory:.1f}GiB of hugepage memory available, but XRd\n"
+                    f"requires at least {HUGEPAGE_MEMORY_GB}GiB."
+                )
+            if (
+                hugepages_size not in ACCEPTED_HUGEPAGE_SIZES_MB
+                or hugepages_memory < HUGEPAGE_MEMORY_GB
+            ):
+                return CheckState.FAILED, "\n".join(msgs)
+    except OSError:
+        return (
+            CheckState.WARNING,
+            f"Unable to parse the contents of {path} - unable to check\n"
+            f"whether hugepages are enabled with 1GiB (recommended)\n"
+            f"or 2MiB hugepage size and at least {HUGEPAGE_MEMORY_GB}GiB of available\n"
+            f"hugepage memory.",
+        )
+    except (ValueError, IndexError):
+        return (
+            CheckState.WARNING,
+            f"Unable to parse the contents of {path} - unable to check\n"
+            f"whether hugepages are enabled with 1GiB (recommended)\n"
+            f"or 2MiB hugepage size and at least {HUGEPAGE_MEMORY_GB}GiB of available\n"
+            f"hugepage memory.",
+        )
+    try:
+        if hugepages_size == 2 and _1gb_hugepages_supported():
+            return (
+                CheckState.NEUTRAL,
+                f"{hugepages_memory:.1f}GiB of hugepages are available.\n"
+                f"The host is configured to use {hugepages_size}MiB hugepages - please\n"
+                f"reconfigure to use 1GiB hugepages for performance reasons.\n"
+                f"See the instructions at:\n"
+                f"https://www.kernel.org/doc/Documentation/vm/hugetlbpage.txt.",
+            )
+        elif hugepages_size == 2:
+            return (
+                CheckState.NEUTRAL,
+                f"{hugepages_memory:.1f}GiB of hugepages are available.\n"
+                f"The host only supports {hugepages_size}MiB hugepages - note that 1GiB\n"
+                f"hugepages are preferred for performance reasons.",
+            )
+        else:  # convert hugepage size to GiB
+            hugepages_size = hugepages_size // 1024
+            num_hugepgs = int(hugepages_memory // hugepages_size)
+    except subprocess.CalledProcessError as e:
+        return (
+            CheckState.WARNING,
+            f"Command {e.cmd!r} failed - unable to check whether 1GiB hugepages are supported.",
+        )
+    return (
+        CheckState.SUCCESS,
+        f"{num_hugepgs} x {hugepages_size}GiB",
+    )
+
+
+def check_interface_kernel_driver() -> CheckFuncReturn:
+    """Check the required interface specific kernel driver is loaded."""
+    # The lsmod, loaded check, requires the underscore version of the kernel
+    # module name
+    if _is_module_loaded("vfio_pci") or _is_module_builtin("vfio-pci"):
+        return CheckState.SUCCESS, "vfio-pci loaded"
+    elif _is_module_installed("vfio-pci"):
+        return (
+            CheckState.FAILED,
+            "The kernel module vfio-pci is installed but not loaded.\n"
+            "Run 'modprobe vfio-pci' to load the module.",
+        )
+    else:
+        return (
+            CheckState.FAILED,
+            "The kernel module vfio-pci is not installed. It may be\n"
+            "possible to install using your distro's package manager.",
+        )
+
+
+def check_iommu() -> CheckFuncReturn:
+    """Check IOMMU is set up correctly for the vfio-pci kernel module."""
+    recommendation = "IOMMU is recommended for security when using the vfio-pci kernel driver."
+    noiommu_filepath = "/sys/module/vfio/parameters/enable_unsafe_noiommu_mode"
+    iommu_dev_filepath = "/sys/class/iommu/*/devices/*"
+    try:
+        with open(noiommu_filepath, "r") as f:
+            no_iommu_mode = f.read().strip().upper() in ("Y", "1")
+            if no_iommu_mode:
+                return (
+                    CheckState.WARNING,
+                    "vfio-pci is set up in no-IOMMU mode, but IOMMU is recommended for security.",
+                )
+    except OSError:
+        return (
+            CheckState.WARNING,
+            "Failed to check whether vfio-pci 'no-IOMMU' mode is enabled by reading\n"
+            f"{noiommu_filepath}.\n" + recommendation,
+        )
+    # Check if IOMMU is enabled on the host
+    try:
+        iommu_devices = [
+            os.path.basename(p) for p in glob.glob(iommu_dev_filepath)
+        ]
+        if not iommu_devices:  # check if the directory is empty
+            return (
+                CheckState.FAILED,
+                "The kernel module vfio-pci cannot be used, as IOMMU is not enabled.\n"
+                + recommendation,
+            )
+    except Exception:
+        return (
+            CheckState.WARNING,
+            f"Unable to check if IOMMU is enabled by listing {iommu_dev_filepath}.\n"
+            + recommendation,
+        )
+    # List the network PCI devices
+    try:
+        cmd = "lshw -businfo -c network"
+        output, _ = run_cmd(shlex.split(cmd))
+        matches = re.findall(
+            r"pci@([\da-f]{4}:[\da-f]{2}:[\da-f]{2}\.[\da-f])\s+(\S+)", output
+        )
+        if not matches:
+            return (CheckState.FAILED, "no PCI network devices found")
+        network_devices = set()
+        net_devices_dict = {}
+        for match in matches:
+            bus_info, logical_name = match
+            network_devices.add(bus_info)
+            net_devices_dict[bus_info] = logical_name
+
+    except subprocess.SubprocessError:
+        return (
+            CheckState.WARNING,
+            f"The cmd {cmd!r} failed - unable to\n"
+            "determine the network devices on the host. IOMMU is enabled.",
+        )
+    net_iommu_devices = network_devices & set(iommu_devices)
+    if not net_iommu_devices:
+        return (
+            CheckState.WARNING,
+            "IOMMU enabled for vfio-pci, but no network PCI devices found.",
+        )
+    net_iommu_devs_list = []
+    for device in sorted(net_iommu_devices):
+        net_iommu_devs_list.append(
+            net_devices_dict[device] + " (" + device + ")"
+        )
+    dev_output = ""
+    for count, dev in enumerate(net_iommu_devs_list, start=1):
+        if count == len(net_iommu_devs_list):
+            dev_output = dev_output + f"{dev}"
+        elif count % 3 != 0:
+            dev_output = dev_output + f"{dev}, "
+        else:
+            dev_output = dev_output + f"{dev},\n"
+    return (
+        CheckState.SUCCESS,
+        "IOMMU enabled for vfio-pci with the following PCI device(s):\n"
+        + dev_output,
+    )
+
+
+def check_shmem_pages_max_size() -> CheckFuncReturn:
+    """Check the maximum size of shared memory pages is sufficient."""
+    path = "/proc/sys/kernel/shmmax"
+    try:
+        with open(path) as file:
+            contents = file.read().rstrip()  # remove trailing newline
+            try:  # try to parse the size in GiB (2^30 bytes)
+                shared_mem_max_page_size = int(contents) / (2**30)
+            except ValueError:
+                return (
+                    CheckState.WARNING,
+                    f"Unable to parse the contents of {path} - unable to\n"
+                    f"determine the maximum size of shared memory pages.\n"
+                    f"At least {SHARED_MEM_MAX_PAGE_SIZE_GB} GiB are required.",
+                )
+
+            if shared_mem_max_page_size < SHARED_MEM_MAX_PAGE_SIZE_GB:
+                return (
+                    CheckState.FAILED,
+                    f"The maximum size of shared memory pages is {shared_mem_max_page_size:.1f} GiB,\n"
+                    f"but at least {SHARED_MEM_MAX_PAGE_SIZE_GB} GiB are required.",
+                )
+    except OSError:
+        return (
+            CheckState.WARNING,
+            f"Unable to read the contents of {path} - unable to\n"
+            f"determine the maximum size of shared memory pages.\n"
+            f"At least {SHARED_MEM_MAX_PAGE_SIZE_GB} GiB are required.",
+        )
+
+    return CheckState.SUCCESS, f"{shared_mem_max_page_size:.1f} GiB"
+
+
+# -------------------------------------
+# Docker checks
+# -------------------------------------
+
+
+def check_docker_client() -> CheckFuncReturn:
+    """Check that the Docker client version is 18.x or higher."""
+    cmd = "docker --version"
+    try:
+        version_str = run_cmd(shlex.split(cmd))[0].strip()
+    except (FileNotFoundError, subprocess.SubprocessError):
+        return (
+            CheckState.FAILED,
+            f"Docker client not correctly installed on the host (checked with\n"
+            f"{cmd!r}).\n"
+            f"See installation instructions at https://docs.docker.com/engine/install/.\n"
+            f"At least version 18.0 is required for XRd.",
+        )
+
+    version_match = re.match(
+        r"Docker version (\d+\.\d+(?:\.\d+)?)", version_str
+    )
+    if not version_match:
+        return (
+            CheckState.WARNING,
+            f"Unable to parse Docker client version from {cmd!r}.\n"
+            f"At least version 18.0 is required for XRd.",
+        )
+    version = version_match.group(1)
+
+    if int(version.split(".")[0]) < 18:
+        return (
+            CheckState.FAILED,
+            f"Docker version must be at least 18.0, current client version is {version}.\n"
+            f"See installation instructions at https://docs.docker.com/engine/install/.",
+        )
+
+    return CheckState.SUCCESS, f"version {version}"
+
+
+def check_docker_daemon() -> CheckFuncReturn:
+    """Check that the docker daemon version is at least 18.0."""
+    cmd = "docker version -f '{{json .Server.Version}}'"
+    try:
+        version_str = run_cmd(shlex.split(cmd))[0].strip()
+    except subprocess.SubprocessError:
+        return (
+            CheckState.FAILED,
+            f"Unable to connect to the Docker daemon (checked with\n"
+            f"{cmd!r}).\n"
+            f"This could be because it isn't running, or due to insufficient permissions.\n"
+            f"See installation instructions at https://docs.docker.com/engine/install/.",
+        )
+
+    version_match = re.match(r'"(\d+\.\d+(?:\.\d+)?)"', version_str)
+    if not version_match:
+        return (
+            CheckState.WARNING,
+            f"Unable to parse Docker server version from\n"
+            f"{cmd!r}.\n"
+            f"At least version 18.0 is required for XRd.",
+        )
+    version = version_match.group(1)
+
+    if int(version.split(".")[0]) < 18:
+        return (
+            CheckState.FAILED,
+            f"Docker version must be at least 18.0, current server version is {version}.\n"
+            f"See installation instructions at https://docs.docker.com/engine/install/.",
+        )
+
+    return CheckState.SUCCESS, f"running, version {version}"
+
+
+def check_supports_d_type() -> CheckFuncReturn:
+    """Check Docker is using a filesystem that supports d_type."""
+    cmd = "docker info"
+    try:
+        output = run_cmd(shlex.split(cmd))[0]
+    except subprocess.SubprocessError:
+        return (
+            CheckState.FAILED,
+            f"{cmd!r} command failed.\n"
+            f"Unable to check filesystem support for d_type (directory entry type).\n"
+            f"This is required for XRd to avoid issues with creating and deleting files.",
+        )
+    if "Supports d_type: true" not in output:
+        return (
+            CheckState.FAILED,
+            "Docker is using a backing filesystem that does not support d_type\n"
+            "(directory entry type).\n"
+            "This is required for XRd to avoid issues with creating and deleting files.",
+        )
+    return None
+
+
+# -------------------------------------
+# XR compose checks
+# -------------------------------------
+
+
+def check_docker_compose() -> CheckFuncReturn:
+    """Check that the docker-compose version is 1.18.x or higher."""
+    cmd = "docker-compose --version"
+    try:
+        version_str = run_cmd(shlex.split(cmd))[0].strip()
+    except (FileNotFoundError, subprocess.SubprocessError):
+        return (
+            CheckState.FAILED,
+            f"Docker Compose not found (checked with {cmd!r}).\n"
+            f"Launching XRd topologies with xr-compose requires docker-compose.\n"
+            f"See installation instructions at https://docs.docker.com/compose/install/.",
+        )
+
+    version_match = re.match(
+        r"docker-compose version (\d+\.\d+(?:\.\d+)?)", version_str
+    )
+    if not version_match:
+        return (
+            CheckState.WARNING,
+            "Unable to parse Docker Compose version, at least version 1.18 is required.",
+        )
+    version = version_match.group(1)
+    version_tuple = tuple(int(x) for x in version.split("."))
+
+    if version_tuple < (1, 18):
+        return (
+            CheckState.FAILED,
+            f"Docker Compose version must be at least 1.18, current version is {version}.\n"
+            f"See installation instructions at https://docs.docker.com/compose/install/.",
+        )
+
+    return CheckState.SUCCESS, f"version {version}"
+
+
+def check_pyyaml_installed() -> CheckFuncReturn:
+    """Check that the pyyaml package is installed for use by xr-compose."""
+    try:
+        import yaml  # pylint: disable=unused-import
+    except ImportError:
+        return (
+            CheckState.FAILED,
+            "PyYAML Python package not installed - required for running xr-compose.\n"
+            "Install with 'python3 -m pip install pyyaml'.",
+        )
+    return CheckState.SUCCESS, "installed"
+
+
+def check_bridge_iptables() -> CheckFuncReturn:
+    """Check that bridge-nf-call-iptables are disabled."""
+    for setting in ["bridge-nf-call-iptables", "bridge-nf-call-ip6tables"]:
+        base_path = "/proc/sys/net/bridge"
+        path = f"{base_path}/{setting}"
+        long_msg = (
+            "For xr-compose to be able to use Docker bridges, bridge IP tables must\n"
+            "be disabled. Note that there may be security considerations associated\n"
+            "with doing so.\n"
+            "Bridge IP tables can be disabled by setting the kernel parameters\n"
+            "net.bridge.bridge-nf-call-iptables and net.bridge.bridge-nf-call-ip6tables\n"
+            "to 0. These can be modified by adding 'net.bridge.bridge-nf-call-iptables=0'\n"
+            "and 'net.bridge.bridge-nf-call-ip6tables=0' to /etc/sysctl.conf or in a\n"
+            "dedicated conf file under /etc/sysctl.d/.\n"
+            "For a temporary fix, run:\n"
+            "  sysctl -w net.bridge.bridge-nf-call-iptables=0\n"
+            "  sysctl -w net.bridge.bridge-nf-call-ip6tables=0"
+        )
+        try:
+            with open(path, "r") as f:
+                val = int(f.read().strip())
+        except Exception:
+            return (
+                CheckState.WARNING,
+                f"Failed to read iptables settings under {base_path}/.\n"
+                + long_msg,
+            )
+
+        if val != 0:
+            return CheckState.FAILED, long_msg
+
+    return CheckState.SUCCESS, "disabled"
+
+
+class Check(NamedTuple):
+    """A check for some host capability."""
+
+    name: str
+    func: Callable[[], CheckFuncReturn]
+    deps: List[str]
+
+
+BASE_CHECKS = [
+    Check("CPU architecture", check_arch, []),
+    Check("CPU cores", check_cpu_cores, []),
+    Check("Kernel version", check_kernel_version, []),
+    Check(
+        "Base kernel modules", check_base_kernel_modules, ["Kernel version"]
+    ),
+    Check("Cgroups version", check_cgroups_version, []),
+    Check("systemd mounts", check_systemd_mounts, ["Cgroups version"]),
+    Check(
+        "Inotify max user instances",
+        functools.partial(check_inotify_limits, "max_user_instances"),
+        [],
+    ),
+    Check(
+        "Inotify max user watches",
+        functools.partial(check_inotify_limits, "max_user_watches"),
+        [],
+    ),
+    Check("Core pattern", check_core_pattern, []),
+    Check("ASLR", check_userspace_aslr, []),
+    Check("Linux Security Modules", check_linux_security_modules, []),
+]
+
+XRD_CHECKS = [
+    Check("RAM", functools.partial(check_ram, XRD_RAM_GB_PER_CONTAINER), []),
+]
+
+GDPLANE_CHECKS = [
+    Check("CPU extensions", check_cpu_extensions, []),
+    Check("RAM", functools.partial(check_ram, GDP_RAM_GB_PER_CONTAINER), []),
+    Check("Hugepages", check_hugepages, []),
+    Check("Interface kernel driver", check_interface_kernel_driver, []),
+    Check("IOMMU", check_iommu, ["Interface kernel driver"]),
+    Check("Shared memory pages max size", check_shmem_pages_max_size, []),
+]
+
+DOCKER_CHECKS = [
+    Check("Docker client", check_docker_client, []),
+    Check("Docker daemon", check_docker_daemon, ["Docker client"]),
+    Check("Docker supports d_type", check_supports_d_type, ["Docker daemon"]),
+]
+
+XR_COMPOSE_CHECKS = [
+    Check("docker-compose", check_docker_compose, []),
+    Check("PyYAML", check_pyyaml_installed, []),
+    Check("Bridge iptables", check_bridge_iptables, []),
+]
+
+PLATFORM_CHECKS_MAP: Mapping[str, List[Check]] = {
+    "xrd": XRD_CHECKS,
+    "xrd-gdplane": GDPLANE_CHECKS,
+}
+EXTRA_CHECKS_MAP: Mapping[str, List[Check]] = {
+    "docker": DOCKER_CHECKS,
+    "xr-compose": XR_COMPOSE_CHECKS,
+}
+
+# -------------------------------------------------------------------------------
+# Main
+# -------------------------------------------------------------------------------
+
+
+def print_check_status_msg(
+    name: str, status: CheckState, msg: Optional[str]
+) -> None:
+    if status is CheckState.SUCCESS:
+        colour = green
+        status_word = "PASS"
+    elif status is CheckState.WARNING:
+        colour = yellow
+        status_word = "WARN"
+    elif status is CheckState.SKIPPED:
+        colour = yellow
+        status_word = "SKIP"
+    elif status is CheckState.FAILED:
+        colour = red
+        status_word = "FAIL"
+    elif status is CheckState.NEUTRAL:
+        colour = cyan
+        status_word = "INFO"
+    else:
+        assert False
+
+    output = f"{status_word} -- {name}"
+    if msg and len(msg) < 32:
+        output += f" ({msg})"
+    elif msg:
+        output += "\n" + textwrap.indent(msg, "        ")
+
+    print(colour(output))
+
+
+def perform_checks(checks: List[Check]) -> bool:
+    """
+    Perform host checks.
+
+    :param checks:
+        Checks to run through.
+    :return:
+        Whether all required checks succeeded.
+    """
+    results: Dict[str, CheckState] = {}
+    msg: Optional[str]
+
+    for name, check_fn, deps in checks:
+        # Only run this test if previous dependent tests were successful.
+        if not any(results[dep].is_error() for dep in deps):
+            try:
+                ret = check_fn()
+                if ret:
+                    status, msg = ret
+                else:
+                    status = CheckState.SUCCESS
+                    msg = None
+            except Exception as e:
+                status = CheckState.FAILED
+                msg = f"Unexpected error: {e}"
+        else:
+            status = CheckState.SKIPPED
+            msg = "Skipped due to failed checks: {}".format(", ".join(deps))
+        print_check_status_msg(name, status, msg)
+
+        results[name] = status
+
+    return not any(c.is_error() for c in results.values())
+
+
+def run_specified_checks(platform: str, extra_checks: List[str]) -> bool:
+    """
+    Run specified checks and report which platforms/extras are supported.
+
+    :param platform:
+        The XR platform.
+    :param extra_checks:
+        A list of the extra checks.
+    :return:
+        Whether the XR platform checks succeeded.
+    """
+    extra_failed = False
+    print_heading(f"Platform checks - {platform}")
+    platform_success = perform_checks(
+        BASE_CHECKS + PLATFORM_CHECKS_MAP[platform]
+    )
+
+    if extra_checks is not None:  # check if any extra checks were specified
+        extras_supported = set()
+        extras_not_supported = set()
+
+        print("")  # insert a newline
+        print_heading("Extra checks")
+        for extra_check in sorted(extra_checks):
+            print_subheading(f"{extra_check} checks")
+            extra_success = perform_checks(EXTRA_CHECKS_MAP[extra_check])
+            if extra_success:
+                extras_supported.add(extra_check)
+            else:
+                extras_not_supported.add(extra_check)
+
+    print(f"\n{DOUBLE_DASHED_LINE}")
+    if platform_success:
+        print_without_newline(
+            f"Host environment set up correctly for {platform}"
+        )
+    else:
+        print_without_newline(
+            f"!! Host NOT set up correctly for {platform} !!"
+        )
+
+    if extra_checks is not None:
+        print_without_newline(f"\n{DASHED_LINE}")
+        if extras_supported:
+            print_without_newline(
+                "\nExtra checks passed: " + ", ".join(sorted(extras_supported))
+            )
+        if extras_not_supported:
+            extra_failed = True
+            print_without_newline(
+                "\nExtra checks failed: "
+                + ", ".join(sorted(extras_not_supported))
+            )
+    print(f"\n{DOUBLE_DASHED_LINE}")
+
+    return platform_success and not extra_failed
+
+
+def run_all_checks() -> bool:
+    """
+    Run all checks and report which platforms/extras are supported.
+
+    :return:
+        Whether at least one XR platform is supported.
+    """
+    platforms_supported = set()
+    platforms_not_supported = set()
+    extras_supported = set()
+    extras_not_supported = set()
+
+    print_heading("Platform checks")
+    print_subheading("base checks")
+    base_success = perform_checks(BASE_CHECKS)
+
+    for platform, checks in PLATFORM_CHECKS_MAP.items():
+        print_subheading(f"{platform} checks")
+        platform_success = perform_checks(checks)
+
+        if base_success and platform_success:
+            platforms_supported.add(platform)
+        else:
+            platforms_not_supported.add(platform)
+
+    print("")  # insert a newline
+    print_heading("Extra checks")
+    for extra, checks in EXTRA_CHECKS_MAP.items():
+        print_subheading(f"{extra} checks")
+        extra_success = perform_checks(checks)
+        if extra_success:
+            extras_supported.add(extra)
+        else:
+            extras_not_supported.add(extra)
+
+    print(f"\n{DOUBLE_DASHED_LINE}")
+
+    if platforms_supported:
+        print_without_newline(
+            "XR platforms supported: " + ", ".join(sorted(platforms_supported))
+        )
+    elif not platforms_supported:
+        print_without_newline(
+            "!! Host NOT set up correctly for any XR platforms !!"
+        )
+    if platforms_not_supported and platforms_supported:
+        print_without_newline(
+            "\nXR platforms NOT supported: "
+            + ", ".join(sorted(platforms_not_supported))
+        )
+
+    print_without_newline(f"\n{DASHED_LINE}")
+
+    if extras_supported:
+        print_without_newline(
+            "\nExtra checks passed: " + ", ".join(sorted(extras_supported))
+        )
+    if extras_not_supported:
+        print_without_newline(
+            "\nExtra checks failed: " + ", ".join(sorted(extras_not_supported))
+        )
+
+    print(f"\n{DOUBLE_DASHED_LINE}")
+
+    return len(platforms_supported) > 0
+
+
+def parse_args(argv: List[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "-p",
+        "--platform",
+        choices=["xrd", "xrd-gdplane"],
+        required=False,
+        help="specify the XR platform to run host-check for",
+    )
+    parser.add_argument(
+        "-e",
+        "--extra-checks",
+        nargs="+",
+        choices=["docker", "xr-compose"],
+        required=False,
+        help="specify any extra checks to run",
+    )
+    # specify some rules for using the arguments
+    args = parser.parse_args(argv)
+    if args.extra_checks and not args.platform:
+        parser.error(
+            "The XR platform must be specified with: --platform [-p] XR_PLATFORM"
+        )
+    return args
+
+
+def main(argv: List[str]) -> NoReturn:
+    args = parse_args(argv)
+    if args.platform:
+        success = run_specified_checks(args.platform, args.extra_checks)
+    else:
+        # We've already checked that extra checks aren't specified in this case.
+        success = run_all_checks()
+    sys.exit(0 if success else 1)
+
+
+if __name__ == "__main__":
+    try:
+        main(sys.argv[1:])
+    except KeyboardInterrupt:
+        print("Exiting on Ctrl+C")
+        sys.exit(1)

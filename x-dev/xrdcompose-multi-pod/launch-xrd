@@ -1,0 +1,466 @@
+#!/bin/bash
+#------------------------------------------------------------------------------
+# launch-xrd - Launches XRd Docker containers
+#
+# Copyright (c) 2020-2022 by Cisco Systems, Inc.
+# All rights reserved.
+#------------------------------------------------------------------------------
+
+#
+# Helper script for launching a single XRd instance, wrapping 'docker run'.
+#
+
+#
+# Functions
+# -----------------------------------------------------------------------------
+
+_usage_short () {
+    echo -n "\
+Usage: $(basename "$0") [-h|--help] [-n|--dry-run] IMG [<opts>]
+"
+}
+
+_usage_opts () {
+    echo -n "\
+Required arguments:
+  IMG                           Specify loaded docker image to boot
+
+Optional arguments:
+  -f, --first-boot-config FILE  Path to startup config file for first boot
+  -e, --every-boot-config FILE  Path to startup config file for every boot
+  -v, --xrd-volume VOL          Name of volume used for persistency (created if
+                                doesn't already exist)
+  -p, --platform PLATFORM       XR platform to launch. Used for images missing
+                                the platform label.
+  -k, --keep                    Keep the container around after it has stopped
+  -m, --container-manager $CONTAINER_MGRS
+                                Container manager (defaults to '$CONTAINER_MGR')
+  --name NAME                   Specify container name
+  --disk-limit LIMIT            Disk usage limit to impose (defaults to '6G')
+  --interfaces IF_TYPE:IF_NAME[,IF_FLAG[,...]][;IF_TYPE:IF_NAME[...]...]
+                                XR interfaces to create and their mapping to
+                                underlying linux/pci interfaces
+  --mgmt-interfaces linux:IF_NAME[,MG_FLAG[,...]][;linux:IF_NAME[...]...]
+                                XR management interfaces to create and their
+                                mapping to underlying linux interfaces (defaults
+                                to a single interface mapped to eth0, pass \"\"
+                                to prevent this)
+  --first-boot-script FILE      Path to script to be run after all config has
+                                been applied on the first boot
+  --every-boot-script FILE      Path to script to be run after all config has
+                                been applied on every boot
+  --ztp-enable                  Enable Zero Touch Provisioning (ZTP) to start
+                                up after boot, by default ZTP is disabled
+                                (cannot be used with IP snooping)
+  --ztp-config FILE             Enable ZTP with custom ZTP ini configuration
+  --privileged                  Run the container with extended privileges
+  --cgroups-version {1|2}       Select version of cgroups (defaults to 1)
+  --args '<arg1> <arg2> ...'    Extra arguments to pass to 'docker run'
+
+XRd ControlPlane arguments:
+  IF_TYPE := { linux }          Interface type
+  IF_NAME := { * }              A linux interface name
+  IF_FLAG := { xr_name | chksum | snoop_v[4|6] | snoop_v[4|6]_default_route }
+                                Flags for interface configuration
+  MG_FLAG := IF_FLAG            Flags for management interface configuration
+
+XRd GDPlane arguments:
+  --gdp-hugepage-mb SIZE        Size of hugepages in megabytes (defaults to
+                                '3G')
+
+  IF_TYPE := { pci | pci-range }            Interface type
+  IF_NAME := { (IF_TYPE=pci)       BUS:SLOT.FUNC |
+               (IF_TYPE=pci-range) lastN | firstN }
+                                Either PCI address e.g. pci:00:09.0, or
+                                selection of addresses e.g. pci-range:last4
+  IF_FLAG := {}                 Flags for interface configuration
+  MG_FLAG := { chksum | snoop_v[4|6] | snoop_v[4|6]_default_route }
+                                Flags for management interface configuration
+"
+}
+
+bad_usage () {
+    _usage_short >&2
+    exit 1
+}
+
+usage () {
+    echo -n "\
+$(_usage_short)
+
+$(_usage_opts)
+"
+    exit 0
+}
+
+# Quote a bash command - the output can be directly run.
+_quote_cmd() {
+    # Python's shlex module is used as it gives cleaner output than bash's
+    # 'printf "%q " "$@"' (quotes rather than backslash escapes).
+    python3 -c \
+        'import shlex, sys; print(" ".join(shlex.quote(x) for x in sys.argv[1:]))' \
+        "$@"
+}
+
+# Get the platform from the labels on a container image
+#   Arg 1: image name
+_get_platform() {
+    local platform
+    platform="$($CONTAINER_MGR inspect "$1" \
+        --format='{{index .Config.Labels "com.cisco.ios-xr.platform"}}' 2>/dev/null)"
+    # Assert that the container image has the word "xrd" in it.
+    if [[ $platform != *xrd* ]]; then
+        echo "Error: Could not determine platform from image '$1' labels." >&2
+        echo "Use '--platform' argument instead." >&2
+        exit 1
+    fi
+    echo -n "$platform"
+}
+
+# Either run the given command or output the command on stderr if DRY_RUN=1.
+_runcmd() {
+    if [[ $DRY_RUN == 1 ]]; then
+        _quote_cmd "$@"
+    else
+        "$@"
+    fi
+}
+
+
+#
+# Parse args
+# -----------------------------------------------------------------------------
+
+DRY_RUN=0
+USE_RM=1
+IS_PRIVILEGED=0
+IS_ZTP_ENABLED=0
+IMAGE=""
+FIRST_BOOT_CONFIG=""
+EVERY_BOOT_CONFIG=""
+FIRST_BOOT_SCRIPT=""
+EVERY_BOOT_SCRIPT=""
+ZTP_CONFIG=""
+PERSIST_VOL=""
+CONTAINER_NAME=""
+INTERFACES=""
+DISK_LIMIT=""
+EXTRA_ARGS=""
+GDP_HUGEPAGE_MB=""
+CONTAINER_MGR="docker"
+CONTAINER_MGRS="{docker|podman}"
+# By default we provide a MgmtEth interface with chksum.
+MGMT_INTERFACES="linux:eth0,chksum"
+CGROUPS_VERSION=1
+
+OPTS=$(getopt -o hnkgf:e:m:p:v: \
+--long help,dry-run,keep,first-boot-config:,every-boot-config:,\
+first-boot-script:,every-boot-script:,xrd-volume:,container-manager:,name:,\
+interfaces:,mgmt-interfaces:,disk-limit:,privileged,args:,plat:,platform:,\
+gdp-hugepage-mb:,cgroups-version:,ztp-enable,ztp-config: -n 'parse-options' -- "$@")
+
+GETOPT_RC=$?
+
+# Exit and print usage info if the option parsing failed
+if [ $GETOPT_RC != 0 ]; then
+    bad_usage
+fi
+
+eval set -- "$OPTS"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h | --help )
+            usage
+            ;;
+        -n | --dry-run )
+            DRY_RUN=1
+            shift
+            ;;
+        -k | --keep )
+            USE_RM=0
+            shift
+            ;;
+        -f | --first-boot-config )
+            FIRST_BOOT_CONFIG=$2
+            shift 2
+            ;;
+        -e | --every-boot-config )
+            EVERY_BOOT_CONFIG=$2
+            shift 2
+            ;;
+        --first-boot-script )
+            FIRST_BOOT_SCRIPT=$2
+            shift 2
+            ;;
+        --every-boot-script )
+            EVERY_BOOT_SCRIPT=$2
+            shift 2
+            ;;
+        -v | --xrd-volume )
+            PERSIST_VOL=$2
+            shift 2
+            ;;
+        -p | --plat | --platform )
+            PLATFORM=$2
+            shift 2
+            ;;
+        -m | --container-manager )
+            CONTAINER_MGR=$2
+            shift 2
+            ;;
+        --name )
+            CONTAINER_NAME=$2
+            shift 2
+            ;;
+        --interfaces )
+            INTERFACES=$2
+            shift 2
+            ;;
+        --mgmt-interfaces )
+            MGMT_INTERFACES=$2
+            shift 2
+            ;;
+        --disk-limit )
+            DISK_LIMIT=$2
+            shift 2
+            ;;
+        --ztp-enable )
+            IS_ZTP_ENABLED=1
+            shift
+            ;;
+        --ztp-config )
+            ZTP_CONFIG=$2
+            shift 2
+            ;;
+        --privileged )
+            IS_PRIVILEGED=1
+            shift
+            ;;
+        --cgroups-version )
+            CGROUPS_VERSION=$2
+            shift 2
+            ;;
+        --args )
+            EXTRA_ARGS=$2
+            shift 2
+            ;;
+        --gdp-hugepage-mb )
+            GDP_HUGEPAGE_MB=$2
+            shift 2
+            ;;
+        -- )
+           shift
+           ;;
+        *)
+            if [[ ! $IMAGE ]]; then
+                IMAGE=$1
+                shift
+            else
+                echo "Unexpected argument '$1'" >&2
+                bad_usage
+            fi
+            ;;
+    esac
+done
+
+if [[ ! $IMAGE ]]; then
+    echo "Must specify Docker image" >&2
+    bad_usage
+fi
+
+#
+# Obtain the platform from the chosen image.
+# -----------------------------------------------------------------------------
+if [[ $PLATFORM == "" ]]; then
+    if ! PLATFORM="$(_get_platform "$IMAGE")"; then
+        bad_usage
+    fi
+fi
+
+#
+# Validate arguments.
+# -----------------------------------------------------------------------------
+
+if [[ "$CONTAINER_MGRS" != *"$CONTAINER_MGR"* ]]; then
+    echo "Error: Unknown container manager '$CONTAINER_MGR' must be one of $CONTAINER_MGRS." >&2
+    bad_usage
+fi
+
+# Validate based on XRd platform
+if [[ $PLATFORM == "xrd" ]]; then
+    if [[ $GDP_HUGEPAGE_MB ]]; then
+        echo "Error: --gdp-hugepage-mb can only be specified for platform 'xrd-gdplane', not '$PLATFORM'." >&2
+        bad_usage
+    fi
+elif [[ $PLATFORM == "xrd-gdplane" ]]; then
+    : # Nothing to validate for XRd GDPlane
+else
+    echo "Error: Unknown platform '$PLATFORM'." >&2
+    echo "Known platforms: xrd, xrd-gdplane" >&2
+    bad_usage
+fi
+
+if [[ 1,2 != *"$CGROUPS_VERSION"* ]]; then
+    echo "The cgroups version must be either '1' or '2'." >&2
+    bad_usage
+fi
+
+#
+# Determine args to pass to docker/podman.
+# -----------------------------------------------------------------------------
+
+run_args=()
+caps_args=()
+misc_args=()
+env_args=()
+mount_args=()
+name_args=()
+
+# Mount the startup config files and set the env vars.
+if [[ $FIRST_BOOT_CONFIG ]]; then
+    config_mount="/etc/xrd/first-boot.cfg"
+    env_args+=("--env" "XR_FIRST_BOOT_CONFIG=$config_mount")
+    mount_args+=("--mount" "type=bind,source=$(realpath "$FIRST_BOOT_CONFIG"),target=$config_mount")
+fi
+if [[ $EVERY_BOOT_CONFIG ]]; then
+    config_mount="/etc/xrd/every-boot.cfg"
+    env_args+=("--env" "XR_EVERY_BOOT_CONFIG=$config_mount")
+    mount_args+=("--mount" "type=bind,source=$(realpath "$EVERY_BOOT_CONFIG"),target=$config_mount")
+fi
+if [[ $ZTP_CONFIG ]]; then
+    script_mount="/etc/xrd/user-ztp.ini"
+    env_args+=("--env" "XR_ENABLE_ZTP_WITH_INI=$script_mount")
+    mount_args+=("--mount" "type=bind,source=$(realpath "$ZTP_CONFIG"),target=$script_mount")
+fi
+# Mount the boot scripts and set the env vars.
+if [[ $FIRST_BOOT_SCRIPT ]]; then
+    script_mount="/etc/xrd/first-boot-script"
+    env_args+=("--env" "XR_FIRST_BOOT_SCRIPT=$script_mount")
+    mount_args+=("--mount" "type=bind,source=$(realpath "$FIRST_BOOT_SCRIPT"),target=$script_mount")
+fi
+if [[ $EVERY_BOOT_SCRIPT ]]; then
+    script_mount="/etc/xrd/every-boot-script"
+    env_args+=("--env" "XR_EVERY_BOOT_SCRIPT=$script_mount")
+    mount_args+=("--mount" "type=bind,source=$(realpath "$EVERY_BOOT_SCRIPT"),target=$script_mount")
+fi
+
+# Persist data by making and mounting a volume at /xr-storage/.
+if [[ $PERSIST_VOL ]]; then
+    if ! "$CONTAINER_MGR" volume inspect "$PERSIST_VOL" &> /dev/null; then
+        CMD=("$CONTAINER_MGR" volume create "$PERSIST_VOL")
+        if [[ $DRY_RUN == 1 ]]; then
+            _runcmd "${CMD[@]}"
+        else
+            "${CMD[@]}" > /dev/null
+        fi
+    fi
+    mount_args+=("--mount" "type=volume,source=$PERSIST_VOL,target=/xr-storage/")
+fi
+
+
+if [[ $IS_PRIVILEGED == 1 ]]; then
+    caps_args+=("--privileged")
+else
+    # Unprivileged requires explicit list of capabilities.
+    caps_args+=(
+        "--cap-drop" "all"
+        # Docker defaults required by XRd.
+        "--cap-add" "AUDIT_WRITE"
+        "--cap-add" "CHOWN"
+        "--cap-add" "DAC_OVERRIDE"
+        "--cap-add" "FOWNER"
+        "--cap-add" "FSETID"
+        "--cap-add" "KILL"
+        "--cap-add" "MKNOD"
+        "--cap-add" "NET_BIND_SERVICE"
+        "--cap-add" "NET_RAW"
+        "--cap-add" "SETFCAP"
+        "--cap-add" "SETGID"
+        "--cap-add" "SETUID"
+        "--cap-add" "SETPCAP"
+        "--cap-add" "SYS_CHROOT"
+        # Extras required by XRd.
+        "--cap-add" "IPC_LOCK"
+        "--cap-add" "NET_ADMIN"
+        "--cap-add" "SYS_ADMIN"
+        "--cap-add" "SYS_NICE"
+        "--cap-add" "SYS_PTRACE"
+        "--cap-add" "SYS_RESOURCE"
+    )
+    misc_args+=(
+        "--device" "/dev/fuse"
+        "--device" "/dev/net/tun"
+        # AppArmor and SELinux are not supported with the default docker profiles.
+        "--security-opt" "apparmor=unconfined"
+        "--security-opt" "label=disable"
+    )
+    if [[ $PLATFORM == "xrd-gdplane" ]]; then
+        # Add GDPlane specific unprivileged arguments:
+        caps_args+=(
+            # Required for DPDK to use interfaces
+            "--cap-add" "SYS_RAWIO"
+        )
+
+        # Required for gdplane to use vfio driver.
+        misc_args+=(
+            "--device" "/dev/vfio"
+            "--device-cgroup-rule" "c *:* rwm"
+        )
+    fi
+fi
+
+
+# Choices based on container engine executable
+if [[ $CONTAINER_MGR == "docker" ]]; then
+    if [[ $IS_PRIVILEGED == 0 && $CGROUPS_VERSION == 1 ]]; then
+        # Need cgroup mounts for unprivileged cgroupv1 docker run
+        misc_args+=("-v" "/sys/fs/cgroup:/sys/fs/cgroup:ro")
+    fi
+elif [[ $CONTAINER_MGR == "podman" ]]; then
+    # Podman's default pid limit is too low so set to unlimited.
+    misc_args+=(--systemd=always)
+    misc_args+=(--pids-limit -1)
+fi
+
+
+# General environment variables:
+#  - interface mapping (XR -> Linux)
+#  - checksum counteract interfaces
+#  - disk usage limit
+#  - ZTP configuring
+if [[ $INTERFACES ]]; then
+    env_args+=("--env" "XR_INTERFACES=$INTERFACES")
+fi
+if [[ $MGMT_INTERFACES ]]; then
+    env_args+=("--env" "XR_MGMT_INTERFACES=$MGMT_INTERFACES")
+fi
+if [[ $DISK_LIMIT ]]; then
+    env_args+=("--env" "XR_DISK_USAGE_LIMIT=$DISK_LIMIT")
+fi
+if [[ $GDP_HUGEPAGE_MB ]]; then
+    env_args+=("--env" "XR_GDP_HUGEPAGE_MB=$GDP_HUGEPAGE_MB")
+fi
+if [[ $IS_ZTP_ENABLED == 1 ]]; then
+    env_args+=("--env" "XR_ZTP_ENABLE=1")
+fi
+
+# Run the docker final command
+# -----------------------------------------------------------------------------
+
+if [[ $CONTAINER_NAME ]]; then
+    name_args+=("--name" "$CONTAINER_NAME")
+fi
+if [[ $USE_RM == 1 ]]; then
+    run_args+=("--rm")
+fi
+_runcmd \
+    "$CONTAINER_MGR" run -it \
+        "${run_args[@]}" \
+        "${name_args[@]}" \
+        "${caps_args[@]}" \
+        "${misc_args[@]}" \
+        "${mount_args[@]}" \
+        "${env_args[@]}" \
+        $EXTRA_ARGS \
+        "$IMAGE" || exit $?

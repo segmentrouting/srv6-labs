@@ -1,0 +1,1223 @@
+# The 27-node topology is comprised of routers xrd00 thru xrd26
+
+services:
+# Ubuntu containers
+  source:
+    non_xr: true
+    image: alpine:3.15
+    container_name: alpine-06
+    stdin_open: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+    command: /bin/sh -c "ip route add 10.0.0.0/8 via 10.10.6.2 && /bin/sh"
+    networks:
+      xrd06-host:
+        ipv4_address: 10.10.6.4
+
+# XRd containers
+  xrd00:
+    xr_startup_cfg: config-v6-only/xrd00.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd01:
+    xr_startup_cfg: config-v6-only/xrd01.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd02:
+    xr_startup_cfg: config-v6-only/xrd02.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Gi0/0/0/6
+      - Mg0/RP0/CPU0/0
+
+  xrd03:
+    xr_startup_cfg: config-v6-only/xrd03.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Gi0/0/0/6
+      - Mg0/RP0/CPU0/0
+
+  xrd04:
+    xr_startup_cfg: config-v6-only/xrd04.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd05:
+    xr_startup_cfg: config-v6-only/xrd05.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Mg0/RP0/CPU0/0
+
+  xrd06:
+    xr_startup_cfg: config-v6-only/xrd06.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Mg0/RP0/CPU0/0
+
+  xrd07:
+    xr_startup_cfg: config-v6-only/xrd07.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd08:
+    xr_startup_cfg: config-v6-only/xrd08.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Mg0/RP0/CPU0/0
+
+  xrd09:
+    xr_startup_cfg: config-v6-only/xrd09.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd10:
+    xr_startup_cfg: config-v6-only/xrd10.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd11:
+    xr_startup_cfg: config-v6-only/xrd11.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Gi0/0/0/6
+      - Mg0/RP0/CPU0/0
+
+  xrd12:
+    xr_startup_cfg: config-v6-only/xrd12.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Gi0/0/0/6
+      - Mg0/RP0/CPU0/0
+
+  xrd13:
+    xr_startup_cfg: config-v6-only/xrd13.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd14:
+    xr_startup_cfg: config-v6-only/xrd14.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd15:
+    xr_startup_cfg: config-v6-only/xrd15.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd16:
+    xr_startup_cfg: config-v6-only/xrd16.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd17:
+    xr_startup_cfg: config-v6-only/xrd17.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Mg0/RP0/CPU0/0
+
+  xrd18:
+    xr_startup_cfg: config-v6-only/xrd18.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Gi0/0/0/6
+      - Mg0/RP0/CPU0/0
+
+  xrd19:
+    xr_startup_cfg: config-v6-only/xrd19.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Gi0/0/0/6
+      - Mg0/RP0/CPU0/0
+
+  xrd20:
+    xr_startup_cfg: config-v6-only/xrd20.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd21:
+    xr_startup_cfg: config-v6-only/xrd21.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd22:
+    xr_startup_cfg: config-v6-only/xrd22.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd23:
+    xr_startup_cfg: config-v6-only/xrd23.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+  xrd24:
+    xr_startup_cfg: config-v6-only/xrd24.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Mg0/RP0/CPU0/0
+
+  xrd25:
+    xr_startup_cfg: config-v6-only/xrd25.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+
+  xrd26:
+    xr_startup_cfg: config-v6-only/xrd26.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+
+# DC01 routers  SS
+
+  xrd48:
+    xr_startup_cfg: config-v6-only/xrd48.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5    
+      - Mg0/RP0/CPU0/0
+
+  xrd49:
+    xr_startup_cfg: config-v6-only/xrd49.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5     
+      - Mg0/RP0/CPU0/0
+
+# DC01 routers  POD1
+
+  xrd40:
+    xr_startup_cfg: config-v6-only/xrd40.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd41:
+    xr_startup_cfg: config-v6-only/xrd41.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd42:
+    xr_startup_cfg: config-v6-only/xrd42.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd43:
+    xr_startup_cfg: config-v6-only/xrd43.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd44:
+    xr_startup_cfg: config-v6-only/xrd44.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd45:
+    xr_startup_cfg: config-v6-only/xrd45.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd46:
+    xr_startup_cfg: config-v6-only/xrd46.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd47:
+    xr_startup_cfg: config-v6-only/xrd47.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+
+# DC01 routers  POD2
+
+  xrd50:
+    xr_startup_cfg: config-v6-only/xrd50.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd51:
+    xr_startup_cfg: config-v6-only/xrd51.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd52:
+    xr_startup_cfg: config-v6-only/xrd52.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd53:
+    xr_startup_cfg: config-v6-only/xrd53.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd54:
+    xr_startup_cfg: config-v6-only/xrd54.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd55:
+    xr_startup_cfg: config-v6-only/xrd55.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd56:
+    xr_startup_cfg: config-v6-only/xrd56.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd57:
+    xr_startup_cfg: config-v6-only/xrd57.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+# DC02 routers  SS
+
+  xrd68:
+    xr_startup_cfg: config-v6-only/xrd68.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd69:
+    xr_startup_cfg: config-v6-only/xrd69.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+# DC02 POD1 routers
+
+  xrd60:
+    xr_startup_cfg: config-v6-only/xrd60.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd61:
+    xr_startup_cfg: config-v6-only/xrd61.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd62:
+    xr_startup_cfg: config-v6-only/xrd62.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd63:
+    xr_startup_cfg: config-v6-only/xrd63.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd64:
+    xr_startup_cfg: config-v6-only/xrd64.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd65:
+    xr_startup_cfg: config-v6-only/xrd65.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd66:
+    xr_startup_cfg: config-v6-only/xrd66.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd67:
+    xr_startup_cfg: config-v6-only/xrd67.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+      
+# DC02 POD2 routers
+
+  xrd70:
+    xr_startup_cfg: config-v6-only/xrd70.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd71:
+    xr_startup_cfg: config-v6-only/xrd71.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd72:
+    xr_startup_cfg: config-v6-only/xrd72.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd73:
+    xr_startup_cfg: config-v6-only/xrd73.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd74:
+    xr_startup_cfg: config-v6-only/xrd74.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd75:
+    xr_startup_cfg: config-v6-only/xrd75.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd76:
+    xr_startup_cfg: config-v6-only/xrd76.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+
+  xrd77:
+    xr_startup_cfg: config-v6-only/xrd77.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5
+      - Mg0/RP0/CPU0/0
+      
+      
+# CE / Host CNF routers
+
+  xrd81:
+    xr_startup_cfg: config-v6-only/xrd81.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+
+  xrd82:
+    xr_startup_cfg: config-v6-only/xrd82.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+ 
+  xrd83:
+    xr_startup_cfg: config-v6-only/xrd83.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0      
+
+  xrd84:
+    xr_startup_cfg: config-v6-only/xrd84.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+      
+  xrd85:
+    xr_startup_cfg: config-v6-only/xrd85.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+
+  xrd86:
+    xr_startup_cfg: config-v6-only/xrd86.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+ 
+  xrd87:
+    xr_startup_cfg: config-v6-only/xrd87.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0      
+
+  xrd88:
+    xr_startup_cfg: config-v6-only/xrd88.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0   
+      
+  xrd89:
+    xr_startup_cfg: config-v6-only/xrd89.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+
+  xrd90:
+    xr_startup_cfg: config-v6-only/xrd90.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+ 
+  xrd91:
+    xr_startup_cfg: config-v6-only/xrd91.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0      
+
+  xrd92:
+    xr_startup_cfg: config-v6-only/xrd92.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+      
+  xrd93:
+    xr_startup_cfg: config-v6-only/xrd93.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+
+  xrd94:
+    xr_startup_cfg: config-v6-only/xrd94.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Mg0/RP0/CPU0/0
+ 
+         
+
+xr_l2networks:
+  - ["xrd00:Gi0/0/0/0", "xrd02:Gi0/0/0/6"]
+  - ["xrd00:Gi0/0/0/1", "xrd03:Gi0/0/0/6"]
+  - ["xrd00:Gi0/0/0/3", "xrd48:Gi0/0/0/0"]
+  - ["xrd00:Gi0/0/0/2", "xrd49:Gi0/0/0/0"]  
+
+  - ["xrd01:Gi0/0/0/0", "xrd02:Gi0/0/0/5"]
+  - ["xrd01:Gi0/0/0/1", "xrd03:Gi0/0/0/5"] 
+  - ["xrd01:Gi0/0/0/3", "xrd48:Gi0/0/0/1"]
+  - ["xrd01:Gi0/0/0/2", "xrd49:Gi0/0/0/1"]
+  
+  - ["xrd02:Gi0/0/0/0", "xrd03:Gi0/0/0/0"]
+  - ["xrd02:Gi0/0/0/1", "xrd11:Gi0/0/0/3"]
+  - ["xrd02:Gi0/0/0/2", "xrd04:Gi0/0/0/2"]
+  - ["xrd02:Gi0/0/0/3", "xrd19:Gi0/0/0/2"]
+  - ["xrd02:Gi0/0/0/4", "xrd23:Gi0/0/0/1"]
+
+  - ["xrd03:Gi0/0/0/1", "xrd05:Gi0/0/0/2"]
+  - ["xrd03:Gi0/0/0/2", "xrd12:Gi0/0/0/2"]
+  - ["xrd03:Gi0/0/0/3", "xrd18:Gi0/0/0/2"]
+  - ["xrd03:Gi0/0/0/4", "xrd22:Gi0/0/0/1"]
+
+  - ["xrd04:Gi0/0/0/0", "xrd05:Gi0/0/0/0"]
+  - ["xrd04:Gi0/0/0/1", "xrd08:Gi0/0/0/4"]
+  - ["xrd04:Gi0/0/0/3", "xrd06:Gi0/0/0/1"]
+
+  - ["xrd05:Gi0/0/0/1", "xrd07:Gi0/0/0/2"]
+  - ["xrd05:Gi0/0/0/3", "xrd06:Gi0/0/0/0"]
+  - ["xrd05:Gi0/0/0/4", "xrd26:Gi0/0/0/0"]
+
+  - ["xrd07:Gi0/0/0/0", "xrd08:Gi0/0/0/0"]
+  - ["xrd07:Gi0/0/0/1", "xrd12:Gi0/0/0/1"]
+  - ["xrd07:Gi0/0/0/3", "xrd10:Gi0/0/0/0"]
+  - ["xrd07:Gi0/0/0/4", "xrd09:Gi0/0/0/0"]
+  - ["xrd07:Gi0/0/0/5", "xrd25:Gi0/0/0/0"]
+
+  - ["xrd08:Gi0/0/0/1", "xrd09:Gi0/0/0/1"]
+  - ["xrd08:Gi0/0/0/2", "xrd10:Gi0/0/0/1"]
+  - ["xrd08:Gi0/0/0/3", "xrd11:Gi0/0/0/4"]
+
+  - ["xrd11:Gi0/0/0/0", "xrd12:Gi0/0/0/0"]
+  - ["xrd11:Gi0/0/0/1", "xrd16:Gi0/0/0/1"]
+  - ["xrd11:Gi0/0/0/2", "xrd19:Gi0/0/0/1"]
+  - ["xrd11:Gi0/0/0/5", "xrd13:Gi0/0/0/0"]
+  - ["xrd11:Gi0/0/0/6", "xrd14:Gi0/0/0/0"]
+
+  - ["xrd12:Gi0/0/0/3", "xrd18:Gi0/0/0/3"]
+  - ["xrd12:Gi0/0/0/4", "xrd15:Gi0/0/0/2"]
+  - ["xrd12:Gi0/0/0/5", "xrd13:Gi0/0/0/1"]
+  - ["xrd12:Gi0/0/0/6", "xrd14:Gi0/0/0/1"]
+
+  - ["xrd13:Gi0/0/0/3", "xrd68:Gi0/0/0/0"]
+  - ["xrd13:Gi0/0/0/2", "xrd69:Gi0/0/0/0"]
+
+  - ["xrd14:Gi0/0/0/3", "xrd68:Gi0/0/0/1"]
+  - ["xrd14:Gi0/0/0/2", "xrd69:Gi0/0/0/1"]
+
+  - ["xrd15:Gi0/0/0/0", "xrd16:Gi0/0/0/0"]
+  - ["xrd15:Gi0/0/0/1", "xrd18:Gi0/0/0/4"]
+  - ["xrd15:Gi0/0/0/3", "xrd17:Gi0/0/0/0"]
+
+  - ["xrd16:Gi0/0/0/2", "xrd19:Gi0/0/0/6"]
+  - ["xrd16:Gi0/0/0/3", "xrd17:Gi0/0/0/1"]
+
+  - ["xrd18:Gi0/0/0/0", "xrd19:Gi0/0/0/0"]
+  - ["xrd18:Gi0/0/0/1", "xrd22:Gi0/0/0/2"]
+  - ["xrd18:Gi0/0/0/5", "xrd21:Gi0/0/0/0"]
+  - ["xrd18:Gi0/0/0/6", "xrd20:Gi0/0/0/0"]
+
+  - ["xrd19:Gi0/0/0/3", "xrd23:Gi0/0/0/3"]
+  - ["xrd19:Gi0/0/0/4", "xrd21:Gi0/0/0/1"]
+  - ["xrd19:Gi0/0/0/5", "xrd20:Gi0/0/0/1"]
+
+  - ["xrd22:Gi0/0/0/0", "xrd23:Gi0/0/0/0"]
+  - ["xrd22:Gi0/0/0/3", "xrd24:Gi0/0/0/0"]
+
+  - ["xrd23:Gi0/0/0/2", "xrd24:Gi0/0/0/1"]
+
+  - ["xrd40:Gi0/0/0/0", "xrd48:Gi0/0/0/2"]
+  - ["xrd40:Gi0/0/0/1", "xrd49:Gi0/0/0/2"]
+  - ["xrd40:Gi0/0/0/2", "xrd42:Gi0/0/0/0"]
+  - ["xrd40:Gi0/0/0/3", "xrd43:Gi0/0/0/0"]
+  - ["xrd40:Gi0/0/0/4", "xrd44:Gi0/0/0/0"]
+  - ["xrd40:Gi0/0/0/5", "xrd45:Gi0/0/0/0"]
+
+  - ["xrd41:Gi0/0/0/0", "xrd48:Gi0/0/0/3"]
+  - ["xrd41:Gi0/0/0/1", "xrd49:Gi0/0/0/3"]
+  - ["xrd41:Gi0/0/0/2", "xrd42:Gi0/0/0/1"]
+  - ["xrd41:Gi0/0/0/3", "xrd43:Gi0/0/0/1"]
+  - ["xrd41:Gi0/0/0/4", "xrd44:Gi0/0/0/1"]
+  - ["xrd41:Gi0/0/0/5", "xrd45:Gi0/0/0/1"]
+
+  - ["xrd42:Gi0/0/0/2", "xrd46:Gi0/0/0/0"]
+  - ["xrd42:Gi0/0/0/3", "xrd47:Gi0/0/0/0"]
+
+  - ["xrd43:Gi0/0/0/2", "xrd46:Gi0/0/0/1"]
+  - ["xrd43:Gi0/0/0/3", "xrd47:Gi0/0/0/1"]
+
+  - ["xrd44:Gi0/0/0/2", "xrd46:Gi0/0/0/2"]
+  - ["xrd44:Gi0/0/0/3", "xrd47:Gi0/0/0/2"]
+
+  - ["xrd45:Gi0/0/0/2", "xrd46:Gi0/0/0/3"]
+  - ["xrd45:Gi0/0/0/3", "xrd47:Gi0/0/0/3"]
+
+  - ["xrd50:Gi0/0/0/0", "xrd48:Gi0/0/0/4"]
+  - ["xrd50:Gi0/0/0/1", "xrd49:Gi0/0/0/4"]
+  - ["xrd50:Gi0/0/0/2", "xrd52:Gi0/0/0/0"]
+  - ["xrd50:Gi0/0/0/3", "xrd53:Gi0/0/0/0"]
+  - ["xrd50:Gi0/0/0/4", "xrd54:Gi0/0/0/0"]
+  - ["xrd50:Gi0/0/0/5", "xrd55:Gi0/0/0/0"]
+
+  - ["xrd51:Gi0/0/0/0", "xrd48:Gi0/0/0/5"]
+  - ["xrd51:Gi0/0/0/1", "xrd49:Gi0/0/0/5"]
+  - ["xrd51:Gi0/0/0/2", "xrd52:Gi0/0/0/1"]
+  - ["xrd51:Gi0/0/0/3", "xrd53:Gi0/0/0/1"]
+  - ["xrd51:Gi0/0/0/4", "xrd54:Gi0/0/0/1"]
+  - ["xrd51:Gi0/0/0/5", "xrd55:Gi0/0/0/1"]
+
+  - ["xrd52:Gi0/0/0/2", "xrd56:Gi0/0/0/0"]
+  - ["xrd52:Gi0/0/0/3", "xrd57:Gi0/0/0/0"]
+
+  - ["xrd53:Gi0/0/0/2", "xrd56:Gi0/0/0/1"]
+  - ["xrd53:Gi0/0/0/3", "xrd57:Gi0/0/0/1"]
+
+  - ["xrd54:Gi0/0/0/2", "xrd56:Gi0/0/0/2"]
+  - ["xrd54:Gi0/0/0/3", "xrd57:Gi0/0/0/2"]
+
+  - ["xrd55:Gi0/0/0/2", "xrd56:Gi0/0/0/3"]
+  - ["xrd55:Gi0/0/0/3", "xrd57:Gi0/0/0/3"]
+
+  - ["xrd60:Gi0/0/0/0", "xrd68:Gi0/0/0/2"]
+  - ["xrd60:Gi0/0/0/1", "xrd69:Gi0/0/0/2"]
+  - ["xrd60:Gi0/0/0/2", "xrd62:Gi0/0/0/0"]
+  - ["xrd60:Gi0/0/0/3", "xrd63:Gi0/0/0/0"]
+  - ["xrd60:Gi0/0/0/4", "xrd64:Gi0/0/0/0"]
+  - ["xrd60:Gi0/0/0/5", "xrd65:Gi0/0/0/0"]
+
+  - ["xrd61:Gi0/0/0/0", "xrd68:Gi0/0/0/3"]
+  - ["xrd61:Gi0/0/0/1", "xrd69:Gi0/0/0/3"]
+  - ["xrd61:Gi0/0/0/2", "xrd62:Gi0/0/0/1"]
+  - ["xrd61:Gi0/0/0/3", "xrd63:Gi0/0/0/1"]
+  - ["xrd61:Gi0/0/0/4", "xrd64:Gi0/0/0/1"]
+  - ["xrd61:Gi0/0/0/5", "xrd65:Gi0/0/0/1"]
+
+  - ["xrd62:Gi0/0/0/2", "xrd66:Gi0/0/0/0"]
+  - ["xrd62:Gi0/0/0/3", "xrd67:Gi0/0/0/0"]
+
+  - ["xrd63:Gi0/0/0/2", "xrd66:Gi0/0/0/1"]
+  - ["xrd63:Gi0/0/0/3", "xrd67:Gi0/0/0/1"]
+
+  - ["xrd64:Gi0/0/0/2", "xrd66:Gi0/0/0/2"]
+  - ["xrd64:Gi0/0/0/3", "xrd67:Gi0/0/0/2"]
+
+  - ["xrd65:Gi0/0/0/2", "xrd66:Gi0/0/0/3"]
+  - ["xrd65:Gi0/0/0/3", "xrd67:Gi0/0/0/3"]
+
+  - ["xrd70:Gi0/0/0/0", "xrd68:Gi0/0/0/4"]
+  - ["xrd70:Gi0/0/0/1", "xrd69:Gi0/0/0/4"]
+  - ["xrd70:Gi0/0/0/2", "xrd72:Gi0/0/0/0"]
+  - ["xrd70:Gi0/0/0/3", "xrd73:Gi0/0/0/0"]
+  - ["xrd70:Gi0/0/0/4", "xrd74:Gi0/0/0/0"]
+  - ["xrd70:Gi0/0/0/5", "xrd75:Gi0/0/0/0"]
+
+  - ["xrd71:Gi0/0/0/0", "xrd68:Gi0/0/0/5"]
+  - ["xrd71:Gi0/0/0/1", "xrd69:Gi0/0/0/5"]
+  - ["xrd71:Gi0/0/0/2", "xrd72:Gi0/0/0/1"]
+  - ["xrd71:Gi0/0/0/3", "xrd73:Gi0/0/0/1"]
+  - ["xrd71:Gi0/0/0/4", "xrd74:Gi0/0/0/1"]
+  - ["xrd71:Gi0/0/0/5", "xrd75:Gi0/0/0/1"]
+
+  - ["xrd72:Gi0/0/0/2", "xrd76:Gi0/0/0/0"]
+  - ["xrd72:Gi0/0/0/3", "xrd77:Gi0/0/0/0"]
+
+  - ["xrd73:Gi0/0/0/2", "xrd76:Gi0/0/0/1"]
+  - ["xrd73:Gi0/0/0/3", "xrd77:Gi0/0/0/1"]
+
+  - ["xrd74:Gi0/0/0/2", "xrd76:Gi0/0/0/2"]
+  - ["xrd74:Gi0/0/0/3", "xrd77:Gi0/0/0/2"]
+
+  - ["xrd75:Gi0/0/0/2", "xrd76:Gi0/0/0/3"]
+  - ["xrd75:Gi0/0/0/3", "xrd77:Gi0/0/0/3"]
+  
+  - ["xrd81:Gi0/0/0/0", "xrd06:Gi0/0/0/2"]
+
+  - ["xrd82:Gi0/0/0/0", "xrd09:Gi0/0/0/2"]
+  - ["xrd82:Gi0/0/0/1", "xrd10:Gi0/0/0/2"]
+  
+  - ["xrd83:Gi0/0/0/0", "xrd09:Gi0/0/0/3"]
+  - ["xrd83:Gi0/0/0/1", "xrd10:Gi0/0/0/3"]  
+  
+  - ["xrd84:Gi0/0/0/0", "xrd17:Gi0/0/0/2"]  
+  
+  - ["xrd85:Gi0/0/0/0", "xrd20:Gi0/0/0/2"]
+  - ["xrd85:Gi0/0/0/1", "xrd20:Gi0/0/0/2"]
+  
+  - ["xrd86:Gi0/0/0/0", "xrd21:Gi0/0/0/3"]
+  - ["xrd86:Gi0/0/0/1", "xrd21:Gi0/0/0/3"]   
+  
+  - ["xrd87:Gi0/0/0/0", "xrd46:Gi0/0/0/4"]
+  - ["xrd87:Gi0/0/0/1", "xrd47:Gi0/0/0/4"]
+  
+  - ["xrd88:Gi0/0/0/0", "xrd46:Gi0/0/0/5"]
+  - ["xrd88:Gi0/0/0/1", "xrd47:Gi0/0/0/5"]     
+
+  - ["xrd89:Gi0/0/0/0", "xrd56:Gi0/0/0/4"]
+  - ["xrd89:Gi0/0/0/1", "xrd57:Gi0/0/0/4"]
+  
+  - ["xrd90:Gi0/0/0/0", "xrd56:Gi0/0/0/5"]
+  - ["xrd90:Gi0/0/0/1", "xrd57:Gi0/0/0/5"]    
+  
+  - ["xrd91:Gi0/0/0/0", "xrd66:Gi0/0/0/4"]
+  - ["xrd91:Gi0/0/0/1", "xrd67:Gi0/0/0/4"]
+  
+  - ["xrd92:Gi0/0/0/0", "xrd66:Gi0/0/0/5"]
+  - ["xrd92:Gi0/0/0/1", "xrd67:Gi0/0/0/5"]     
+
+  - ["xrd93:Gi0/0/0/0", "xrd76:Gi0/0/0/4"]
+  - ["xrd93:Gi0/0/0/1", "xrd77:Gi0/0/0/4"]
+  
+  - ["xrd94:Gi0/0/0/0", "xrd76:Gi0/0/0/5"]
+  - ["xrd94:Gi0/0/0/1", "xrd77:Gi0/0/0/5"]    
+
+networks:
+  mgmt:
+    xr_interfaces:
+      - xrd00:Mg0/RP0/CPU0/0
+      - xrd01:Mg0/RP0/CPU0/0
+      - xrd02:Mg0/RP0/CPU0/0
+      - xrd03:Mg0/RP0/CPU0/0
+      - xrd04:Mg0/RP0/CPU0/0
+      - xrd05:Mg0/RP0/CPU0/0
+      - xrd06:Mg0/RP0/CPU0/0
+      - xrd07:Mg0/RP0/CPU0/0
+      - xrd08:Mg0/RP0/CPU0/0
+      - xrd09:Mg0/RP0/CPU0/0
+      - xrd10:Mg0/RP0/CPU0/0
+      - xrd11:Mg0/RP0/CPU0/0
+      - xrd12:Mg0/RP0/CPU0/0
+      - xrd13:Mg0/RP0/CPU0/0
+      - xrd14:Mg0/RP0/CPU0/0
+      - xrd15:Mg0/RP0/CPU0/0
+      - xrd16:Mg0/RP0/CPU0/0
+      - xrd17:Mg0/RP0/CPU0/0
+      - xrd18:Mg0/RP0/CPU0/0
+      - xrd19:Mg0/RP0/CPU0/0
+      - xrd20:Mg0/RP0/CPU0/0
+      - xrd21:Mg0/RP0/CPU0/0
+      - xrd22:Mg0/RP0/CPU0/0
+      - xrd23:Mg0/RP0/CPU0/0
+      - xrd24:Mg0/RP0/CPU0/0
+      - xrd26:Mg0/RP0/CPU0/0
+      - xrd25:Mg0/RP0/CPU0/0
+      - xrd40:Mg0/RP0/CPU0/0
+      - xrd41:Mg0/RP0/CPU0/0
+      - xrd42:Mg0/RP0/CPU0/0
+      - xrd43:Mg0/RP0/CPU0/0
+      - xrd44:Mg0/RP0/CPU0/0
+      - xrd45:Mg0/RP0/CPU0/0
+      - xrd46:Mg0/RP0/CPU0/0
+      - xrd47:Mg0/RP0/CPU0/0
+      - xrd48:Mg0/RP0/CPU0/0
+      - xrd49:Mg0/RP0/CPU0/0
+      - xrd50:Mg0/RP0/CPU0/0
+      - xrd51:Mg0/RP0/CPU0/0
+      - xrd52:Mg0/RP0/CPU0/0
+      - xrd53:Mg0/RP0/CPU0/0
+      - xrd54:Mg0/RP0/CPU0/0
+      - xrd55:Mg0/RP0/CPU0/0    
+      - xrd56:Mg0/RP0/CPU0/0
+      - xrd57:Mg0/RP0/CPU0/0          
+      - xrd60:Mg0/RP0/CPU0/0
+      - xrd61:Mg0/RP0/CPU0/0
+      - xrd62:Mg0/RP0/CPU0/0
+      - xrd63:Mg0/RP0/CPU0/0
+      - xrd64:Mg0/RP0/CPU0/0
+      - xrd65:Mg0/RP0/CPU0/0
+      - xrd66:Mg0/RP0/CPU0/0
+      - xrd67:Mg0/RP0/CPU0/0
+      - xrd68:Mg0/RP0/CPU0/0
+      - xrd69:Mg0/RP0/CPU0/0
+      - xrd70:Mg0/RP0/CPU0/0
+      - xrd71:Mg0/RP0/CPU0/0
+      - xrd72:Mg0/RP0/CPU0/0
+      - xrd73:Mg0/RP0/CPU0/0
+      - xrd74:Mg0/RP0/CPU0/0
+      - xrd75:Mg0/RP0/CPU0/0    
+      - xrd76:Mg0/RP0/CPU0/0
+      - xrd77:Mg0/RP0/CPU0/0
+      - xrd81:Mg0/RP0/CPU0/0
+      - xrd82:Mg0/RP0/CPU0/0
+      - xrd83:Mg0/RP0/CPU0/0
+      - xrd84:Mg0/RP0/CPU0/0
+      - xrd85:Mg0/RP0/CPU0/0
+      - xrd86:Mg0/RP0/CPU0/0
+      - xrd87:Mg0/RP0/CPU0/0
+      - xrd88:Mg0/RP0/CPU0/0
+      - xrd89:Mg0/RP0/CPU0/0
+      - xrd90:Mg0/RP0/CPU0/0
+      - xrd91:Mg0/RP0/CPU0/0
+      - xrd92:Mg0/RP0/CPU0/0
+      - xrd93:Mg0/RP0/CPU0/0
+      - xrd94:Mg0/RP0/CPU0/0      
+              
+    ipam:
+      config:
+        - subnet: 10.251.254.0/24
+
+  xrd06-host:
+    ipam:
+      config:
+        - subnet: 10.10.6.0/24
+    xr_interfaces:
+      - xrd06:Gi0/0/0/2
+
+  xrd09-host1:
+    ipam:
+      config:
+        - subnet: 10.10.51.0/29
+    xr_interfaces:
+      - xrd09:Gi0/0/0/2
+  xrd09-host2:
+    ipam:
+      config:
+        - subnet: 10.10.50.0/29
+    xr_interfaces:
+      - xrd09:Gi0/0/0/3
+
+  xrd10-host1:
+    ipam:
+      config:
+        - subnet: 10.10.51.8/29
+    xr_interfaces:
+      - xrd10:Gi0/0/0/2
+  xrd10-host2:
+    ipam:
+      config:
+        - subnet: 10.10.50.8/29
+    xr_interfaces:
+      - xrd10:Gi0/0/0/3
+
+  xrd17-host:
+    ipam:
+      config:
+        - subnet: 10.10.17.0/24
+    xr_interfaces:
+      - xrd17:Gi0/0/0/2
+
+  xrd20-host1:
+    ipam:
+      config:
+        - subnet: 10.10.53.8/29
+    xr_interfaces:
+      - xrd20:Gi0/0/0/2
+  xrd20-host2:
+    ipam:
+      config:
+        - subnet: 10.10.52.8/29
+    xr_interfaces:
+      - xrd20:Gi0/0/0/3
+
+  xrd21-host1:
+    ipam:
+      config:
+        - subnet: 10.10.53.0/29
+    xr_interfaces:
+      - xrd21:Gi0/0/0/2
+  xrd21-host2:
+    ipam:
+      config:
+        - subnet: 10.10.52.0/29
+    xr_interfaces:
+      - xrd21:Gi0/0/0/3
+
+  xrd24-host:
+    ipam:
+      config:
+        - subnet: 10.10.24.0/24
+    xr_interfaces:
+      - xrd24:Gi0/0/0/2
+
+  xrd46-host:
+    ipam:
+      config:
+        - subnet: 10.10.46.0/24
+    xr_interfaces:
+      - xrd46:Gi0/0/0/4
+
+  xrd47-host:
+    ipam:
+      config:
+        - subnet: 10.10.47.0/24
+    xr_interfaces:
+      - xrd47:Gi0/0/0/4
+
+  xrd56-host:
+    ipam:
+      config:
+        - subnet: 10.10.48.0/24
+    xr_interfaces:
+      - xrd46:Gi0/0/0/4
+
+  xrd57-host:
+    ipam:
+      config:
+        - subnet: 10.10.49.0/24
+    xr_interfaces:
+      - xrd47:Gi0/0/0/4
+
+  xrd66-host:
+    ipam:
+      config:
+        - subnet: 10.10.66.0/24
+    xr_interfaces:
+      - xrd66:Gi0/0/0/4
+
+  xrd67-host:
+    ipam:
+      config:
+        - subnet: 10.10.67.0/24
+    xr_interfaces:
+      - xrd67:Gi0/0/0/4
+
+  xrd76-host:
+    ipam:
+      config:
+        - subnet: 10.10.68.0/24
+    xr_interfaces:
+      - xrd66:Gi0/0/0/4
+
+  xrd77-host:
+    ipam:
+      config:
+        - subnet: 10.10.69.0/24
+    xr_interfaces:
+      - xrd67:Gi0/0/0/4
