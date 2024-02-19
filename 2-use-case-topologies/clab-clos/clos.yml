@@ -513,9 +513,9 @@ topology:
     - endpoints: ["br00t02n03:Gi0-0-0-7", "br00t01n03:Gi0-0-0-3"]
 
     - endpoints: ["br00t01n00:Gi0-0-0-4", "br00t00n000:Gi0-0-0-0"]
-    - endpoints: ["br00t01n01:Gi0-0-0-4", "br00t00n000:Gi0-0-0-0"]
-    - endpoints: ["br00t01n02:Gi0-0-0-4", "br00t00n000:Gi0-0-0-0"]
-    - endpoints: ["br00t01n03:Gi0-0-0-4", "br00t00n000:Gi0-0-0-0"]
+    - endpoints: ["br00t01n01:Gi0-0-0-4", "br00t00n000:Gi0-0-0-1"]
+    - endpoints: ["br00t01n02:Gi0-0-0-4", "br00t00n000:Gi0-0-0-2"]
+    - endpoints: ["br00t01n03:Gi0-0-0-4", "br00t00n000:Gi0-0-0-3"]
 
 
  # Brick-1
@@ -541,9 +541,9 @@ topology:
     - endpoints: ["br01t02n03:Gi0-0-0-7", "br01t01n03:Gi0-0-0-3"]
 
     - endpoints: ["br01t01n00:Gi0-0-0-4", "br01t00n000:Gi0-0-0-0"]
-    - endpoints: ["br01t01n01:Gi0-0-0-4", "br01t00n000:Gi0-0-0-0"]
-    - endpoints: ["br01t01n02:Gi0-0-0-4", "br01t00n000:Gi0-0-0-0"]
-    - endpoints: ["br01t01n03:Gi0-0-0-4", "br01t00n000:Gi0-0-0-0"]
+    - endpoints: ["br01t01n01:Gi0-0-0-4", "br01t00n000:Gi0-0-0-1"]
+    - endpoints: ["br01t01n02:Gi0-0-0-4", "br01t00n000:Gi0-0-0-2"]
+    - endpoints: ["br01t01n03:Gi0-0-0-4", "br01t00n000:Gi0-0-0-3"]
 
  # Brick-2
 
@@ -568,9 +568,9 @@ topology:
     - endpoints: ["br02t02n03:Gi0-0-0-7", "br02t01n03:Gi0-0-0-3"]
 
     - endpoints: ["br02t01n00:Gi0-0-0-4", "br02t00n000:Gi0-0-0-0"]
-    - endpoints: ["br02t01n01:Gi0-0-0-4", "br02t00n000:Gi0-0-0-0"]
-    - endpoints: ["br02t01n02:Gi0-0-0-4", "br02t00n000:Gi0-0-0-0"]
-    - endpoints: ["br02t01n03:Gi0-0-0-4", "br02t00n000:Gi0-0-0-0"]
+    - endpoints: ["br02t01n01:Gi0-0-0-4", "br02t00n000:Gi0-0-0-1"]
+    - endpoints: ["br02t01n02:Gi0-0-0-4", "br02t00n000:Gi0-0-0-2"]
+    - endpoints: ["br02t01n03:Gi0-0-0-4", "br02t00n000:Gi0-0-0-3"]
 
 #  # Brick-3
 
