@@ -11,744 +11,590 @@ mgmt:
 topology:
   nodes:
 
-  # brick 1 leaf
-    xrd01:
+  # spine
+    sp00c00n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.6.101
-      mgmt-ipv6: 2001:172:20:6::101
-      startup-config: config/xrd01.cfg
+      mgmt-ipv4: 172.20.6.100
+      mgmt-ipv6: 2001:172:20:6::100
+      startup-config: config/sp00c00n00.cfg
 
-    xrd02:
+    sp00c00n01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.6.100
+      mgmt-ipv6: 2001:172:20:6::101
+      startup-config: config/sp00c00n01.cfg
+
+    sp00c00n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.102
       mgmt-ipv6: 2001:172:20:6::102
-      startup-config: config/xrd02.cfg
+      startup-config: config/sp00c00n02.cfg
 
-    xrd03:
+    sp00c00n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.103
       mgmt-ipv6: 2001:172:20:6::103
-      startup-config: config/xrd03.cfg
+      startup-config: config/sp00c00n03.cfg
 
-    xrd04:
+    sp00c01n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.104
       mgmt-ipv6: 2001:172:20:6::104
-      startup-config: config/xrd04.cfg
+      startup-config: config/sp00c01n00.cfg
 
-    xrd05:
+    sp00c01n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.105
       mgmt-ipv6: 2001:172:20:6::105
-      startup-config: config/xrd05.cfg
+      startup-config: config/sp00c01n01.cfg
 
-    xrd06:
+    sp00c01n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.106
       mgmt-ipv6: 2001:172:20:6::106
-      startup-config: config/xrd06.cfg
+      startup-config: config/sp00c01n02.cfg
 
-    xrd07:
+    sp00c01n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.107
       mgmt-ipv6: 2001:172:20:6::107
-      startup-config: config/xrd07.cfg
+      startup-config: config/sp00c01n03.cfg
 
-    xrd08:
+    sp00c02n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.108
       mgmt-ipv6: 2001:172:20:6::108
-      startup-config: config/xrd08.cfg
+      startup-config: config/sp00c02n00.cfg
 
-  # brick 1 spine
-    xrd09:
+    sp00c02n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.109
       mgmt-ipv6: 2001:172:20:6::109
-      startup-config: config/xrd09.cfg
+      startup-config: config/sp00c02n01.cfg
 
-    xrd10:
+    sp00c02n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.110
       mgmt-ipv6: 2001:172:20:6::110
-      startup-config: config/xrd10.cfg
+      startup-config: config/sp00c02n02.cfg
 
-    xrd11:
+    sp00c02n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.111
       mgmt-ipv6: 2001:172:20:6::111
-      startup-config: config/xrd11.cfg
+      startup-config: config/sp00c02n03.cfg
 
-    xrd12:
+    sp00c03n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.112
       mgmt-ipv6: 2001:172:20:6::112
-      startup-config: config/xrd12.cfg
+      startup-config: config/sp00c03n00.cfg
 
-    xrd13:
+    sp00c03n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.113
       mgmt-ipv6: 2001:172:20:6::113
-      startup-config: config/xrd13.cfg
+      startup-config: config/sp00c03n01.cfg
 
-    xrd14:
+    sp00c03n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.114
       mgmt-ipv6: 2001:172:20:6::114
-      startup-config: config/xrd14.cfg
+      startup-config: config/sp00c03n02.cfg
 
-    xrd15:
+    sp00c03n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.115
       mgmt-ipv6: 2001:172:20:6::115
-      startup-config: config/xrd15.cfg
+      startup-config: config/sp00c03n03.cfg
 
-    xrd16:
+  # Brick-0 Tier-2
+
+    br00t02n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.116
       mgmt-ipv6: 2001:172:20:6::116
-      startup-config: config/xrd16.cfg
+      startup-config: config/br00t02n00.cfg
 
-  # brick 2 leaf
-    xrd17:
+    br00t02n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.117
       mgmt-ipv6: 2001:172:20:6::117
-      startup-config: config/xrd17.cfg
+      startup-config: config/br00t02n01.cfg
 
-    xrd18:
+    br00t02n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.118
       mgmt-ipv6: 2001:172:20:6::118
-      startup-config: config/xrd18.cfg
+      startup-config: config/br00t02n02.cfg
 
-    xrd19:
+    br00t02n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.119
       mgmt-ipv6: 2001:172:20:6::119
-      startup-config: config/xrd19.cfg
+      startup-config: config/br00t02n03.cfg
 
-    xrd20:
+  # Brick-0 Tier-1
+
+    br00t01n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.120
       mgmt-ipv6: 2001:172:20:6::120
-      startup-config: config/xrd20.cfg
+      startup-config: config/br00t01n00.cfg
 
-    xrd21:
+    br00t01n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.121
       mgmt-ipv6: 2001:172:20:6::121
-      startup-config: config/xrd21.cfg
+      startup-config: config/br00t01n01.cfg
 
-    xrd22:
+    br00t01n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.122
       mgmt-ipv6: 2001:172:20:6::122
-      startup-config: config/xrd22.cfg
+      startup-config: config/br00t01n02.cfg
 
-    xrd23:
+    br00t01n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.123
       mgmt-ipv6: 2001:172:20:6::123
-      startup-config: config/xrd23.cfg
+      startup-config: config/br00t01n03.cfg
 
-    xrd24:
+  # Brick-0 Tier-0
+
+    br00t00n000:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.124
       mgmt-ipv6: 2001:172:20:6::124
-      startup-config: config/xrd24.cfg
+      startup-config: config/br00t00n000.cfg
 
-  # brick 2 spine
-    xrd25:
+  # Brick-1 Tier-2
+
+    br01t02n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.125
       mgmt-ipv6: 2001:172:20:6::125
-      startup-config: config/xrd25.cfg
+      startup-config: config/br01t02n00.cfg
 
-    xrd26:
+    br01t02n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.126
       mgmt-ipv6: 2001:172:20:6::126
-      startup-config: config/xrd26.cfg
+      startup-config: config/br01t02n01.cfg
 
-    xrd27:
+    br01t02n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.127
       mgmt-ipv6: 2001:172:20:6::127
-      startup-config: config/xrd27.cfg
+      startup-config: config/br01t02n02.cfg
 
-    xrd28:
+    br01t02n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.128
       mgmt-ipv6: 2001:172:20:6::128
-      startup-config: config/xrd28.cfg
+      startup-config: config/br01t02n03.cfg
 
-    xrd29:
+  # Brick-1 Tier-1
+
+    br01t01n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.129
       mgmt-ipv6: 2001:172:20:6::129
-      startup-config: config/xrd29.cfg
+      startup-config: config/br01t01n00.cfg
 
-    xrd30:
+    br01t01n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.130
       mgmt-ipv6: 2001:172:20:6::130
-      startup-config: config/xrd30.cfg
+      startup-config: config/br01t01n01.cfg
 
-    xrd31:
+    br01t01n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.131
       mgmt-ipv6: 2001:172:20:6::131
-      startup-config: config/xrd31.cfg
+      startup-config: config/br01t01n02.cfg
 
-    xrd32:
+    br01t01n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.132
       mgmt-ipv6: 2001:172:20:6::132
-      startup-config: config/xrd32.cfg
+      startup-config: config/br01t01n03.cfg
 
-  # spine 1
+  # Brick-1 Tier-0
 
-    xrd33:
+    br01t00n000:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.133
       mgmt-ipv6: 2001:172:20:6::133
-      startup-config: config/xrd33.cfg
+      startup-config: config/br01t00n000.cfg
 
-    xrd34:
+  # Brick-2 Tier-2
+
+    br02t02n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.134
       mgmt-ipv6: 2001:172:20:6::134
-      startup-config: config/xrd34.cfg
+      startup-config: config/br02t02n00.cfg
 
-    xrd35:
+    br02t02n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.135
       mgmt-ipv6: 2001:172:20:6::135
-      startup-config: config/xrd35.cfg
+      startup-config: config/br02t02n01.cfg
 
-    xrd36:
+    br02t02n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.136
       mgmt-ipv6: 2001:172:20:6::136
-      startup-config: config/xrd36.cfg
+      startup-config: config/br02t02n02.cfg
 
-    xrd37:
+    br02t02n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.137
       mgmt-ipv6: 2001:172:20:6::137
-      startup-config: config/xrd37.cfg
+      startup-config: config/br02t02n03.cfg
 
-    xrd38:
+  # Brick-2 Tier-1
+
+    br02t01n00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.138
       mgmt-ipv6: 2001:172:20:6::138
-      startup-config: config/xrd38.cfg
+      startup-config: config/br02t01n00.cfg
 
-    xrd39:
+    br02t01n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.139
       mgmt-ipv6: 2001:172:20:6::139
-      startup-config: config/xrd39.cfg
+      startup-config: config/br02t01n01.cfg
 
-    xrd40:
+    br02t01n02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.140
       mgmt-ipv6: 2001:172:20:6::140
-      startup-config: config/xrd40.cfg
+      startup-config: config/br02t01n02.cfg
 
-    xrd41:
+    br02t01n03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.141
       mgmt-ipv6: 2001:172:20:6::141
-      startup-config: config/xrd41.cfg
+      startup-config: config/br02t01n03.cfg
 
-    xrd42:
+  # Brick-2 Tier-0
+
+    br02t00n000:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.6.142
       mgmt-ipv6: 2001:172:20:6::142
-      startup-config: config/xrd42.cfg
+      startup-config: config/br02t00n000.cfg
 
-    xrd43:
-      kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.6.143
-      mgmt-ipv6: 2001:172:20:6::143
-      startup-config: config/xrd43.cfg
+  # # Brick-3 Tier-2
 
-    xrd44:
-      kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.6.144
-      mgmt-ipv6: 2001:172:20:6::144
-      startup-config: config/xrd44.cfg
+  #   br03t02n00:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.143
+  #     mgmt-ipv6: 2001:172:20:6::143
+  #     startup-config: config/br03t02n00.cfg
 
-  # spine 2
+  #   br03t02n01:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.144
+  #     mgmt-ipv6: 2001:172:20:6::144
+  #     startup-config: config/br03t02n01.cfg
 
-    # xrd45:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.145
-    #   mgmt-ipv6: 2001:172:20:6::145
-    #   startup-config: config/xrd45.cfg
+  #   br03t02n02:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.145
+  #     mgmt-ipv6: 2001:172:20:6::145
+  #     startup-config: config/br03t02n02.cfg
 
-    # xrd46:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.146
-    #   mgmt-ipv6: 2001:172:20:6::146
-    #   startup-config: config/xrd46.cfg
+  #   br03t02n03:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.146
+  #     mgmt-ipv6: 2001:172:20:6::146
+  #     startup-config: config/br03t02n03.cfg
 
-    # xrd47:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.147
-    #   mgmt-ipv6: 2001:172:20:6::147
-    #   startup-config: config/xrd47.cfg
+  # # Brick-3 Tier-1
 
-    # xrd48:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.148
-    #   mgmt-ipv6: 2001:172:20:6::148
-    #   startup-config: config/xrd48.cfg
+  #   br03t01n00:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.147
+  #     mgmt-ipv6: 2001:172:20:6::147
+  #     startup-config: config/br03t01n00.cfg
 
-    # xrd49:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.149
-    #   mgmt-ipv6: 2001:172:20:6::149
-    #   startup-config: config/xrd49.cfg
+  #   br03t01n01:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.148
+  #     mgmt-ipv6: 2001:172:20:6::148
+  #     startup-config: config/br03t01n01.cfg
 
-    # xrd50:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.150
-    #   mgmt-ipv6: 2001:172:20:6::150
-    #   startup-config: config/xrd50.cfg
+  #   br03t01n02:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.149
+  #     mgmt-ipv6: 2001:172:20:6::149
+  #     startup-config: config/br03t01n02.cfg
 
-    # xrd51:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.151
-    #   mgmt-ipv6: 2001:172:20:6::151
-    #   startup-config: config/xrd51.cfg
+  #   br03t01n03:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.150
+  #     mgmt-ipv6: 2001:172:20:6::150
+  #     startup-config: config/br03t01n03.cfg
 
-    # xrd52:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.152
-    #   mgmt-ipv6: 2001:172:20:6::152
-    #   startup-config: config/xrd52.cfg
+  # # Brick-3 Tier-0
 
-    # xrd53:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.153
-    #   mgmt-ipv6: 2001:172:20:6::153
-    #   startup-config: config/xrd53.cfg
+  #   br03t00n000:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:7.10.2
+  #     mgmt-ipv4: 172.20.6.151
+  #     mgmt-ipv6: 2001:172:20:6::151
+  #     startup-config: config/br03t00n000.cfg
 
-    # xrd54:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.154
-    #   mgmt-ipv6: 2001:172:20:6::154
-    #   startup-config: config/xrd54.cfg
-
-    # xrd55:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.155
-    #   mgmt-ipv6: 2001:172:20:6::155
-    #   startup-config: config/xrd55.cfg
-
-    # xrd56:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:7.10.2
-    #   mgmt-ipv4: 172.20.6.156
-    #   mgmt-ipv6: 2001:172:20:6::156
-    #   startup-config: config/xrd56.cfg
-
-  # ToR
-    xrd57:
-      kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.6.157
-      mgmt-ipv6: 2001:172:20:6::157
-      startup-config: config/xrd57.cfg
-
-    xrd58:
-      kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.6.158
-      mgmt-ipv6: 2001:172:20:6::158
-      startup-config: config/xrd58.cfg
-
-    xrd59:
-      kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.6.159
-      mgmt-ipv6: 2001:172:20:6::159
-      startup-config: config/xrd59.cfg      
-
-    xrd60:
-      kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.6.160
-      mgmt-ipv6: 2001:172:20:6::160
-      startup-config: config/xrd60.cfg 
-
-    # xrd06-host:
+    # sp00c01n02-host:
     #   kind: bridge
 
   links:
 
-  # brick 1
-    - endpoints: ["xrd01:Gi0-0-0-0", "xrd09:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-1", "xrd10:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-2", "xrd11:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-3", "xrd12:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-4", "xrd13:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-5", "xrd14:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-6", "xrd15:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-7", "xrd16:Gi0-0-0-0"]
-    - endpoints: ["xrd01:Gi0-0-0-8", "xrd57:Gi0-0-0-0"]
+  # Spine
+    # Node 00
+    - endpoints: ["sp00c00n00:Gi0-0-0-0", "br00t02n00:Gi0-0-0-0"]
+    - endpoints: ["sp00c00n00:Gi0-0-0-1", "br01t02n00:Gi0-0-0-0"]
+    - endpoints: ["sp00c00n00:Gi0-0-0-2", "br02t02n00:Gi0-0-0-0"]
+    #- endpoints: ["sp00c00n00:Gi0-0-0-3", "br02t02n00:Gi0-0-0-0"]
 
-    - endpoints: ["xrd02:Gi0-0-0-0", "xrd09:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-1", "xrd10:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-2", "xrd11:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-3", "xrd12:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-4", "xrd13:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-5", "xrd14:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-6", "xrd15:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-7", "xrd16:Gi0-0-0-1"]
-    - endpoints: ["xrd02:Gi0-0-0-8", "xrd57:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n00:Gi0-0-0-0", "br00t02n00:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n00:Gi0-0-0-1", "br01t02n00:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n00:Gi0-0-0-2", "br02t02n00:Gi0-0-0-1"]
+    #- endpoints: ["sp00c01n00:Gi0-0-0-3", "br02t02n00:Gi0-0-0-1"]
 
-    - endpoints: ["xrd03:Gi0-0-0-0", "xrd09:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-1", "xrd10:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-2", "xrd11:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-3", "xrd12:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-4", "xrd13:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-5", "xrd14:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-6", "xrd15:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-7", "xrd16:Gi0-0-0-2"]
-    - endpoints: ["xrd03:Gi0-0-0-8", "xrd57:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n00:Gi0-0-0-0", "br00t02n00:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n00:Gi0-0-0-1", "br01t02n00:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n00:Gi0-0-0-2", "br02t02n00:Gi0-0-0-2"]
+    #- endpoints: ["sp00c02n00:Gi0-0-0-3", "br02t02n00:Gi0-0-0-2"]
 
-    - endpoints: ["xrd04:Gi0-0-0-0", "xrd09:Gi0-0-0-3"]
-    - endpoints: ["xrd04:Gi0-0-0-1", "xrd10:Gi0-0-0-3"]
-    - endpoints: ["xrd04:Gi0-0-0-2", "xrd11:Gi0-0-0-3"]
-    - endpoints: ["xrd04:Gi0-0-0-3", "xrd12:Gi0-0-0-3"]
-    - endpoints: ["xrd04:Gi0-0-0-4", "xrd13:Gi0-0-0-3"]
-    - endpoints: ["xrd04:Gi0-0-0-5", "xrd14:Gi0-0-0-3"]
-    - endpoints: ["xrd04:Gi0-0-0-6", "xrd15:Gi0-0-0-3"]
-    - endpoints: ["xrd04:Gi0-0-0-7", "xrd16:Gi0-0-0-3"]
-    - endpoints: ["xrd04:Gi0-0-0-8", "xrd57:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n00:Gi0-0-0-0", "br00t02n00:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n00:Gi0-0-0-1", "br01t02n00:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n00:Gi0-0-0-2", "br02t02n00:Gi0-0-0-3"]
+    #- endpoints: ["sp00c03n00:Gi0-0-0-3", "br02t02n00:Gi0-0-0-3"]
 
-    - endpoints: ["xrd05:Gi0-0-0-0", "xrd09:Gi0-0-0-4"]
-    - endpoints: ["xrd05:Gi0-0-0-1", "xrd10:Gi0-0-0-4"]
-    - endpoints: ["xrd05:Gi0-0-0-2", "xrd11:Gi0-0-0-4"]
-    - endpoints: ["xrd05:Gi0-0-0-3", "xrd12:Gi0-0-0-4"]
-    - endpoints: ["xrd05:Gi0-0-0-4", "xrd13:Gi0-0-0-4"]
-    - endpoints: ["xrd05:Gi0-0-0-5", "xrd14:Gi0-0-0-4"]
-    - endpoints: ["xrd05:Gi0-0-0-6", "xrd15:Gi0-0-0-4"]
-    - endpoints: ["xrd05:Gi0-0-0-7", "xrd16:Gi0-0-0-4"]
-    - endpoints: ["xrd05:Gi0-0-0-8", "xrd58:Gi0-0-0-0"]
+    # Node 01
+    - endpoints: ["sp00c00n01:Gi0-0-0-0", "br00t02n01:Gi0-0-0-0"]
+    - endpoints: ["sp00c00n01:Gi0-0-0-1", "br01t02n01:Gi0-0-0-0"]
+    - endpoints: ["sp00c00n01:Gi0-0-0-2", "br02t02n01:Gi0-0-0-0"]
+    #- endpoints: ["sp00c00n01:Gi0-0-0-3", "br02t02n01:Gi0-0-0-0"]
 
-    - endpoints: ["xrd06:Gi0-0-0-0", "xrd09:Gi0-0-0-5"]
-    - endpoints: ["xrd06:Gi0-0-0-1", "xrd10:Gi0-0-0-5"]
-    - endpoints: ["xrd06:Gi0-0-0-2", "xrd11:Gi0-0-0-5"]
-    - endpoints: ["xrd06:Gi0-0-0-3", "xrd12:Gi0-0-0-5"]
-    - endpoints: ["xrd06:Gi0-0-0-4", "xrd13:Gi0-0-0-5"]
-    - endpoints: ["xrd06:Gi0-0-0-5", "xrd14:Gi0-0-0-5"]
-    - endpoints: ["xrd06:Gi0-0-0-6", "xrd15:Gi0-0-0-5"]
-    - endpoints: ["xrd06:Gi0-0-0-7", "xrd16:Gi0-0-0-5"]
-    - endpoints: ["xrd06:Gi0-0-0-8", "xrd58:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n01:Gi0-0-0-0", "br00t02n01:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n01:Gi0-0-0-1", "br01t02n01:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n01:Gi0-0-0-2", "br02t02n01:Gi0-0-0-1"]
+    #- endpoints: ["sp00c01n01:Gi0-0-0-3", "br02t02n01:Gi0-0-0-1"]
 
-    - endpoints: ["xrd07:Gi0-0-0-0", "xrd09:Gi0-0-0-6"]
-    - endpoints: ["xrd07:Gi0-0-0-1", "xrd10:Gi0-0-0-6"]
-    - endpoints: ["xrd07:Gi0-0-0-2", "xrd11:Gi0-0-0-6"]
-    - endpoints: ["xrd07:Gi0-0-0-3", "xrd12:Gi0-0-0-6"]
-    - endpoints: ["xrd07:Gi0-0-0-4", "xrd13:Gi0-0-0-6"]
-    - endpoints: ["xrd07:Gi0-0-0-5", "xrd14:Gi0-0-0-6"]
-    - endpoints: ["xrd07:Gi0-0-0-6", "xrd15:Gi0-0-0-6"]
-    - endpoints: ["xrd07:Gi0-0-0-7", "xrd16:Gi0-0-0-6"]
-    - endpoints: ["xrd07:Gi0-0-0-8", "xrd58:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n01:Gi0-0-0-0", "br00t02n01:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n01:Gi0-0-0-1", "br01t02n01:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n01:Gi0-0-0-2", "br02t02n01:Gi0-0-0-2"]
+    #- endpoints: ["sp00c02n01:Gi0-0-0-3", "br02t02n01:Gi0-0-0-2"]
 
-    - endpoints: ["xrd08:Gi0-0-0-0", "xrd09:Gi0-0-0-7"]
-    - endpoints: ["xrd08:Gi0-0-0-1", "xrd10:Gi0-0-0-7"]
-    - endpoints: ["xrd08:Gi0-0-0-2", "xrd11:Gi0-0-0-7"]
-    - endpoints: ["xrd08:Gi0-0-0-3", "xrd12:Gi0-0-0-7"]
-    - endpoints: ["xrd08:Gi0-0-0-4", "xrd13:Gi0-0-0-7"]
-    - endpoints: ["xrd08:Gi0-0-0-5", "xrd14:Gi0-0-0-7"]
-    - endpoints: ["xrd08:Gi0-0-0-6", "xrd15:Gi0-0-0-7"]
-    - endpoints: ["xrd08:Gi0-0-0-7", "xrd16:Gi0-0-0-7"]
-    - endpoints: ["xrd08:Gi0-0-0-8", "xrd58:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n01:Gi0-0-0-0", "br00t02n01:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n01:Gi0-0-0-1", "br01t02n01:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n01:Gi0-0-0-2", "br02t02n01:Gi0-0-0-3"]
+    #- endpoints: ["sp00c03n01:Gi0-0-0-3", "br02t02n01:Gi0-0-0-3"]
 
-  # brick 2
+    # Node 02
+    - endpoints: ["sp00c00n02:Gi0-0-0-0", "br00t02n02:Gi0-0-0-0"]
+    - endpoints: ["sp00c00n02:Gi0-0-0-1", "br01t02n02:Gi0-0-0-0"]
+    - endpoints: ["sp00c00n02:Gi0-0-0-2", "br02t02n02:Gi0-0-0-0"]
+    #- endpoints: ["sp00c00n02:Gi0-0-0-3", "br02t02n02:Gi0-0-0-0"]
 
-    - endpoints: ["xrd17:Gi0-0-0-0", "xrd25:Gi0-0-0-0"]
-    - endpoints: ["xrd17:Gi0-0-0-1", "xrd26:Gi0-0-0-0"]
-    - endpoints: ["xrd17:Gi0-0-0-2", "xrd27:Gi0-0-0-0"]
-    - endpoints: ["xrd17:Gi0-0-0-3", "xrd28:Gi0-0-0-0"]
-    - endpoints: ["xrd17:Gi0-0-0-4", "xrd29:Gi0-0-0-0"]
-    - endpoints: ["xrd17:Gi0-0-0-5", "xrd30:Gi0-0-0-0"]
-    - endpoints: ["xrd17:Gi0-0-0-6", "xrd31:Gi0-0-0-0"]
-    - endpoints: ["xrd17:Gi0-0-0-7", "xrd32:Gi0-0-0-0"]
-    - endpoints: ["xrd17:Gi0-0-0-8", "xrd59:Gi0-0-0-0"]
+    - endpoints: ["sp00c01n02:Gi0-0-0-0", "br00t02n02:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n02:Gi0-0-0-1", "br01t02n02:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n02:Gi0-0-0-2", "br02t02n02:Gi0-0-0-1"]
+    #- endpoints: ["sp00c01n02:Gi0-0-0-3", "br02t02n02:Gi0-0-0-1"]
 
-    - endpoints: ["xrd18:Gi0-0-0-0", "xrd25:Gi0-0-0-1"]
-    - endpoints: ["xrd18:Gi0-0-0-1", "xrd26:Gi0-0-0-1"]
-    - endpoints: ["xrd18:Gi0-0-0-2", "xrd27:Gi0-0-0-1"]
-    - endpoints: ["xrd18:Gi0-0-0-3", "xrd28:Gi0-0-0-1"]
-    - endpoints: ["xrd18:Gi0-0-0-4", "xrd29:Gi0-0-0-1"]
-    - endpoints: ["xrd18:Gi0-0-0-5", "xrd30:Gi0-0-0-1"]
-    - endpoints: ["xrd18:Gi0-0-0-6", "xrd31:Gi0-0-0-1"]
-    - endpoints: ["xrd18:Gi0-0-0-7", "xrd32:Gi0-0-0-1"]
-    - endpoints: ["xrd18:Gi0-0-0-8", "xrd59:Gi0-0-0-1"]
+    - endpoints: ["sp00c02n02:Gi0-0-0-0", "br00t02n02:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n02:Gi0-0-0-1", "br01t02n02:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n02:Gi0-0-0-2", "br02t02n02:Gi0-0-0-2"]
+    #- endpoints: ["sp00c02n02:Gi0-0-0-3", "br02t02n02:Gi0-0-0-2"]
 
-    - endpoints: ["xrd19:Gi0-0-0-0", "xrd25:Gi0-0-0-2"]
-    - endpoints: ["xrd19:Gi0-0-0-1", "xrd26:Gi0-0-0-2"]
-    - endpoints: ["xrd19:Gi0-0-0-2", "xrd27:Gi0-0-0-2"]
-    - endpoints: ["xrd19:Gi0-0-0-3", "xrd28:Gi0-0-0-2"]
-    - endpoints: ["xrd19:Gi0-0-0-4", "xrd29:Gi0-0-0-2"]
-    - endpoints: ["xrd19:Gi0-0-0-5", "xrd30:Gi0-0-0-2"]
-    - endpoints: ["xrd19:Gi0-0-0-6", "xrd31:Gi0-0-0-2"]
-    - endpoints: ["xrd19:Gi0-0-0-7", "xrd32:Gi0-0-0-2"]
-    - endpoints: ["xrd19:Gi0-0-0-8", "xrd59:Gi0-0-0-2"]
+    - endpoints: ["sp00c03n02:Gi0-0-0-0", "br00t02n02:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n02:Gi0-0-0-1", "br01t02n02:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n02:Gi0-0-0-2", "br02t02n02:Gi0-0-0-3"]
+    #- endpoints: ["sp00c03n02:Gi0-0-0-3", "br02t02n02:Gi0-0-0-3"]
 
-    - endpoints: ["xrd20:Gi0-0-0-0", "xrd25:Gi0-0-0-3"]
-    - endpoints: ["xrd20:Gi0-0-0-1", "xrd26:Gi0-0-0-3"]
-    - endpoints: ["xrd20:Gi0-0-0-2", "xrd27:Gi0-0-0-3"]
-    - endpoints: ["xrd20:Gi0-0-0-3", "xrd28:Gi0-0-0-3"]
-    - endpoints: ["xrd20:Gi0-0-0-4", "xrd29:Gi0-0-0-3"]
-    - endpoints: ["xrd20:Gi0-0-0-5", "xrd30:Gi0-0-0-3"]
-    - endpoints: ["xrd20:Gi0-0-0-6", "xrd31:Gi0-0-0-3"]
-    - endpoints: ["xrd20:Gi0-0-0-7", "xrd32:Gi0-0-0-3"]
-    - endpoints: ["xrd20:Gi0-0-0-8", "xrd59:Gi0-0-0-3"]
+    # Node 03
+    - endpoints: ["sp00c00n03:Gi0-0-0-0", "br00t02n03:Gi0-0-0-0"]
+    - endpoints: ["sp00c00n03:Gi0-0-0-1", "br01t02n03:Gi0-0-0-0"]
+    - endpoints: ["sp00c00n03:Gi0-0-0-2", "br02t02n03:Gi0-0-0-0"]
+    #- endpoints: ["sp00c00n03:Gi0-0-0-3", "br02t02n03:Gi0-0-0-0"]
 
-    - endpoints: ["xrd21:Gi0-0-0-0", "xrd25:Gi0-0-0-4"]
-    - endpoints: ["xrd21:Gi0-0-0-1", "xrd26:Gi0-0-0-4"]
-    - endpoints: ["xrd21:Gi0-0-0-2", "xrd27:Gi0-0-0-4"]
-    - endpoints: ["xrd21:Gi0-0-0-3", "xrd28:Gi0-0-0-4"]
-    - endpoints: ["xrd21:Gi0-0-0-4", "xrd29:Gi0-0-0-4"]
-    - endpoints: ["xrd21:Gi0-0-0-5", "xrd30:Gi0-0-0-4"]
-    - endpoints: ["xrd21:Gi0-0-0-6", "xrd31:Gi0-0-0-4"]
-    - endpoints: ["xrd21:Gi0-0-0-7", "xrd32:Gi0-0-0-4"]
-    - endpoints: ["xrd21:Gi0-0-0-8", "xrd60:Gi0-0-0-0"]
+    - endpoints: ["sp00c01n03:Gi0-0-0-0", "br00t02n03:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n03:Gi0-0-0-1", "br01t02n03:Gi0-0-0-1"]
+    - endpoints: ["sp00c01n03:Gi0-0-0-2", "br02t02n03:Gi0-0-0-1"]
+    #- endpoints: ["sp00c01n03:Gi0-0-0-3", "br02t02n03:Gi0-0-0-1"]
 
-    - endpoints: ["xrd22:Gi0-0-0-0", "xrd25:Gi0-0-0-5"]
-    - endpoints: ["xrd22:Gi0-0-0-1", "xrd26:Gi0-0-0-5"]
-    - endpoints: ["xrd22:Gi0-0-0-2", "xrd27:Gi0-0-0-5"]
-    - endpoints: ["xrd22:Gi0-0-0-3", "xrd28:Gi0-0-0-5"]
-    - endpoints: ["xrd22:Gi0-0-0-4", "xrd29:Gi0-0-0-5"]
-    - endpoints: ["xrd22:Gi0-0-0-5", "xrd30:Gi0-0-0-5"]
-    - endpoints: ["xrd22:Gi0-0-0-6", "xrd31:Gi0-0-0-5"]
-    - endpoints: ["xrd22:Gi0-0-0-7", "xrd32:Gi0-0-0-5"]
-    - endpoints: ["xrd22:Gi0-0-0-8", "xrd60:Gi0-0-0-1"]
+    - endpoints: ["sp00c02n03:Gi0-0-0-0", "br00t02n03:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n03:Gi0-0-0-1", "br01t02n03:Gi0-0-0-2"]
+    - endpoints: ["sp00c02n03:Gi0-0-0-2", "br02t02n03:Gi0-0-0-2"]
+    #- endpoints: ["sp00c02n03:Gi0-0-0-3", "br02t02n03:Gi0-0-0-2"]
 
-    - endpoints: ["xrd23:Gi0-0-0-0", "xrd25:Gi0-0-0-6"]
-    - endpoints: ["xrd23:Gi0-0-0-1", "xrd26:Gi0-0-0-6"]
-    - endpoints: ["xrd23:Gi0-0-0-2", "xrd27:Gi0-0-0-6"]
-    - endpoints: ["xrd23:Gi0-0-0-3", "xrd28:Gi0-0-0-6"]
-    - endpoints: ["xrd23:Gi0-0-0-4", "xrd29:Gi0-0-0-6"]
-    - endpoints: ["xrd23:Gi0-0-0-5", "xrd30:Gi0-0-0-6"]
-    - endpoints: ["xrd23:Gi0-0-0-6", "xrd31:Gi0-0-0-6"]
-    - endpoints: ["xrd23:Gi0-0-0-7", "xrd32:Gi0-0-0-6"]
-    - endpoints: ["xrd23:Gi0-0-0-8", "xrd60:Gi0-0-0-2"]
+    - endpoints: ["sp00c03n03:Gi0-0-0-0", "br00t02n03:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n03:Gi0-0-0-1", "br01t02n03:Gi0-0-0-3"]
+    - endpoints: ["sp00c03n03:Gi0-0-0-2", "br02t02n03:Gi0-0-0-3"]
+    #- endpoints: ["sp00c03n03:Gi0-0-0-3", "br02t02n03:Gi0-0-0-3"]
 
-    - endpoints: ["xrd24:Gi0-0-0-0", "xrd25:Gi0-0-0-7"]
-    - endpoints: ["xrd24:Gi0-0-0-1", "xrd26:Gi0-0-0-7"]
-    - endpoints: ["xrd24:Gi0-0-0-2", "xrd27:Gi0-0-0-7"]
-    - endpoints: ["xrd24:Gi0-0-0-3", "xrd28:Gi0-0-0-7"]
-    - endpoints: ["xrd24:Gi0-0-0-4", "xrd29:Gi0-0-0-7"]
-    - endpoints: ["xrd24:Gi0-0-0-5", "xrd30:Gi0-0-0-7"]
-    - endpoints: ["xrd24:Gi0-0-0-6", "xrd31:Gi0-0-0-7"]
-    - endpoints: ["xrd24:Gi0-0-0-7", "xrd32:Gi0-0-0-7"]
-    - endpoints: ["xrd24:Gi0-0-0-8", "xrd60:Gi0-0-0-3"]
+ # Brick-0
 
-  # spine
-    - endpoints: ["xrd09:Gi0-0-0-8", "xrd33:Gi0-0-0-0"]
-    - endpoints: ["xrd09:Gi0-0-0-9", "xrd34:Gi0-0-0-0"]
-    - endpoints: ["xrd09:Gi0-0-0-10", "xrd35:Gi0-0-0-0"]
-    - endpoints: ["xrd09:Gi0-0-0-11", "xrd36:Gi0-0-0-0"]
-    - endpoints: ["xrd09:Gi0-0-0-12", "xrd37:Gi0-0-0-0"]
-    - endpoints: ["xrd09:Gi0-0-0-13", "xrd38:Gi0-0-0-0"]
-    - endpoints: ["xrd09:Gi0-0-0-14", "xrd39:Gi0-0-0-0"]
-    - endpoints: ["xrd09:Gi0-0-0-15", "xrd40:Gi0-0-0-0"]
+    - endpoints: ["br00t02n00:Gi0-0-0-4", "br00t01n00:Gi0-0-0-0"]
+    - endpoints: ["br00t02n00:Gi0-0-0-5", "br00t01n01:Gi0-0-0-0"]
+    - endpoints: ["br00t02n00:Gi0-0-0-6", "br00t01n02:Gi0-0-0-0"]
+    - endpoints: ["br00t02n00:Gi0-0-0-7", "br00t01n03:Gi0-0-0-0"]
 
-    - endpoints: ["xrd10:Gi0-0-0-8", "xrd41:Gi0-0-0-0"]
-    - endpoints: ["xrd10:Gi0-0-0-9", "xrd42:Gi0-0-0-0"]
-    - endpoints: ["xrd10:Gi0-0-0-10", "xrd43:Gi0-0-0-0"]
-    - endpoints: ["xrd10:Gi0-0-0-11", "xrd44:Gi0-0-0-0"]
-    - endpoints: ["xrd10:Gi0-0-0-12", "xrd33:Gi0-0-0-1"]
-    - endpoints: ["xrd10:Gi0-0-0-13", "xrd34:Gi0-0-0-1"]
-    - endpoints: ["xrd10:Gi0-0-0-14", "xrd35:Gi0-0-0-1"]
-    - endpoints: ["xrd10:Gi0-0-0-15", "xrd36:Gi0-0-0-1"]
+    - endpoints: ["br00t02n01:Gi0-0-0-4", "br00t01n00:Gi0-0-0-1"]
+    - endpoints: ["br00t02n01:Gi0-0-0-5", "br00t01n01:Gi0-0-0-1"]
+    - endpoints: ["br00t02n01:Gi0-0-0-6", "br00t01n02:Gi0-0-0-1"]
+    - endpoints: ["br00t02n01:Gi0-0-0-7", "br00t01n03:Gi0-0-0-1"]
 
-    - endpoints: ["xrd11:Gi0-0-0-8", "xrd37:Gi0-0-0-1"]
-    - endpoints: ["xrd11:Gi0-0-0-9", "xrd38:Gi0-0-0-1"]
-    - endpoints: ["xrd11:Gi0-0-0-10", "xrd39:Gi0-0-0-1"]
-    - endpoints: ["xrd11:Gi0-0-0-11", "xrd40:Gi0-0-0-1"]
-    - endpoints: ["xrd11:Gi0-0-0-12", "xrd41:Gi0-0-0-1"]
-    - endpoints: ["xrd11:Gi0-0-0-13", "xrd42:Gi0-0-0-1"]
-    - endpoints: ["xrd11:Gi0-0-0-14", "xrd43:Gi0-0-0-1"]
-    - endpoints: ["xrd11:Gi0-0-0-15", "xrd44:Gi0-0-0-1"]
+    - endpoints: ["br00t02n02:Gi0-0-0-4", "br00t01n00:Gi0-0-0-2"]
+    - endpoints: ["br00t02n02:Gi0-0-0-5", "br00t01n01:Gi0-0-0-2"]
+    - endpoints: ["br00t02n02:Gi0-0-0-6", "br00t01n02:Gi0-0-0-2"]
+    - endpoints: ["br00t02n02:Gi0-0-0-7", "br00t01n03:Gi0-0-0-2"]
 
-    - endpoints: ["xrd12:Gi0-0-0-8", "xrd33:Gi0-0-0-2"]
-    - endpoints: ["xrd12:Gi0-0-0-9", "xrd34:Gi0-0-0-2"]
-    - endpoints: ["xrd12:Gi0-0-0-10", "xrd35:Gi0-0-0-2"]
-    - endpoints: ["xrd12:Gi0-0-0-11", "xrd36:Gi0-0-0-2"]
-    - endpoints: ["xrd12:Gi0-0-0-12", "xrd37:Gi0-0-0-2"]
-    - endpoints: ["xrd12:Gi0-0-0-13", "xrd38:Gi0-0-0-2"]
-    - endpoints: ["xrd12:Gi0-0-0-14", "xrd39:Gi0-0-0-2"]
-    - endpoints: ["xrd12:Gi0-0-0-15", "xrd40:Gi0-0-0-2"]
+    - endpoints: ["br00t02n03:Gi0-0-0-4", "br00t01n00:Gi0-0-0-3"]
+    - endpoints: ["br00t02n03:Gi0-0-0-5", "br00t01n01:Gi0-0-0-3"]
+    - endpoints: ["br00t02n03:Gi0-0-0-6", "br00t01n02:Gi0-0-0-3"]
+    - endpoints: ["br00t02n03:Gi0-0-0-7", "br00t01n03:Gi0-0-0-3"]
 
-    - endpoints: ["xrd13:Gi0-0-0-8", "xrd41:Gi0-0-0-2"]
-    - endpoints: ["xrd13:Gi0-0-0-9", "xrd42:Gi0-0-0-2"]
-    - endpoints: ["xrd13:Gi0-0-0-10", "xrd43:Gi0-0-0-2"]
-    - endpoints: ["xrd13:Gi0-0-0-11", "xrd44:Gi0-0-0-2"]
-    - endpoints: ["xrd13:Gi0-0-0-12", "xrd33:Gi0-0-0-3"]
-    - endpoints: ["xrd13:Gi0-0-0-13", "xrd34:Gi0-0-0-3"]
-    - endpoints: ["xrd13:Gi0-0-0-14", "xrd35:Gi0-0-0-3"]
-    - endpoints: ["xrd13:Gi0-0-0-15", "xrd36:Gi0-0-0-3"]
+    - endpoints: ["br00t01n00:Gi0-0-0-4", "br00t00n000:Gi0-0-0-0"]
+    - endpoints: ["br00t01n01:Gi0-0-0-4", "br00t00n000:Gi0-0-0-0"]
+    - endpoints: ["br00t01n02:Gi0-0-0-4", "br00t00n000:Gi0-0-0-0"]
+    - endpoints: ["br00t01n03:Gi0-0-0-4", "br00t00n000:Gi0-0-0-0"]
 
-    - endpoints: ["xrd14:Gi0-0-0-8", "xrd37:Gi0-0-0-3"]
-    - endpoints: ["xrd14:Gi0-0-0-9", "xrd38:Gi0-0-0-3"]
-    - endpoints: ["xrd14:Gi0-0-0-10", "xrd39:Gi0-0-0-3"]
-    - endpoints: ["xrd14:Gi0-0-0-11", "xrd40:Gi0-0-0-3"]
-    - endpoints: ["xrd14:Gi0-0-0-12", "xrd41:Gi0-0-0-3"]
-    - endpoints: ["xrd14:Gi0-0-0-13", "xrd42:Gi0-0-0-3"]
-    - endpoints: ["xrd14:Gi0-0-0-14", "xrd43:Gi0-0-0-3"]
-    - endpoints: ["xrd14:Gi0-0-0-15", "xrd44:Gi0-0-0-3"]
 
-    - endpoints: ["xrd15:Gi0-0-0-8", "xrd33:Gi0-0-0-4"]
-    - endpoints: ["xrd15:Gi0-0-0-9", "xrd34:Gi0-0-0-4"]
-    - endpoints: ["xrd15:Gi0-0-0-10", "xrd35:Gi0-0-0-4"]
-    - endpoints: ["xrd15:Gi0-0-0-11", "xrd36:Gi0-0-0-4"]
-    - endpoints: ["xrd15:Gi0-0-0-12", "xrd37:Gi0-0-0-4"]
-    - endpoints: ["xrd15:Gi0-0-0-13", "xrd38:Gi0-0-0-4"]
-    - endpoints: ["xrd15:Gi0-0-0-14", "xrd39:Gi0-0-0-4"]
-    - endpoints: ["xrd15:Gi0-0-0-15", "xrd40:Gi0-0-0-4"]
+ # Brick-1
 
-    - endpoints: ["xrd16:Gi0-0-0-8", "xrd41:Gi0-0-0-4"]
-    - endpoints: ["xrd16:Gi0-0-0-9", "xrd42:Gi0-0-0-4"]
-    - endpoints: ["xrd16:Gi0-0-0-10", "xrd43:Gi0-0-0-4"]
-    - endpoints: ["xrd16:Gi0-0-0-11", "xrd44:Gi0-0-0-4"]
-    - endpoints: ["xrd16:Gi0-0-0-12", "xrd33:Gi0-0-0-5"]
-    - endpoints: ["xrd16:Gi0-0-0-13", "xrd34:Gi0-0-0-5"]
-    - endpoints: ["xrd16:Gi0-0-0-14", "xrd35:Gi0-0-0-5"]
-    - endpoints: ["xrd16:Gi0-0-0-15", "xrd36:Gi0-0-0-5"]
+    - endpoints: ["br01t02n00:Gi0-0-0-4", "br01t01n00:Gi0-0-0-0"]
+    - endpoints: ["br01t02n00:Gi0-0-0-5", "br01t01n01:Gi0-0-0-0"]
+    - endpoints: ["br01t02n00:Gi0-0-0-6", "br01t01n02:Gi0-0-0-0"]
+    - endpoints: ["br01t02n00:Gi0-0-0-7", "br01t01n03:Gi0-0-0-0"]
 
-    - endpoints: ["xrd17:Gi0-0-0-8", "xrd37:Gi0-0-0-5"]
-    - endpoints: ["xrd17:Gi0-0-0-9", "xrd38:Gi0-0-0-5"]
-    - endpoints: ["xrd17:Gi0-0-0-10", "xrd39:Gi0-0-0-5"]
-    - endpoints: ["xrd17:Gi0-0-0-11", "xrd40:Gi0-0-0-5"]
-    - endpoints: ["xrd17:Gi0-0-0-12", "xrd41:Gi0-0-0-5"]
-    - endpoints: ["xrd17:Gi0-0-0-13", "xrd42:Gi0-0-0-5"]
-    - endpoints: ["xrd17:Gi0-0-0-14", "xrd43:Gi0-0-0-5"]
-    - endpoints: ["xrd17:Gi0-0-0-15", "xrd44:Gi0-0-0-5"]
+    - endpoints: ["br01t02n01:Gi0-0-0-4", "br01t01n00:Gi0-0-0-1"]
+    - endpoints: ["br01t02n01:Gi0-0-0-5", "br01t01n01:Gi0-0-0-1"]
+    - endpoints: ["br01t02n01:Gi0-0-0-6", "br01t01n02:Gi0-0-0-1"]
+    - endpoints: ["br01t02n01:Gi0-0-0-7", "br01t01n03:Gi0-0-0-1"]
 
-    - endpoints: ["xrd18:Gi0-0-0-8", "xrd33:Gi0-0-0-6"]
-    - endpoints: ["xrd18:Gi0-0-0-9", "xrd34:Gi0-0-0-6"]
-    - endpoints: ["xrd18:Gi0-0-0-10", "xrd35:Gi0-0-0-6"]
-    - endpoints: ["xrd18:Gi0-0-0-11", "xrd36:Gi0-0-0-6"]
-    - endpoints: ["xrd18:Gi0-0-0-12", "xrd37:Gi0-0-0-6"]
-    - endpoints: ["xrd18:Gi0-0-0-13", "xrd38:Gi0-0-0-6"]
-    - endpoints: ["xrd18:Gi0-0-0-14", "xrd39:Gi0-0-0-6"]
-    - endpoints: ["xrd18:Gi0-0-0-15", "xrd40:Gi0-0-0-6"]
+    - endpoints: ["br01t02n02:Gi0-0-0-4", "br01t01n00:Gi0-0-0-2"]
+    - endpoints: ["br01t02n02:Gi0-0-0-5", "br01t01n01:Gi0-0-0-2"]
+    - endpoints: ["br01t02n02:Gi0-0-0-6", "br01t01n02:Gi0-0-0-2"]
+    - endpoints: ["br01t02n02:Gi0-0-0-7", "br01t01n03:Gi0-0-0-2"]
 
-    - endpoints: ["xrd19:Gi0-0-0-8", "xrd41:Gi0-0-0-6"]
-    - endpoints: ["xrd19:Gi0-0-0-9", "xrd42:Gi0-0-0-6"]
-    - endpoints: ["xrd19:Gi0-0-0-10", "xrd43:Gi0-0-0-6"]
-    - endpoints: ["xrd19:Gi0-0-0-11", "xrd44:Gi0-0-0-6"]
-    - endpoints: ["xrd19:Gi0-0-0-12", "xrd33:Gi0-0-0-7"]
-    - endpoints: ["xrd19:Gi0-0-0-13", "xrd34:Gi0-0-0-7"]
-    - endpoints: ["xrd19:Gi0-0-0-14", "xrd35:Gi0-0-0-7"]
-    - endpoints: ["xrd19:Gi0-0-0-15", "xrd36:Gi0-0-0-7"]
+    - endpoints: ["br01t02n03:Gi0-0-0-4", "br01t01n00:Gi0-0-0-3"]
+    - endpoints: ["br01t02n03:Gi0-0-0-5", "br01t01n01:Gi0-0-0-3"]
+    - endpoints: ["br01t02n03:Gi0-0-0-6", "br01t01n02:Gi0-0-0-3"]
+    - endpoints: ["br01t02n03:Gi0-0-0-7", "br01t01n03:Gi0-0-0-3"]
 
-    - endpoints: ["xrd20:Gi0-0-0-8", "xrd37:Gi0-0-0-7"]
-    - endpoints: ["xrd20:Gi0-0-0-9", "xrd38:Gi0-0-0-7"]
-    - endpoints: ["xrd20:Gi0-0-0-10", "xrd39:Gi0-0-0-7"]
-    - endpoints: ["xrd20:Gi0-0-0-11", "xrd40:Gi0-0-0-7"]
-    - endpoints: ["xrd20:Gi0-0-0-12", "xrd41:Gi0-0-0-7"]
-    - endpoints: ["xrd20:Gi0-0-0-13", "xrd42:Gi0-0-0-7"]
-    - endpoints: ["xrd20:Gi0-0-0-14", "xrd43:Gi0-0-0-7"]
-    - endpoints: ["xrd20:Gi0-0-0-15", "xrd44:Gi0-0-0-7"]
+    - endpoints: ["br01t01n00:Gi0-0-0-4", "br01t00n000:Gi0-0-0-0"]
+    - endpoints: ["br01t01n01:Gi0-0-0-4", "br01t00n000:Gi0-0-0-0"]
+    - endpoints: ["br01t01n02:Gi0-0-0-4", "br01t00n000:Gi0-0-0-0"]
+    - endpoints: ["br01t01n03:Gi0-0-0-4", "br01t00n000:Gi0-0-0-0"]
 
-    - endpoints: ["xrd21:Gi0-0-0-8", "xrd33:Gi0-0-0-8"]
-    - endpoints: ["xrd21:Gi0-0-0-9", "xrd34:Gi0-0-0-8"]
-    - endpoints: ["xrd21:Gi0-0-0-10", "xrd35:Gi0-0-0-8"]
-    - endpoints: ["xrd21:Gi0-0-0-11", "xrd36:Gi0-0-0-8"]
-    - endpoints: ["xrd21:Gi0-0-0-12", "xrd37:Gi0-0-0-8"]
-    - endpoints: ["xrd21:Gi0-0-0-13", "xrd38:Gi0-0-0-8"]
-    - endpoints: ["xrd21:Gi0-0-0-14", "xrd39:Gi0-0-0-8"]
-    - endpoints: ["xrd21:Gi0-0-0-15", "xrd40:Gi0-0-0-8"]
+ # Brick-2
 
-    - endpoints: ["xrd22:Gi0-0-0-8", "xrd41:Gi0-0-0-8"]
-    - endpoints: ["xrd22:Gi0-0-0-9", "xrd42:Gi0-0-0-8"]
-    - endpoints: ["xrd22:Gi0-0-0-10", "xrd43:Gi0-0-0-8"]
-    - endpoints: ["xrd22:Gi0-0-0-11", "xrd44:Gi0-0-0-8"]
-    - endpoints: ["xrd22:Gi0-0-0-12", "xrd33:Gi0-0-0-9"]
-    - endpoints: ["xrd22:Gi0-0-0-13", "xrd34:Gi0-0-0-9"]
-    - endpoints: ["xrd22:Gi0-0-0-14", "xrd35:Gi0-0-0-9"]
-    - endpoints: ["xrd22:Gi0-0-0-15", "xrd36:Gi0-0-0-9"]
+    - endpoints: ["br02t02n00:Gi0-0-0-4", "br02t01n00:Gi0-0-0-0"]
+    - endpoints: ["br02t02n00:Gi0-0-0-5", "br02t01n01:Gi0-0-0-0"]
+    - endpoints: ["br02t02n00:Gi0-0-0-6", "br02t01n02:Gi0-0-0-0"]
+    - endpoints: ["br02t02n00:Gi0-0-0-7", "br02t01n03:Gi0-0-0-0"]
 
-    - endpoints: ["xrd23:Gi0-0-0-8", "xrd37:Gi0-0-0-9"]
-    - endpoints: ["xrd23:Gi0-0-0-9", "xrd38:Gi0-0-0-9"]
-    - endpoints: ["xrd23:Gi0-0-0-10", "xrd39:Gi0-0-0-9"]
-    - endpoints: ["xrd23:Gi0-0-0-11", "xrd40:Gi0-0-0-9"]
-    - endpoints: ["xrd23:Gi0-0-0-12", "xrd41:Gi0-0-0-9"]
-    - endpoints: ["xrd23:Gi0-0-0-13", "xrd42:Gi0-0-0-9"]
-    - endpoints: ["xrd23:Gi0-0-0-14", "xrd43:Gi0-0-0-9"]
-    - endpoints: ["xrd23:Gi0-0-0-15", "xrd44:Gi0-0-0-9"]
+    - endpoints: ["br02t02n01:Gi0-0-0-4", "br02t01n00:Gi0-0-0-1"]
+    - endpoints: ["br02t02n01:Gi0-0-0-5", "br02t01n01:Gi0-0-0-1"]
+    - endpoints: ["br02t02n01:Gi0-0-0-6", "br02t01n02:Gi0-0-0-1"]
+    - endpoints: ["br02t02n01:Gi0-0-0-7", "br02t01n03:Gi0-0-0-1"]
 
-    - endpoints: ["xrd24:Gi0-0-0-8", "xrd33:Gi0-0-0-10"]
-    - endpoints: ["xrd24:Gi0-0-0-9", "xrd34:Gi0-0-0-10"]
-    - endpoints: ["xrd24:Gi0-0-0-10", "xrd35:Gi0-0-0-10"]
-    - endpoints: ["xrd24:Gi0-0-0-11", "xrd36:Gi0-0-0-10"]
-    - endpoints: ["xrd24:Gi0-0-0-12", "xrd37:Gi0-0-0-10"]
-    - endpoints: ["xrd24:Gi0-0-0-13", "xrd38:Gi0-0-0-10"]
-    - endpoints: ["xrd24:Gi0-0-0-14", "xrd39:Gi0-0-0-10"]
-    - endpoints: ["xrd24:Gi0-0-0-15", "xrd40:Gi0-0-0-10"]
+    - endpoints: ["br02t02n02:Gi0-0-0-4", "br02t01n00:Gi0-0-0-2"]
+    - endpoints: ["br02t02n02:Gi0-0-0-5", "br02t01n01:Gi0-0-0-2"]
+    - endpoints: ["br02t02n02:Gi0-0-0-6", "br02t01n02:Gi0-0-0-2"]
+    - endpoints: ["br02t02n02:Gi0-0-0-7", "br02t01n03:Gi0-0-0-2"]
+
+    - endpoints: ["br02t02n03:Gi0-0-0-4", "br02t01n00:Gi0-0-0-3"]
+    - endpoints: ["br02t02n03:Gi0-0-0-5", "br02t01n01:Gi0-0-0-3"]
+    - endpoints: ["br02t02n03:Gi0-0-0-6", "br02t01n02:Gi0-0-0-3"]
+    - endpoints: ["br02t02n03:Gi0-0-0-7", "br02t01n03:Gi0-0-0-3"]
+
+    - endpoints: ["br02t01n00:Gi0-0-0-4", "br02t00n000:Gi0-0-0-0"]
+    - endpoints: ["br02t01n01:Gi0-0-0-4", "br02t00n000:Gi0-0-0-0"]
+    - endpoints: ["br02t01n02:Gi0-0-0-4", "br02t00n000:Gi0-0-0-0"]
+    - endpoints: ["br02t01n03:Gi0-0-0-4", "br02t00n000:Gi0-0-0-0"]
+
+#  # Brick-3
+
+#     - endpoints: ["br03t02n00:Gi0-0-0-4", "br03t01n00:Gi0-0-0-0"]
+#     - endpoints: ["br03t02n00:Gi0-0-0-5", "br03t01n01:Gi0-0-0-0"]
+#     - endpoints: ["br03t02n00:Gi0-0-0-6", "br03t01n02:Gi0-0-0-0"]
+#     - endpoints: ["br03t02n00:Gi0-0-0-7", "br03t01n03:Gi0-0-0-0"]
+
+#     - endpoints: ["br03t02n01:Gi0-0-0-4", "br03t01n00:Gi0-0-0-1"]
+#     - endpoints: ["br03t02n01:Gi0-0-0-5", "br03t01n01:Gi0-0-0-1"]
+#     - endpoints: ["br03t02n01:Gi0-0-0-6", "br03t01n02:Gi0-0-0-1"]
+#     - endpoints: ["br03t02n01:Gi0-0-0-7", "br03t01n03:Gi0-0-0-1"]
+
+#     - endpoints: ["br03t02n02:Gi0-0-0-4", "br03t01n00:Gi0-0-0-2"]
+#     - endpoints: ["br03t02n02:Gi0-0-0-5", "br03t01n01:Gi0-0-0-2"]
+#     - endpoints: ["br03t02n02:Gi0-0-0-6", "br03t01n02:Gi0-0-0-2"]
+#     - endpoints: ["br03t02n02:Gi0-0-0-7", "br03t01n03:Gi0-0-0-2"]
+
+#     - endpoints: ["br03t02n03:Gi0-0-0-4", "br03t01n00:Gi0-0-0-3"]
+#     - endpoints: ["br03t02n03:Gi0-0-0-5", "br03t01n01:Gi0-0-0-3"]
+#     - endpoints: ["br03t02n03:Gi0-0-0-6", "br03t01n02:Gi0-0-0-3"]
+#     - endpoints: ["br03t02n03:Gi0-0-0-7", "br03t01n03:Gi0-0-0-3"]
+
+    # - endpoints: ["br03t01n00:Gi0-0-0-4", "br03t00n000:Gi0-0-0-0"]
+    # - endpoints: ["br03t01n01:Gi0-0-0-4", "br03t00n000:Gi0-0-0-0"]
+    # - endpoints: ["br03t01n02:Gi0-0-0-4", "br03t00n000:Gi0-0-0-0"]
+    # - endpoints: ["br03t01n03:Gi0-0-0-4", "br03t00n000:Gi0-0-0-0"]
