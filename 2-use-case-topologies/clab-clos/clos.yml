@@ -22,7 +22,7 @@ topology:
     sp00c00n01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.10.2
-      mgmt-ipv4: 172.20.6.100
+      mgmt-ipv4: 172.20.6.101
       mgmt-ipv6: 2001:172:20:6::101
       startup-config: config/sp00c00n01.cfg
 
