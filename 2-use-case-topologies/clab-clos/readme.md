@@ -23,4 +23,4 @@ sudo containerlab deploy -t clos-lower.yml
 ./vxlan-lower.sh
 ```
 
-![Topology](clab-diagram.png)
+![Topology](clos-diagram.png)
