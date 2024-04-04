@@ -1,4 +1,7 @@
 #/bin/sh
+
+sudo clab tools vxlan delete -p clab
+
 clab tools vxlan create --remote 198.18.1.100 --id 100 --link sp00c00n00-Gi0-0-0-1
 clab tools vxlan create --remote 198.18.1.100 --id 101 --link sp00c00n00-Gi0-0-0-2
 

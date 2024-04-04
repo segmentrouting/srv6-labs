@@ -1,0 +1,75 @@
+#   Topology
+#  
+#      linux-rtr
+#       /  \ 
+#      /    \ 
+#    r01    r02
+#     |      |
+#  scapy1   scapy2
+
+name: linux-srv6
+
+mgmt:
+  network: mgt_net
+  ipv4-subnet: 172.20.33.0/24
+
+topology:
+  nodes:
+
+    # xrd01:
+    #   kind: cisco_xrd
+    #   image: ios-xr/xrd-control-plane:7.10.2
+    #   mgmt-ipv4: 172.20.33.101
+    #   startup-config: config/xrd01.cfg
+
+    # xrd02:
+    #   kind: cisco_xrd
+    #   image: ios-xr/xrd-control-plane:7.10.2
+    #   mgmt-ipv4: 172.20.1.102
+    #   mgmt-ipv6: 2001:db8:20:1::102
+    #   startup-config: config/xrd02.cfg
+
+    scapy1:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt-ipv4: 172.20.33.111
+
+    linux-rtr:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt-ipv4: 172.20.33.112
+
+    scapy2:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt-ipv4: 172.20.33.113
+
+    bridge1:
+      kind: bridge
+
+    bridge2:
+      kind: bridge
+
+    # xrd01-host:
+    #   kind: bridge
+
+    # xrd02-host:
+    #   kind: bridge
+
+  links:
+
+    - endpoints: ["scapy1:eth1","bridge1:scapy1-eth1"]
+    - endpoints: ["scapy2:eth1","bridge2:scapy2-eth1"]
+
+    - endpoints: ["linux-rtr:eth1","bridge1:linux-rtr-eth1"]
+    - endpoints: ["linux-rtr:eth2","bridge2:linux-rtr-eth2"]
+
+    # - endpoints: ["xrd01:Gi0-0-0-0", "xrd03:Gi0-0-0-0"]
+    # - endpoints: ["xrd01:Gi0-0-0-1", "xrd04:Gi0-0-0-0"]
+    #- endpoints: ["xrd01:Gi0-0-0-2", "xrd01-host:xrd01-Gi0-0-0-2"]
+
+    # - endpoints: ["xrd02:Gi0-0-0-0", "xrd03:Gi0-0-0-1"]
+    # - endpoints: ["xrd02:Gi0-0-0-1", "xrd04:Gi0-0-0-1"]
+    #- endpoints: ["xrd02:Gi0-0-0-2", "xrd02-host:xrd02-Gi0-0-0-2"]
+
+    # - endpoints: ["xrd03:Gi0-0-0-2", "xrd04:Gi0-0-0-2"]
