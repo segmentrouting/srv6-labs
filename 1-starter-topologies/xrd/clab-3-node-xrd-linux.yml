@@ -2,9 +2,7 @@
 #  
 #      linux-rtr
 #       /  \ 
-#      /    \ 
-#    r01    r02
-#     |      |
+#      /    \
 #  scapy1   scapy2
 
 name: linux-srv6

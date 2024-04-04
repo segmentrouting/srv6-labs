@@ -1,3 +1,6 @@
+### Note: the frr-srv6-usid-ubuntu22:rev1.3 image can be found on dockerhub at bmcdougall/frr-srv6-usid
+###   docker pull bmcdougall/frr-srv6-usid
+
 name: frr
 
 mgmt:
