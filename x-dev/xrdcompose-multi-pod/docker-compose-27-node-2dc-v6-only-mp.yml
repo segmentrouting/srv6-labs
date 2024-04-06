@@ -83,6 +83,7 @@ services:
       - Gi0/0/0/0
       - Gi0/0/0/1
       - Gi0/0/0/2
+      - Gi0/0/0/3      
       - Mg0/RP0/CPU0/0
 
   xrd07:
@@ -113,6 +114,8 @@ services:
       - Gi0/0/0/1
       - Gi0/0/0/2
       - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5            
       - Mg0/RP0/CPU0/0
 
   xrd10:
@@ -122,6 +125,8 @@ services:
       - Gi0/0/0/1
       - Gi0/0/0/2
       - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5              
       - Mg0/RP0/CPU0/0
 
   xrd11:
@@ -190,6 +195,7 @@ services:
       - Gi0/0/0/0
       - Gi0/0/0/1
       - Gi0/0/0/2
+      - Gi0/0/0/3      
       - Mg0/RP0/CPU0/0
 
   xrd18:
@@ -223,6 +229,8 @@ services:
       - Gi0/0/0/1
       - Gi0/0/0/2
       - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5      
       - Mg0/RP0/CPU0/0
 
   xrd21:
@@ -232,6 +240,8 @@ services:
       - Gi0/0/0/1
       - Gi0/0/0/2
       - Gi0/0/0/3
+      - Gi0/0/0/4
+      - Gi0/0/0/5      
       - Mg0/RP0/CPU0/0
 
   xrd22:
@@ -258,6 +268,7 @@ services:
       - Gi0/0/0/0
       - Gi0/0/0/1
       - Gi0/0/0/2
+      - Gi0/0/0/3      
       - Mg0/RP0/CPU0/0
 
   xrd25:
@@ -375,6 +386,7 @@ services:
       - Gi0/0/0/3
       - Gi0/0/0/4
       - Gi0/0/0/5
+      - Gi0/0/0/6      
       - Mg0/RP0/CPU0/0
 
   xrd47:
@@ -386,6 +398,7 @@ services:
       - Gi0/0/0/3
       - Gi0/0/0/4
       - Gi0/0/0/5
+      - Gi0/0/0/6       
       - Mg0/RP0/CPU0/0
 
 
@@ -466,6 +479,7 @@ services:
       - Gi0/0/0/3
       - Gi0/0/0/4
       - Gi0/0/0/5
+      - Gi0/0/0/6       
       - Mg0/RP0/CPU0/0
 
   xrd57:
@@ -477,6 +491,7 @@ services:
       - Gi0/0/0/3
       - Gi0/0/0/4
       - Gi0/0/0/5
+      - Gi0/0/0/6       
       - Mg0/RP0/CPU0/0
 
 # DC02 routers  SS
@@ -580,6 +595,7 @@ services:
       - Gi0/0/0/3
       - Gi0/0/0/4
       - Gi0/0/0/5
+      - Gi0/0/0/6       
       - Mg0/RP0/CPU0/0
 
   xrd67:
@@ -591,6 +607,7 @@ services:
       - Gi0/0/0/3
       - Gi0/0/0/4
       - Gi0/0/0/5
+      - Gi0/0/0/6       
       - Mg0/RP0/CPU0/0
       
 # DC02 POD2 routers
@@ -670,6 +687,7 @@ services:
       - Gi0/0/0/3
       - Gi0/0/0/4
       - Gi0/0/0/5
+      - Gi0/0/0/6       
       - Mg0/RP0/CPU0/0
 
   xrd77:
@@ -681,6 +699,7 @@ services:
       - Gi0/0/0/3
       - Gi0/0/0/4
       - Gi0/0/0/5
+      - Gi0/0/0/6       
       - Mg0/RP0/CPU0/0
       
       
@@ -979,34 +998,34 @@ xr_l2networks:
   - ["xrd84:Gi0/0/0/0", "xrd17:Gi0/0/0/2"]  
   
   - ["xrd85:Gi0/0/0/0", "xrd20:Gi0/0/0/2"]
-  - ["xrd85:Gi0/0/0/1", "xrd20:Gi0/0/0/2"]
+  - ["xrd86:Gi0/0/0/0", "xrd20:Gi0/0/0/3"]
   
-  - ["xrd86:Gi0/0/0/0", "xrd21:Gi0/0/0/3"]
+  - ["xrd85:Gi0/0/0/1", "xrd21:Gi0/0/0/2"]
   - ["xrd86:Gi0/0/0/1", "xrd21:Gi0/0/0/3"]   
   
-  - ["xrd87:Gi0/0/0/0", "xrd46:Gi0/0/0/4"]
-  - ["xrd87:Gi0/0/0/1", "xrd47:Gi0/0/0/4"]
+  - ["xrd87:Gi0/0/0/0", "xrd46:Gi0/0/0/5"]
+  - ["xrd87:Gi0/0/0/1", "xrd47:Gi0/0/0/5"]
   
-  - ["xrd88:Gi0/0/0/0", "xrd46:Gi0/0/0/5"]
-  - ["xrd88:Gi0/0/0/1", "xrd47:Gi0/0/0/5"]     
+  - ["xrd88:Gi0/0/0/0", "xrd46:Gi0/0/0/6"]
+  - ["xrd88:Gi0/0/0/1", "xrd47:Gi0/0/0/6"]     
 
-  - ["xrd89:Gi0/0/0/0", "xrd56:Gi0/0/0/4"]
-  - ["xrd89:Gi0/0/0/1", "xrd57:Gi0/0/0/4"]
+  - ["xrd89:Gi0/0/0/0", "xrd56:Gi0/0/0/5"]
+  - ["xrd89:Gi0/0/0/1", "xrd57:Gi0/0/0/5"]
   
-  - ["xrd90:Gi0/0/0/0", "xrd56:Gi0/0/0/5"]
-  - ["xrd90:Gi0/0/0/1", "xrd57:Gi0/0/0/5"]    
+  - ["xrd90:Gi0/0/0/0", "xrd56:Gi0/0/0/6"]
+  - ["xrd90:Gi0/0/0/1", "xrd57:Gi0/0/0/6"]    
   
-  - ["xrd91:Gi0/0/0/0", "xrd66:Gi0/0/0/4"]
-  - ["xrd91:Gi0/0/0/1", "xrd67:Gi0/0/0/4"]
+  - ["xrd91:Gi0/0/0/0", "xrd66:Gi0/0/0/5"]
+  - ["xrd91:Gi0/0/0/1", "xrd67:Gi0/0/0/5"]
   
-  - ["xrd92:Gi0/0/0/0", "xrd66:Gi0/0/0/5"]
-  - ["xrd92:Gi0/0/0/1", "xrd67:Gi0/0/0/5"]     
+  - ["xrd92:Gi0/0/0/0", "xrd66:Gi0/0/0/6"]
+  - ["xrd92:Gi0/0/0/1", "xrd67:Gi0/0/0/6"]     
 
-  - ["xrd93:Gi0/0/0/0", "xrd76:Gi0/0/0/4"]
-  - ["xrd93:Gi0/0/0/1", "xrd77:Gi0/0/0/4"]
+  - ["xrd93:Gi0/0/0/0", "xrd76:Gi0/0/0/5"]
+  - ["xrd93:Gi0/0/0/1", "xrd77:Gi0/0/0/5"]
   
-  - ["xrd94:Gi0/0/0/0", "xrd76:Gi0/0/0/5"]
-  - ["xrd94:Gi0/0/0/1", "xrd77:Gi0/0/0/5"]    
+  - ["xrd94:Gi0/0/0/0", "xrd76:Gi0/0/0/6"]
+  - ["xrd94:Gi0/0/0/1", "xrd77:Gi0/0/0/6"]    
 
 networks:
   mgmt:
@@ -1098,73 +1117,73 @@ networks:
       config:
         - subnet: 10.10.6.0/24
     xr_interfaces:
-      - xrd06:Gi0/0/0/2
+      - xrd06:Gi0/0/0/3
 
   xrd09-host1:
     ipam:
       config:
         - subnet: 10.10.51.0/29
     xr_interfaces:
-      - xrd09:Gi0/0/0/2
+      - xrd09:Gi0/0/0/4
   xrd09-host2:
     ipam:
       config:
         - subnet: 10.10.50.0/29
     xr_interfaces:
-      - xrd09:Gi0/0/0/3
+      - xrd09:Gi0/0/0/5
 
   xrd10-host1:
     ipam:
       config:
         - subnet: 10.10.51.8/29
     xr_interfaces:
-      - xrd10:Gi0/0/0/2
+      - xrd10:Gi0/0/0/4
   xrd10-host2:
     ipam:
       config:
         - subnet: 10.10.50.8/29
     xr_interfaces:
-      - xrd10:Gi0/0/0/3
+      - xrd10:Gi0/0/0/5
 
   xrd17-host:
     ipam:
       config:
         - subnet: 10.10.17.0/24
     xr_interfaces:
-      - xrd17:Gi0/0/0/2
+      - xrd17:Gi0/0/0/3
 
   xrd20-host1:
     ipam:
       config:
         - subnet: 10.10.53.8/29
     xr_interfaces:
-      - xrd20:Gi0/0/0/2
+      - xrd20:Gi0/0/0/4
   xrd20-host2:
     ipam:
       config:
         - subnet: 10.10.52.8/29
     xr_interfaces:
-      - xrd20:Gi0/0/0/3
+      - xrd20:Gi0/0/0/5
 
   xrd21-host1:
     ipam:
       config:
         - subnet: 10.10.53.0/29
     xr_interfaces:
-      - xrd21:Gi0/0/0/2
+      - xrd21:Gi0/0/0/4
   xrd21-host2:
     ipam:
       config:
         - subnet: 10.10.52.0/29
     xr_interfaces:
-      - xrd21:Gi0/0/0/3
+      - xrd21:Gi0/0/0/5
 
   xrd24-host:
     ipam:
       config:
         - subnet: 10.10.24.0/24
     xr_interfaces:
-      - xrd24:Gi0/0/0/2
+      - xrd24:Gi0/0/0/3
 
   xrd46-host:
     ipam:
@@ -1185,14 +1204,14 @@ networks:
       config:
         - subnet: 10.10.48.0/24
     xr_interfaces:
-      - xrd46:Gi0/0/0/4
+      - xrd56:Gi0/0/0/4
 
   xrd57-host:
     ipam:
       config:
         - subnet: 10.10.49.0/24
     xr_interfaces:
-      - xrd47:Gi0/0/0/4
+      - xrd57:Gi0/0/0/4
 
   xrd66-host:
     ipam:
@@ -1213,11 +1232,11 @@ networks:
       config:
         - subnet: 10.10.68.0/24
     xr_interfaces:
-      - xrd66:Gi0/0/0/4
+      - xrd76:Gi0/0/0/4
 
   xrd77-host:
     ipam:
       config:
         - subnet: 10.10.69.0/24
     xr_interfaces:
-      - xrd67:Gi0/0/0/4
+      - xrd77:Gi0/0/0/4

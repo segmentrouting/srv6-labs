@@ -482,14 +482,14 @@ docker network ls | awk -F': ' '/xrd-compose_xrd46-host /{print $0}' > net.txt
 netinstance=$( head -n 1 net.txt | cut -c 1-12 )
 echo br-"$netinstance" > ./xrd46-host
 echo br-"$netinstance"
-sudo brctl delif virbr0 vnet0
-sudo brctl addif br-"$netinstance" vnet0
+#sudo brctl delif virbr0 vnet0
+#sudo brctl addif br-"$netinstance" vnet0
 
 docker network ls | awk -F': ' '/xrd-compose_xrd66-host /{print $0}' > net.txt
 netinstance=$( head -n 1 net.txt | cut -c 1-12 )
 echo br-"$netinstance" > ./xrd66-host
 echo br-"$netinstance"
-sudo brctl delif virbr0 vnet2
-sudo brctl addif br-"$netinstance" vnet2
+#sudo brctl delif virbr0 vnet2
+#sudo brctl addif br-"$netinstance" vnet2
 
 rm net.txt

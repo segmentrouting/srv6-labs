@@ -38,6 +38,17 @@ docker volume rm xrd44
 docker volume rm xrd45
 docker volume rm xrd46
 docker volume rm xrd47
+docker volume rm xrd48
+docker volume rm xrd49
+docker volume rm xrd50
+docker volume rm xrd51
+docker volume rm xrd52
+docker volume rm xrd53
+docker volume rm xrd54
+docker volume rm xrd55
+docker volume rm xrd56
+docker volume rm xrd57
+
 
 docker volume rm xrd60
 docker volume rm xrd61
@@ -47,15 +58,28 @@ docker volume rm xrd64
 docker volume rm xrd65
 docker volume rm xrd66
 docker volume rm xrd67
+docker volume rm xrd68
+docker volume rm xrd69
+docker volume rm xrd70
+docker volume rm xrd71
+docker volume rm xrd72
+docker volume rm xrd73
+docker volume rm xrd74
+docker volume rm xrd75
+docker volume rm xrd76
+docker volume rm xrd77
 
+docker volume rm xrd81
+docker volume rm xrd82
+docker volume rm xrd83
+docker volume rm xrd84
+docker volume rm xrd85
+docker volume rm xrd86
+docker volume rm xrd87
+docker volume rm xrd88
+docker volume rm xrd89
+docker volume rm xrd90
 docker volume rm xrd91
 docker volume rm xrd92
 docker volume rm xrd93
 docker volume rm xrd94
-
-docker volume rm xrd95
-docker volume rm xrd96
-docker volume rm xrd97
-docker volume rm xrd98
-docker volume rm xrd99
-docker volume rm xrd100
