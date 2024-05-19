@@ -2,7 +2,8 @@
 
 ### Static uSID is not publicly available as of the creation of this document. This should be considered experimental and as reference only
 
-#### Peterson graph topology is used
+#### Peterson graph topology is used 
+[link](https://github.com/segmentrouting/srv6-labs/blob/main/2-use-case-topologies/peterson-graph/diagrams/topology.png)
 
 ### End.DT46
 
