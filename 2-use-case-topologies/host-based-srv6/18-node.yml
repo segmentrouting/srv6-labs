@@ -67,12 +67,6 @@ topology:
       mgmt-ipv4: 172.20.18.116
       startup-config: 18-node-config/xrd16.cfg
 
-    xrd17:
-      kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.18.117
-      startup-config: 18-node-config/xrd17.cfg
-
     xrd18:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
