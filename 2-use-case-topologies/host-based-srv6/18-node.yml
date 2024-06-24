@@ -1,147 +1,125 @@
-#   The clab-srv6-mup.yml launches a containerlab XRd topology where the XRd instances are connected
-#   via point-to-point links: https://containerlab.dev/manual/network/#point-to-point-links
 
-name: 22-node
+name: 18-node
 
 mgmt:
   network: mgt_net
-  ipv4-subnet: 172.20.1.0/24
-  ipv6-subnet: 2001:172:20:1::/80
+  ipv4-subnet: 172.20.18.0/24
 
 topology:
   nodes:
     xrd01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.101
-      mgmt-ipv6: 2001:172:20:1::101
-      startup-config: 22-node-config/xrd01.cfg
+      mgmt-ipv4: 172.20.18.101
+      startup-config: 18-node-config/xrd01.cfg
 
     xrd02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.102
-      mgmt-ipv6: 2001:172:20:1::102
-      startup-config: 22-node-config/xrd02.cfg
+      mgmt-ipv4: 172.20.18.102
+      startup-config: 18-node-config/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.103
-      mgmt-ipv6: 2001:172:20:1::103
-      startup-config: 22-node-config/xrd03.cfg
+      mgmt-ipv4: 172.20.18.103
+      startup-config: 18-node-config/xrd03.cfg
 
     xrd04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.104
-      mgmt-ipv6: 2001:172:20:1::104
-      startup-config: 22-node-config/xrd04.cfg
+      mgmt-ipv4: 172.20.18.104
+      startup-config: 18-node-config/xrd04.cfg
 
     xrd06:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.106
-      mgmt-ipv6: 2001:172:20:1::106
-      startup-config: 22-node-config/xrd06.cfg
+      mgmt-ipv4: 172.20.18.106
+      startup-config: 18-node-config/xrd06.cfg
 
     xrd07:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.107
-      mgmt-ipv6: 2001:172:20:1::107
-      startup-config: 22-node-config/xrd07.cfg
+      mgmt-ipv4: 172.20.18.107
+      startup-config: 18-node-config/xrd07.cfg
 
     xrd08:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.108
-      mgmt-ipv6: 2001:172:20:1::108
-      startup-config: 22-node-config/xrd08.cfg
+      mgmt-ipv4: 172.20.18.108
+      startup-config: 18-node-config/xrd08.cfg
 
     xrd09:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.109
-      mgmt-ipv6: 2001:172:20:1::109
-      startup-config: 22-node-config/xrd09.cfg
+      mgmt-ipv4: 172.20.18.109
+      startup-config: 18-node-config/xrd09.cfg
 
     xrd15:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.115
-      mgmt-ipv6: 2001:172:20:1::115
-      startup-config: 22-node-config/xrd15.cfg
+      mgmt-ipv4: 172.20.18.115
+      startup-config: 18-node-config/xrd15.cfg
 
     xrd16:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.116
-      mgmt-ipv6: 2001:172:20:1::116
-      startup-config: 22-node-config/xrd16.cfg
+      mgmt-ipv4: 172.20.18.116
+      startup-config: 18-node-config/xrd16.cfg
 
     xrd17:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.117
-      mgmt-ipv6: 2001:172:20:1::117
-      startup-config: 22-node-config/xrd17.cfg
+      mgmt-ipv4: 172.20.18.117
+      startup-config: 18-node-config/xrd17.cfg
 
     xrd18:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.118
-      mgmt-ipv6: 2001:172:20:1::118
-      startup-config: 22-node-config/xrd18.cfg
+      mgmt-ipv4: 172.20.18.118
+      startup-config: 18-node-config/xrd18.cfg
 
     xrd25:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.125
-      mgmt-ipv6: 2001:172:20:1::125
-      startup-config: 22-node-config/xrd25.cfg
+      mgmt-ipv4: 172.20.18.125
+      startup-config: 18-node-config/xrd25.cfg
 
     xrd31:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.131
-      mgmt-ipv6: 2001:172:20:1::131
-      startup-config: 22-node-config/xrd31.cfg
+      mgmt-ipv4: 172.20.18.131
+      startup-config: 18-node-config/xrd31.cfg
 
     xrd32:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.132
-      mgmt-ipv6: 2001:172:20:1::132
-      startup-config: 22-node-config/xrd32.cfg
+      mgmt-ipv4: 172.20.18.132
+      startup-config: 18-node-config/xrd32.cfg
 
     xrd40:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.140
-      mgmt-ipv6: 2001:172:20:1::140
-      startup-config: 22-node-config/xrd40.cfg
+      mgmt-ipv4: 172.20.18.140
+      startup-config: 18-node-config/xrd40.cfg
 
     xrd41:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.141
-      mgmt-ipv6: 2001:172:20:1::141
-      startup-config: 22-node-config/xrd41.cfg
+      mgmt-ipv4: 172.20.18.141
+      startup-config: 18-node-config/xrd41.cfg
 
     xrd42:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.142
-      mgmt-ipv6: 2001:172:20:1::142
-      startup-config: 22-node-config/xrd42.cfg
+      mgmt-ipv4: 172.20.18.142
+      startup-config: 18-node-config/xrd42.cfg
 
     xrd43:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.1.1
-      mgmt-ipv4: 172.20.1.143
-      mgmt-ipv6: 2001:172:20:1::143
-      startup-config: 22-node-config/xrd43.cfg
+      mgmt-ipv4: 172.20.18.143
+      startup-config: 18-node-config/xrd43.cfg
 
     xrd06-host:
       kind: bridge
