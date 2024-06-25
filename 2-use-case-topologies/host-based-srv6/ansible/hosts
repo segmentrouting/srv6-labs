@@ -5,7 +5,7 @@ localhost ansible_connection=local
 j-cluster00-node00 ansible_host=192.168.122.242
 j-cluster00-node01 ansible_host=192.168.122.243
 
-[control-plane-node]
+[j-cluster00-cp]
 j-cluster00-node00 ansible_host=192.168.122.242
 
 ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
