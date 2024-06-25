@@ -155,6 +155,7 @@ topology:
     - endpoints: ["xrd04:Gi0-0-0-3", "xrd06:Gi0-0-0-0"]
 
     - endpoints: ["xrd06:Gi0-0-0-2", "xrd06-host:xrd06-Gi0-0-0-2"]
+    - endpoints: ["xrd06:Gi0-0-0-3", "macvlan:ens224"]
 
     - endpoints: ["xrd07:Gi0-0-0-0", "xrd08:Gi0-0-0-0"]
     - endpoints: ["xrd07:Gi0-0-0-2", "xrd15:Gi0-0-0-1"]
@@ -165,6 +166,7 @@ topology:
     - endpoints: ["xrd08:Gi0-0-0-2", "xrd16:Gi0-0-0-1"]
 
     - endpoints: ["xrd09:Gi0-0-0-2", "xrd09-host:xrd09-Gi0-0-0-2"]
+    - endpoints: ["xrd09:Gi0-0-0-3", "macvlan:ens224"]
 
     - endpoints: ["xrd15:Gi0-0-0-0", "xrd16:Gi0-0-0-0"]
     - endpoints: ["xrd15:Gi0-0-0-4", "xrd18:Gi0-0-0-4"]

@@ -1,0 +1,105 @@
+---
+
+# ansible-playbook -i hosts startup-playbook.yml -e "ansible_user=cisco ansible_ssh_pass=cisco123 ansible_sudo_pass=cisco123" -vv
+
+---
+      
+- name: copy files
+  hosts: j-cluster
+  become: true
+  tasks: 
+
+    - name: Copy netplan
+      copy:
+        src: "{{ inventory_hostname }}/netplan.yaml"
+        dest: "/etc/netplan/00-installer-config.yaml"
+        mode: 0644
+
+    - name: Copy /etc/environment
+      copy:
+        src: "{{ inventory_hostname }}/environment"
+        dest: "/etc/environment"
+        mode: 0644
+
+    - name: Copy /etc/fstab
+      copy:
+        src: "{{ inventory_hostname }}/fstab"
+        dest: "/etc/fstab"
+        mode: 0644
+
+    - name: swapoff
+      command: "sudo swapoff -a"
+      ignore_errors: yes
+
+    - name: rm swap
+      command: "sudo rm /swap.img"
+      ignore_errors: yes
+
+    - name: set timezone
+      command: "sudo timedatectl set-timezone America/Los_Angeles"
+      ignore_errors: yes
+
+    - name: wget containerd
+      command: "wget https://github.com/containerd/containerd/releases/download/v1.7.14/containerd-1.7.14-linux-amd64.tar.gz"
+      ignore_errors: yes
+
+    - name: untar
+      command: "tar Cxzvf /usr/local containerd-1.7.14-linux-amd64.tar.gz"
+      ignore_errors: yes
+
+    - name: Copy containerd.service
+      copy:
+        src: "{{ inventory_hostname }}/containerd.service"
+        dest: "/usr/local/lib/systemd/system/containerd.service"
+        mode: 0644
+
+    - name: daemon-reload
+      command: "systemctl daemon-reload"
+      ignore_errors: yes
+
+    - name: enable containerd
+      command: "systemctl enable --now containerd"
+      ignore_errors: yes
+
+    - name: download helm
+      command: "wget https://get.helm.sh/helm-v3.15.2-linux-amd64.tar.gz"
+      ignore_errors: yes
+
+    - name: untar helm
+      command: "tar -zxvf helm-v3.15.2-linux-amd64.tar.gz"
+      ignore_errors: yes
+    
+    - name: mv helm
+      command: "mv linux-amd64/helm /usr/local/bin/helm"
+      ignore_errors: yes
+
+    - name: add helm repo
+      command: "helm repo add isovalent https://helm.isovalent.com"
+      ignore_errors: yes
+
+
+  # install kubectl/kubelet/kubeadm
+    # control plane node:
+
+- name: control plane node
+  hosts: j-cluster00-cp
+  become: true
+  tasks: 
+
+    - name: kubeadm init
+      command: "kubeadm init"
+      ignore_errors: yes
+
+    - name: get nodes
+      command: "kubectl get nodes -o wide"
+      ignore_errors: yes
+
+- name: worker node join
+  hosts: j-cluster00-wn
+  become: true
+  tasks:
+
+    - name: kubeadm join
+      command: "kubeadm join 10.42.1.2:6443 --token 7egvt3.ivj2a5tv5zqgqpoe \
+	--discovery-token-ca-cert-hash sha256:a2c654a62300bce3bd4336b58e70cab7a6329d9646dc80443b61c4e9907ad8e6"
+      ignore_errors: yes

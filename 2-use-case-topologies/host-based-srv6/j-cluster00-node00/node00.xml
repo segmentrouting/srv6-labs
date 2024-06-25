@@ -38,7 +38,7 @@
     </disk>
     <interface type='network'>
       <mac address='52:54:60:00:a0:07'/>
-      <source network='default' bridge='virbr1'/>
+      <source network='default' bridge='virbr0'/>
       <target dev='vnet0'/>
       <model type='virtio'/>
       <alias name='net0'/>
