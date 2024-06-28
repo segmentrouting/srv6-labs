@@ -7,7 +7,11 @@ sudo iptables -t nat -A POSTROUTING -s 10.43.1.0/24 -o enp1s0f0 -j MASQUERADE
 
 sudo iptables -t nat -A POSTROUTING -s 10.9.6.0/24 -o ens224 -j MASQUERADE
 
-sudo iptables -t nat -A POSTROUTING -s 10.42.1.0/24 -o ens224 -j MASQUERADE
-sudo iptables -t nat -A POSTROUTING -s 10.43.1.0/24 -o enp1s0f0 -j MASQUERADE
+sudo iptables -t nat -D POSTROUTING -s 10.42.1.0/24 -o ens160 -j MASQUERADE
+sudo iptables -t nat -D POSTROUTING -s 10.43.1.0/24 -o ens160 -j MASQUERADE
 
-sudo iptables -t nat -A POSTROUTING -s 10.42.1.2/32 -o ens224 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s 10.42.1.2/32 -o ens160 -j MASQUERADE
+
+sudo iptables -t nat -A PREROUTING -s 10.42.1.0/24 -o ens160 -j MASQUERADE
+
+sudo iptables -t nat -A POSTROUTING -o ens160 -j MASQUERADE
