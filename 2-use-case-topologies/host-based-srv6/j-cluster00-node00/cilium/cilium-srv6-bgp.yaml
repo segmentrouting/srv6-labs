@@ -1,0 +1,18 @@
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumBGPPeeringPolicy
+metadata:
+  name: pe0
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: j-cluster00-node00
+  virtualRouters:
+  - localASN: 65142
+    exportPodCIDR: true
+    mapSRv6VRFs: true
+    neighbors:
+    - peerAddress: "10.42.1.1/32"
+      peerASN: 65042
+      families:
+       - afi: ipv4
+         safi: mpls_vpn
