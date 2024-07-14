@@ -33,7 +33,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/opt/images/j-cluster00-node00.qcow2'/>
+      <source file='/home/cisco/images/j-cluster00-node00.qcow2'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <interface type='network'>

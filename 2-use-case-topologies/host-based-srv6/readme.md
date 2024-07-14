@@ -68,6 +68,7 @@ helm install cilium isovalent/cilium --version 1.15.6 \
   --set ipv4.enabled=true \
   --set ipv6.enabled=true \
   --set ipam.mode=cluster-pool \
+  --set bgp-control-plane=true  
   #--set bpf.masquerade=true 
 ```
 
@@ -98,16 +99,16 @@ ipam:
   mode: kubernetes
 tunnel: disabled
 ipv4NativeRoutingCIDR: 10.244.0.0/16
-ipv6NativeRoutingCIDR: fc::/32
+ipv6NativeRoutingCIDR: fc00:0000:200::/32
 ```
 15. helm install
 ```
-helm install cilium isovalent/cilium --version 1.15.6 -f helm-global-config.yaml
+helm install cilium isovalent/cilium --version 1.15.6 -f helm-global-conf.yaml
 ```
 
 16.  helm upgrade (if making changes)
 ```
-helm upgrade -f helm-global-config.yaml cilium isovalent/cilium -n kube-system
+helm upgrade -f helm-global-conf.yaml cilium isovalent/cilium -n kube-system
 ```
 
 17.  restart cilium operator:
