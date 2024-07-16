@@ -1,0 +1,23 @@
+hubble:
+  enabled: false
+  relay:
+    enabled: false
+nodeinit:
+  enabled: true
+
+ipv6:
+  enabled: true
+enterprise:
+  srv6:
+    enabled: true
+    encapMode: reduced
+bgpControlPlane:
+  enabled: true
+k8s:
+  requireIPv4PodCIDR: true
+  requireIPv6PodCIDR: true
+ipam:
+  mode: kubernetes
+tunnel: disabled
+ipv4NativeRoutingCIDR: 10.142.0.0/16
+ipv6NativeRoutingCIDR: 2001:db8:142:0::/56

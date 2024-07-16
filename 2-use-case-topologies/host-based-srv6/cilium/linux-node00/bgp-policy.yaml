@@ -1,7 +1,7 @@
 apiVersion: "cilium.io/v2alpha1"
 kind: CiliumBGPPeeringPolicy
 metadata:
-  name: pe0
+  name: xrd42
 spec:
   nodeSelector:
     matchLabels:
@@ -15,4 +15,11 @@ spec:
       peerASN: 65042
       families:
        - afi: ipv4
+         safi: unicast
+       - afi: ipv4
          safi: mpls_vpn
+    - peerAddress: "fc00:0:42:1::1/128"
+      peerASN: 65042
+      families:
+        - afi: ipv6
+          safi: unicast

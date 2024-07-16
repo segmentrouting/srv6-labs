@@ -1,3 +1,6 @@
+kubeadm init --pod-network-cidr=10.142.0.0/16,2001:db8:142:0::/56 --service-cidr=10.96.0.0/16,2001:db8:42:1::/112
+
+
 ### install
 1. helm install
 ```
@@ -29,3 +32,8 @@ kubectl apply -f cilium-srv6-bgp.yaml
 cilium bgp peers
 ```
 
+
+
+kubectl annotate node j-cluster00-node00 cilium.io/bgp-virtual-router.65142="router-id=10.42.1.2"
+
+kubectl -n kube-system cilium-l2lkp logs | grep bgp-control-plane

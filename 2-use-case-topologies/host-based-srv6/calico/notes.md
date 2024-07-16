@@ -1,3 +1,28 @@
+
+# Calico VPP
+https://docs.tigera.io/calico/latest/getting-started/kubernetes/vpp/getting-started
+
+cat << EOF > /etc/sysctl.conf
+net.ipv6.conf.all.disable_ipv6 = 0
+net.ipv6.conf.default.disable_ipv6 = 0
+net.ipv6.conf.lo.disable_ipv6 = 0
+net.ipv6.conf.all.accept_dad = 0
+net.ipv6.conf.default.accept_dad = 0
+net.ipv6.conf.default.forwarding = 1
+net.ipv6.conf.all.forwarding = 1
+net.ipv6.conf.all.autoconf = 0
+net.ipv6.conf.all.accept_ra = 0
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+net.ipv4.conf.all.rp_filter = 0
+vm.nr_hugepages = 512
+EOF
+
+CALICOVPP_INTERFACES: |-
+  {
+      "uplinkInterfaces": [ { "interfaceName": "eth0" } ]
+  }
+
 ### GoBGP
 
 cisco@Host-2:~$ kubectl -n calico-vpp-dataplane exec -it calico-vpp-node-6dqfm  -c agent -- gobgp global del all

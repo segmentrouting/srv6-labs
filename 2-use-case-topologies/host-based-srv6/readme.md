@@ -61,62 +61,23 @@ kubectl cluster-info dump | grep -m 1 cluster-cidr
 ps -ef | grep "cluster-cidr"
 ```
 
-9. install cilium with helm:
-```
-helm install cilium isovalent/cilium --version 1.15.6 \
-  --namespace kube-system \
-  --set ipv4.enabled=true \
-  --set ipv6.enabled=true \
-  --set ipam.mode=cluster-pool \
-  --set bgp-control-plane=true  
-  #--set bpf.masquerade=true 
-```
+1.  install cilium with helm 
 
-10. uninstall if needed:
-```
-helm delete cilium -n kube-system
-```
-
-11.  or create helm globals yaml
-```
-ipam:
-  mode: cluster-pool
-ipv4:
-  enabled: true
-ipv6:
-  enabled: true
-enterprise:
-  srv6:
-    enabled: true
-    encapMode: reduced
-    locatorPoolEnabled: true
-bgpControlPlane:
-  enabled: true
-k8s:
-  requireIPv4PodCIDR: true
-  requireIPv6PodCIDR: true
-ipam:
-  mode: kubernetes
-tunnel: disabled
-ipv4NativeRoutingCIDR: 10.244.0.0/16
-ipv6NativeRoutingCIDR: fc00:0000:200::/32
-```
-15. helm install
 ```
 helm install cilium isovalent/cilium --version 1.15.6 -f helm-global-conf.yaml
 ```
 
-16.  helm upgrade (if making changes)
+1.   helm upgrade (if making changes)
 ```
 helm upgrade -f helm-global-conf.yaml cilium isovalent/cilium -n kube-system
 ```
 
-17.  restart cilium operator:
+1.   restart cilium operator:
 ```
 kubectl -n kube-system rollout restart ds/cilium
 ```
 
-18.  helm get values, show node labels
+1.   helm get values, show node labels
 ```
 helm get values cilium -n kube-system
 kubectl get nodes --show-labels=true
