@@ -1,4 +1,4 @@
-# https://thenewstack.io/how-to-deploy-kubernetes-with-kubeadm-and-containerd/
+### reference: https://thenewstack.io/how-to-deploy-kubernetes-with-kubeadm-and-containerd/
 
 1. turn off swap and set data/time:
 ```
@@ -59,11 +59,4 @@ sudo systemctl status containerd
 
 wget https://github.com/opencontainers/runc/releases/download/v1.1.13/runc.amd64
 sudo  install -m 755 runc.amd64 /usr/local/sbin/runc
-```
-
-8. kubeadm init
-```
-sudo kubeadm init --pod-network-cidr=10.142.0.0/16,2001:db8:142:0::/56 --service-cidr=10.96.0.0/16,2001:db8:42:1::/112
-
-kubectl get nodes -o wide
 ```

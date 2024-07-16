@@ -1,17 +1,17 @@
 ## Host Based SRv6 with Cilium
 
+### preparation, kubeadm init
 1. Install containerd and kubeadm/kubelet/kubectl on one or more hosts/VMs
-2. Disable swap (rm /swap.img, sudo swapoff, edit /etc/fstab)
-3. Install Helm
-4. Add helm cilium repo:
+https://github.com/segmentrouting/srv6-labs/blob/main/2-use-case-topologies/host-based-srv6/k8s-install.md
+
+2. Install Helm: https://helm.sh/docs/intro/install/
+3. Add helm cilium repo:
 ```
 helm repo add isovalent https://helm.isovalent.com
 ```
 
-https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/dual-stack-support/
-
-5. enable ipv4 and ipv6 forwarding in /etc/sysctl.conf
-6. kubeadm init on control plane node:
+4. enable ipv4 and ipv6 forwarding in /etc/sysctl.conf
+5. kubeadm init on control plane node:
 ```
 kubeadm init --pod-network-cidr=10.244.0.0/16,2001:db8:42:0::/56 --service-cidr=10.96.0.0/16,2001:db8:42:1::/112
 ```
@@ -36,7 +36,7 @@ nodeRegistration:
 ```
 kubeadm init --config=kubeadm-config.yaml
 ```
-7. then on worker node:
+6. then on worker node:
 ```
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: JoinConfiguration
@@ -52,7 +52,7 @@ nodeRegistration:
     node-ip: 10.43.1.2,fc00:0:43:1::2
 ```
 
-8. verify nodes:
+7. verify nodes:
 ```
 kubectl get nodes -o wide
 kubectl describe nodes | grep -E 'InternalIP'
@@ -60,38 +60,39 @@ kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
 kubectl cluster-info dump | grep -m 1 cluster-cidr
 ps -ef | grep "cluster-cidr"
 ```
-
-1.  install cilium with helm 
+### install Cilium
+1. Base helm chart
+https://github.com/segmentrouting/srv6-labs/blob/main/2-use-case-topologies/host-based-srv6/cilium/linux-node00/helm-install.yaml
 
 ```
-helm install cilium isovalent/cilium --version 1.15.6 -f helm-global-conf.yaml
+helm install cilium isovalent/cilium --version 1.15.6 -f helm-install.yaml
 ```
 
-1.   helm upgrade (if making changes)
+#### helm upgrade (if making changes)
 ```
-helm upgrade -f helm-global-conf.yaml cilium isovalent/cilium -n kube-system
+helm upgrade -f helm-install.yaml cilium isovalent/cilium -n kube-system
 ```
 
-1.   restart cilium operator:
+#### optional: restart cilium operator:
 ```
 kubectl -n kube-system rollout restart ds/cilium
 ```
 
-1.   helm get values, show node labels
+2. verify cilium, helm get values, show node labels
 ```
+kubectl get ds -n kube-system cilium
 helm get values cilium -n kube-system
 kubectl get nodes --show-labels=true
 ```
 
-###    cilium bgp peering
+###  cilium bgp peering with SRv6 L3VPN
 
 1. bgp yaml
 ```
 apiVersion: "cilium.io/v2alpha1"
 kind: CiliumBGPPeeringPolicy
 metadata:
-  name: pe0
-  namespace: kube-system
+  name: xrd42
 spec:
   nodeSelector:
     matchLabels:
@@ -101,18 +102,36 @@ spec:
     exportPodCIDR: true
     mapSRv6VRFs: true
     neighbors:
-    - peerAddress: "fc00:0:42:1::1/128"
+    - peerAddress: "10.42.1.1/32"
       peerASN: 65042
       families:
        - afi: ipv4
+         safi: unicast
+       - afi: ipv4
          safi: mpls_vpn
+    - peerAddress: "fc00:0:42:1::1/128"
+      peerASN: 65042
+      families:
+        - afi: ipv6
+          safi: unicast
 ```
 
-1.  validate BGP
+2. apply cilium bgp
+```
+kubectl apply -f bgp-policy.yaml
+```
 
+3. verify bgp peering
+```
+cilium bgp peers
+```
 
+4. manually add bgp router-id if needed:
+```
+kubectl annotate node j-cluster00-node00 cilium.io/bgp-virtual-router.65142="router-id=10.42.1.2"
+```
 
-11. deploy a pod:
+5. deploy a pod:
 https://yolops.net/k8s-dualstack-cilium.html
 
 ```
@@ -128,34 +147,14 @@ spec:
     name: nginx-test
 ```
 
-1.  get pods/describe pod, exec into pod
+6.  get pods/describe pod, exec into pod
 ```
 kubectl get pods -A
 kubectl describe pod nginx-test
 kubectl exec -it nginx-test -- bash
 ```
 
-
-
-1.  helm upgrade with this yaml
-```
-enterprise:
-  srv6:
-    enabled: true
-    locatorPoolEnabled: true
-bgpControlPlane:
-  enabled: true
-ipam:
-  mode: cluster-pool
-ipv4:
-  enabled: true
-ipv6:
-  enabled: true
-```
-#### command
-```
-helm upgrade -f helm-enterprise-srv6.yaml cilium isovalent/cilium -n kube-system
-```
+### under construction
 
 1.  helm uninstall
 ```
