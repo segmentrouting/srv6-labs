@@ -9,7 +9,7 @@ network:
         - 10.42.1.2/24
         - fc00:0000:42:1::2/64
       nameservers:
-        addresses: [10.200.96.87]
+        addresses: [8.8.8.8]
       gateway4: 10.42.1.1
       routes:
         # - to: 10.0.0.0/8

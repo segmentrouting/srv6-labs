@@ -1,5 +1,5 @@
 
-name: 18-node
+name: 20-xrd
 
 mgmt:
   network: mgt_net
@@ -9,111 +9,123 @@ topology:
   nodes:
     xrd01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.101
       startup-config: 18-node-config/xrd01.cfg
 
     xrd02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.102
       startup-config: 18-node-config/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.103
       startup-config: 18-node-config/xrd03.cfg
 
     xrd04:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.104
       startup-config: 18-node-config/xrd04.cfg
 
     xrd06:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.106
       startup-config: 18-node-config/xrd06.cfg
 
     xrd07:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.107
       startup-config: 18-node-config/xrd07.cfg
 
     xrd08:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.108
       startup-config: 18-node-config/xrd08.cfg
 
     xrd09:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.109
       startup-config: 18-node-config/xrd09.cfg
 
     xrd15:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.115
       startup-config: 18-node-config/xrd15.cfg
 
     xrd16:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.116
       startup-config: 18-node-config/xrd16.cfg
 
     xrd18:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.118
       startup-config: 18-node-config/xrd18.cfg
 
     xrd25:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.125
       startup-config: 18-node-config/xrd25.cfg
 
     xrd31:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.131
       startup-config: 18-node-config/xrd31.cfg
 
     xrd32:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.132
       startup-config: 18-node-config/xrd32.cfg
 
     xrd40:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.140
       startup-config: 18-node-config/xrd40.cfg
 
     xrd41:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.141
       startup-config: 18-node-config/xrd41.cfg
 
     xrd42:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.142
       startup-config: 18-node-config/xrd42.cfg
 
     xrd43:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.2
+      image: ios-xr/xrd-control-plane:7.10.2
       mgmt-ipv4: 172.20.18.143
       startup-config: 18-node-config/xrd43.cfg
+
+    xrd44:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.144
+      startup-config: 18-node-config/xrd44.cfg
+
+    xrd45:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.145
+      startup-config: 18-node-config/xrd45.cfg
 
     xrd06-host:
       kind: bridge
@@ -127,10 +139,10 @@ topology:
     xrd32-host:
       kind: bridge
 
-    xrd42-host:
+    xrd44-host:
       kind: bridge
 
-    xrd43-host:
+    xrd45-host:
       kind: bridge
 
   links:
@@ -176,7 +188,6 @@ topology:
 
     - endpoints: ["xrd31:Gi0-0-0-1", "xrd32:Gi0-0-0-0"]
     - endpoints: ["xrd31:Gi0-0-0-2", "xrd31-host:xrd31-Gi0-0-0-2"]
-
     - endpoints: ["xrd32:Gi0-0-0-2", "xrd32-host:xrd32-Gi0-0-0-2"]
 
     - endpoints: ["xrd40:Gi0-0-0-2", "xrd42:Gi0-0-0-0"]
@@ -185,7 +196,12 @@ topology:
     - endpoints: ["xrd41:Gi0-0-0-2", "xrd42:Gi0-0-0-1"]
     - endpoints: ["xrd41:Gi0-0-0-3", "xrd43:Gi0-0-0-1"]
 
-    - endpoints: ["xrd42:Gi0-0-0-2", "xrd42-host:xrd42-Gi0-0-0-2"]
+    - endpoints: ["xrd42:Gi0-0-0-2", "xrd44:Gi0-0-0-0"]
+    - endpoints: ["xrd42:Gi0-0-0-3", "xrd45:Gi0-0-0-0"]
 
-    - endpoints: ["xrd43:Gi0-0-0-2", "xrd43-host:xrd43-Gi0-0-0-2"]
+    - endpoints: ["xrd43:Gi0-0-0-2", "xrd44:Gi0-0-0-1"]
+    - endpoints: ["xrd43:Gi0-0-0-3", "xrd45:Gi0-0-0-1"]
+
+    - endpoints: ["xrd44:Gi0-0-0-2", "xrd44-host:xrd44-Gi0-0-0-2"]
+    - endpoints: ["xrd45:Gi0-0-0-2", "xrd45-host:xrd45-Gi0-0-0-2"]
 

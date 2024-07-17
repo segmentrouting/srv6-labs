@@ -140,6 +140,7 @@ kind: Pod
 metadata:
   labels:
     app: nginx-test
+    vrf: blue
   name: nginx-test
 spec:
   containers:
@@ -152,6 +153,11 @@ spec:
 kubectl get pods -A
 kubectl describe pod nginx-test
 kubectl exec -it nginx-test -- bash
+```
+
+7. cilium SRv6 responder
+```
+kubectl annotate --overwrite nodes {node name} cilium.io/bgp-virtual-router.65142="router-id=10.42.1.2,srv6-responder=true"
 ```
 
 ### under construction

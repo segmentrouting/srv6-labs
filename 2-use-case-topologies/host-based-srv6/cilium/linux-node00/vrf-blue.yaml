@@ -6,6 +6,7 @@ spec:
   vrfID: 1
   importRouteTarget: "12:12"
   exportRouteTarget: "12:12"
+  locatorPoolRef: main
   rules:
   - selectors:
     - endpointSelector:
@@ -13,3 +14,4 @@ spec:
           vrf: blue
     destinationCIDRs:
     - 0.0.0.0/0
+
