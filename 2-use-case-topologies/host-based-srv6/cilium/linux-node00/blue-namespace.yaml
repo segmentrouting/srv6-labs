@@ -1,0 +1,7 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: blue
+  labels:
+    name: blue
+#kubectl apply -f namespace-blue.yaml

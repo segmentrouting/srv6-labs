@@ -3,10 +3,10 @@ kind: IsovalentVRF
 metadata:
   name: blue
 spec:
-  vrfID: 1
+  vrfID: 1000012
   importRouteTarget: "12:12"
   exportRouteTarget: "12:12"
-  locatorPoolRef: main
+  locatorPoolRef: pool0
   rules:
   - selectors:
     - endpointSelector:

@@ -1,0 +1,40 @@
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumBGPPeeringPolicy
+metadata:
+  name: cluster00-wkr00
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: cluster00-wkr00
+  virtualRouters:
+  - localASN: 65040
+    exportPodCIDR: true
+    mapSRv6VRFs: true
+    srv6LocatorPoolSelector:
+      matchLabels:
+        export: "true"
+    neighbors:
+    - peerAddress: "10.0.0.40/32"
+      peerASN: 65040
+      families:
+       - afi: ipv4
+         safi: unicast
+    - peerAddress: "10.0.0.41/32"
+      peerASN: 65040
+      families:
+       - afi: ipv4
+         safi: unicast
+    - peerAddress: "fc00:0:40::1/128"
+      peerASN: 65040
+      families:
+        - afi: ipv6
+          safi: unicast
+        - afi: ipv4
+          safi: mpls_vpn
+    - peerAddress: "fc00:0:41::1/128"
+      peerASN: 65040
+      families:
+        - afi: ipv6
+          safi: unicast
+        - afi: ipv4
+          safi: mpls_vpn

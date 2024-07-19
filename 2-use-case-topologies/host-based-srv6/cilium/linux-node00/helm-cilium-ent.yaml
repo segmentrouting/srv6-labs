@@ -4,7 +4,8 @@ hubble:
     enabled: false
 nodeinit:
   enabled: true
-
+debug:
+  enabled: true
 ipv6:
   enabled: true
 enterprise:
@@ -20,5 +21,5 @@ k8s:
 ipam:
   mode: kubernetes
 tunnel: disabled
-ipv4NativeRoutingCIDR: 10.142.0.0/16
-ipv6NativeRoutingCIDR: 2001:db8:142:0::/56
+#ipv4NativeRoutingCIDR: 10.142.0.0/16
+#ipv6NativeRoutingCIDR: fc00:0:142:0::/56

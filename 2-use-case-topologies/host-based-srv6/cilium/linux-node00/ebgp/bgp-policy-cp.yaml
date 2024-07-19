@@ -5,19 +5,22 @@ metadata:
 spec:
   nodeSelector:
     matchLabels:
-      kubernetes.io/hostname: j-cluster00-node00
+      kubernetes.io/hostname: cluster00-cp
   virtualRouters:
-  - localASN: 65142
+  - localASN: 65044
     exportPodCIDR: true
     mapSRv6VRFs: true
+    srv6LocatorPoolSelector:
+      matchLabels:
+        export: "true"
     neighbors:
-    - peerAddress: "10.42.1.1/32"
-      peerASN: 65042
+    - peerAddress: "10.44.1.1/32"
+      peerASN: 65040
       families:
        - afi: ipv4
          safi: unicast
-    - peerAddress: "fc00:0:42:1::1/128"
-      peerASN: 65042
+    - peerAddress: "2001:db8:18:44::1/128"
+      peerASN: 65040
       families:
         - afi: ipv6
           safi: unicast
