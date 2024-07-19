@@ -5,11 +5,11 @@ metadata:
   labels:
     app: alpine-ping
     vrf: blue
-  name: blue-alpine00
+  name: bluepod0
 spec:
   containers:
   - image: alpine:latest
-    name: blue-alpine00
+    name: bluepod0
     command:
       - /bin/sh
       - "-c"
