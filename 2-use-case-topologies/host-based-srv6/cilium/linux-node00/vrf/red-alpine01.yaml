@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: blue
+  labels:
+    app: alpine-ping
+    vrf: blue
+  name: red-alpine01
+spec:
+  containers:
+  - image: alpine:latest
+    name: red-alpine01
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
