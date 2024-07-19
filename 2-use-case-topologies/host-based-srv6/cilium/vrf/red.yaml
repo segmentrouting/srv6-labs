@@ -1,0 +1,63 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: red
+  labels:
+    name: red
+
+---
+
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: red
+spec:
+  vrfID: 1000009
+  importRouteTarget: "9:9"
+  exportRouteTarget: "9:9"
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: red
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: green
+  labels:
+    app: alpine-ping
+    vrf: red
+  name: redpod0
+spec:
+  containers:
+  - image: alpine:latest
+    name: redpod0
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: red
+  labels:
+    app: alpine-ping
+    vrf: red
+  name: redpod1
+spec:
+  containers:
+  - image: alpine:latest
+    name: redpod1
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
