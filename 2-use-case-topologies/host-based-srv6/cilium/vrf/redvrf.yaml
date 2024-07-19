@@ -1,7 +1,7 @@
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentVRF
 metadata:
-  name: blue
+  name: red
 spec:
   vrfID: 1000009
   importRouteTarget: "9:9"

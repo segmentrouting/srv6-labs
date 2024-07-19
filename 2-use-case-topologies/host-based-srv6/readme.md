@@ -305,6 +305,7 @@ kubectl exec -n kube-system cilium-6z5gs -- cilium-dbg bpf srv6 policy
 ```
 sudo kubeadm init --pod-network-cidr=10.200.0.0/16,2001:db8:200:0::/56 --service-cidr=10.96.0.0/20,2001:db8:44:44:44:44::/112
 helm install cilium isovalent/cilium --version 1.15.6  --namespace kube-system -f helm-cilium-ent.yaml
+helm get values cilium -n kube-system
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 kubectl apply -f bgp-cp.yaml 
 kubectl apply -f bgp-wkr.yaml
