@@ -309,7 +309,7 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 kubectl apply -f bgp-cp.yaml 
 kubectl apply -f bgp-wkr.yaml
 cilium bgp peers
-kubectl apply -f loc-pool.yaml 
+kubectl apply -f locator-pool.yaml 
 kubectl get sidmanager -o yaml
 kubectl apply -f vrf-blue.yaml 
 kubectl create namespace blue
