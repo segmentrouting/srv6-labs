@@ -291,6 +291,7 @@ cilium bgp routes advertised ipv4 mpls_vpn
 cilium bgp routes available ipv4 mpls_vpn
 cilium bgp routes available ipv4 unicast
 cilium bgp routes available ipv6 unicast
+kubectl get isovalentvrf -o yaml
 kubectl get IsovalentSRv6EgressPolicy
 kubectl get IsovalentSRv6EgressPolicy -o yaml
 kubectl get IsovalentSRv6EgressPolicy /bgp-control-plane-16bbd4214d4e691ddf412a6a078265de02d8cff5a3c4aa618712e8a1444477a9 -o yaml
@@ -312,6 +313,7 @@ kubectl apply -f bgp-wkr.yaml
 cilium bgp peers
 kubectl apply -f locator-pool.yaml 
 kubectl get sidmanager -o yaml
+kubectl get IsovalentSRv6EgressPolicy -o yaml
 kubectl apply -f vrf-blue.yaml 
 kubectl create namespace blue
 kubectl apply -f nginx-blue.yaml 
@@ -326,7 +328,7 @@ kubectl get IsovalentSRv6EgressPolicy -o yaml
 ```
 
 
-### appendix
+### appendix / notes
 
 1.  helm uninstall
 ```
@@ -340,7 +342,34 @@ NAME  	NAMESPACE  	REVISION	UPDATED                                	STATUS  	CHA
 cilium	kube-system	3       	2024-06-26 20:47:04.417451988 -0700 PDT	deployed	cilium-1.15.6	1.15.6    
 ```
 
+#### changing the locator pool
+May cause Cilium's eBPF SRv6 programming to fail (the features are currently beta)
+```
+cisco@cluster00-cp:~/cilium$ kubectl apply -f loc-pool2.yaml 
+isovalentsrv6locatorpool.isovalent.com/pool0 created
+cisco@cluster00-cp:~/cilium$ kubectl get IsovalentSRv6EgressPolicy -o yaml
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+```
+The workaround appears to be uninstall then reinstall Cilium
 
+### eBGP host-to-ToR
+If locatorLenBits: 48 then
+1. On ToR create static route to host locator /48, redistribute into ISIS
 
+If locatorLenBits: 64 then
+1. set functionLenBits to 32
+2. on ToR create static route to host locator /64 and static route to locator /128, redistribute into ISIS
+Example:
+```
+router static
+ address-family ipv6 unicast
+  fc00:0:4000::/128 2001:db8:18:44:5054:60ff:fe01:a008
+  fc00:0:4000:2b::/64 2001:db8:18:44:5054:60ff:fe01:a008
+```
 
+3. Note: if the ToR/DC domain has an eBGP relationship with other outside domains (WAN, etc.) BGP IPv6 unicast will advertise the /64 locator networks out, but the /128 won't appear in DC BGP without some other redistribution (static /128 into DC BGP?). 
 

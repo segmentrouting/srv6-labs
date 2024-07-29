@@ -7,6 +7,15 @@ metadata:
 
 ---
 
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: green
+  labels:
+    name: green
+
+---
+
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentVRF
 metadata:
