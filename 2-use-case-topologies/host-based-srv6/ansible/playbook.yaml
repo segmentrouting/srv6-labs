@@ -73,10 +73,6 @@
       command: "mv linux-amd64/helm /usr/local/bin/helm"
       ignore_errors: yes
 
-    - name: add helm repo
-      command: "helm repo add isovalent https://helm.isovalent.com"
-      ignore_errors: yes
-
 
   # install kubectl/kubelet/kubeadm
     # control plane node:
