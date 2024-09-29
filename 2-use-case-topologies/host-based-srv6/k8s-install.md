@@ -1,5 +1,7 @@
 ### reference: https://thenewstack.io/how-to-deploy-kubernetes-with-kubeadm-and-containerd/
 
+These instructions have been verified on Ubuntu 20.04 and 22.04
+
 1. turn off swap and set data/time:
 ```
 sudo timedatectl set-timezone America/Los_Angeles
@@ -17,8 +19,11 @@ sudo apt upgrade -y
 4. add curl/https packages, keys, etc.
 ```
 sudo apt install curl apt-transport-https -y
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo mkdir -p -m 755 /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list 
 sudo apt update
 ```
 
@@ -60,3 +65,5 @@ sudo systemctl status containerd
 wget https://github.com/opencontainers/runc/releases/download/v1.1.13/runc.amd64
 sudo  install -m 755 runc.amd64 /usr/local/sbin/runc
 ```
+
+8. You may now initialize your k8s cluster with kubeadm init [reference](../readme.md#initialize-the-kubernetes-cluster)
