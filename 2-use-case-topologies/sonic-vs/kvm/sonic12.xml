@@ -25,7 +25,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2' cache='writeback'/>
-      <source file='/opt/images/sonic/sonic-srv6-usid-vs-12.img'/>
+      <source file='/home/cisco/images/sonic/sonic-srv6-usid-vs-12.img'/>
       <target dev='vda' bus='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x06' function='0x0'/>
     </disk>
