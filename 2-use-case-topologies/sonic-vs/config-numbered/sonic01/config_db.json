@@ -1,7 +1,7 @@
 {
     "DEVICE_METADATA": {
         "localhost": {
-            "hwsku": "Force10-S6000",
+            "hwsku": "cisco-8101-p4-32x100-vs",
             "platform": "x86_64-kvm_x86_64-r0",
             "mac": "52:54:00:74:c1:01",
             "hostname": "sonic01",
