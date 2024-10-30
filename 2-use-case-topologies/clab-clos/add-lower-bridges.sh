@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 sudo brctl addbr br01t02n00-host
 sudo brctl addbr br01t02n01-host
