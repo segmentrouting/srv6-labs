@@ -18,10 +18,9 @@ mgmt:
 topology:
   kinds:
     linux:
-      image: c8000-clab-sonic:30.1
+      image: c8000-clab-sonic:46
       binds: 
-          #- /home/cisco/images:/images
-          - /opt/images:/images
+        - /home/cisco/images:/images
       env:
           IMAGE: /images/sonic-cisco-8000.bin
           PID: '8101-32H'

@@ -81,11 +81,11 @@ admin@sonic:~$
 
 1. ssh to the management IP and scp the config files to the sonic instance. Example:
 ```
-scp brmcdoug@192.168.122.1:/home/brmcdoug/sonic-vs/config-unnumbered/sonic01/* .
+scp cisco@192.168.122.1:/home/cisco/srv6-labs/2-use-case-topologies/sonic-vs/config-unnumbered/sonic01/* .
 ```
   
 ```
-admin@sonic01:~$ scp brmcdoug@192.168.122.1:/home/brmcdoug/sonic-vs/config-unnumbered/sonic01/* .
+admin@sonic01:~$ scp cisco@192.168.122.1:/home/cisco/srv6-labs/2-use-case-topologies/sonic-vs/config-unnumbered/sonic01/* .
 brmcdoug@192.168.122.116's password: 
 config_db.json   100% 8426     5.5MB/s   00:00    
 frr.conf        100% 2383     3.1MB/s   00:00
