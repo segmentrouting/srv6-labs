@@ -218,17 +218,9 @@ topology:
   # #     mgmt-ipv6: 2001:172:20:6::151
   # #     startup-config: config/br03t00n000.cfg
 
-    br01t02n00-host0:
+    br01t02n00-host:
       kind: bridge
 
-    br01t02n00-host1:
-      kind: bridge
-
-    br01t02n00-host2:
-      kind: bridge
-
-    br01t02n00-host3:
-      kind: bridge
 
     # br01t02n01-host:
     #   kind: bridge
@@ -239,17 +231,9 @@ topology:
     # br01t02n03-host:
     #   kind: bridge
 
-    br02t02n00-host0:
+    br02t02n00-host:
       kind: bridge
 
-    br02t02n00-host1:
-      kind: bridge
-
-    br02t02n00-host2:
-      kind: bridge
-
-    br02t02n00-host3:
-      kind: bridge
 
     # br02t02n01-host:
     #   kind: bridge
