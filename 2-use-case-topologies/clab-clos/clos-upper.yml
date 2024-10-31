@@ -167,7 +167,10 @@ topology:
   #     mgmt-ipv4: 172.20.6.124
   #     startup-config: config/br00t00n000.cfg
 
-    sp00c00n00-host:
+    sp00c00n00-host0:
+      kind: bridge
+
+    sp00c00n00-host1:
       kind: bridge
 
     # sp00c01n00-host:
@@ -220,8 +223,8 @@ topology:
   # Spine
     # All columns, Node 00
     # - endpoints: ["sp00c00n00:Gi0-0-0-0", "br00t02n00:Gi0-0-0-0"]
-    - endpoints: ["sp00c00n00:Gi0-0-0-1", "sp00c00n00-host:sp00c00n00-Gi0-0-0-1"]
-    - endpoints: ["sp00c00n00:Gi0-0-0-2", "sp00c00n00-host:sp00c00n00-Gi0-0-0-2"]    
+    - endpoints: ["sp00c00n00:Gi0-0-0-1", "sp00c00n00-host0:sp00c00n00-Gi0-0-0-1"]
+    - endpoints: ["sp00c00n00:Gi0-0-0-2", "sp00c00n00-host1:sp00c00n00-Gi0-0-0-2"]    
 
 #     - endpoints: ["sp00c01n00:Gi0-0-0-0", "br00t02n00:Gi0-0-0-1"]
 #     - endpoints: ["sp00c01n00:Gi0-0-0-1", "sp00c01n00-host:sp00c01n00-Gi0-0-0-1"]
