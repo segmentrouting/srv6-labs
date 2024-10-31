@@ -277,9 +277,9 @@ topology:
  # Brick-1
 
     - endpoints: ["br01t02n00:Gi0-0-0-0", "br01t02n00-host0:br01t02n00-Gi0-0-0-0"]
-    - endpoints: ["br01t02n00:Gi0-0-0-1", "br01t02n00-host1:br01t02n00-Gi0-0-0-1"]
-    - endpoints: ["br01t02n00:Gi0-0-0-2", "br01t02n00-host2:br01t02n00-Gi0-0-0-2"]
-    - endpoints: ["br01t02n00:Gi0-0-0-3", "br01t02n00-host3:br01t02n00-Gi0-0-0-3"]
+    # - endpoints: ["br01t02n00:Gi0-0-0-1", "br01t02n00-host1:br01t02n00-Gi0-0-0-1"]
+    # - endpoints: ["br01t02n00:Gi0-0-0-2", "br01t02n00-host2:br01t02n00-Gi0-0-0-2"]
+    # - endpoints: ["br01t02n00:Gi0-0-0-3", "br01t02n00-host3:br01t02n00-Gi0-0-0-3"]
     # - endpoints: ["br01t02n00:Gi0-0-0-4", "br01t01n00:Gi0-0-0-0"]
     # - endpoints: ["br01t02n00:Gi0-0-0-5", "br01t01n01:Gi0-0-0-0"]
     # - endpoints: ["br01t02n00:Gi0-0-0-6", "br01t01n02:Gi0-0-0-0"]
@@ -320,9 +320,9 @@ topology:
  # Brick-2
 
     - endpoints: ["br02t02n00:Gi0-0-0-0", "br02t02n00-host:br02t02n00-Gi0-0-0-0"]
-    - endpoints: ["br02t02n00:Gi0-0-0-1", "br02t02n00-host:br02t02n00-Gi0-0-0-1"]
-    - endpoints: ["br02t02n00:Gi0-0-0-2", "br02t02n00-host:br02t02n00-Gi0-0-0-2"]
-    - endpoints: ["br02t02n00:Gi0-0-0-3", "br02t02n00-host:br02t02n00-Gi0-0-0-3"]
+    # - endpoints: ["br02t02n00:Gi0-0-0-1", "br02t02n00-host:br02t02n00-Gi0-0-0-1"]
+    # - endpoints: ["br02t02n00:Gi0-0-0-2", "br02t02n00-host:br02t02n00-Gi0-0-0-2"]
+    # - endpoints: ["br02t02n00:Gi0-0-0-3", "br02t02n00-host:br02t02n00-Gi0-0-0-3"]
     # - endpoints: ["br02t02n00:Gi0-0-0-4", "br02t01n00:Gi0-0-0-0"]
     # - endpoints: ["br02t02n00:Gi0-0-0-5", "br02t01n01:Gi0-0-0-0"]
     # - endpoints: ["br02t02n00:Gi0-0-0-6", "br02t01n02:Gi0-0-0-0"]
