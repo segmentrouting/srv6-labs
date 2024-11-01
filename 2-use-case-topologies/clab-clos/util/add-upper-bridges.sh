@@ -1,44 +1,19 @@
 #!/bin/sh
 
-sudo brctl addbr sp00c00n00-host
-sudo brctl addbr sp00c00n00-host
+sudo brctl addbr SS00-host
+sudo brctl addbr SS01-host
+sudo brctl addbr SS02-host
+sudo brctl addbr SS03-host
+sudo brctl addbr SS04-host
+sudo brctl addbr SS05-host
+sudo brctl addbr SS06-host
+sudo brctl addbr SS07-host
 
-sudo brctl addbr sp00c01n00-host
-sudo brctl addbr sp00c02n00-host
-sudo brctl addbr sp00c03n00-host
-
-sudo brctl addbr sp00c00n01-host
-sudo brctl addbr sp00c01n01-host
-sudo brctl addbr sp00c02n01-host
-sudo brctl addbr sp00c03n01-host
-
-sudo brctl addbr sp00c00n02-host
-sudo brctl addbr sp00c01n02-host
-sudo brctl addbr sp00c02n02-host
-sudo brctl addbr sp00c03n02-host
-
-sudo brctl addbr sp00c00n03-host
-sudo brctl addbr sp00c01n03-host
-sudo brctl addbr sp00c02n03-host
-sudo brctl addbr sp00c03n03-host
-
-sudo ip link set up sp00c00n00-host
-sudo ip link set up sp00c00n00-host
-sudo ip link set up sp00c01n00-host
-sudo ip link set up sp00c02n00-host
-sudo ip link set up sp00c03n00-host
-
-sudo ip link set up sp00c00n01-host
-sudo ip link set up sp00c01n01-host
-sudo ip link set up sp00c02n01-host
-sudo ip link set up sp00c03n01-host
-
-sudo ip link set up sp00c00n02-host
-sudo ip link set up sp00c01n02-host
-sudo ip link set up sp00c02n02-host
-sudo ip link set up sp00c03n02-host
-
-sudo ip link set up sp00c00n03-host
-sudo ip link set up sp00c01n03-host
-sudo ip link set up sp00c02n03-host
-sudo ip link set up sp00c03n03-host
+sudo ip link set up SS00-host
+sudo ip link set up SS01-host
+sudo ip link set up SS02-host
+sudo ip link set up SS03-host
+sudo ip link set up SS04-host
+sudo ip link set up SS05-host
+sudo ip link set up SS06-host
+sudo ip link set up SS07-host

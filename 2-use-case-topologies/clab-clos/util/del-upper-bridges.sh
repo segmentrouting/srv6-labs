@@ -1,41 +1,21 @@
 #!/bin/bash
 
-sudo ip link set down sp00c00n00-host
-sudo ip link set down sp00c00n01-host
-sudo ip link set down sp00c00n02-host
-sudo ip link set down sp00c00n03-host
+sudo ip link set down SS00-host
+sudo ip link set down SS01-host
+sudo ip link set down SS02-host
+sudo ip link set down SS03-host
 
-sudo ip link set down sp00c01n00-host
-sudo ip link set down sp00c01n01-host
-sudo ip link set down sp00c01n02-host
-sudo ip link set down sp00c01n03-host
+sudo ip link set down SS04-host
+sudo ip link set down SS05-host
+sudo ip link set down SS06-host
+sudo ip link set down SS07-host
 
-sudo ip link set down sp00c02n00-host
-sudo ip link set down sp00c02n01-host
-sudo ip link set down sp00c02n02-host
-sudo ip link set down sp00c02n03-host
+sudo brctl delbr SS00-host
+sudo brctl delbr SS01-host
+sudo brctl delbr SS02-host
+sudo brctl delbr SS03-host
 
-sudo ip link set down sp00c03n00-host
-sudo ip link set down sp00c03n01-host
-sudo ip link set down sp00c03n02-host
-sudo ip link set down sp00c03n03-host
-
-sudo brctl delbr sp00c00n00-host
-sudo brctl delbr sp00c00n01-host
-sudo brctl delbr sp00c00n02-host
-sudo brctl delbr sp00c00n03-host
-
-sudo brctl delbr sp00c01n00-host
-sudo brctl delbr sp00c01n01-host
-sudo brctl delbr sp00c01n02-host
-sudo brctl delbr sp00c01n03-host
-
-sudo brctl delbr sp00c02n00-host
-sudo brctl delbr sp00c02n01-host
-sudo brctl delbr sp00c02n02-host
-sudo brctl delbr sp00c02n03-host
-
-sudo brctl delbr sp00c03n00-host
-sudo brctl delbr sp00c03n01-host
-sudo brctl delbr sp00c03n02-host
-sudo brctl delbr sp00c03n03-host
+sudo brctl delbr SS04-host
+sudo brctl delbr SS05-host
+sudo brctl delbr SS06-host
+sudo brctl delbr SS07-host
