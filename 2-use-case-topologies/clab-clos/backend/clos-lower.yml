@@ -4,7 +4,7 @@
 name: clos
 
 mgmt:
-  network: mgtnet
+  network: mgtclos
   ipv4-subnet: 172.20.6.0/24
 
 topology:
