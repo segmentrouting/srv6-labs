@@ -5,7 +5,7 @@ name: clos
 
 mgmt:
   network: mgtclos
-  ipv4-subnet: 172.20.6.0/24
+  ipv4-subnet: 172.20.7.0/24
 
 topology:
   nodes:
@@ -13,73 +13,73 @@ topology:
     SP01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.11
+      mgmt-ipv4: 172.20.7.11
       startup-config: config/SP01.cfg
 
     SP02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.12
+      mgmt-ipv4: 172.20.7.12
       startup-config: config/SP02.cfg
 
     SP03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.13
+      mgmt-ipv4: 172.20.7.13
       startup-config: config/SP03.cfg
 
     SP04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.14
+      mgmt-ipv4: 172.20.7.14
       startup-config: config/SP04.cfg
 
     LF01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.15
+      mgmt-ipv4: 172.20.7.15
       startup-config: config/LF01.cfg
 
     LF02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.16
+      mgmt-ipv4: 172.20.7.16
       startup-config: config/LF02.cfg
 
     LF03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.17
+      mgmt-ipv4: 172.20.7.17
       startup-config: config/LF03.cfg
 
     LF04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.18
+      mgmt-ipv4: 172.20.7.18
       startup-config: config/LF04.cfg
 
     LF05:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.19
+      mgmt-ipv4: 172.20.7.19
       startup-config: config/LF05.cfg
 
     LF06:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.20
+      mgmt-ipv4: 172.20.7.20
       startup-config: config/LF06.cfg
 
     LF07:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.21
+      mgmt-ipv4: 172.20.7.21
       startup-config: config/LF07.cfg
 
     LF08:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.6.22
+      mgmt-ipv4: 172.20.7.22
       startup-config: config/LF08.cfg
 
     SP01-host:
