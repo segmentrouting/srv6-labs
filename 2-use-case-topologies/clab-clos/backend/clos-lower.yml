@@ -34,52 +34,76 @@ topology:
       mgmt-ipv4: 172.20.7.14
       startup-config: config/SP04.cfg
 
-    LF01:
+    SP05:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
       mgmt-ipv4: 172.20.7.15
+      startup-config: config/SP05.cfg
+
+    SP06:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.16
+      startup-config: config/SP06.cfg
+
+    SP07:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.17
+      startup-config: config/SP07.cfg
+
+    SP08:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.18
+      startup-config: config/SP08.cfg
+
+    LF01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.19
       startup-config: config/LF01.cfg
 
     LF02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.16
+      mgmt-ipv4: 172.20.7.20
       startup-config: config/LF02.cfg
 
     LF03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.17
+      mgmt-ipv4: 172.20.7.21
       startup-config: config/LF03.cfg
 
     LF04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.18
+      mgmt-ipv4: 172.20.7.22
       startup-config: config/LF04.cfg
 
     LF05:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.19
+      mgmt-ipv4: 172.20.7.23
       startup-config: config/LF05.cfg
 
     LF06:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.20
+      mgmt-ipv4: 172.20.7.24
       startup-config: config/LF06.cfg
 
     LF07:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.21
+      mgmt-ipv4: 172.20.7.25
       startup-config: config/LF07.cfg
 
     LF08:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.22
+      mgmt-ipv4: 172.20.7.26
       startup-config: config/LF08.cfg
 
     SP01-host:
