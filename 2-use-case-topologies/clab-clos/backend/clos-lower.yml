@@ -63,25 +63,25 @@ topology:
     SP65:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.19
+      mgmt-ipv4: 172.20.7.41
       startup-config: config/SP65.cfg
 
     SP66:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.20
+      mgmt-ipv4: 172.20.7.42
       startup-config: config/SP66.cfg
 
     SP67:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.21
+      mgmt-ipv4: 172.20.7.43
       startup-config: config/SP67.cfg
 
     SP68:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.22
+      mgmt-ipv4: 172.20.7.44
       startup-config: config/SP68.cfg
 
     # Brick-0 LF Tier-1
@@ -89,25 +89,25 @@ topology:
     LF65:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.23
+      mgmt-ipv4: 172.20.7.51
       startup-config: config/LF65.cfg
 
     LF66:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.24
+      mgmt-ipv4: 172.20.7.52  
       startup-config: config/LF66.cfg
 
     LF67:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.25
+      mgmt-ipv4: 172.20.7.53
       startup-config: config/LF67.cfg
 
     LF68:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
-      mgmt-ipv4: 172.20.7.26
+      mgmt-ipv4: 172.20.7.54
       startup-config: config/LF68.cfg
 
 
