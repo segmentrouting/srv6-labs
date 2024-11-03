@@ -32,7 +32,7 @@ topology:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
       mgmt-ipv4: 172.20.7.14
-      startup-config: config/SS03.cfg
+      startup-config: config/SS04.cfg
 
     SS05:
       kind: cisco_xrd

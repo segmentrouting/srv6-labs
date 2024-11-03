@@ -194,6 +194,10 @@ topology:
     - endpoints: ["SP01:Gi0-0-0-9", "LF02:Gi0-0-0-0"]
     - endpoints: ["SP01:Gi0-0-0-10", "LF03:Gi0-0-0-0"]
     - endpoints: ["SP01:Gi0-0-0-11", "LF04:Gi0-0-0-0"]
+    - endpoints: ["SP01:Gi0-0-0-12", "LF05:Gi0-0-0-0"]
+    - endpoints: ["SP01:Gi0-0-0-13", "LF06:Gi0-0-0-0"]
+    - endpoints: ["SP01:Gi0-0-0-14", "LF07:Gi0-0-0-0"]
+    - endpoints: ["SP01:Gi0-0-0-15", "LF08:Gi0-0-0-0"]
 
   # SP02
     - endpoints: ["SP02:Gi0-0-0-0", "SP02-host:SP02-Gi0-0-0-0"]
@@ -208,6 +212,10 @@ topology:
     - endpoints: ["SP02:Gi0-0-0-9", "LF02:Gi0-0-0-1"]
     - endpoints: ["SP02:Gi0-0-0-10", "LF03:Gi0-0-0-1"]
     - endpoints: ["SP02:Gi0-0-0-11", "LF04:Gi0-0-0-1"]
+    - endpoints: ["SP02:Gi0-0-0-12", "LF05:Gi0-0-0-1"]
+    - endpoints: ["SP02:Gi0-0-0-13", "LF06:Gi0-0-0-1"]
+    - endpoints: ["SP02:Gi0-0-0-14", "LF07:Gi0-0-0-1"]
+    - endpoints: ["SP02:Gi0-0-0-15", "LF08:Gi0-0-0-1"]
 
   # SP03
     - endpoints: ["SP03:Gi0-0-0-0", "SP03-host:SP03-Gi0-0-0-0"]
@@ -222,6 +230,10 @@ topology:
     - endpoints: ["SP03:Gi0-0-0-9", "LF02:Gi0-0-0-2"]
     - endpoints: ["SP03:Gi0-0-0-10", "LF03:Gi0-0-0-2"]
     - endpoints: ["SP03:Gi0-0-0-11", "LF04:Gi0-0-0-2"]
+    - endpoints: ["SP03:Gi0-0-0-12", "LF05:Gi0-0-0-2"]
+    - endpoints: ["SP03:Gi0-0-0-13", "LF06:Gi0-0-0-2"]
+    - endpoints: ["SP03:Gi0-0-0-14", "LF07:Gi0-0-0-2"]
+    - endpoints: ["SP03:Gi0-0-0-15", "LF08:Gi0-0-0-2"]
 
   # SP04
     - endpoints: ["SP04:Gi0-0-0-0", "SP04-host:SP04-Gi0-0-0-0"]
@@ -236,6 +248,10 @@ topology:
     - endpoints: ["SP04:Gi0-0-0-9", "LF02:Gi0-0-0-3"]
     - endpoints: ["SP04:Gi0-0-0-10", "LF03:Gi0-0-0-3"]
     - endpoints: ["SP04:Gi0-0-0-11", "LF04:Gi0-0-0-3"]
+    - endpoints: ["SP04:Gi0-0-0-12", "LF05:Gi0-0-0-3"]
+    - endpoints: ["SP04:Gi0-0-0-13", "LF06:Gi0-0-0-3"]
+    - endpoints: ["SP04:Gi0-0-0-14", "LF07:Gi0-0-0-3"]
+    - endpoints: ["SP04:Gi0-0-0-15", "LF08:Gi0-0-0-3"]
 
   # SP05
     - endpoints: ["SP05:Gi0-0-0-0", "SP05-host:SP05-Gi0-0-0-0"]
@@ -250,6 +266,10 @@ topology:
     - endpoints: ["SP05:Gi0-0-0-9", "LF02:Gi0-0-0-4"]
     - endpoints: ["SP05:Gi0-0-0-10", "LF03:Gi0-0-0-4"]
     - endpoints: ["SP05:Gi0-0-0-11", "LF04:Gi0-0-0-4"]
+    - endpoints: ["SP05:Gi0-0-0-12", "LF05:Gi0-0-0-4"]
+    - endpoints: ["SP05:Gi0-0-0-13", "LF06:Gi0-0-0-4"]
+    - endpoints: ["SP05:Gi0-0-0-14", "LF07:Gi0-0-0-4"]
+    - endpoints: ["SP05:Gi0-0-0-15", "LF08:Gi0-0-0-4"]
 
   # SP06
     - endpoints: ["SP06:Gi0-0-0-0", "SP06-host:SP06-Gi0-0-0-0"]
@@ -264,6 +284,10 @@ topology:
     - endpoints: ["SP06:Gi0-0-0-9", "LF02:Gi0-0-0-5"]
     - endpoints: ["SP06:Gi0-0-0-10", "LF03:Gi0-0-0-5"]
     - endpoints: ["SP06:Gi0-0-0-11", "LF04:Gi0-0-0-5"]
+    - endpoints: ["SP06:Gi0-0-0-12", "LF05:Gi0-0-0-5"]
+    - endpoints: ["SP06:Gi0-0-0-13", "LF06:Gi0-0-0-5"]
+    - endpoints: ["SP06:Gi0-0-0-14", "LF07:Gi0-0-0-5"]
+    - endpoints: ["SP06:Gi0-0-0-15", "LF08:Gi0-0-0-5"]
 
   # SP07
     - endpoints: ["SP07:Gi0-0-0-0", "SP07-host:SP07-Gi0-0-0-0"]
@@ -278,6 +302,10 @@ topology:
     - endpoints: ["SP07:Gi0-0-0-9", "LF02:Gi0-0-0-6"]
     - endpoints: ["SP07:Gi0-0-0-10", "LF03:Gi0-0-0-6"]
     - endpoints: ["SP07:Gi0-0-0-11", "LF04:Gi0-0-0-6"]
+    - endpoints: ["SP07:Gi0-0-0-12", "LF05:Gi0-0-0-6"]
+    - endpoints: ["SP07:Gi0-0-0-13", "LF06:Gi0-0-0-6"]
+    - endpoints: ["SP07:Gi0-0-0-14", "LF07:Gi0-0-0-6"]
+    - endpoints: ["SP07:Gi0-0-0-15", "LF08:Gi0-0-0-6"]
 
   # SP08
     - endpoints: ["SP08:Gi0-0-0-0", "SP08-host:SP08-Gi0-0-0-0"]
@@ -292,6 +320,10 @@ topology:
     - endpoints: ["SP08:Gi0-0-0-9", "LF02:Gi0-0-0-7"]
     - endpoints: ["SP08:Gi0-0-0-10", "LF03:Gi0-0-0-7"]
     - endpoints: ["SP08:Gi0-0-0-11", "LF04:Gi0-0-0-7"]
+    - endpoints: ["SP08:Gi0-0-0-12", "LF05:Gi0-0-0-7"]
+    - endpoints: ["SP08:Gi0-0-0-13", "LF06:Gi0-0-0-7"]
+    - endpoints: ["SP08:Gi0-0-0-14", "LF07:Gi0-0-0-7"]
+    - endpoints: ["SP08:Gi0-0-0-15", "LF08:Gi0-0-0-7"]
 
 # Brick-1 Leaf 
 
