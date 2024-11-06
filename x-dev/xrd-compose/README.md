@@ -134,12 +134,12 @@ fs.inotify.max_user_instances=131072
 
 
 ### Topology - config-v6-vDC   (vanilla DC)      "Host Networking" 	   YouTube Video 1 of 9
-![Topology](UseCase1-BGPOnlyDC-SingleAS-DC-Host Networking.png)
+![Topology](UseCase1-BGPOnlyDC-SingleAS-DC-Host Networking.jpg)
 
 
 ### Topology - config-v6-vCore (vanilla Core)    "Migration"     	   YouTube Video 2 of 9
-![Topology](UseCase1-BGPOnlyDC-SingleAS-DC-Migration-vCore.png)
+![Topology](UseCase1-BGPOnlyDC-SingleAS-DC-Migration-vCore.jpg)
  
 
 ### Topology config-v6-only  (end-end-SRv6)    "SRv6 uSID End to End"  YouTube Video 3 of 9
-![Topology](UseCase1-BGPOnlyDC-SingleAS-DC-uSIDEndtoEnd.png)
+![Topology](UseCase1-BGPOnlyDC-SingleAS-DC-uSIDEndtoEnd.jpg)
