@@ -133,7 +133,7 @@ fs.inotify.max_user_instances=131072
 
 
 ### Topology - config-v6-vDC   (vanilla DC)      "Host Networking" 	   YouTube Video 7 of 9
-![Topology](UseCase3-MulitDomain-Host Networking-vDC.jpg)
+![Topology](UseCase3-MulitDomain-Host-Networking-vDC.jpg)
  
 
 ### Topology - config-v6-vCore (vanilla Core)    "Migration"		   YouTube Video 8 of 9
