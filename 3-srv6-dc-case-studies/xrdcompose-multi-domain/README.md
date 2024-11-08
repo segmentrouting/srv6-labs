@@ -1,3 +1,10 @@
+#### SRv6-labs/3-srv6-dc-case-studies/xrdcompose-multi-domain-core "Use-Case 3 Multi Domain"
+#### 3 config flavors all use the same topology
+* config-v6-vDC   (vanilla DC)      "Host Networking" 	   YouTube Video 7 of 9
+* config-v6-vCore (vanilla Core)    "Migration"		   YouTube Video 8 of 9
+* config-v6-only  (end-end-SRv6)    "SRv6 uSID End to End"  YouTube Video 9 of 9
+
+
 ## Launch an XRd topology on baremetal, Ubuntu VM, or AWS instance 
 ### This doc is based on Ubuntu 20.04
 
@@ -121,4 +128,17 @@ fs.inotify.max_user_watches=131072
 fs.inotify.max_user_instances=131072
 ```
 
+#### SRv6-labs/3-srv6-dc-case-studies/xrdcompose-multi-domain-core "Use-Case 3 Multi Domain"
+#### 3 config flavors all use the same topology
 
+
+### Topology - config-v6-vDC   (vanilla DC)      "Host Networking" 	   YouTube Video 7 of 9
+![Topology](UseCase3-MulitDomain-Host-Networking-vDC.jpg)
+ 
+
+### Topology - config-v6-vCore (vanilla Core)    "Migration"		   YouTube Video 8 of 9
+![Topology](UseCase3-MulitDomain-Migration-vCore.jpg)
+
+
+### Topology - config-v6-only  (end-end-SRv6)    "SRv6 uSID End to End"  YouTube Video 9 of 9
+![Topology](UseCase3-MulitDomain-uSIDEndtoEnd.jpg)

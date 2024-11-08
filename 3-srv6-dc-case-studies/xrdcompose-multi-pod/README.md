@@ -1,3 +1,11 @@
+#### SRv6-labs/3-srv6-dc-case-studies/xrdcompose-multi-pod "Use-Case 2 Multi POD DC"
+#### 3 config flavors all use the same topology
+* config-v6-vDC   (vanilla DC)      "Host Networking"	   YouTube Video 4 of 9
+* config-v6-vCore (vanilla Core)    "Migration"		   YouTube Video 5 of 9
+* config-v6-only  (end-end-SRv6)    "SRv6 uSID End to End"  YouTube Video 6 of 9
+
+
+
 ## Launch an XRd topology on baremetal, Ubuntu VM, or AWS instance 
 ### This doc is based on Ubuntu 20.04
 
@@ -121,4 +129,18 @@ fs.inotify.max_user_watches=131072
 fs.inotify.max_user_instances=131072
 ```
 
+#### SRv6-labs/3-srv6-dc-case-studies/xrdcompose-multi-pod "Use-Case 2 Multi POD DC"
+#### 3 config flavors all use the same topology
 
+
+
+### Topology - config-v6-vDC   (vanilla DC)      "Host Networking"	   YouTube Video 4 of 9
+![Topology](UseCase2-MulitPODDC-Host-Networking-vDC.jpg)
+
+
+### Topology - config-v6-vCore (vanilla Core)    "Migration"		   YouTube Video 5 of 9
+![Topology](UseCase2-MulitPODDC-MIgration-vCore.jpg)
+
+
+### Topology - config-v6-only  (end-end-SRv6)    "SRv6 uSID End to End"  YouTube Video 6 of 9
+![Topology](UseCase2-MulitPODDC-uSIDEndtoEnd.jpg)

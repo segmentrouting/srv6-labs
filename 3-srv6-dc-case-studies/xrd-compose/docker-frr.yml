@@ -1,0 +1,79 @@
+# The 4-node topology is comprised of routers xrd31 thru xrd34
+
+services:
+# Ubuntu containers
+  source:
+    non_xr: true
+    image: bmcdougall/frr-srv6-usid:latest
+    container_name: source
+    stdin_open: true
+    tty: true
+    networks:
+      xrd200-host:
+        ipv4_address: 10.0.25.2
+
+# XRd
+  xrd200:
+    xr_startup_cfg: frr/xrd200.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+  xrd201:
+    xr_startup_cfg: frr/xrd201.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+  xrd202:
+    xr_startup_cfg: frr/xrd202.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+  xrd203:
+    xr_startup_cfg: frr/xrd203.cfg
+    xr_interfaces:
+      - Gi0/0/0/0
+      - Gi0/0/0/1
+      - Gi0/0/0/2
+      - Gi0/0/0/3
+      - Mg0/RP0/CPU0/0
+
+
+xr_l2networks:
+  - ["xrd200:Gi0/0/0/0", "xrd202:Gi0/0/0/0"]
+  - ["xrd201:Gi0/0/0/1", "xrd203:Gi0/0/0/1"]
+  - ["xrd203:Gi0/0/0/3", "xrd202:Gi0/0/0/0"]
+  - ["xrd200:Gi0/0/0/2", "xrd201:Gi0/0/0/2"]
+
+
+networks:
+  mgmt:
+    xr_interfaces:
+      - xrd200:Mg0/RP0/CPU0/0
+      - xrd201:Mg0/RP0/CPU0/0
+      - xrd202:Mg0/RP0/CPU0/0
+      - xrd203:Mg0/RP0/CPU0/0
+
+    ipam:
+      config:
+        - subnet: 172.40.0.0/24
+  xrd200-host:
+    ipam:
+      config:
+        - subnet: 10.0.91.0/24
+    xr_interfaces:
+      - xrd200:Gi0/0/0/3
+  xrd201-host:
+    ipam:
+      config:
+        - subnet: 10.10.94.0/24
+    xr_interfaces:
+      - xrd201:Gi0/0/0/3
