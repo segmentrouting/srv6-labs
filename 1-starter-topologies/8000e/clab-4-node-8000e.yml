@@ -22,7 +22,7 @@ topology:
 
   kinds:
     linux:
-      image: 8201-32fh-clab:7.9.1
+      image: 8201-32fh-clab:7.10.2
 
   nodes:
     8201-r1:

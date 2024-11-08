@@ -1,0 +1,232 @@
+
+name: host-based
+
+mgmt:
+  network: mgt_net
+  ipv4-subnet: 172.20.18.0/24
+
+topology:
+  nodes:
+    xrd01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.101
+      startup-config: xrd-config/xrd01.cfg
+
+    xrd02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.102
+      startup-config: xrd-config/xrd02.cfg
+
+    xrd03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.103
+      startup-config: xrd-config/xrd03.cfg
+
+    xrd04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.104
+      startup-config: xrd-config/xrd04.cfg
+
+    xrd06:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.106
+      startup-config: xrd-config/xrd06.cfg
+
+    xrd07:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.107
+      startup-config: xrd-config/xrd07.cfg
+
+    xrd08:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.108
+      startup-config: xrd-config/xrd08.cfg
+
+    xrd09:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.109
+      startup-config: xrd-config/xrd09.cfg
+
+    xrd15:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.115
+      startup-config: xrd-config/xrd15.cfg
+
+    xrd16:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.116
+      startup-config: xrd-config/xrd16.cfg
+
+    xrd18:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.118
+      startup-config: xrd-config/xrd18.cfg
+
+    xrd25:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.125
+      startup-config: xrd-config/xrd25.cfg
+
+    xrd31:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.131
+      startup-config: xrd-config/xrd31.cfg
+
+    xrd32:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.132
+      startup-config: xrd-config/xrd32.cfg
+
+    xrd33:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.133
+      startup-config: xrd-config/xrd33.cfg
+
+    xrd34:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.134
+      startup-config: xrd-config/xrd34.cfg
+
+    xrd35:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.135
+      startup-config: xrd-config/xrd35.cfg
+
+    xrd40:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.140
+      startup-config: xrd-config/xrd40.cfg
+
+    xrd41:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.141
+      startup-config: xrd-config/xrd41.cfg
+
+    xrd42:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.142
+      startup-config: xrd-config/xrd42.cfg
+
+    xrd43:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.143
+      startup-config: xrd-config/xrd43.cfg
+
+    xrd44:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.144
+      startup-config: xrd-config/xrd44.cfg
+
+    xrd45:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.10.2
+      mgmt-ipv4: 172.20.18.145
+      startup-config: xrd-config/xrd45.cfg
+
+    xrd06-host:
+      kind: bridge
+
+    xrd09-host:
+      kind: bridge
+
+    xrd35-host:
+      kind: bridge
+
+    xrd44-host:
+      kind: bridge
+
+    xrd45-host:
+      kind: bridge
+
+  links:
+    - endpoints: ["xrd01:Gi0-0-0-0", "xrd04:Gi0-0-0-5"]
+    - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-5"]
+    - endpoints: ["xrd01:Gi0-0-0-2", "xrd41:Gi0-0-0-1"]
+    - endpoints: ["xrd01:Gi0-0-0-3", "xrd40:Gi0-0-0-1"]
+
+    - endpoints: ["xrd02:Gi0-0-0-0", "xrd04:Gi0-0-0-6"]
+    - endpoints: ["xrd02:Gi0-0-0-1", "xrd03:Gi0-0-0-6"]
+    - endpoints: ["xrd02:Gi0-0-0-2", "xrd41:Gi0-0-0-0"]
+    - endpoints: ["xrd02:Gi0-0-0-3", "xrd40:Gi0-0-0-0"]
+
+    - endpoints: ["xrd03:Gi0-0-0-0", "xrd04:Gi0-0-0-0"]
+    - endpoints: ["xrd03:Gi0-0-0-1", "xrd07:Gi0-0-0-1"]
+    - endpoints: ["xrd03:Gi0-0-0-2", "xrd15:Gi0-0-0-2"]
+    - endpoints: ["xrd03:Gi0-0-0-3", "xrd18:Gi0-0-0-2"]
+    - endpoints: ["xrd03:Gi0-0-0-4", "xrd06:Gi0-0-0-1"]
+
+    - endpoints: ["xrd04:Gi0-0-0-1", "xrd08:Gi0-0-0-3"]
+    - endpoints: ["xrd04:Gi0-0-0-2", "xrd16:Gi0-0-0-2"]
+    - endpoints: ["xrd04:Gi0-0-0-3", "xrd06:Gi0-0-0-0"]
+
+    - endpoints: ["xrd06:Gi0-0-0-2", "xrd06-host:xrd06-Gi0-0-0-2"]
+    - endpoints: ["xrd06:Gi0-0-0-3", "macvlan:ens224"]
+
+    - endpoints: ["xrd07:Gi0-0-0-0", "xrd08:Gi0-0-0-0"]
+    - endpoints: ["xrd07:Gi0-0-0-2", "xrd15:Gi0-0-0-1"]
+    - endpoints: ["xrd07:Gi0-0-0-4", "xrd09:Gi0-0-0-0"]
+    - endpoints: ["xrd07:Gi0-0-0-5", "xrd25:Gi0-0-0-0"]
+
+    - endpoints: ["xrd08:Gi0-0-0-1", "xrd09:Gi0-0-0-1"]
+    - endpoints: ["xrd08:Gi0-0-0-2", "xrd16:Gi0-0-0-1"]
+
+    - endpoints: ["xrd09:Gi0-0-0-2", "xrd09-host:xrd09-Gi0-0-0-2"]
+    - endpoints: ["xrd09:Gi0-0-0-3", "macvlan:ens224"]
+
+    - endpoints: ["xrd15:Gi0-0-0-0", "xrd16:Gi0-0-0-0"]
+    - endpoints: ["xrd15:Gi0-0-0-4", "xrd18:Gi0-0-0-4"]
+    - endpoints: ["xrd15:Gi0-0-0-5", "xrd31:Gi0-0-0-0"]
+
+    - endpoints: ["xrd16:Gi0-0-0-4", "xrd32:Gi0-0-0-1"]
+
+    - endpoints: ["xrd31:Gi0-0-0-1", "xrd32:Gi0-0-0-0"]
+    - endpoints: ["xrd31:Gi0-0-0-2", "xrd33:Gi0-0-0-0"]
+    - endpoints: ["xrd31:Gi0-0-0-3", "xrd34:Gi0-0-0-0"]
+
+    - endpoints: ["xrd32:Gi0-0-0-2", "xrd33:Gi0-0-0-1"]
+    - endpoints: ["xrd32:Gi0-0-0-3", "xrd34:Gi0-0-0-1"]
+
+    - endpoints: ["xrd33:Gi0-0-0-2", "xrd35:Gi0-0-0-0"]
+
+    - endpoints: ["xrd34:Gi0-0-0-2", "xrd35:Gi0-0-0-1"]
+
+    - endpoints: ["xrd35:Gi0-0-0-2", "xrd35-host:xrd35-Gi0-0-0-2"]
+    - endpoints: ["xrd35:Gi0-0-0-3", "xrd35-host:xrd35-Gi0-0-0-3"]
+
+    - endpoints: ["xrd40:Gi0-0-0-2", "xrd42:Gi0-0-0-0"]
+    - endpoints: ["xrd40:Gi0-0-0-3", "xrd43:Gi0-0-0-0"]
+
+    - endpoints: ["xrd41:Gi0-0-0-2", "xrd42:Gi0-0-0-1"]
+    - endpoints: ["xrd41:Gi0-0-0-3", "xrd43:Gi0-0-0-1"]
+
+    - endpoints: ["xrd42:Gi0-0-0-2", "xrd44:Gi0-0-0-0"]
+    - endpoints: ["xrd42:Gi0-0-0-3", "xrd45:Gi0-0-0-0"]
+
+    - endpoints: ["xrd43:Gi0-0-0-2", "xrd44:Gi0-0-0-1"]
+    - endpoints: ["xrd43:Gi0-0-0-3", "xrd45:Gi0-0-0-1"]
+
+    - endpoints: ["xrd44:Gi0-0-0-2", "xrd44-host:xrd44-Gi0-0-0-2"]
+    - endpoints: ["xrd45:Gi0-0-0-2", "xrd45-host:xrd45-Gi0-0-0-2"]
+

@@ -1,0 +1,281 @@
+#   This yml launches the SS and brick-0 portions of the clos topology
+#   Bricks 1, 2, and 3 are launched via the clos-lower.yml
+
+name: clos
+
+mgmt:
+  network: mgtclos
+  ipv4-subnet: 172.20.7.0/24
+
+topology:
+  nodes:
+  # # Super Spine
+  #   SS01:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:24.2.2
+  #     mgmt-ipv4: 172.20.7.11
+  #     startup-config: config/SS01.cfg
+
+  #   SS02:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:24.2.2
+  #     mgmt-ipv4: 172.20.7.12
+  #     startup-config: config/SS02.cfg
+
+  #   SS03:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:24.2.2
+  #     mgmt-ipv4: 172.20.7.13
+  #     startup-config: config/SS03.cfg
+
+  #   SS04:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:24.2.2
+  #     mgmt-ipv4: 172.20.7.14
+  #     startup-config: config/SS04.cfg
+
+  #   SS05:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:24.2.2
+  #     mgmt-ipv4: 172.20.7.15
+  #     startup-config: config/SS05.cfg
+
+  #   SS06:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:24.2.2
+  #     mgmt-ipv4: 172.20.7.16
+  #     startup-config: config/SS06.cfg
+
+  #   SS07:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:24.2.2
+  #     mgmt-ipv4: 172.20.7.17
+  #     startup-config: config/SS07.cfg
+
+  #   SS08:
+  #     kind: cisco_xrd
+  #     image: ios-xr/xrd-control-plane:24.2.2
+  #     mgmt-ipv4: 172.20.7.18
+  #     startup-config: config/SS08.cfg
+
+    # Brick-0 Spine Tier-2
+
+    SP65:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.41
+      startup-config: config/SP65.cfg
+
+    SP66:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.42
+      startup-config: config/SP66.cfg
+
+    SP67:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.43
+      startup-config: config/SP67.cfg
+
+    SP68:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.44
+      startup-config: config/SP68.cfg
+
+    # Brick-0 LF Tier-1
+
+    LF65:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.51
+      startup-config: config/LF65.cfg
+
+    LF66:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.52  
+      startup-config: config/LF66.cfg
+
+    LF67:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.53
+      startup-config: config/LF67.cfg
+
+    LF68:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.7.54
+      startup-config: config/LF68.cfg
+
+
+    # SS01-host:
+    #   kind: bridge
+
+    # SS02-host:
+    #   kind: bridge
+
+    # SS03-host:
+    #   kind: bridge
+
+    # SS04-host:
+    #   kind: bridge
+
+    SP65-host:
+      kind: bridge
+
+    SP66-host:
+      kind: bridge
+
+    SP67-host:
+      kind: bridge
+
+    SP68-host:
+      kind: bridge
+
+    LF65-host1:
+      kind: bridge
+
+    LF65-host2:
+      kind: bridge
+
+    LF66-host1:
+      kind: bridge
+
+    LF66-host2:
+      kind: bridge
+
+    LF67-host1:
+      kind: bridge
+
+    LF67-host2:
+      kind: bridge
+
+    LF68-host1:
+      kind: bridge
+
+    LF68-host2:
+      kind: bridge
+
+  links:
+
+  # SS05
+    # - endpoints: ["SS05:Gi0-0-0-0", "SS05-host:SS05-Gi0-0-0-0"]
+    # - endpoints: ["SS05:Gi0-0-0-1", "SS05-host:SS05-Gi0-0-0-1"]
+    # - endpoints: ["SS05:Gi0-0-0-2", "SS05-host:SS05-Gi0-0-0-2"]
+    # - endpoints: ["SS05:Gi0-0-0-3", "SS05-host:SS05-Gi0-0-0-3"]
+    # - endpoints: ["SS05:Gi0-0-0-4", "SS05-host:SS05-Gi0-0-0-4"]
+    # - endpoints: ["SS05:Gi0-0-0-5", "SS05-host:SS05-Gi0-0-0-5"]
+    # - endpoints: ["SS05:Gi0-0-0-6", "SS05-host:SS05-Gi0-0-0-6"]
+    # - endpoints: ["SS05:Gi0-0-0-7", "SS05-host:SS05-Gi0-0-0-7"]
+    # - endpoints: ["SS05:Gi0-0-0-8", "SP65:Gi0-0-0-4"]
+    # - endpoints: ["SS05:Gi0-0-0-9", "SP66:Gi0-0-0-4"]
+    # - endpoints: ["SS05:Gi0-0-0-10", "SP67:Gi0-0-0-4"]
+    # - endpoints: ["SS05:Gi0-0-0-11", "SP68:Gi0-0-0-4"]
+
+  # SS06
+    # - endpoints: ["SS06:Gi0-0-0-0", "SS06-host:SS06-Gi0-0-0-0"]
+    # - endpoints: ["SS06:Gi0-0-0-1", "SS06-host:SS06-Gi0-0-0-1"]
+    # - endpoints: ["SS06:Gi0-0-0-2", "SS06-host:SS06-Gi0-0-0-2"]
+    # - endpoints: ["SS06:Gi0-0-0-3", "SS06-host:SS06-Gi0-0-0-3"]
+    # - endpoints: ["SS06:Gi0-0-0-4", "SS06-host:SS06-Gi0-0-0-4"]
+    # - endpoints: ["SS06:Gi0-0-0-5", "SS06-host:SS06-Gi0-0-0-5"]
+    # - endpoints: ["SS06:Gi0-0-0-6", "SS06-host:SS06-Gi0-0-0-6"]
+    # - endpoints: ["SS06:Gi0-0-0-7", "SS06-host:SS06-Gi0-0-0-7"]
+    # - endpoints: ["SS06:Gi0-0-0-8", "SP65:Gi0-0-0-5"]
+    # - endpoints: ["SS06:Gi0-0-0-9", "SP66:Gi0-0-0-5"]
+    # - endpoints: ["SS06:Gi0-0-0-10", "SP67:Gi0-0-0-5"]
+    # - endpoints: ["SS06:Gi0-0-0-11", "SP68:Gi0-0-0-5"]
+
+  # SS07
+    # - endpoints: ["SS07:Gi0-0-0-0", "SS07-host:SS07-Gi0-0-0-0"]
+    # - endpoints: ["SS07:Gi0-0-0-1", "SS07-host:SS07-Gi0-0-0-1"]
+    # - endpoints: ["SS07:Gi0-0-0-2", "SS07-host:SS07-Gi0-0-0-2"]
+    # - endpoints: ["SS07:Gi0-0-0-3", "SS07-host:SS07-Gi0-0-0-3"]
+    # - endpoints: ["SS07:Gi0-0-0-4", "SS07-host:SS07-Gi0-0-0-4"]
+    # - endpoints: ["SS07:Gi0-0-0-5", "SS07-host:SS07-Gi0-0-0-5"]
+    # - endpoints: ["SS07:Gi0-0-0-6", "SS07-host:SS07-Gi0-0-0-6"]
+    # - endpoints: ["SS07:Gi0-0-0-7", "SS07-host:SS07-Gi0-0-0-7"]
+    # - endpoints: ["SS07:Gi0-0-0-8", "SP65:Gi0-0-0-6"]
+    # - endpoints: ["SS07:Gi0-0-0-9", "SP66:Gi0-0-0-6"]
+    # - endpoints: ["SS07:Gi0-0-0-10", "SP67:Gi0-0-0-6"]
+    # - endpoints: ["SS07:Gi0-0-0-11", "SP68:Gi0-0-0-6"]
+
+  # SS08
+    # - endpoints: ["SS08:Gi0-0-0-0", "SS08-host:SS08-Gi0-0-0-0"]
+    # - endpoints: ["SS08:Gi0-0-0-1", "SS08-host:SS08-Gi0-0-0-1"]
+    # - endpoints: ["SS08:Gi0-0-0-2", "SS08-host:SS08-Gi0-0-0-2"]
+    # - endpoints: ["SS08:Gi0-0-0-3", "SS08-host:SS08-Gi0-0-0-3"]
+    # - endpoints: ["SS08:Gi0-0-0-4", "SS08-host:SS08-Gi0-0-0-4"]
+    # - endpoints: ["SS08:Gi0-0-0-5", "SS08-host:SS08-Gi0-0-0-5"]
+    # - endpoints: ["SS08:Gi0-0-0-6", "SS08-host:SS08-Gi0-0-0-6"]
+    # - endpoints: ["SS08:Gi0-0-0-7", "SS08-host:SS08-Gi0-0-0-7"]
+    # - endpoints: ["SS08:Gi0-0-0-8", "SP65:Gi0-0-0-7"]
+    # - endpoints: ["SS08:Gi0-0-0-9", "SP66:Gi0-0-0-7"]
+    # - endpoints: ["SS08:Gi0-0-0-10", "SP67:Gi0-0-0-7"]
+    # - endpoints: ["SS08:Gi0-0-0-11", "SP68:Gi0-0-0-7"]
+
+
+# Brick-2 Spine to Leaf
+
+  # SP65
+    - endpoints: ["SP65:Gi0-0-0-0", "SP65-host:SP65-Gi0-0-0-0"]
+    - endpoints: ["SP65:Gi0-0-0-1", "SP65-host:SP65-Gi0-0-0-1"]
+    - endpoints: ["SP65:Gi0-0-0-2", "SP65-host:SP65-Gi0-0-0-2"]
+    - endpoints: ["SP65:Gi0-0-0-3", "SP65-host:SP65-Gi0-0-0-3"]
+    - endpoints: ["SP65:Gi0-0-0-8", "LF65:Gi0-0-0-0"]
+    - endpoints: ["SP65:Gi0-0-0-9", "LF66:Gi0-0-0-0"]
+    - endpoints: ["SP65:Gi0-0-0-10", "LF67:Gi0-0-0-0"]
+    - endpoints: ["SP65:Gi0-0-0-11", "LF68:Gi0-0-0-0"]
+
+  # SP66
+    - endpoints: ["SP66:Gi0-0-0-0", "SP66-host:SP66-Gi0-0-0-0"]
+    - endpoints: ["SP66:Gi0-0-0-1", "SP66-host:SP66-Gi0-0-0-1"]
+    - endpoints: ["SP66:Gi0-0-0-2", "SP66-host:SP66-Gi0-0-0-2"]
+    - endpoints: ["SP66:Gi0-0-0-3", "SP66-host:SP66-Gi0-0-0-3"]
+    - endpoints: ["SP66:Gi0-0-0-8", "LF65:Gi0-0-0-1"]
+    - endpoints: ["SP66:Gi0-0-0-9", "LF66:Gi0-0-0-1"]
+    - endpoints: ["SP66:Gi0-0-0-10", "LF67:Gi0-0-0-1"]
+    - endpoints: ["SP66:Gi0-0-0-11", "LF68:Gi0-0-0-1"]
+
+  # SP67
+    - endpoints: ["SP67:Gi0-0-0-0", "SP67-host:SP67-Gi0-0-0-0"]
+    - endpoints: ["SP67:Gi0-0-0-1", "SP67-host:SP67-Gi0-0-0-1"]
+    - endpoints: ["SP67:Gi0-0-0-2", "SP67-host:SP67-Gi0-0-0-2"]
+    - endpoints: ["SP67:Gi0-0-0-3", "SP67-host:SP67-Gi0-0-0-3"]
+    - endpoints: ["SP67:Gi0-0-0-8", "LF65:Gi0-0-0-2"]
+    - endpoints: ["SP67:Gi0-0-0-9", "LF66:Gi0-0-0-2"]
+    - endpoints: ["SP67:Gi0-0-0-10", "LF67:Gi0-0-0-2"]
+    - endpoints: ["SP67:Gi0-0-0-11", "LF68:Gi0-0-0-2"]
+
+  # SP68
+    - endpoints: ["SP68:Gi0-0-0-0", "SP68-host:SP68-Gi0-0-0-0"]
+    - endpoints: ["SP68:Gi0-0-0-1", "SP68-host:SP68-Gi0-0-0-1"]
+    - endpoints: ["SP68:Gi0-0-0-2", "SP68-host:SP68-Gi0-0-0-2"]
+    - endpoints: ["SP68:Gi0-0-0-3", "SP68-host:SP68-Gi0-0-0-3"]
+    - endpoints: ["SP68:Gi0-0-0-8", "LF65:Gi0-0-0-3"]
+    - endpoints: ["SP68:Gi0-0-0-9", "LF66:Gi0-0-0-3"]
+    - endpoints: ["SP68:Gi0-0-0-10", "LF67:Gi0-0-0-3"]
+    - endpoints: ["SP68:Gi0-0-0-11", "LF68:Gi0-0-0-3"]
+
+
+  # LF65
+    - endpoints: ["LF65:Gi0-0-0-4", "LF65-host1:LF65-Gi0-0-0-4"]
+    - endpoints: ["LF65:Gi0-0-0-5", "LF65-host2:LF65-Gi0-0-0-5"]
+
+
+  # LF66
+    - endpoints: ["LF66:Gi0-0-0-4", "LF66-host1:LF66-Gi0-0-0-4"]
+    - endpoints: ["LF66:Gi0-0-0-5", "LF66-host2:LF66-Gi0-0-0-5"]
+
+
+  # LF67
+    - endpoints: ["LF67:Gi0-0-0-4", "LF67-host1:LF67-Gi0-0-0-4"]
+    - endpoints: ["LF67:Gi0-0-0-5", "LF67-host2:LF67-Gi0-0-0-5"]
+
+
+  # LF68
+    - endpoints: ["LF68:Gi0-0-0-4", "LF68-host1:LF68-Gi0-0-0-4"]
+    - endpoints: ["LF68:Gi0-0-0-5", "LF68-host2:LF68-Gi0-0-0-5"]
