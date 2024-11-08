@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 # IP addresses and routes
 
