@@ -37,7 +37,7 @@ The repository is organized around network topology scenarios and the tools used
 
 
 ### Topology - config-v6-vDC   (vanilla DC)      "Host Networking" 	   YouTube Video 1 of 9
-![Topology](UseCase1-BGPOnlyDC-SingleAS-DC-Host-Networking.jpg)
+![Topology](UseCase1-BGPOnlyDC-SingleAS-DC-Host-Networking-vDC.jpg)
 
 
 ### Topology - config-v6-vCore (vanilla Core)    "Migration"     	   YouTube Video 2 of 9
