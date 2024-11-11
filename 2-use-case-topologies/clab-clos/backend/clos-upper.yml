@@ -35,30 +35,6 @@ topology:
       mgmt-ipv4: 172.20.7.14
       startup-config: config/SS04.cfg
 
-    # SS05:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:24.2.2
-    #   mgmt-ipv4: 172.20.7.15
-    #   startup-config: config/SS05.cfg
-
-    # SS06:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:24.2.2
-    #   mgmt-ipv4: 172.20.7.16
-    #   startup-config: config/SS06.cfg
-
-    # SS07:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:24.2.2
-    #   mgmt-ipv4: 172.20.7.17
-    #   startup-config: config/SS07.cfg
-
-    # SS08:
-    #   kind: cisco_xrd
-    #   image: ios-xr/xrd-control-plane:24.2.2
-    #   mgmt-ipv4: 172.20.7.18
-    #   startup-config: config/SS08.cfg
-
     SP01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.2.2
@@ -166,18 +142,6 @@ topology:
 
     SS04-host:
       kind: bridge
-
-    # SP05-host:
-    #   kind: bridge
-
-    # SP06-host:
-    #   kind: bridge
-
-    # SP07-host:
-    #   kind: bridge
-
-    # SP08-host:
-    #   kind: bridge
 
     LF01-host1:
       kind: bridge
