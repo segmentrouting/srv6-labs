@@ -137,43 +137,43 @@ topology:
       kind: linux
       image: ubuntu-trex:1.1
       mgmt-ipv4: 172.20.7.61
-      binds: 
-        - ../trex/trex01/trex_cfg.yaml:/etc/trex_cfg.yaml
+      # binds: 
+      #   - trex/trex01/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     host02:
       kind: linux
       image: ubuntu-trex:1.1
       mgmt-ipv4: 172.20.7.62
-      binds: 
-        - ../trex/trex02/trex_cfg.yaml:/etc/trex_cfg.yaml
+      # binds: 
+      #   - trex/trex02/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     host03:
       kind: linux
       image: ubuntu-trex:1.1
       mgmt-ipv4: 172.20.7.63
-      binds: 
-        - ../trex/trex03/trex_cfg.yaml:/etc/trex_cfg.yaml
+      # binds: 
+      #   - trex/trex03/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     host513:
       kind: linux
       image: ubuntu-trex:1.1
       mgmt-ipv4: 172.20.7.64
-      binds: 
-        - ../trex/trex513/trex_cfg.yaml:/etc/trex_cfg.yaml
+      # binds: 
+      #   - trex/trex513/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     host514:
       kind: linux
       image: ubuntu-trex:1.1
       mgmt-ipv4: 172.20.7.65
-      binds: 
-        - ../trex/trex514/trex_cfg.yaml:/etc/trex_cfg.yaml
+      # binds: 
+      #   - trex/trex514/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     host515:
       kind: linux
       image: ubuntu-trex:1.1
       mgmt-ipv4: 172.20.7.66
-      binds: 
-        - ../trex/trex515/trex_cfg.yaml:/etc/trex_cfg.yaml
+      # binds: 
+      #   - trex/trex515/trex_cfg.yaml:/etc/trex_cfg.yaml
 
 
   links:
