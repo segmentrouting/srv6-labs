@@ -12,14 +12,12 @@ These instructions roughly apply to all Starter scenarios when running in Contai
    bash -c "$(curl -sL https://get.containerlab.dev)"
    ```
 
-3. Acquire dockerized router image(s):
+3. Acquire router image(s). XRd example:
    
    #### XRd:
    https://xrdocs.io/virtual-routing/tutorials/2022-08-22-xrd-images-where-can-one-get-them/
    https://software.cisco.com/download/home/286331236/type/280805694/release
 
-   #### 8000e
-   Not yet available on public download; contact Cisco
 
 4. Load docker image(s):
    ```

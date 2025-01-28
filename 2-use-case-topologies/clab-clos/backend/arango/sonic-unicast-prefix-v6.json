@@ -1,0 +1,7 @@
+[
+    {
+        "prefix": "2001:db8:1:1::/64",
+        "prefix_length": 64,
+        "prefix_type": "unicast"
+    }
+]
