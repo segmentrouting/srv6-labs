@@ -3,7 +3,7 @@
 #
 #   Topology
 #  
-#  r00  r01
+#  r00  r01--r99
 #   | \ / |
 #   | / \ |
 #  r02  r03
@@ -20,33 +20,40 @@ mgmt:
 topology:
   nodes:
 
-    xrd00:
+    r00:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.11.21
       mgmt-ipv4: 172.20.1.100
       mgmt-ipv6: 2001:db8:20:1::100
-      startup-config: config/xrd00.cfg
+      startup-config: config/r00.cfg
 
-    xrd01:
+    r01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.11.21
       mgmt-ipv4: 172.20.1.101
       mgmt-ipv6: 2001:db8:20:1::101
-      startup-config: config/xrd01.cfg
+      startup-config: config/r01.cfg
 
-    xrd02:
+    r02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.11.21
       mgmt-ipv4: 172.20.1.102
       mgmt-ipv6: 2001:db8:20:1::102
-      startup-config: config/xrd02.cfg
+      startup-config: config/r02.cfg
 
-    xrd03:
+    r03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:7.11.21
       mgmt-ipv4: 172.20.1.103
       mgmt-ipv6: 2001:db8:20:1::103
-      startup-config: config/xrd03.cfg
+      startup-config: config/r03.cfg
+
+    r99:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:7.11.21
+      mgmt-ipv4: 172.20.1.104
+      mgmt-ipv6: 2001:db8:20:1::199
+      startup-config: config/r99.cfg
 
     host00:
       kind: linux
@@ -61,12 +68,13 @@ topology:
       mgmt-ipv6: 2001:db8:20:1::201
 
   links:
-    - endpoints: ["xrd00:Gi0-0-0-0", "xrd02:Gi0-0-0-0"]
-    - endpoints: ["xrd00:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
+    - endpoints: ["r00:Gi0-0-0-0", "r02:Gi0-0-0-0"]
+    - endpoints: ["r00:Gi0-0-0-1", "r03:Gi0-0-0-0"]
 
-    - endpoints: ["xrd01:Gi0-0-0-0", "xrd02:Gi0-0-0-1"]
-    - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-1"]
+    - endpoints: ["r01:Gi0-0-0-0", "r02:Gi0-0-0-1"]
+    - endpoints: ["r01:Gi0-0-0-1", "r03:Gi0-0-0-1"]
+    - endpoints: ["r01:Gi0-0-0-2", "r99:Gi0-0-0-0"]
 
-    - endpoints: ["xrd02:Gi0-0-0-2", "host00:eth1"]
-    - endpoints: ["xrd03:Gi0-0-0-2", "host01:eth1"]
+    - endpoints: ["r02:Gi0-0-0-2", "host00:eth1"]
+    - endpoints: ["r03:Gi0-0-0-2", "host01:eth1"]
 
