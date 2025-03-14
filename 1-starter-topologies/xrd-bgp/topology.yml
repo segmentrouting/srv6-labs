@@ -22,28 +22,28 @@ topology:
 
     xrd00:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:7.11.21
       mgmt-ipv4: 172.20.1.100
       mgmt-ipv6: 2001:db8:20:1::100
       startup-config: config/xrd00.cfg
 
     xrd01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:7.11.21
       mgmt-ipv4: 172.20.1.101
       mgmt-ipv6: 2001:db8:20:1::101
       startup-config: config/xrd01.cfg
 
     xrd02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:7.11.21
       mgmt-ipv4: 172.20.1.102
       mgmt-ipv6: 2001:db8:20:1::102
       startup-config: config/xrd02.cfg
 
     xrd03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:7.11.21
       mgmt-ipv4: 172.20.1.103
       mgmt-ipv6: 2001:db8:20:1::103
       startup-config: config/xrd03.cfg
