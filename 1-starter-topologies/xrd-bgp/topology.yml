@@ -1,0 +1,72 @@
+#   The xrd-bgp/topology.yml launches a containerlab XRd topology with a pair of 
+#   Alpine containers and where the XRd instances are connected in a small CLOS
+#
+#   Topology
+#  
+#  r00  r01
+#   | \ / |
+#   | / \ |
+#  r02  r03
+#   |    |
+#  h00  h01
+
+name: 2-node
+
+mgmt:
+  network: mgt_net
+  ipv4-subnet: 172.20.1.0/24
+  ipv6-subnet: 2001:db8:20:1::/64
+
+topology:
+  nodes:
+
+    xrd00:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.100
+      mgmt-ipv6: 2001:db8:20:1::100
+      startup-config: config/xrd00.cfg
+
+    xrd01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.101
+      mgmt-ipv6: 2001:db8:20:1::101
+      startup-config: config/xrd01.cfg
+
+    xrd02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.102
+      mgmt-ipv6: 2001:db8:20:1::102
+      startup-config: config/xrd02.cfg
+
+    xrd03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.103
+      mgmt-ipv6: 2001:db8:20:1::103
+      startup-config: config/xrd03.cfg
+
+    host00:
+      kind: linux
+      image: iejalapeno/alpine:latest
+      mgmt-ipv4: 172.20.1.200
+      mgmt-ipv6: 2001:db8:20:1::200
+
+    host01:
+      kind: linux
+      image: iejalapeno/alpine:latest
+      mgmt-ipv4: 172.20.1.201
+      mgmt-ipv6: 2001:db8:20:1::201
+
+  links:
+    - endpoints: ["xrd00:Gi0-0-0-0", "xrd02:Gi0-0-0-0"]
+    - endpoints: ["xrd00:Gi0-0-0-1", "xrd03:Gi0-0-0-0"]
+
+    - endpoints: ["xrd01:Gi0-0-0-0", "xrd02:Gi0-0-0-1"]
+    - endpoints: ["xrd01:Gi0-0-0-1", "xrd03:Gi0-0-0-1"]
+
+    - endpoints: ["xrd02:Gi0-0-0-2", "host00:eth1"]
+    - endpoints: ["xrd03:Gi0-0-0-2", "host01:eth1"]
+
