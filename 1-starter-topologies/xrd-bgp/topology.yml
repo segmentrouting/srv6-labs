@@ -1,5 +1,6 @@
 #   The xrd-bgp/topology.yml launches a containerlab XRd topology with a pair of 
 #   Alpine containers and where the XRd instances are connected in a small CLOS
+#   topology. The topology also includes r99 which acts as a sort of eBGP route reflector.
 #
 #   Topology
 #  
@@ -22,35 +23,35 @@ topology:
 
     r00:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.21
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.100
       mgmt-ipv6: 2001:db8:20:1::100
       startup-config: config/r00.cfg
 
     r01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.21
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.101
       mgmt-ipv6: 2001:db8:20:1::101
       startup-config: config/r01.cfg
 
     r02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.21
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.102
       mgmt-ipv6: 2001:db8:20:1::102
       startup-config: config/r02.cfg
 
     r03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.21
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.103
       mgmt-ipv6: 2001:db8:20:1::103
       startup-config: config/r03.cfg
 
     r99:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:7.11.21
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.104
       mgmt-ipv6: 2001:db8:20:1::199
       startup-config: config/r99.cfg
