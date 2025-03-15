@@ -76,5 +76,7 @@ topology:
     - endpoints: ["r01:Gi0-0-0-2", "r99:Gi0-0-0-0"]
 
     - endpoints: ["r02:Gi0-0-0-2", "host00:eth1"]
+    - endpoints: ["r02:Gi0-0-0-3", "host00:eth2"]
     - endpoints: ["r03:Gi0-0-0-2", "host01:eth1"]
+    - endpoints: ["r03:Gi0-0-0-3", "host01:eth2"]
 
