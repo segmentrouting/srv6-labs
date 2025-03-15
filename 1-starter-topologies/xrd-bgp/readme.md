@@ -66,6 +66,7 @@ docker exec -it clab-xrd-bgp-host00 ping 2.2.2.1 -c 4 -i .3
 docker exec -it clab-xrd-bgp-host00 ping 100.0.0.1 -c 4 -i .3
 docker exec -it clab-xrd-bgp-host01 ping 3.3.3.1 -c 4 -i .3
 docker exec -it clab-xrd-bgp-host01 ping 101.0.0.1 -c 4 -i .3
+```
 
 8. End to end ping tests from host to host
 ```

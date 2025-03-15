@@ -58,6 +58,7 @@ These instructions roughly apply to all Starter scenarios when running in Contai
     ```
 
 #### Example terminal output
+```
 brmcdoug@dev7:~/srv6-labs/1-starter-topologies/xrd$ sudo containerlab deploy -t clab-4-node-xrd.yml
 INFO[0000] Containerlab v0.48.6 started                 
 INFO[0000] Parsing & checking topology file: clab-4-node-xrd.yml 
@@ -84,8 +85,9 @@ INFO[0006] Adding ssh config for containerlab nodes
 | 3 | clab-4-node-xrd03 | 93e4f53c7c1f | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.103/24 | 2001:db8:20:1::103/64 |
 | 4 | clab-4-node-xrd04 | 5979b127d2dc | ios-xr/xrd-control-plane:7.9.2 | cisco_xrd | running | 172.20.1.104/24 | 2001:db8:20:1::104/64 |
 +---+-------------------+--------------+--------------------------------+-----------+---------+-----------------+-----------------------+
+```
 
-1.  Give the XRd instances 2-3 minutes to come up and be responsive. All the usual docker commands work:
+10.  Give the XRd instances 2-3 minutes to come up and be responsive. All the usual docker commands work:
 
 #### check status of instances:
 ```
