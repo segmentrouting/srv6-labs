@@ -4,7 +4,7 @@ This repository contains instructions and sample yaml files for launching sonic 
 
 Requires:
 
-* Containerlab v0.40.0: https://containerlab.dev/
+* Containerlab v0.60.0 or later: https://containerlab.dev/
 * c8000 docker image
 * sonic-cisco-8000.bin 
 
