@@ -1,6 +1,6 @@
 <domain type='kvm'>
-  <name>k8s-cp</name>
-  <description>ubuntu-24.04-k8s-vm</description>
+  <name>k8s-cp-22</name>
+  <description>ubuntu-22.04-k8s-vm</description>
   <memory unit='MB'>4000</memory>
   <currentMemory unit='MB'>4000</currentMemory>
   <cpu mode='custom' match='exact' check='partial'>
@@ -44,7 +44,7 @@
       <target dev='vda' bus='virtio'/>
     </disk>
     <interface type='network'>
-      <mac address='52:54:a0:b0:c0:d0'/>
+      <mac address='52:54:10:20:30:40'/>
       <source network='default' bridge='virbr0'/>
       <target dev='vnet0'/>
       <model type='virtio'/>
@@ -52,7 +52,7 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <interface type='network'>
-      <mac address="52:54:e0:f0:a0:b0"/>   
+      <mac address="52:54:11:22:33:44"/>   
       <source network='k8s-cp' bridge='k8s-cp'/>
       <target dev='vnet1'/>
       <model type='virtio'/>
