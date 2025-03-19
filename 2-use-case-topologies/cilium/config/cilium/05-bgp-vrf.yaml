@@ -1,0 +1,24 @@
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: carrots-config
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "bgp-carrots"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: carrots-adverts
+  labels:
+    advertise: bgp-carrots
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+

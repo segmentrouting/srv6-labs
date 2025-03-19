@@ -1,0 +1,257 @@
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPClusterConfig
+metadata:
+  name: cilium-bgp
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: berlin
+  bgpInstances:
+  - name: "asn65000"
+    localASN: 65000
+    peers:
+    - name: "xrd05-rr"
+      peerASN: 65000
+      peerAddress: fc00:0:5555::1
+      peerConfigRef:
+        name: "cilium-peer"
+    - name: "xrd06-rr"
+      peerASN: 65000
+      peerAddress: fc00:0:6666::1
+      peerConfigRef:
+        name: "cilium-peer"
+    vrfs:
+    - vrfRef: "carrots"
+      rd: "9:9"
+      importRTs:
+        - "9:9"
+      exportRTs:
+        - "9:9"
+      configRef: carrots-config
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPPeerConfig
+metadata:
+  name: cilium-peer
+spec:
+  families:
+    - afi: ipv6
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: "bgpv6unicast"
+    - afi: ipv4
+      safi: mpls_vpn
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPNodeConfigOverride
+metadata:
+  name: berlin
+spec:
+  bgpInstances:
+    - name: "asn65000"
+      srv6Responder: true
+      peers:
+        - name: "xrd05-rr"
+          localAddress: fc00:0:8888::1
+        - name: "xrd06-rr"
+          localAddress: fc00:0:8888::1
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: bgp-ipv6-unicast
+  labels:
+    advertise: bgpv6unicast
+spec:
+  advertisements:
+    - advertisementType: "SRv6LocatorPool"
+      selector:
+        matchLabels:
+          export: "pool0"
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: carrots-config
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "bgp-carrots"  
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: carrots-adverts
+  labels:
+    advertise: bgp-carrots
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentSRv6LocatorPool
+metadata:
+  name: pool0
+  labels:
+    export: "pool0"
+spec:
+  behaviorType: uSID
+  prefix: fc00:0:A000::/40
+  structure:
+    locatorBlockLenBits: 32
+    locatorNodeLenBits: 16
+    functionLenBits: 16
+    argumentLenBits: 0
+
+---
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: veggies
+  labels:
+    name: veggies
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: carrots
+spec:
+  vrfID: 99
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: carrots
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: veggies
+  labels:
+    app: alpine-ping
+    vrf: carrots
+  name: carrots0
+spec:
+  containers:
+  - image: alpine:latest
+    imagePullPolicy: IfNotPresent
+    name: carrots0
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: veggies
+  labels:
+    app: alpine-ping
+    vrf: carrots
+  name: carrots1
+spec:
+  containers:
+  - image: alpine:latest
+    imagePullPolicy: IfNotPresent
+    name: carrots1
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: radish-config
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "bgp-radish"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: radish-adverts
+  labels:
+    advertise: bgp-radish
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: radish
+spec:
+  vrfID: 100
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: radish
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: veggies
+  labels:
+    app: alpine-ping
+    vrf: radish
+  name: radish0
+spec:
+  containers:
+  - image: alpine:latest
+    imagePullPolicy: IfNotPresent
+    name: radish0
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: veggies
+  labels:
+    app: alpine-ping
+    vrf: radish
+  name: carrots1
+spec:
+  containers:
+  - image: alpine:latest
+    imagePullPolicy: IfNotPresent
+    name: carrots1
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"

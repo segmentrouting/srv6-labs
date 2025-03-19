@@ -9,6 +9,10 @@ Dependencies:
 cd config
 virsh net-define k8s-cp-net.xml
 virsh net-start k8s-cp
+virsh net-define k8s-wkr00-net.xml
+virsh net-start k8s-wkr00
+virsh net-define k8s-wkr01-net.xml
+virsh net-start k8s-wkr01
 ```
 
 2. create VMs

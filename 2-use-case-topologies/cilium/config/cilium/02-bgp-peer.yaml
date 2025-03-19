@@ -1,0 +1,14 @@
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPPeerConfig
+metadata:
+  name: cilium-peer
+spec:
+  families:
+    - afi: ipv6
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: "bgpv6unicast"
+    - afi: ipv4
+      safi: mpls_vpn

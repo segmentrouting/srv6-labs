@@ -1,0 +1,99 @@
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPClusterConfig
+metadata:
+  name: cilium-bgp
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: berlin
+  bgpInstances:
+  - name: "asn65000"
+    localASN: 65000
+    peers:
+    - name: "xrd05-rr"
+      peerASN: 65000
+      peerAddress: fc00:0:5555::1
+      peerConfigRef:
+        name: "cilium-peer"
+    - name: "xrd06-rr"
+      peerASN: 65000
+      peerAddress: fc00:0:6666::1
+      peerConfigRef:
+        name: "cilium-peer"
+    vrfs:
+    - vrfRef: "carrots"
+      rd: "9:9"
+      importRTs:
+        - "9:9"
+      exportRTs:
+        - "9:9"
+      configRef: carrots-config
+
+    - vrfRef: "radish"
+      rd: "10:10"
+      importRTs:
+        - "10:10"
+      exportRTs:
+        - "10:10"
+      configRef: radish-config
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: radish-config
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "bgp-radish"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: radish-adverts
+  labels:
+    advertise: bgp-radish
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: radish
+spec:
+  vrfID: 100
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: radish
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: veggies
+  labels:
+    app: alpine-ping
+    vrf: radish
+  name: radish0
+spec:
+  containers:
+  - image: alpine:latest
+    imagePullPolicy: IfNotPresent
+    name: radish0
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
+

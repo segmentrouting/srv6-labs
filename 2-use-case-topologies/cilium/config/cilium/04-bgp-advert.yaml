@@ -1,0 +1,16 @@
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: bgp-ipv6-unicast
+  labels:
+    advertise: bgpv6unicast
+spec:
+  advertisements:
+    - advertisementType: "SRv6LocatorPool"
+      selector:
+        matchLabels:
+          export: "pool0"
+    - advertisementType: "PodCIDR"
+
+

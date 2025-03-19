@@ -1,0 +1,61 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: veggies
+  labels:
+    name: veggies
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: carrots
+spec:
+  vrfID: 99
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: carrots
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: veggies
+  labels:
+    app: alpine-ping
+    vrf: carrots
+  name: carrots0
+spec:
+  containers:
+  - image: alpine:latest
+    imagePullPolicy: IfNotPresent
+    name: carrots0
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: veggies
+  labels:
+    app: alpine-ping
+    vrf: carrots
+  name: carrots1
+spec:
+  containers:
+  - image: alpine:latest
+    imagePullPolicy: IfNotPresent
+    name: carrots1
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
