@@ -68,8 +68,9 @@ topology:
     - endpoints: ["r01:eth2", "r03:eth2"]
     - endpoints: ["r01:eth3", "r04:eth2"]
     
-    - endpoints: ["r02:eth3", "k8s-cp:eth1"]
-    - endpoints: ["r03:eth3", "k8s-wkr00:eth1"]
-    - endpoints: ["r04:eth3", "k8s-wkr01:eth1"]
+    - endpoints: ["r02:eth3", "k8s-cp:r02-eth3"]
+    - endpoints: ["r03:eth3", "k8s-wkr00:r03-eth3"]
+    - endpoints: ["r04:eth3", "k8s-wkr01:r04-eth3"]
+
 
 
