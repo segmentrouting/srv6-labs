@@ -11,21 +11,25 @@ spec:
   - name: "asn4200001000"
     localASN: 4200001000
     peers:
+
     - name: "r02"
       peerASN: 4200000002
       peerAddress: fc00:0:1000::1
       peerConfigRef:
         name: "fabric-peer"
-    # - name: "k8s-wkr00-22"
-    #   peerASN: 4200001001
-    #   peerAddress: fc00:0:1001::1
-    #   peerConfigRef:
-    #     name: "srv6-peer"
-    # - name: "k8s-wkr01-22"
-    #   peerASN: 4200001002
-    #   peerAddress: fc00:0:1002::1
-    #   peerConfigRef:
-    #     name: "srv6-peer"
+
+    - name: "k8s-wkr00-22"
+      peerASN: 4200001001
+      peerAddress: fc00:0:1001::2
+      peerConfigRef:
+        name: "srv6-peer"
+
+    - name: "k8s-wkr01-22"
+      peerASN: 4200001002
+      peerAddress: fc00:0:1002::2
+      peerConfigRef:
+        name: "srv6-peer"
+
     # - name: "xrd99"
     #   peerASN: 4200001099
     #   peerAddress: fc00:0:1099::1
@@ -58,6 +62,19 @@ spec:
       peerAddress: fc00:0:1001::1
       peerConfigRef:
         name: "fabric-peer"
+  
+    - name: "k8s-cp-22"
+      peerASN: 4200001000
+      peerAddress: fc00:0:1000::2
+      peerConfigRef:
+        name: "srv6-peer"
+
+    - name: "k8s-wkr01-22"
+      peerASN: 4200001002
+      peerAddress: fc00:0:1002::2
+      peerConfigRef:
+        name: "srv6-peer"
+
     # vrfs:
     # - vrfRef: "blue"
     #   rd: "1001:1"
@@ -92,6 +109,21 @@ spec:
       peerAddress: fc00:0:1002::1
       peerConfigRef:
         name: "fabric-peer"
+
+    - name: "k8s-cp-22"
+      peerASN: 4200001000
+      peerAddress: fc00:0:1000::2
+      peerConfigRef:
+        name: "srv6-peer"
+
+    - name: "k8s-wkr00-22"
+      peerASN: 4200001001
+      peerAddress: fc00:0:1001::2
+      peerConfigRef:
+        name: "srv6-peer"
+
+        
+        
     # vrfs:
     # - vrfRef: "blue"
     #   rd: "1002:1"
