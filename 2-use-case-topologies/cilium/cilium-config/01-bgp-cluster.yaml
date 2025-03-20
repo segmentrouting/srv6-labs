@@ -2,25 +2,98 @@
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentBGPClusterConfig
 metadata:
-  name: cilium-bgp
+  name: k8s-cp
 spec:
   nodeSelector:
     matchLabels:
       kubernetes.io/hostname: k8s-cp-22
   bgpInstances:
-  - name: "asn65000"
-    localASN: 65000
+  - name: "asn4200001000"
+    localASN: 4200001000
     peers:
-    - name: "nx02"
-      peerASN: 65000
-      peerAddress: fc00:0:5555::1
+    - name: "r02"
+      peerASN: 4200000002
+      peerAddress: fc00:0:1000::1
+      peerConfigRef:
+        name: "fabric-peer"
+    - name: "k8s-wkr-00"
+      peerASN: 4200001001
+      peerAddress: fc00:0:1001::1
+      peerConfigRef:
+        name: "srv6-peer"
+    vrfs:
+    - vrfRef: "blue"
+      rd: "1000:1"
+      importRTs:
+        - "4:4"
+      exportRTs:
+        - "4:4"
+      configRef: blue-config
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPClusterConfig
+metadata:
+  name: k8s-wkr-00
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: k8s-wkr00-22
+  bgpInstances:
+  - name: "asn4200001001"
+    localASN: 4200001001
+    peers:
+    - name: "r03"
+      peerASN: 4200000003
+      peerAddress: fc00:0:1001::1
       peerConfigRef:
         name: "cilium-peer"
     vrfs:
     - vrfRef: "blue"
-      rd: "9:9"
+      rd: "1001:1"
       importRTs:
-        - "9:9"
+        - "4:4"
       exportRTs:
-        - "9:9"
+        - "4:4"
       configRef: blue-config
+    - vrfRef: "green"
+      rd: "1001:1"
+      importRTs:
+        - "5:5"
+      exportRTs:
+        - "5:5"
+      configRef: green-config
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPClusterConfig
+metadata:
+  name: k8s-wkr-01
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: k8s-wkr01-22
+  bgpInstances:
+  - name: "asn4200001002"
+    localASN: 4200001002
+    peers:
+    - name: "r04"
+      peerASN: 4200000004
+      peerAddress: fc00:0:1002::1
+      peerConfigRef:
+        name: "cilium-peer"
+    vrfs:
+    - vrfRef: "blue"
+      rd: "1002:1"
+      importRTs:
+        - "4:4"
+      exportRTs:
+        - "4:4"
+      configRef: blue-config
+    - vrfRef: "green"
+      rd: "1002:1"
+      importRTs:
+        - "5:5"
+      exportRTs:
+        - "5:5"
+      configRef: green-config

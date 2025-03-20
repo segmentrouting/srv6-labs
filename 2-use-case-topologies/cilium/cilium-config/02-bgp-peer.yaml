@@ -2,7 +2,7 @@
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentBGPPeerConfig
 metadata:
-  name: cilium-peer
+  name: fabric-peer
 spec:
   families:
     - afi: ipv6
