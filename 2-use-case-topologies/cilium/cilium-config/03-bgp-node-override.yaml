@@ -10,10 +10,24 @@ spec:
       srv6Responder: true
       peers:
         - name: "r02"
-          localAddress: fc00:0:1000::1
+          localAddress: fc00:0:1000::2
         # - name: "k8s-wkr-00"
         #   localAddress: fc00:0:1000::1
         # - name: "k8s-wkr-01"
         #   localAddress: fc00:0:1000::1
         # - name: "xrd99"
         #   localAddress: fc00:0:1000::1
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPNodeConfigOverride
+metadata:
+  name: k8s-wkr00-22
+spec:
+  bgpInstances:
+    - name: "asn4200001001"
+      routerID: "10.10.11.2"
+      srv6Responder: true
+      peers:
+        - name: "r02"
+          localAddress: fc00:0:1001::2
