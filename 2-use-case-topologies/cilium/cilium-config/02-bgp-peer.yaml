@@ -16,6 +16,7 @@ kind: IsovalentBGPPeerConfig
 metadata:
   name: srv6-peer
 spec:
+  ebgpMultihop: 10
   families:
     - afi: ipv6
       safi: unicast
