@@ -1,0 +1,14 @@
+network:
+  ethernets:
+    ens3:
+      dhcp4: false
+      addresses:
+        - 192.168.122.102/24
+    ens4:
+      addresses:
+        - 10.10.12.2/24
+        - fc00:0:1002::2/64
+      nameservers:
+        addresses: [8.8.8.8]
+      gateway4: 10.10.12.1          
+  version: 2
