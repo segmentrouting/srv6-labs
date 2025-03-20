@@ -18,10 +18,5 @@ metadata:
 spec:
   ebgpMultihop: 10
   families:
-    # - afi: ipv6
-    #   safi: unicast
-    #   advertisements:
-    #     matchLabels:
-    #       advertise: "bgpv6unicast"
     - afi: ipv4
       safi: mpls_vpn

@@ -90,6 +90,7 @@ spec:
       exportRTs:
         - "4:4"
       configRef: blue-config
+
     - vrfRef: "green"
       rd: "1001:1"
       importRTs:
@@ -143,6 +144,7 @@ spec:
       exportRTs:
         - "4:4"
       configRef: blue-config
+      
     - vrfRef: "green"
       rd: "1002:1"
       importRTs:
