@@ -10,5 +10,8 @@ network:
         - fc00:0:1001::2/64
       nameservers:
         addresses: [8.8.8.8]
-      gateway4: 10.10.11.1          
+      gateway4: 10.10.11.1    
+      routes: 
+        - to: fc00:0::/32
+          via: fc00:0:1001::1        
   version: 2

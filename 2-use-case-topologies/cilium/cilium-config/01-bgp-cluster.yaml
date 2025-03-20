@@ -2,7 +2,7 @@
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentBGPClusterConfig
 metadata:
-  name: k8s-cp
+  name: k8s-cp-22
 spec:
   nodeSelector:
     matchLabels:
@@ -16,12 +16,12 @@ spec:
       peerAddress: fc00:0:1000::1
       peerConfigRef:
         name: "fabric-peer"
-    - name: "k8s-wkr-00"
+    - name: "k8s-wkr00-22"
       peerASN: 4200001001
       peerAddress: fc00:0:1001::1
       peerConfigRef:
         name: "srv6-peer"
-    - name: "k8s-wkr-01"
+    - name: "k8s-wkr01-22"
       peerASN: 4200001002
       peerAddress: fc00:0:1002::1
       peerConfigRef:
@@ -44,7 +44,7 @@ spec:
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentBGPClusterConfig
 metadata:
-  name: k8s-wkr-00
+  name: k8s-wkr00-22
 spec:
   nodeSelector:
     matchLabels:
@@ -57,7 +57,7 @@ spec:
       peerASN: 4200000003
       peerAddress: fc00:0:1001::1
       peerConfigRef:
-        name: "cilium-peer"
+        name: "fabric-peer"
     vrfs:
     - vrfRef: "blue"
       rd: "1001:1"
@@ -78,7 +78,7 @@ spec:
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentBGPClusterConfig
 metadata:
-  name: k8s-wkr-01
+  name: k8s-wkr01-22
 spec:
   nodeSelector:
     matchLabels:
@@ -91,7 +91,7 @@ spec:
       peerASN: 4200000004
       peerAddress: fc00:0:1002::1
       peerConfigRef:
-        name: "cilium-peer"
+        name: "fabric-peer"
     vrfs:
     - vrfRef: "blue"
       rd: "1002:1"
