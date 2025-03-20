@@ -17,3 +17,20 @@ virsh net-start k8s-wkr01
 
 2. create VMs
 ```
+
+
+
+k8s worker nodes:
+```
+sudo vi /etc/default/kubelet
+```
+```
+KUBELET_EXTRA_ARGS="--node-ip=fc00:0:1002::2"
+```
+```
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+```
+
+
+

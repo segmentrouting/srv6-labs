@@ -6,26 +6,21 @@ metadata:
 spec:
   nodeSelector:
     matchLabels:
-      kubernetes.io/hostname: berlin
+      kubernetes.io/hostname: k8s-cp-22
   bgpInstances:
   - name: "asn65000"
     localASN: 65000
     peers:
-    - name: "xrd05-rr"
+    - name: "nx02"
       peerASN: 65000
       peerAddress: fc00:0:5555::1
       peerConfigRef:
         name: "cilium-peer"
-    - name: "xrd06-rr"
-      peerASN: 65000
-      peerAddress: fc00:0:6666::1
-      peerConfigRef:
-        name: "cilium-peer"
     vrfs:
-    - vrfRef: "carrots"
+    - vrfRef: "blue"
       rd: "9:9"
       importRTs:
         - "9:9"
       exportRTs:
         - "9:9"
-      configRef: carrots-config
+      configRef: blue-config

@@ -50,6 +50,12 @@ topology:
       mgmt-ipv4: 172.20.1.104
       startup-config: config/r04.cfg
 
+    r99:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.104
+      startup-config: config/r99.cfg
+
     k8s-cp:
       kind: bridge
 
@@ -63,10 +69,12 @@ topology:
     - endpoints: ["r00:eth1", "r02:eth1"]
     - endpoints: ["r00:eth2", "r03:eth1"]
     - endpoints: ["r00:eth3", "r04:eth1"]
+    - endpoints: ["r00:eth4", "r99:Gi0-0-0-0"]
 
     - endpoints: ["r01:eth1", "r02:eth2"]
     - endpoints: ["r01:eth2", "r03:eth2"]
     - endpoints: ["r01:eth3", "r04:eth2"]
+    - endpoints: ["r01:eth4", "r99:Gi0-0-0-1"]
     
     - endpoints: ["r02:eth3", "k8s-cp:r02-eth3"]
     - endpoints: ["r03:eth3", "k8s-wkr00:r03-eth3"]
