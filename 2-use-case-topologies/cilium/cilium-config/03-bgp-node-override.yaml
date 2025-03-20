@@ -9,9 +9,11 @@ spec:
       routerID: "10.10.10.2"
       srv6Responder: true
       peers:
-        - name: "k8s-wkr-00"
+        - name: "r02"
           localAddress: fc00:0:1000::1
-        - name: "k8s-wkr-01"
-          localAddress: fc00:0:1000::1
-        - name: "xrd99"
-          localAddress: fc00:0:1000::1
+        # - name: "k8s-wkr-00"
+        #   localAddress: fc00:0:1000::1
+        # - name: "k8s-wkr-01"
+        #   localAddress: fc00:0:1000::1
+        # - name: "xrd99"
+        #   localAddress: fc00:0:1000::1
