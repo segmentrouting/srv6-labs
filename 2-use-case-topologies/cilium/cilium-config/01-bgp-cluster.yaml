@@ -16,29 +16,29 @@ spec:
       peerAddress: fc00:0:1000::1
       peerConfigRef:
         name: "fabric-peer"
-    - name: "k8s-wkr00-22"
-      peerASN: 4200001001
-      peerAddress: fc00:0:1001::1
-      peerConfigRef:
-        name: "srv6-peer"
-    - name: "k8s-wkr01-22"
-      peerASN: 4200001002
-      peerAddress: fc00:0:1002::1
-      peerConfigRef:
-        name: "srv6-peer"
-    - name: "xrd99"
-      peerASN: 4200001099
-      peerAddress: fc00:0:1099::1
-      peerConfigRef:
-        name: "srv6-peer"
-    vrfs:
-    - vrfRef: "blue"
-      rd: "1000:1"
-      importRTs:
-        - "4:4"
-      exportRTs:
-        - "4:4"
-      configRef: blue-config
+    # - name: "k8s-wkr00-22"
+    #   peerASN: 4200001001
+    #   peerAddress: fc00:0:1001::1
+    #   peerConfigRef:
+    #     name: "srv6-peer"
+    # - name: "k8s-wkr01-22"
+    #   peerASN: 4200001002
+    #   peerAddress: fc00:0:1002::1
+    #   peerConfigRef:
+    #     name: "srv6-peer"
+    # - name: "xrd99"
+    #   peerASN: 4200001099
+    #   peerAddress: fc00:0:1099::1
+    #   peerConfigRef:
+    #     name: "srv6-peer"
+    # vrfs:
+    # - vrfRef: "blue"
+    #   rd: "1000:1"
+    #   importRTs:
+    #     - "4:4"
+    #   exportRTs:
+    #     - "4:4"
+    #   configRef: blue-config
 
 ---
 apiVersion: isovalent.com/v1alpha1
@@ -58,21 +58,21 @@ spec:
       peerAddress: fc00:0:1001::1
       peerConfigRef:
         name: "fabric-peer"
-    vrfs:
-    - vrfRef: "blue"
-      rd: "1001:1"
-      importRTs:
-        - "4:4"
-      exportRTs:
-        - "4:4"
-      configRef: blue-config
-    - vrfRef: "green"
-      rd: "1001:1"
-      importRTs:
-        - "5:5"
-      exportRTs:
-        - "5:5"
-      configRef: green-config
+    # vrfs:
+    # - vrfRef: "blue"
+    #   rd: "1001:1"
+    #   importRTs:
+    #     - "4:4"
+    #   exportRTs:
+    #     - "4:4"
+    #   configRef: blue-config
+    # - vrfRef: "green"
+    #   rd: "1001:1"
+    #   importRTs:
+    #     - "5:5"
+    #   exportRTs:
+    #     - "5:5"
+    #   configRef: green-config
 
 ---
 apiVersion: isovalent.com/v1alpha1
@@ -92,18 +92,18 @@ spec:
       peerAddress: fc00:0:1002::1
       peerConfigRef:
         name: "fabric-peer"
-    vrfs:
-    - vrfRef: "blue"
-      rd: "1002:1"
-      importRTs:
-        - "4:4"
-      exportRTs:
-        - "4:4"
-      configRef: blue-config
-    - vrfRef: "green"
-      rd: "1002:1"
-      importRTs:
-        - "5:5"
-      exportRTs:
-        - "5:5"
-      configRef: green-config
+    # vrfs:
+    # - vrfRef: "blue"
+    #   rd: "1002:1"
+    #   importRTs:
+    #     - "4:4"
+    #   exportRTs:
+    #     - "4:4"
+    #   configRef: blue-config
+    # - vrfRef: "green"
+    #   rd: "1002:1"
+    #   importRTs:
+    #     - "5:5"
+    #   exportRTs:
+    #     - "5:5"
+    #   configRef: green-config
