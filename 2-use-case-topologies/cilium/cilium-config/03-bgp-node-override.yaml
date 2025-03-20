@@ -11,12 +11,12 @@ spec:
       peers:
         - name: "r02"
           localAddress: fc00:0:1000::2
-        # - name: "k8s-wkr-00"
-        #   localAddress: fc00:0:1000::1
-        # - name: "k8s-wkr-01"
-        #   localAddress: fc00:0:1000::1
-        # - name: "xrd99"
-        #   localAddress: fc00:0:1000::1
+        - name: "k8s-wkr-00"
+          localAddress: fc00:0:1000::2
+        - name: "k8s-wkr-01"
+          localAddress: fc00:0:1000::2
+        - name: "xrd99"
+          localAddress: fc00:0:1000::2
 
 ---
 apiVersion: isovalent.com/v1alpha1
@@ -31,7 +31,12 @@ spec:
       peers:
         - name: "r03"
           localAddress: fc00:0:1001::2
-
+        - name: "k8s-cp-22"
+          localAddress: fc00:0:1001::2
+        - name: "k8s-wkr-01"
+          localAddress: fc00:0:1001::2
+        - name: "xrd99"
+          localAddress: fc00:0:1001::2
 ---
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentBGPNodeConfigOverride
@@ -44,4 +49,10 @@ spec:
       srv6Responder: true
       peers:
         - name: "r04"
+          localAddress: fc00:0:1002::2
+        - name: "k8s-cp-22"
+          localAddress: fc00:0:1002::2
+        - name: "k8s-wkr-00"
+          localAddress: fc00:0:1002::2
+        - name: "xrd99"
           localAddress: fc00:0:1002::2
