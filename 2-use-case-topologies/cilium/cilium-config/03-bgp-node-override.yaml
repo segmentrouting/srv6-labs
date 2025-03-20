@@ -2,10 +2,11 @@
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentBGPNodeConfigOverride
 metadata:
-  name: k8s-cp
+  name: k8s-cp-22
 spec:
   bgpInstances:
     - name: "asn4200001000"
+      routerID: "10.10.10.2"
       srv6Responder: true
       peers:
         - name: "k8s-wkr-00"
