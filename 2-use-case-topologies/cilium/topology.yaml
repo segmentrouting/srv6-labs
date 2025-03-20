@@ -52,7 +52,7 @@ topology:
 
     r99:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:24.2.2
       mgmt-ipv4: 172.20.1.104
       startup-config: config/r99.cfg
 
