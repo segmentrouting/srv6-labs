@@ -21,6 +21,16 @@ spec:
       peerAddress: fc00:0:1001::1
       peerConfigRef:
         name: "srv6-peer"
+    - name: "k8s-wkr-01"
+      peerASN: 4200001002
+      peerAddress: fc00:0:1002::1
+      peerConfigRef:
+        name: "srv6-peer"
+    - name: "xrd99"
+      peerASN: 4200001099
+      peerAddress: fc00:0:1099::1
+      peerConfigRef:
+        name: "srv6-peer"
     vrfs:
     - vrfRef: "blue"
       rd: "1000:1"

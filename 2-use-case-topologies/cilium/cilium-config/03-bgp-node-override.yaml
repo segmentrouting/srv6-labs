@@ -2,13 +2,15 @@
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentBGPNodeConfigOverride
 metadata:
-  name: berlin
+  name: k8s-cp
 spec:
   bgpInstances:
-    - name: "asn65000"
+    - name: "asn4200001000"
       srv6Responder: true
       peers:
-        - name: "xrd05-rr"
-          localAddress: fc00:0:8888::1
-        - name: "xrd06-rr"
-          localAddress: fc00:0:8888::1
+        - name: "k8s-wkr-00"
+          localAddress: fc00:0:1000::1
+        - name: "k8s-wkr-01"
+          localAddress: fc00:0:1000::1
+        - name: "xrd99"
+          localAddress: fc00:0:1000::1

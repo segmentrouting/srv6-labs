@@ -6,7 +6,7 @@ metadata:
     export: "pool0"
 spec:
   behaviorType: uSID
-  prefix: fc00:0:A000::/40
+  prefix: fc00:0:2000::/40
   structure:
     locatorBlockLenBits: 32
     locatorNodeLenBits: 16

@@ -2,23 +2,23 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: veggies
+  name: blue
   labels:
-    name: veggies
+    name: blue
 
 ---
 apiVersion: isovalent.com/v1alpha1
 kind: IsovalentVRF
 metadata:
-  name: carrots
+  name: blue
 spec:
-  vrfID: 99
+  vrfID: 4
   locatorPoolRef: pool0
   rules:
   - selectors:
     - endpointSelector:
         matchLabels:
-          vrf: carrots
+          vrf: blue
     destinationCIDRs:
     - 0.0.0.0/0
 
@@ -26,16 +26,16 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  namespace: veggies
+  namespace: blue
   labels:
     app: alpine-ping
-    vrf: carrots
-  name: carrots0
+    vrf: blue
+  name: bluepod0
 spec:
   containers:
   - image: alpine:latest
     imagePullPolicy: IfNotPresent
-    name: carrots0
+    name: bluepod0
     command:
       - /bin/sh
       - "-c"
@@ -45,16 +45,16 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  namespace: veggies
+  namespace: blue
   labels:
     app: alpine-ping
-    vrf: carrots
-  name: carrots1
+    vrf: blue
+  name: bluepod1
 spec:
   containers:
   - image: alpine:latest
     imagePullPolicy: IfNotPresent
-    name: carrots1
+    name: bluepod1
     command:
       - /bin/sh
       - "-c"
