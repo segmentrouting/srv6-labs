@@ -68,30 +68,30 @@ topology:
       mgmt-ipv4: 172.20.1.201
       mgmt-ipv6: 2001:db8:20:1::201
 
-    bridge00:
-      kind: bridge
+    # bridge00:
+    #   kind: bridge
 
-    bridge01:
-      kind: bridge
+    # bridge01:
+    #   kind: bridge
 
-    bridge02:
-      kind: bridge
+    # bridge02:
+    #   kind: bridge
 
-    bridge03:
-      kind: bridge
+    # bridge03:
+    #   kind: bridge
 
 
   links:
     - endpoints: ["r00:Gi0-0-0-0", "r02:Gi0-0-0-0"]
     - endpoints: ["r00:Gi0-0-0-1", "r03:Gi0-0-0-0"]
-    - endpoints: ["r00:Gi0-0-0-2", "bridge00:r00-Gi0-0-0-2"]
-    - endpoints: ["r00:Gi0-0-0-3", "bridge02:r00-Gi0-0-0-3"]
+    # - endpoints: ["r00:Gi0-0-0-2", "bridge00:r00-Gi0-0-0-2"]
+    # - endpoints: ["r00:Gi0-0-0-3", "bridge02:r00-Gi0-0-0-3"]
 
     - endpoints: ["r01:Gi0-0-0-0", "r02:Gi0-0-0-1"]
     - endpoints: ["r01:Gi0-0-0-1", "r03:Gi0-0-0-1"]
     - endpoints: ["r01:Gi0-0-0-2", "r99:Gi0-0-0-0"]
-    - endpoints: ["r01:Gi0-0-0-3", "bridge01:r01-Gi0-0-0-3"]
-    - endpoints: ["r01:Gi0-0-0-4", "bridge03:r01-Gi0-0-0-4"]
+    # - endpoints: ["r01:Gi0-0-0-3", "bridge01:r01-Gi0-0-0-3"]
+    # - endpoints: ["r01:Gi0-0-0-4", "bridge03:r01-Gi0-0-0-4"]
     
     - endpoints: ["r02:Gi0-0-0-2", "host00:eth1"]
     - endpoints: ["r02:Gi0-0-0-3", "host00:eth2"]

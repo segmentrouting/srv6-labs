@@ -23,17 +23,17 @@ Example: https://software.cisco.com/download/home/286331236/type/280805694/relea
 
 2. Load the image per [readme](../README-clab.md)
    
-3. Optional: Add linux bridges for expanding the topology - or comment out the 'bridge' sections in the topology.yaml file
+3. Optional: Add linux bridges for expanding the topology. Run the script below and uncomment the 'bridge' sections in the topology.yaml file
 ```
 sudo ./add-bridges.sh
 ```
 
-4. Launch the topology
+1. Launch the topology
 ```
 sudo containerlab deploy -t topology.yaml
 ```
 
-4. Give it 60-90 seconds to boot, then ssh to routers (password is cisco123)
+1. Give it 60-90 seconds to boot, then ssh to routers (password is cisco123)
 ```
 ssh cisco@clab-xrd-bgp-r00
 ssh cisco@clab-xrd-bgp-r01
@@ -42,45 +42,35 @@ ssh cisco@clab-xrd-bgp-r03
 ssh cisco@clab-xrd-bgp-r99
 ```
 
-5. XRd verification commands (example commands for r02)
+1. XRd verification commands (example commands for r02)
 ```
 show segment-routing srv6 sid
 show bgp ipv6 unicast
 show bgp ipv4 unicast
 show bgp ipv4 unicast 3.3.3.0/24
-show bgp vpnv4 unicast
-show bgp vpnv4 unicast rd 10.0.0.3:0 101.0.0.0/24
 ```
 
-6. Give the alpine host00 and host01 their IPs and routes
+1. Give the alpine host00 and host01 their IPs and routes
 ```
 docker exec -it clab-xrd-bgp-host00 ip addr add 2.2.2.2/24 dev eth1
-docker exec -it clab-xrd-bgp-host00 ip addr add 100.0.0.2/24 dev eth2
 docker exec -it clab-xrd-bgp-host01 ip addr add 3.3.3.2/24 dev eth1
-docker exec -it clab-xrd-bgp-host01 ip addr add 101.0.0.2/24 dev eth2   
 docker exec -it clab-xrd-bgp-host00 ip route add 3.3.3.0/24 via 2.2.2.1 dev eth1
-docker exec -it clab-xrd-bgp-host00 ip route add 101.0.0.0/24 via 100.0.0.1 dev eth2
 docker exec -it clab-xrd-bgp-host01 ip route add 2.2.2.0/24 via 3.3.3.1 dev eth1
-docker exec -it clab-xrd-bgp-host01 ip route add 100.0.0.0/24 via 101.0.0.1 dev eth2
 ```
 
-7. ping tests from hosts to local gateways
+1. ping tests from hosts to local gateways
 ```
 docker exec -it clab-xrd-bgp-host00 ping 2.2.2.1 -c 4 -i .3
-docker exec -it clab-xrd-bgp-host00 ping 100.0.0.1 -c 4 -i .3
 docker exec -it clab-xrd-bgp-host01 ping 3.3.3.1 -c 4 -i .3
-docker exec -it clab-xrd-bgp-host01 ping 101.0.0.1 -c 4 -i .3
 ```
 
-8. End to end ping tests from host to host
+1. End to end ping tests from host to host
 ```
 docker exec -it clab-xrd-bgp-host00 ping 3.3.3.2 -c 4 -i .3
-docker exec -it clab-xrd-bgp-host00 ping 101.0.0.2 -c 4 -i .3
 docker exec -it clab-xrd-bgp-host01 ping 2.2.2.2 -c 4 -i .3
-docker exec -it clab-xrd-bgp-host01 ping 100.0.0.2 -c 4 -i .3
 ```
 
-9. Setup a tcpdump session and re-run host to host pings - the pings will appear on one of these interfaces:
+1. Setup a tcpdump session and re-run host to host pings - the pings will appear on one of these interfaces:
 ```
 docker exec -it clab-xrd-bgp-r00 tcpdump -ni Gi0-0-0-0
 docker exec -it clab-xrd-bgp-r00 tcpdump -ni Gi0-0-0-1
