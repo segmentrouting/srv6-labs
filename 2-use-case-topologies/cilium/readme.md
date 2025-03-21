@@ -16,9 +16,6 @@ virsh net-start k8s-wkr01
 ```
 
 2. create VMs
-```
-
-
 
 k8s worker nodes:
 ```
@@ -53,7 +50,8 @@ kubectl describe pod -n green green0
 kubectl describe pod -n blue blue0 | grep -e Node -e vrf -e IP
 kubectl describe pod -n blue blue1 | grep -e Node -e vrf -e IP
 kubectl describe pod -n green green0 | grep -e Node -e vrf -e IP
-
+kubectl describe pod -n dolphin dolphin0 | grep -e Node -e vrf -e IP
+kubectl describe pod -n dragon dragon0 | grep -e Node -e vrf -e IP
 cilium bgp routes advertised ipv4 mpls_vpn 
 cilium bgp routes available ipv4 mpls_vpn
 
