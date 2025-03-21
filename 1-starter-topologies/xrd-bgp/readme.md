@@ -23,10 +23,14 @@ Example: https://software.cisco.com/download/home/286331236/type/280805694/relea
 
 2. Load the image per [readme](../README-clab.md)
    
-3. Launch the topology
-
+3. Optional: Add linux bridges for expanding the topology - or comment out the 'bridge' sections in the topology.yaml file
 ```
-sudo containerlab deploy -t topology.yml
+sudo ./add-bridges.sh
+```
+
+4. Launch the topology
+```
+sudo containerlab deploy -t topology.yaml
 ```
 
 4. Give it 60-90 seconds to boot, then ssh to routers (password is cisco123)
