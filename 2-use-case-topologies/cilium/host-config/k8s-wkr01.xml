@@ -1,5 +1,5 @@
 <domain type='kvm'>
-  <name>k8s-wkr01-22</name>
+  <name>k8s-wkr01</name>
   <description>ubuntu-24.04-k8s-vm</description>
   <memory unit='MB'>4000</memory>
   <currentMemory unit='MB'>4000</currentMemory>
@@ -33,7 +33,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/home/cisco/images/k8s-wkr01-22.qcow2'/>
+      <source file='/home/cisco/images/k8s-wkr01.img'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <interface type='network'>

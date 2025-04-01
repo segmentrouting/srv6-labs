@@ -1,5 +1,5 @@
 <domain type='kvm'>
-  <name>k8s-wkr00</name>
+  <name>k8s-wkr02</name>
   <description>ubuntu-24.04-k8s-vm</description>
   <memory unit='MB'>4000</memory>
   <currentMemory unit='MB'>4000</currentMemory>
@@ -33,11 +33,11 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/home/cisco/images/k8s-wkr00.img'/>
+      <source file='/home/cisco/images/k8s-wkr02.img'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <interface type='network'>
-      <mac address='52:54:00:22:c1:d1'/>
+      <mac address='52:54:02:22:c2:d2'/>
       <source network='default' bridge='virbr0'/>
       <target dev='vnet0'/>
       <model type='virtio'/>
@@ -45,8 +45,8 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <interface type='network'>
-      <mac address="52:54:00:22:a1:b1"/>   
-      <source network='k8s-wkr00' bridge='k8s-wkr00'/>
+      <mac address="52:54:02:22:a2:b2"/>   
+      <source network='k8s-wkr02' bridge='k8s-wkr02'/>
       <target dev='vnet1'/>
       <model type='virtio'/>
       <alias name='net0'/>
