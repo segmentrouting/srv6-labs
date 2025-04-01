@@ -13,7 +13,6 @@ name: c8101-sonic-4-node
 mgmt:
   network: mgt_net4
   ipv4_subnet: 172.20.4.0/24
-  ipv6_subnet: 2001:172:20:4::/80
 
 topology:
   kinds:
@@ -29,14 +28,12 @@ topology:
     r1:
       kind: linux
       mgmt_ipv4: 172.20.4.101
-      mgmt_ipv6: 2001:172:20:4::101
 
     r2:
       kind: linux
       wait-for:
         - r1
       mgmt_ipv4: 172.20.4.102
-      mgmt_ipv6: 2001:172:20:4::102
 
     r3:
       kind: linux
@@ -44,7 +41,6 @@ topology:
         - r1
         - r2
       mgmt_ipv4: 172.20.4.103
-      mgmt_ipv6: 2001:172:20:4::103
 
     r4:
       kind: linux
@@ -53,7 +49,6 @@ topology:
         - r2
         - r3
       mgmt_ipv4: 172.20.4.104
-      mgmt_ipv6: 2001:172:20:4::104
 
     r1e0-r3e0:
       kind: bridge

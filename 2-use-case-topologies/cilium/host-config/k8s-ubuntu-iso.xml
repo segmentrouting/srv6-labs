@@ -33,14 +33,14 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
-      <source file='/home/cisco/images/ubuntu-22.04.5-live-server-amd64.iso'/>
+      <source file='/home/cisco/images/ubuntu-24.04.2-live-server-amd64.iso'/>
       <target dev='hdc' bus='ide'/>
       <readonly/>
       <address type='drive' controller='0' bus='1' target='0' unit='0'/>
     </disk>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/home/cisco/images/k8s-cp-22.qcow2'/>
+      <source file='/home/cisco/images/ubuntu24.qcow2'/>
       <target dev='vda' bus='virtio'/>
     </disk>
     <interface type='network'>

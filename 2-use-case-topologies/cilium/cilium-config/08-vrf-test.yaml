@@ -1,0 +1,347 @@
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: vrf100
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "vrf100"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: vrf100-adverts
+  labels:
+    advertise: vrf100
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: vrf100
+spec:
+  vrfID: 100
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: vrf100
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: vrf101
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "vrf101"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: vrf101-adverts
+  labels:
+    advertise: vrf101
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: vrf101
+spec:
+  vrfID: 101
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: vrf101
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: vrf102
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "vrf102"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: vrf102-adverts
+  labels:
+    advertise: vrf102
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: vrf102
+spec:
+  vrfID: 102
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: vrf102
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: vrf103
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "vrf103"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: vrf103-adverts
+  labels:
+    advertise: vrf103
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: vrf103
+spec:
+  vrfID: 103
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: vrf103
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: vrf104
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "vrf104"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: vrf104-adverts
+  labels:
+    advertise: vrf104
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: vrf104
+spec:
+  vrfID: 104
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: vrf104
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: vrf105
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "vrf105"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: vrf105-adverts
+  labels:
+    advertise: vrf105
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: vrf105
+spec:
+  vrfID: 105
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: vrf105
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: vrf106
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "vrf106"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: vrf106-adverts
+  labels:
+    advertise: vrf106
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: vrf106
+spec:
+  vrfID: 106
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: vrf106
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPVRFConfig
+metadata:
+  name: vrf107
+spec:
+  families:
+    - afi: ipv4
+      safi: mpls_vpn
+      advertisements:
+        matchLabels:
+          advertise: "vrf107"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentBGPAdvertisement
+metadata:
+  name: vrf107-adverts
+  labels:
+    advertise: vrf107
+spec:
+  advertisements:
+    - advertisementType: "PodCIDR"
+
+---
+apiVersion: isovalent.com/v1alpha1
+kind: IsovalentVRF
+metadata:
+  name: vrf107
+spec:
+  vrfID: 107
+  locatorPoolRef: pool0
+  rules:
+  - selectors:
+    - endpointSelector:
+        matchLabels:
+          vrf: vrf107
+    destinationCIDRs:
+    - 0.0.0.0/0
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: blue
+  labels:
+    app: alpine-ping
+    vrf:
+      - vrf100
+      - vrf101
+      - vrf102
+      - vrf103
+      - vrf104
+      - vrf105
+      - vrf106
+      - vrf107
+
+  name: blue2
+spec:
+  containers:
+  - image: alpine:latest
+    imagePullPolicy: IfNotPresent
+    name: blue0
+    command:
+      - /bin/sh
+      - "-c"
+      - "sleep 60m"
