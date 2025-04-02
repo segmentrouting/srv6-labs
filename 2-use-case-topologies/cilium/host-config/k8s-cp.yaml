@@ -14,4 +14,11 @@ network:
       routes: 
         - to: fc00:0::/32
           via: fc00:0:1000::1   
+    ens5:
+      addresses:
+        - 10.10.20.2/24
+        - fc00:0:2000::2/64
+      nameservers:
+        addresses: [8.8.8.8]
+      gateway4: 10.10.20.1
   version: 2
