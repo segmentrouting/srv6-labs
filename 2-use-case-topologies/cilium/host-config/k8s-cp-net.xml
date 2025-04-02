@@ -4,10 +4,3 @@
   <forward mode="route" />
   <ip address="10.10.10.1" netmask="255.255.255.0" />
 </network>
-
-<network>
-  <name>k8s-cp24</name>
-  <bridge name="k8s-cp24" />
-  <forward mode="route" />
-  <ip address="10.10.20.1" netmask="255.255.255.0" />
-</network>

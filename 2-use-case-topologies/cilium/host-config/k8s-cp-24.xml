@@ -52,6 +52,14 @@
       <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
     </interface>
+    <interface type='network'>
+      <mac address="52:54:e2:f4:a0:b0"/>   
+      <source network='k8s-cp2' bridge='k8s-cp2'/>
+      <target dev='vnet2'/>
+      <model type='virtio'/>
+      <alias name='net0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+    </interface>
     <serial type='pty'>
       <target port='0'/>
     </serial>
