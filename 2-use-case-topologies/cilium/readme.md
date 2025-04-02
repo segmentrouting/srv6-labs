@@ -17,6 +17,12 @@ virsh net-start k8s-wkr01
 
 2. create VMs
 
+3. Install k8s on cp and worker nodes
+4. kubeadm init on cp node
+```
+sudo kubeadm init --config kubeadm-init.yaml
+```
+
 k8s worker nodes:
 ```
 sudo vi /etc/default/kubelet
