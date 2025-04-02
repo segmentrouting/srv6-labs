@@ -1,6 +1,6 @@
 <domain type='kvm'>
   <name>ubuntu24</name>
-  <description>ubuntu-22.04-k8s-vm</description>
+  <description>ubuntu-24.04-k8s-vm</description>
   <memory unit='MB'>4000</memory>
   <currentMemory unit='MB'>4000</currentMemory>
   <cpu mode='custom' match='exact' check='partial'>
@@ -37,7 +37,7 @@
       <target dev='vda' bus='virtio'/>
     </disk>
     <interface type='network'>
-      <mac address='52:54:10:20:30:40'/>
+      <mac address='52:54:50:20:30:40'/>
       <source network='default' bridge='virbr0'/>
       <target dev='vnet0'/>
       <model type='virtio'/>
