@@ -54,7 +54,7 @@
     </interface>
     <interface type='network'>
       <mac address="52:54:11:22:33:52"/>   
-      <source network='k8s-cp-net2' bridge='k8s-cp-net2'/>
+      <source network='k8s-cp2' bridge='k8s-cp2'/>
       <target dev='vnet2'/>
       <model type='virtio'/>
       <alias name='net0'/>
