@@ -13,5 +13,9 @@ network:
       gateway4: 10.10.13.1     
       routes: 
         - to: fc00:0::/32
-          via: fc00:0:1003::1       
+          via: fc00:0:1003::1 
+    ens5:
+      addresses:
+        - 10.10.23.2/24
+        - fc00:0:2003::2/64 
   version: 2

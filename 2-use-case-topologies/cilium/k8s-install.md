@@ -66,4 +66,23 @@ wget https://github.com/opencontainers/runc/releases/download/v1.1.13/runc.amd64
 sudo  install -m 755 runc.amd64 /usr/local/sbin/runc
 ```
 
-8. You may now initialize your k8s cluster with kubeadm init [reference](../readme.md#initialize-the-kubernetes-cluster)
+8. copy containerd [config.toml](host-config/config.toml) into /etc/containerd/config.toml
+
+```
+sudo mkdir /etc/containerd
+sudo cp host-config/config.toml /etc/containerd/config.toml
+```
+
+
+9.  You may now initialize your k8s cluster with kubeadm init:
+```
+sudo kubeadm init
+```
+
+or if you want to use a specific pod network cidr:
+```
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+```
+
+
+

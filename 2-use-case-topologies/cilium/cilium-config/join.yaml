@@ -3,11 +3,11 @@ kind: JoinConfiguration
 discovery:
   bootstrapToken:
     apiServerEndpoint: 10.10.10.2:6443
-    token: "68hehf.8x79yf0hkgkpvjfg"
+    token: "11fuja.8f8rx8msyvhfx7vp"
     caCertHashes:
-    - "sha256:a4863cde706cfc580a439f842cc65d5ef112b7b2be31628513a9881cf0d9fe0e"
+    - "sha256:ac2bdf7d6a23fe8de6f50e8385b90719b2851f97c05da7216ce3239d0a37442d"
     # change auth info above to match the actual token and CA certificate hash for your cluster
 nodeRegistration:
   kubeletExtraArgs:
   - name: "node-ip"
-    value: "10.10.10.2,fc00:0:1000::2"
+    value: "10.10.11.2,fc00:0:1001::2"
