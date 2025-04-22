@@ -1,0 +1,75 @@
+name: srv6-7
+
+mgmt: 
+  network: srv6-7-mgmt
+  ipv4-subnet: 10.101.1.0/24
+
+topology: 
+  nodes: 
+    r1:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b 
+      mgmt-ipv4: 10.101.1.101
+      startup-config: r1.cfg
+    r2:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b
+      mgmt-ipv4: 10.101.1.102
+      startup-config: r2.cfg
+    r3:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b
+      mgmt-ipv4: 10.101.1.103
+      startup-config: r3.cfg
+    r4:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b
+      mgmt-ipv4: 10.101.1.104
+      startup-config: r4.cfg
+    r5:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b
+      mgmt-ipv4: 10.101.1.105
+      startup-config: r5.cfg
+    r6:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b
+      mgmt-ipv4: 10.101.1.106
+      startup-config: r6.cfg
+    r7:
+      kind: cisco_c8000v
+      image: vrnetlab/cisco_c8000v:17.12.04b
+      mgmt-ipv4: 10.101.1.107
+      startup-config: r7.cfg
+    a1:
+      kind: linux
+      image: alpine:latest
+      mgmt-ipv4: 10.101.1.108
+      binds:
+        - a1.sh:/config.sh
+      exec:
+        - /bin/sh /config.sh
+    b1:
+      kind: linux
+      image: alpine:latest
+      mgmt-ipv4: 10.101.1.109
+      binds: 
+        - b1.sh:/config.sh
+      exec: 
+        - /bin/sh /config.sh
+  
+  links: 
+    - endpoints: ["r1:Gi2", "r2:Gi2"]
+    - endpoints: ["r1:Gi3", "r5:Gi2"]
+    - endpoints: ["r1:Gi4", "a1:eth1"]
+    - endpoints: ["r2:Gi4", "r5:Gi4"]
+    - endpoints: ["r2:Gi5", "r3:Gi4"]
+    - endpoints: ["r2:Gi6", "r6:Gi4"]
+    - endpoints: ["r2:Gi7", "r7:Gi2"]
+    - endpoints: ["r3:Gi2", "r4:Gi2"]
+    - endpoints: ["r3:Gi5", "r5:Gi5"]
+    - endpoints: ["r3:Gi6", "r6:Gi5"]
+    - endpoints: ["r3:Gi7", "r7:Gi3"]
+    - endpoints: ["r4:Gi3", "r6:Gi2"] 
+    - endpoints: ["r4:Gi4", "b1:eth1"]
+    - endpoints: ["r5:Gi6", "r6:Gi6"] 
