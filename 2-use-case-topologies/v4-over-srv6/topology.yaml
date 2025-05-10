@@ -1,0 +1,87 @@
+#   The xrd-bgp/topology.yml launches a containerlab XRd topology with a pair of 
+#   Alpine containers and where the XRd instances are connected in a small CLOS
+#   topology. The topology also includes r99 which acts as a sort of eBGP route reflector.
+#
+#   Topology
+#  
+#  r00  r01
+#   | \ / |
+#   | / \ |
+#  r02  r03
+#   | \ / |
+#   | / \ |
+#  r04  r05
+#   |    |
+#  h00  h01
+
+name: v4-over-srv6
+
+mgmt:
+  network: mgt
+  ipv4-subnet: 172.20.1.0/24
+  ipv6-subnet: 2001:db8:20:1::/64
+
+topology:
+  nodes:
+
+    r00:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.100
+      startup-config: config/r00.cfg
+
+    r01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.101
+      startup-config: config/r01.cfg
+
+    r02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.102
+      startup-config: config/r02.cfg
+
+    r03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.103
+      startup-config: config/r03.cfg
+
+    r04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.104
+      startup-config: config/r04.cfg
+
+    r05:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.4.1
+      mgmt-ipv4: 172.20.1.105
+      startup-config: config/r05.cfg
+
+    host00:
+      kind: linux
+      image: iejalapeno/alpine:latest
+      mgmt-ipv4: 172.20.1.200
+
+    host01:
+      kind: linux
+      image: iejalapeno/alpine:latest
+      mgmt-ipv4: 172.20.1.201
+
+
+  links:
+    - endpoints: ["r00:Gi0-0-0-0", "r02:Gi0-0-0-0"]
+    - endpoints: ["r00:Gi0-0-0-1", "r03:Gi0-0-0-0"]
+
+    - endpoints: ["r01:Gi0-0-0-0", "r02:Gi0-0-0-1"]
+    - endpoints: ["r01:Gi0-0-0-1", "r03:Gi0-0-0-1"]
+    
+    - endpoints: ["r02:Gi0-0-0-2", "r04:Gi0-0-0-0"]
+    - endpoints: ["r02:Gi0-0-0-3", "r05:Gi0-0-0-0"]
+  
+    - endpoints: ["r03:Gi0-0-0-2", "r04:Gi0-0-0-1"]
+    - endpoints: ["r03:Gi0-0-0-3", "r05:Gi0-0-0-1"]
+
+
