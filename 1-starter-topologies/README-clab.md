@@ -1,5 +1,6 @@
 ### General Containerlab Instructions
-These instructions roughly apply to all Starter scenarios when running in Containerlab
+
+These instructions roughly apply to all Starter topologies when running Containerlab
    
 1. Requirements: Openvswitch
    ```
@@ -7,12 +8,13 @@ These instructions roughly apply to all Starter scenarios when running in Contai
    ```
    
 2. Install containerlab: https://containerlab.dev/install/
+
    Or the quick and easy way:
    ```
    bash -c "$(curl -sL https://get.containerlab.dev)"
    ```
 
-3. Acquire router image(s). XRd example:
+3. Acquire/download and untar router image(s). XRd example:
    
    #### XRd:
    https://xrdocs.io/virtual-routing/tutorials/2022-08-22-xrd-images-where-can-one-get-them/
@@ -115,6 +117,8 @@ ssh cisco@172.20.1.104
 
 pw for all = cisco123
 ```
+
+## Appendix
 
 ### Containerlab interconnecting a topology across multiple hosts or host VMs
 https://containerlab.dev/lab-examples/multinode/#vxlan-tunneling

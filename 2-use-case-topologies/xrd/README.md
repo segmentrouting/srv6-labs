@@ -1,8 +1,10 @@
 ### Clab XRd
-The 7-node topology is based on https://github.com/jalapeno/SRv6_dCloud_Lab
-The 20-node topology is a subset of the [clab-sp-core-plus-dc](../clab-sp-core-and-dc/) topology
 
-Both have been tested on Ubuntu 20.04, 22.04, and containerlab version 0.40.0
+The 7-node topology is based on https://github.com/jalapeno/SRv6_dCloud_Lab
+
+The 22-node topology is a subset of the [clab-sp-core-plus-dc](../clab-sp-core-and-dc/) topology
+
+Both have been tested on Ubuntu 20.04, 22.04
 
 1. Host server requirements
 
@@ -23,32 +25,34 @@ sudo apt-get install openvswitch-switch qemu qemu-kvm libvirt-bin -y
      [host-check-script](../../utils/host-check)
   
 
-1. Install Containerlab:
+2. Install Containerlab:
 ```
 https://containerlab.dev/install/
 ```
-1. Load XRd docker image:
+
+3. Load XRd docker image:
 ```
 docker load -i xrd-control-plane-container-x64.dockerv1.tgz 
 ``` 
-1. Define/edit topology yml file in this directory 
 
-2. If using the linux bridge topology file run the create-bridges.sh script prior to launching the topology
-   - XRd's will connect to each other via linux bridge instances, which is handy for doing tcpdump, etc.)
-  ```
-  sudo ./create-bridges.sh
-  ```
-1. Launch topology - note "7-node-bx.yml" uses linux bridge to connect XRd instances, "7-node-dx.yml" uses point-to-point veth-pairs
+4. Define/edit topology yml file in this directory 
+
+5. Run run the *xy-node-add-bridges.sh* script prior to launching the topology - this establishes linux bridge instances for attaching external elements to the topology
+   
+```
+sudo ./7-node-add-bridges.sh
+```
 
 ```
-sudo containerlab deploy -t 7-node-bx.yml
+sudo containerlab deploy -t 7-node.yml
 ```
+
 Example console output
 
 ```
-brmcdoug@naja:~/srv6-labs/containerlab/xrd$ sudo containerlab deploy -t 7-node-bx.yml 
+brmcdoug@naja:~/srv6-labs/containerlab/xrd$ sudo containerlab deploy -t 7-node.yml 
 INFO[0000] Containerlab v0.40.0 started                 
-INFO[0000] Parsing & checking topology file: 7-node-bx.yml 
+INFO[0000] Parsing & checking topology file: 7-node.yml 
 INFO[0000] Creating lab directory: /home/brmcdoug/srv6-labs/containerlab/xrd/clab-xrd-7-node 
 INFO[0000] Creating container: "xrd07"                  
 INFO[0000] Creating container: "xrd06"                  
@@ -88,7 +92,8 @@ brmcdoug@naja:~/srv6-labs/containerlab/xrd$
 ### check status of instances:
 docker ps
 
-### docker exec access to xr cli:
+### optional: docker exec access to xr cli
+```
 docker exec -it clab-xrd-7-node-xrd05 /pkg/bin/xr_cli.sh
 ```
 
