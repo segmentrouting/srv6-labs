@@ -12,13 +12,13 @@ topology:
   # Super Spine
     xrd-SS01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.11
       startup-config: config-10-node/SS01.cfg
 
     xrd-SS02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.12
       startup-config: config-10-node/SS02.cfg
 
@@ -26,25 +26,25 @@ topology:
 
     xrd-SP03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.13
       startup-config: config-10-node/SP03.cfg
 
     xrd-SP04:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.14
       startup-config: config-10-node/SP04.cfg
 
     xrd-SP05:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.15
       startup-config: config-10-node/SP05.cfg
 
     xrd-SP06:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.16
       startup-config: config-10-node/SP06.cfg
 
@@ -52,25 +52,25 @@ topology:
 
     xrd-LF07:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.17
       startup-config: config-10-node/LF07.cfg
 
     xrd-LF08:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.18
       startup-config: config-10-node/LF08.cfg
 
     xrd-LF09:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.19
       startup-config: config-10-node/LF09.cfg
 
     xrd-LF10:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.9.20
       startup-config: config-10-node/LF10.cfg
 
