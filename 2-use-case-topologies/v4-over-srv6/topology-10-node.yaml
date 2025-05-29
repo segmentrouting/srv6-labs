@@ -99,46 +99,46 @@ topology:
   links:
 
   # SS01
-    - endpoints: ["xrd-SS01:Gi0-0-0-0", "xrd-SP03:Gi0-0-0-0"]
-    - endpoints: ["xrd-SS01:Gi0-0-0-1", "xrd-SP04:Gi0-0-0-0"]
-    - endpoints: ["xrd-SS01:Gi0-0-0-2", "xrd-SP05:Gi0-0-0-0"]
-    - endpoints: ["xrd-SS01:Gi0-0-0-3", "xrd-SP06:Gi0-0-0-0"]
+    - endpoints: ["xrd-ss01:Gi0-0-0-0", "xrd-sp03:Gi0-0-0-0"]
+    - endpoints: ["xrd-ss01:Gi0-0-0-1", "xrd-sp04:Gi0-0-0-0"]
+    - endpoints: ["xrd-ss01:Gi0-0-0-2", "xrd-sp05:Gi0-0-0-0"]
+    - endpoints: ["xrd-ss01:Gi0-0-0-3", "xrd-sp06:Gi0-0-0-0"]
 
   # SS02
-    - endpoints: ["xrd-SS02:Gi0-0-0-0", "xrd-SP03:Gi0-0-0-1"]
-    - endpoints: ["xrd-SS02:Gi0-0-0-1", "xrd-SP04:Gi0-0-0-1"]
-    - endpoints: ["xrd-SS02:Gi0-0-0-2", "xrd-SP05:Gi0-0-0-1"]
-    - endpoints: ["xrd-SS02:Gi0-0-0-3", "xrd-SP06:Gi0-0-0-1"]
+    - endpoints: ["xrd-ss02:Gi0-0-0-0", "xrd-sp03:Gi0-0-0-1"]
+    - endpoints: ["xrd-ss02:Gi0-0-0-1", "xrd-sp04:Gi0-0-0-1"]
+    - endpoints: ["xrd-ss02:Gi0-0-0-2", "xrd-sp05:Gi0-0-0-1"]
+    - endpoints: ["xrd-ss02:Gi0-0-0-3", "xrd-sp06:Gi0-0-0-1"]
 
   # SP03
 
-    - endpoints: ["xrd-SP03:Gi0-0-0-2", "xrd-LF07:Gi0-0-0-0"]
-    - endpoints: ["xrd-SP03:Gi0-0-0-3", "xrd-LF08:Gi0-0-0-0"]
+    - endpoints: ["xrd-sp03:Gi0-0-0-2", "xrd-lf07:Gi0-0-0-0"]
+    - endpoints: ["xrd-sp03:Gi0-0-0-3", "xrd-lf08:Gi0-0-0-0"]
 
   # SP04  
-    - endpoints: ["xrd-SP04:Gi0-0-0-2", "xrd-LF07:Gi0-0-0-1"]
-    - endpoints: ["xrd-SP04:Gi0-0-0-3", "xrd-LF08:Gi0-0-0-1"]
+    - endpoints: ["xrd-sp04:Gi0-0-0-2", "xrd-lf07:Gi0-0-0-1"]
+    - endpoints: ["xrd-sp04:Gi0-0-0-3", "xrd-lf08:Gi0-0-0-1"]
 
   # SP05
-    - endpoints: ["xrd-SP05:Gi0-0-0-2", "xrd-LF09:Gi0-0-0-0"]
-    - endpoints: ["xrd-SP05:Gi0-0-0-3", "xrd-LF10:Gi0-0-0-0"]
+    - endpoints: ["xrd-sp05:Gi0-0-0-2", "xrd-lf09:Gi0-0-0-0"]
+    - endpoints: ["xrd-sp05:Gi0-0-0-3", "xrd-lf10:Gi0-0-0-0"]
 
   # SP06
-    - endpoints: ["xrd-SP06:Gi0-0-0-2", "xrd-LF09:Gi0-0-0-1"]
-    - endpoints: ["xrd-SP06:Gi0-0-0-3", "xrd-LF10:Gi0-0-0-1"]
+    - endpoints: ["xrd-sp06:Gi0-0-0-2", "xrd-lf09:Gi0-0-0-1"]
+    - endpoints: ["xrd-sp06:Gi0-0-0-3", "xrd-lf10:Gi0-0-0-1"]
 
   # LF07
-    - endpoints: ["xrd-LF07:Gi0-0-0-2", "Linux-host01:eth1"]
-    - endpoints: ["xrd-LF07:Gi0-0-0-3", "Linux-host02:eth1"]
+    - endpoints: ["xrd-lf07:Gi0-0-0-2", "Linux-host01:eth1"]
+    - endpoints: ["xrd-lf07:Gi0-0-0-3", "Linux-host02:eth1"]
 
   # LF08
-    - endpoints: ["xrd-LF08:Gi0-0-0-2", "Linux-host01:eth2"]
-    - endpoints: ["xrd-LF08:Gi0-0-0-3", "Linux-host02:eth2"]
+    - endpoints: ["xrd-lf08:Gi0-0-0-2", "Linux-host01:eth2"]
+    - endpoints: ["xrd-lf08:Gi0-0-0-3", "Linux-host02:eth2"]
   # LF09
-    - endpoints: ["xrd-LF09:Gi0-0-0-2", "Linux-host03:eth1"]
-    - endpoints: ["xrd-LF09:Gi0-0-0-3", "Linux-host04:eth1"]
+    - endpoints: ["xrd-lf09:Gi0-0-0-2", "Linux-host03:eth1"]
+    - endpoints: ["xrd-lf09:Gi0-0-0-3", "Linux-host04:eth1"]
 
   # LF10
-    - endpoints: ["xrd-LF10:Gi0-0-0-2", "Linux-host03:eth2"]
-    - endpoints: ["xrd-LF10:Gi0-0-0-3", "Linux-host04:eth2"]
+    - endpoints: ["xrd-lf10:Gi0-0-0-2", "Linux-host03:eth2"]
+    - endpoints: ["xrd-lf10:Gi0-0-0-3", "Linux-host04:eth2"]
   
