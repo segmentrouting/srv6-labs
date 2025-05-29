@@ -1,0 +1,73 @@
+name: trex
+
+mgmt:
+  network: trexmgt_net
+  ipv4-subnet: 172.20.99.0/24
+
+topology:
+  nodes:
+
+    ubtrex01:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt-ipv4: 172.20.99.11
+      binds: 
+        - trex/trex01/trex_cfg.yaml:/etc/trex_cfg.yaml
+
+    ubtrex02:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt-ipv4: 172.20.99.12
+      binds: 
+        - trex/trex02/trex_cfg.yaml:/etc/trex_cfg.yaml
+
+    ubtrex03:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt-ipv4: 172.20.99.13
+      binds: 
+        - trex/trex01/trex_cfg.yaml:/etc/trex_cfg.yaml
+
+    ubtrex04:
+      kind: linux
+      image: ubuntu-trex:1.1
+      mgmt-ipv4: 172.20.99.14
+      binds: 
+        - trex/trex02/trex_cfg.yaml:/etc/trex_cfg.yaml
+
+    LF07-host1:
+      kind: bridge
+
+    LF07-host2:
+      kind: bridge
+
+    LF08-host1:
+      kind: bridge
+
+    LF08-host2:
+      kind: bridge
+
+    LF09-host1:
+      kind: bridge
+
+    LF09-host2:
+      kind: bridge
+
+    LF10-host1:
+      kind: bridge
+
+    LF10-host2:
+      kind: bridge
+
+  links:
+    - endpoints: ["ubtrex01:eth1","LF07-host1:ubtrex01-eth1"]
+    - endpoints: ["ubtrex01:eth2","LF08-host1:ubtrex01-eth2"]
+
+    - endpoints: ["ubtrex02:eth1","LF07-host2:ubtrex02-eth1"]
+    - endpoints: ["ubtrex02:eth2","LF08-host2:ubtrex02-eth2"]
+
+    - endpoints: ["ubtrex03:eth1","LF09-host1:ubtrex03-eth1"]
+    - endpoints: ["ubtrex03:eth2","LF10-host1:ubtrex03-eth2"]
+
+    - endpoints: ["ubtrex04:eth1","LF09-host2:ubtrex04-eth1"]
+    - endpoints: ["ubtrex04:eth2","LF10-host2:ubtrex04-eth2"]

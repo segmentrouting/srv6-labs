@@ -1,0 +1,144 @@
+#   This yml launches the SS and brick-0 portions of the clos topology
+#   Bricks 1, 2, and 3 are launched via the clos-lower.yml
+
+name: xrd-clos
+
+mgmt:
+  network: mgt_xrd
+  ipv4-subnet: 172.20.9.0/24
+
+topology:
+  nodes:
+  # Super Spine
+    xrd-SS01:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.11
+      startup-config: config-10-node/SS01.cfg
+
+    xrd-SS02:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.12
+      startup-config: config-10-node/SS02.cfg
+
+    # Spine Tier-2
+
+    xrd-SP03:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.13
+      startup-config: config-10-node/SP03.cfg
+
+    xrd-SP04:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.14
+      startup-config: config-10-node/SP04.cfg
+
+    xrd-SP05:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.15
+      startup-config: config-10-node/SP05.cfg
+
+    xrd-SP06:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.16
+      startup-config: config-10-node/SP06.cfg
+
+    # Brick-0 LF Tier-1
+
+    xrd-LF07:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.17
+      startup-config: config-10-node/LF07.cfg
+
+    xrd-LF08:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.18
+      startup-config: config-10-node/LF08.cfg
+
+    xrd-LF09:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.19
+      startup-config: config-10-node/LF09.cfg
+
+    xrd-LF10:
+      kind: cisco_xrd
+      image: ios-xr/xrd-control-plane:24.2.2
+      mgmt-ipv4: 172.20.9.20
+      startup-config: config-10-node/LF10.cfg
+
+    # Linux Hosts 
+
+    Linux-host01:
+      kind: linux
+      image: vpackets/net-tools:latest
+      mgmt-ipv4: 172.20.9.21
+
+    Linux-host02:
+      kind: linux
+      image: vpackets/net-tools:latest
+      mgmt-ipv4: 172.20.9.22
+
+    Linux-host03:
+      kind: linux
+      image: vpackets/net-tools:latest
+      mgmt-ipv4: 172.20.9.23
+
+    Linux-host04:
+      kind: linux
+      image: vpackets/net-tools:latest
+      mgmt-ipv4: 172.20.9.24
+
+  links:
+
+  # SS01
+    - endpoints: ["xrd-SS01:Gi0-0-0-0", "xrd-SP03:Gi0-0-0-0"]
+    - endpoints: ["xrd-SS01:Gi0-0-0-1", "xrd-SP04:Gi0-0-0-0"]
+    - endpoints: ["xrd-SS01:Gi0-0-0-2", "xrd-SP05:Gi0-0-0-0"]
+    - endpoints: ["xrd-SS01:Gi0-0-0-3", "xrd-SP06:Gi0-0-0-0"]
+
+  # SS02
+    - endpoints: ["xrd-SS02:Gi0-0-0-0", "xrd-SP03:Gi0-0-0-1"]
+    - endpoints: ["xrd-SS02:Gi0-0-0-1", "xrd-SP04:Gi0-0-0-1"]
+    - endpoints: ["xrd-SS02:Gi0-0-0-2", "xrd-SP05:Gi0-0-0-1"]
+    - endpoints: ["xrd-SS02:Gi0-0-0-3", "xrd-SP06:Gi0-0-0-1"]
+
+  # SP03
+
+    - endpoints: ["xrd-SP03:Gi0-0-0-2", "xrd-LF07:Gi0-0-0-0"]
+    - endpoints: ["xrd-SP03:Gi0-0-0-3", "xrd-LF08:Gi0-0-0-0"]
+
+  # SP04  
+    - endpoints: ["xrd-SP04:Gi0-0-0-2", "xrd-LF07:Gi0-0-0-1"]
+    - endpoints: ["xrd-SP04:Gi0-0-0-3", "xrd-LF08:Gi0-0-0-1"]
+
+  # SP05
+    - endpoints: ["xrd-SP05:Gi0-0-0-2", "xrd-LF09:Gi0-0-0-0"]
+    - endpoints: ["xrd-SP05:Gi0-0-0-3", "xrd-LF10:Gi0-0-0-0"]
+
+  # SP06
+    - endpoints: ["xrd-SP06:Gi0-0-0-2", "xrd-LF09:Gi0-0-0-1"]
+    - endpoints: ["xrd-SP06:Gi0-0-0-3", "xrd-LF10:Gi0-0-0-1"]
+
+  # LF07
+    - endpoints: ["xrd-LF07:Gi0-0-0-2", "Linux-host01:eth1"]
+    - endpoints: ["xrd-LF07:Gi0-0-0-3", "Linux-host02:eth1"]
+
+  # LF08
+    - endpoints: ["xrd-LF08:Gi0-0-0-2", "Linux-host01:eth2"]
+    - endpoints: ["xrd-LF08:Gi0-0-0-3", "Linux-host02:eth2"]
+  # LF09
+    - endpoints: ["xrd-LF09:Gi0-0-0-2", "Linux-host03:eth1"]
+    - endpoints: ["xrd-LF09:Gi0-0-0-3", "Linux-host04:eth1"]
+
+  # LF10
+    - endpoints: ["xrd-LF10:Gi0-0-0-2", "Linux-host03:eth2"]
+    - endpoints: ["xrd-LF10:Gi0-0-0-3", "Linux-host04:eth2"]
+  

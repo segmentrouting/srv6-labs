@@ -28,37 +28,37 @@ topology:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.100
-      startup-config: config/r00.cfg
+      startup-config: config-6-node/r00.cfg
 
     r01:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.101
-      startup-config: config/r01.cfg
+      startup-config: config-6-node/r01.cfg
 
     r02:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.102
-      startup-config: config/r02.cfg
+      startup-config: config-6-node/r02.cfg
 
     r03:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.103
-      startup-config: config/r03.cfg
+      startup-config: config-6-node/r03.cfg
 
     r04:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.104
-      startup-config: config/r04.cfg
+      startup-config: config-6-node/r04.cfg
 
     r05:
       kind: cisco_xrd
       image: ios-xr/xrd-control-plane:24.4.1
       mgmt-ipv4: 172.20.1.105
-      startup-config: config/r05.cfg
+      startup-config: config-6-node/r05.cfg
 
     host00:
       kind: linux
@@ -83,5 +83,8 @@ topology:
   
     - endpoints: ["r03:Gi0-0-0-2", "r04:Gi0-0-0-1"]
     - endpoints: ["r03:Gi0-0-0-3", "r05:Gi0-0-0-1"]
+
+    - endpoints: ["r04:Gi0-0-0-2", "host00:eth1"]
+    - endpoints: ["r05:Gi0-0-0-2", "host01:eth1"]
 
 
