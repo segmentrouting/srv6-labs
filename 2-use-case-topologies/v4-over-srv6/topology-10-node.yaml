@@ -78,22 +78,22 @@ topology:
 
     Linux-host01:
       kind: linux
-      image: vpackets/net-tools:latest
+      image: iejalapeno/alpine:latest
       mgmt-ipv4: 172.20.9.21
 
     Linux-host02:
       kind: linux
-      image: vpackets/net-tools:latest
+      image: iejalapeno/alpine:latest
       mgmt-ipv4: 172.20.9.22
 
     Linux-host03:
       kind: linux
-      image: vpackets/net-tools:latest
+      image: iejalapeno/alpine:latest
       mgmt-ipv4: 172.20.9.23
 
     Linux-host04:
       kind: linux
-      image: vpackets/net-tools:latest
+      image: iejalapeno/alpine:latest
       mgmt-ipv4: 172.20.9.24
 
   links:
