@@ -118,6 +118,11 @@ ssh cisco@172.20.1.104
 pw for all = cisco123
 ```
 
+12.  To shutdown or destroy the topology (with -c to cleanup files/logs/etc.):
+    ```
+    sudo containerlab destroy -t clab-4-node-xrd.yml -c 
+    ```
+
 ## Appendix
 
 ### Containerlab interconnecting a topology across multiple hosts or host VMs
