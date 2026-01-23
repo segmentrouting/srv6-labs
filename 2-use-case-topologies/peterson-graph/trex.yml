@@ -10,70 +10,70 @@ topology:
 
     ubtrex01:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.101
       binds: 
         - trex/trex01/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex02:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.102
       binds: 
         - trex/trex02/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex03:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.103
       binds: 
         - trex/trex03/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex04:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.104
       binds: 
         - trex/trex04/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex05:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.105
       binds: 
         - trex/trex05/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex06:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.106
       binds: 
         - trex/trex06/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex07:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.107
       binds: 
         - trex/trex07/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex08:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.108
       binds: 
         - trex/trex08/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex09:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.109
       binds: 
         - trex/trex09/trex_cfg.yaml:/etc/trex_cfg.yaml
 
     ubtrex10:
       kind: linux
-      image: ubuntu-trex:1.2
+      image: ubuntu-trex:1.4
       mgmt-ipv4: 172.20.99.110
       binds: 
         - trex/trex10/trex_cfg.yaml:/etc/trex_cfg.yaml
