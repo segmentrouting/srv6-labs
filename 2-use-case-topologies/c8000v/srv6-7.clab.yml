@@ -1,4 +1,5 @@
 name: srv6-7
+prefix: ""
 
 mgmt: 
   network: srv6-7-mgmt

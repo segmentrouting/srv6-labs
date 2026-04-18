@@ -2,6 +2,7 @@
 #   Bricks 1, 2, and 3 are launched via the clos-lower.yml
 
 name: clos
+prefix: ""
 
 mgmt:
   network: mgtclos
@@ -14,25 +15,25 @@ topology:
 
     SP65:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.7.41
       startup-config: config/SP65.cfg
 
     SP66:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.7.42
       startup-config: config/SP66.cfg
 
     SP67:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.7.43
       startup-config: config/SP67.cfg
 
     SP68:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.7.44
       startup-config: config/SP68.cfg
 
@@ -40,25 +41,25 @@ topology:
 
     LF65:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.7.51
       startup-config: config/LF65.cfg
 
     LF66:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.7.52  
       startup-config: config/LF66.cfg
 
     LF67:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.7.53
       startup-config: config/LF67.cfg
 
     LF68:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.7.54
       startup-config: config/LF68.cfg
 

@@ -1,4 +1,5 @@
 name: trex
+prefix: ""
 
 mgmt:
   network: trexmgt_net

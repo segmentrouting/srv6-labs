@@ -12,6 +12,7 @@
 #  cp  wkr00  wkr01  
 
 name: cilium
+prefix: ""
 
 mgmt:
   network: mgtnet
@@ -52,7 +53,7 @@ topology:
 
     r99:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.2.2
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.199
       startup-config: config/r99.cfg
 

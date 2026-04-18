@@ -15,48 +15,48 @@
 #  h00  h01
 
 name: v4-over-srv6
+prefix: ""
 
 mgmt:
   network: mgt
   ipv4-subnet: 172.20.1.0/24
-  ipv6-subnet: 2001:db8:20:1::/64
 
 topology:
   nodes:
 
     r00:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.100
       startup-config: config-6-node/r00.cfg
 
     r01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.101
       startup-config: config-6-node/r01.cfg
 
     r02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.102
       startup-config: config-6-node/r02.cfg
 
     r03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.103
       startup-config: config-6-node/r03.cfg
 
     r04:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.104
       startup-config: config-6-node/r04.cfg
 
     r05:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.105
       startup-config: config-6-node/r05.cfg
 

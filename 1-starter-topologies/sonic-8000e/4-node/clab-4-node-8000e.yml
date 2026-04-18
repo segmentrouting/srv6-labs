@@ -9,6 +9,7 @@
 #
 
 name: c8101-sonic-4-node
+prefix: ""
 
 mgmt:
   network: mgt_net4

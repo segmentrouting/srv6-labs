@@ -12,61 +12,54 @@
 #  h00  h01
 
 name: xrd-bgp
+prefix: ""
 
 mgmt:
   network: mgt
   ipv4-subnet: 172.20.1.0/24
-  ipv6-subnet: 2001:db8:20:1::/64
 
 topology:
   nodes:
 
     r00:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.100
-      mgmt-ipv6: 2001:db8:20:1::100
       startup-config: config/r00.cfg
 
     r01:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.101
-      mgmt-ipv6: 2001:db8:20:1::101
       startup-config: config/r01.cfg
 
     r02:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.102
-      mgmt-ipv6: 2001:db8:20:1::102
       startup-config: config/r02.cfg
 
     r03:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.103
-      mgmt-ipv6: 2001:db8:20:1::103
       startup-config: config/r03.cfg
 
     r99:
       kind: cisco_xrd
-      image: ios-xr/xrd-control-plane:24.4.1
+      image: ios-xr/xrd-control-plane:25.4.2
       mgmt-ipv4: 172.20.1.104
-      mgmt-ipv6: 2001:db8:20:1::199
       startup-config: config/r99.cfg
 
     host00:
       kind: linux
       image: iejalapeno/alpine:latest
       mgmt-ipv4: 172.20.1.200
-      mgmt-ipv6: 2001:db8:20:1::200
 
     host01:
       kind: linux
       image: iejalapeno/alpine:latest
       mgmt-ipv4: 172.20.1.201
-      mgmt-ipv6: 2001:db8:20:1::201
 
     # bridge00:
     #   kind: bridge
