@@ -6,11 +6,11 @@
 #    \___r3__/
 
 name: c8101-sonic-5-node
+prefix: ""
 
 mgmt:
   network: mgt_net5
   ipv4_subnet: 172.20.5.0/24
-  ipv6_subnet: 2001:172:20:5::/80
 
 topology:
   kinds:
@@ -26,14 +26,12 @@ topology:
     r1:
       kind: linux
       mgmt_ipv4: 172.20.5.101
-      mgmt_ipv6: 2001:172:20:5::101
 
     r2:
       kind: linux
       wait-for:
         - r1
       mgmt_ipv4: 172.20.5.102
-      mgmt_ipv6: 2001:172:20:5::102
 
     r3:
       kind: linux
@@ -41,7 +39,6 @@ topology:
         - r1
         - r2
       mgmt_ipv4: 172.20.5.103
-      mgmt_ipv6: 2001:172:20:5::103
 
     r4:
       kind: linux
@@ -50,7 +47,6 @@ topology:
         - r2
         - r3
       mgmt_ipv4: 172.20.5.104
-      mgmt_ipv6: 2001:172:20:5::104
 
     r5:
       kind: linux
@@ -60,7 +56,6 @@ topology:
         - r3
         - r4
       mgmt_ipv4: 172.20.5.105
-      mgmt_ipv6: 2001:172:20:5::105
 
   links:
     - endpoints: ["r1:eth1", "r2:eth1"]

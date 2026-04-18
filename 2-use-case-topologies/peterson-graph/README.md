@@ -1,4 +1,7 @@
 ## Peterson Graph - Work in Progress
+
+Topologies use `prefix: ""` and XRd image `ios-xr/xrd-control-plane:25.4.2` where applicable. Container names follow `{lab-name}-{node-name}` (for example `peterson-xrd01` for lab `peterson`).
+
 ![Peterson Graph](diagrams/topology.png)
 
 A containerlab based project with 10 nodes linked together in a Peterson Graph with two iterations:
@@ -38,7 +41,7 @@ python3 imix-start.py
 4. Enable ODN steering from sources to xrd01 host prefix by advertising it with extcomm color
 
 ```
-ssh cisco@clab-peterson-xrd01
+ssh cisco@peterson-xrd01
 ```
 Apply config:
 ```

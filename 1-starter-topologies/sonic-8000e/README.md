@@ -1,5 +1,7 @@
 ## Containerlab SONiC Cisco 8000 Emulator (8000e)
 
+Sample topologies: `4-node/clab-4-node-8000e.yml` and `5-node/clab-5-node-8000e.yml`. Both set `prefix: ""` and use IPv4-only management (no per-node management IPv6). Adjust image tags in the YAML to match your local SONiC build.
+
 This repository contains instructions and sample yaml files for launching sonic running on the Cisco 8000 hardware emulator
 
 Requires:

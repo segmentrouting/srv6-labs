@@ -1,5 +1,7 @@
 ## CLAB CLOS
 
+Topology definitions live under [`backend/`](./backend/) (`clos-upper.yml`, `clos-lower.yml`); XRd uses `ios-xr/xrd-control-plane:25.4.2`. Bridge and VXLAN helper scripts are under `backend/util/`.
+
 The CLOS topology is designed such that it could scale out massively (per the diagram: 96 bricks, 1024 spine nodes, etc.). Currently the topology files define 16 Spine nodes and three 4x4 Bricks to be spread across a pair of hosts or VMs (recommend minimum of 32 vCPU and 64GB memory): 
 
 * clos-upper.yml - 16 spine nodes and brick 0 nodes (see topology diagram)

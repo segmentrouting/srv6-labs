@@ -2,11 +2,11 @@
 ###   docker pull bmcdougall/frr-srv6-usid
 
 name: frr
+prefix: ""
 
 mgmt:
   network: frr_mgt_net
   ipv4_subnet: 172.20.2.0/24
-  ipv6_subnet: 2001:172:20:2::/80
 
 topology:
   nodes:
@@ -18,7 +18,6 @@ topology:
         - frr-1/daemons:/etc/frr/daemons
         - frr-1/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.101
-      mgmt_ipv6: 2001:172:20:2::101
 
     frr-2:
       kind: linux
@@ -28,7 +27,6 @@ topology:
         - frr-2/daemons:/etc/frr/daemons
         - frr-2/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.102
-      mgmt_ipv6: 2001:172:20:2::102
 
     frr-3:
       kind: linux
@@ -38,7 +36,6 @@ topology:
         - frr-3/daemons:/etc/frr/daemons
         - frr-3/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.103
-      mgmt_ipv6: 2001:172:20:2::103
       
     frr-4:
       kind: linux
@@ -48,7 +45,6 @@ topology:
         - frr-4/daemons:/etc/frr/daemons
         - frr-4/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.104
-      mgmt_ipv6: 2001:172:20:2::104
       
     frr-5:
       kind: linux
@@ -58,7 +54,6 @@ topology:
         - frr-5/daemons:/etc/frr/daemons
         - frr-5/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.105
-      mgmt_ipv6: 2001:172:20:2::105
       
     frr-6:
       kind: linux
@@ -68,7 +63,6 @@ topology:
         - frr-6/daemons:/etc/frr/daemons
         - frr-6/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.106
-      mgmt_ipv6: 2001:172:20:2::106
       
     frr-7:
       kind: linux
@@ -78,7 +72,6 @@ topology:
         - frr-7/daemons:/etc/frr/daemons
         - frr-7/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.107
-      mgmt_ipv6: 2001:172:20:2::107
       
     frr-8:
       kind: linux
@@ -88,7 +81,6 @@ topology:
         - frr-8/daemons:/etc/frr/daemons
         - frr-8/frr.conf:/etc/frr/frr.conf
       mgmt_ipv4: 172.20.2.108
-      mgmt_ipv6: 2001:172:20:2::108
     
 
 

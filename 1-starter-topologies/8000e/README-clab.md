@@ -71,7 +71,7 @@ Please feel free to use this topology or add additional topologies and configura
 9.  Give the 8201 emulator instances 10-12 minutes to come up and be responsive. Monitor progress using docker logs commands:
 
    ```
-   docker logs -f clab-4-node-8201-r1
+   docker logs -f 4-node-8000e-8201-r1
    ```
 
 If the emulator build is successful the last few entries of docker logs will look like this:
@@ -97,6 +97,6 @@ If the emulator build is successful the last few entries of docker logs will loo
 11. We can also use docker exec to access the routers' console port, or invoke XR cli:
 
    ```
-   docker exec -it clab-4-node-8201-r1 telnet 0 60000
-   docker exec -it clab-4-node-8201-r1 /pkg/bin/xr_cli.sh
+   docker exec -it 4-node-8000e-8201-r1 telnet 0 60000
+   docker exec -it 4-node-8000e-8201-r1 /pkg/bin/xr_cli.sh
    ```

@@ -1,5 +1,9 @@
 ## Cilium SRv6 L3VPN with Nexus 9000v fabric
 
+**Containerlab:** `topology.yaml` (`name: cilium`, `prefix: ""`) defines Nexus 9000v switches plus one XRd (`ios-xr/xrd-control-plane:25.4.2`) and Linux bridges for Kubernetes attachment. Deploy from this directory:
+
+`sudo containerlab deploy -t topology.yaml`
+
 Dependencies:
  - containerlab
  - kvm/virsh

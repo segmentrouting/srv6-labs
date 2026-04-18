@@ -1,4 +1,7 @@
 ### An 8-node SRv6 lab using FRR
+
+`frr.yml` uses `prefix: ""` and IPv4-only management. Container names follow `frr-<node>` (for example `frr-frr-1`).
+
 Many thanks to Brian Linkletter as his blog post gave this lab a jumpstart: 
 https://www.brianlinkletter.com/2021/05/use-containerlab-to-emulate-open-source-routers/
 
@@ -62,12 +65,12 @@ sysctl net.vrf.strict_mode=1
 ### Accessing FRR nodes:
 1. Access FRR vtysh CLI:
 ```
-docker exec -it clab-frr-frr-1 vtysh
+docker exec -it frr-frr-1 vtysh
 ```
 
 2. Access FRR container linux shell:
 ```
-docker exec -it clab-frr-frr-1 bash  
+docker exec -it frr-frr-1 bash  
 ```
 
 ### Validate BGP peering, routes, etc.
@@ -120,11 +123,11 @@ Paths: (1 available, best #1, vrf blue)
 3. Validate PE l3vpn routes in Linux
 
 ```
-docker exec -it clab-frr-frr-1 ip route show vrf blue
+docker exec -it frr-frr-1 ip route show vrf blue
 ```
 
 ```
-cisco@topology-host:~$ docker exec -it clab-frr-frr-1 ip route show vrf blue
+cisco@topology-host:~$ docker exec -it frr-frr-1 ip route show vrf blue
 10.7.0.1 nhid 40 via 10.7.1.2 dev eth3 proto bgp metric 20 
 10.7.1.0/24 dev eth3 proto kernel scope link src 10.7.1.1 
 10.8.1.0/24 nhid 52  encap seg6 mode encap segs 1 [ fc00:0:6:e001:: ] via inet6 2001:db8:3e8:70::1 dev eth1 proto bgp metric 20 
@@ -134,17 +137,17 @@ cisco@topology-host:~$ docker exec -it clab-frr-frr-1 ip route show vrf blue
 1. Run a ping from CE frr-7
 
 ```
-docker exec -it  clab-frr-frr-7 ping -i .3 10.8.1.1
+docker exec -it frr-frr-7 ping -i .3 10.8.1.1
 ```
 
 2. Enter container netns to run tcpdump
 ```
-sudo ip netns exec clab-frr-frr-1 tcpdump -ni eth2
+sudo ip netns exec frr-frr-1 tcpdump -ni eth2
 ```
 
 *Note* tcpdump output may not display immediately. *ctrl-c* will stop the tcpdump and should show the output:
 ```
-isco@topology-host:~$ sudo ip netns exec clab-frr-frr-1 tcpdump -ni eth1
+isco@topology-host:~$ sudo ip netns exec frr-frr-1 tcpdump -ni eth1
 tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
 listening on eth1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
 ^C20:14:37.509899 IP6 fe80::a8c1:abff:fe8d:e692 > ff02::1: ICMP6, router advertisement, length 56

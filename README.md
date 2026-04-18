@@ -3,13 +3,11 @@ A repository containing several types of SRv6 lab or demo projects.
 
 The repository is organized around network topology scenarios and the tools used to launch a given topology. For example:
 
-* [1-starter-topologies](./1-starter-topologies/) - contains topology definition yaml files and router configs for quickly getting up and running using the Containerlab or KNE topology orchestrators.
+* [1-starter-topologies](./1-starter-topologies/) - topology definitions and router configs for quick starts with [Containerlab](https://containerlab.dev/).
 
-* [2-use-case-topologies](./2-use-case-topologies/) - contains topology definition yaml files and router configs for running larger, more complex SRv6 scenarios using Containerlab, KNE, VXR, or xr-compose
+* [2-use-case-topologies](./2-use-case-topologies/) - larger SRv6 scenarios using Containerlab, VXR, or xr-compose (and related tooling).
 
-* [3-srv6-dc-case-studies](./3-srv6-dc-case-studies/) - contains dc topology definition yaml files and router configs for running larger, more complex SRv6 dc scenarios using xr-compose
-
-* Note: some of the KNE examples are still a work in progress
+* [3-srv6-dc-case-studies](./3-srv6-dc-case-studies/) - DC-oriented xr-compose scenarios.
 
 Each project subdirectory includes READMEs, scripts, configs, and other tools for building SRv6 topologies and running various simulation or demo scenarios.
 

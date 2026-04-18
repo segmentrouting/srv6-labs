@@ -18,8 +18,8 @@ Note, in order to tunnel global ipv4 traffic over SRv6 we need to establish and 
 
 It is assumed containerlab is already installed. If not, please see: [readme](../README-clab.md)
 
-1. Acquire an XRd control-plane image
-Example: https://software.cisco.com/download/home/286331236/type/280805694/release/24.4.1
+1. Acquire an XRd control-plane image (topology uses `ios-xr/xrd-control-plane:25.4.2`)
+Example: https://software.cisco.com/download/home/286331236/type/280805694/release
 
 2. Load the image per [readme](../README-clab.md)
    
@@ -35,11 +35,11 @@ sudo containerlab deploy -t topology.yaml
 
 1. Give it 60-90 seconds to boot, then ssh to routers (password is cisco123)
 ```
-ssh cisco@clab-xrd-bgp-r00
-ssh cisco@clab-xrd-bgp-r01
-ssh cisco@clab-xrd-bgp-r02
-ssh cisco@clab-xrd-bgp-r03
-ssh cisco@clab-xrd-bgp-r99
+ssh cisco@xrd-bgp-r00
+ssh cisco@xrd-bgp-r01
+ssh cisco@xrd-bgp-r02
+ssh cisco@xrd-bgp-r03
+ssh cisco@xrd-bgp-r99
 ```
 
 1. XRd verification commands (example commands for r02)
@@ -52,35 +52,35 @@ show bgp ipv4 unicast 3.3.3.0/24
 
 1. Give the alpine host00 and host01 their IPs and routes
 ```
-docker exec -it clab-xrd-bgp-host00 ip addr add 2.2.2.2/24 dev eth1
-docker exec -it clab-xrd-bgp-host01 ip addr add 3.3.3.2/24 dev eth1
-docker exec -it clab-xrd-bgp-host00 ip route add 3.3.3.0/24 via 2.2.2.1 dev eth1
-docker exec -it clab-xrd-bgp-host01 ip route add 2.2.2.0/24 via 3.3.3.1 dev eth1
+docker exec -it xrd-bgp-host00 ip addr add 2.2.2.2/24 dev eth1
+docker exec -it xrd-bgp-host01 ip addr add 3.3.3.2/24 dev eth1
+docker exec -it xrd-bgp-host00 ip route add 3.3.3.0/24 via 2.2.2.1 dev eth1
+docker exec -it xrd-bgp-host01 ip route add 2.2.2.0/24 via 3.3.3.1 dev eth1
 ```
 
 1. ping tests from hosts to local gateways
 ```
-docker exec -it clab-xrd-bgp-host00 ping 2.2.2.1 -c 4 -i .3
-docker exec -it clab-xrd-bgp-host01 ping 3.3.3.1 -c 4 -i .3
+docker exec -it xrd-bgp-host00 ping 2.2.2.1 -c 4 -i .3
+docker exec -it xrd-bgp-host01 ping 3.3.3.1 -c 4 -i .3
 ```
 
 1. End to end ping tests from host to host
 ```
-docker exec -it clab-xrd-bgp-host00 ping 3.3.3.2 -c 4 -i .3
-docker exec -it clab-xrd-bgp-host01 ping 2.2.2.2 -c 4 -i .3
+docker exec -it xrd-bgp-host00 ping 3.3.3.2 -c 4 -i .3
+docker exec -it xrd-bgp-host01 ping 2.2.2.2 -c 4 -i .3
 ```
 
 1. Setup a tcpdump session and re-run host to host pings - the pings will appear on one of these interfaces:
 ```
-docker exec -it clab-xrd-bgp-r00 tcpdump -ni Gi0-0-0-0
-docker exec -it clab-xrd-bgp-r00 tcpdump -ni Gi0-0-0-1
-docker exec -it clab-xrd-bgp-r01 tcpdump -ni Gi0-0-0-0
-docker exec -it clab-xrd-bgp-r01 tcpdump -ni Gi0-0-0-1
+docker exec -it xrd-bgp-r00 tcpdump -ni Gi0-0-0-0
+docker exec -it xrd-bgp-r00 tcpdump -ni Gi0-0-0-1
+docker exec -it xrd-bgp-r01 tcpdump -ni Gi0-0-0-0
+docker exec -it xrd-bgp-r01 tcpdump -ni Gi0-0-0-1
 ```
 
 Example:
 ```
-$ docker exec -it clab-xrd-bgp-r01 tcpdump -ni Gi0-0-0-0
+$ docker exec -it xrd-bgp-r01 tcpdump -ni Gi0-0-0-0
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on Gi0-0-0-0, link-type EN10MB (Ethernet), capture size 262144 bytes
 03:35:21.330441 IP6 fc00:0:1002::1 > fc00:0:1003:e001::: IP 2.2.2.2 > 3.3.3.2: ICMP echo request, id 157, seq 0, length 64
