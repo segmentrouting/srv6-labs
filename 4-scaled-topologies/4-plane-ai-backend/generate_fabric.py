@@ -169,6 +169,21 @@ def spine_ua_sid(plane: int, leaf: int) -> str:
     return f"{plane_block_prefix(plane)}:e00{hex1(leaf)}::/48"
 
 
+def leaf_host_ua_sid(plane: int, eth_port_num: int) -> str:
+    """e<NNN>: leaf-side uA SID toward whatever's attached on Ethernet<eth_port_num>.
+
+    Same e-space and same numbering rule as spine→leaf: function value is the
+    NIC ordinal (port_number / 4), so Ethernet0=e000, Ethernet4=e001,
+    Ethernet32=e008, Ethernet36=e009, Ethernet40=e00a, etc.
+
+    This matches the spine pattern exactly (on a spine, leaf L is on
+    Ethernet<L*4>, which is NIC ordinal L = e00<L>) so a single rule applies
+    fabric-wide: 'e<ordinal> = step down out the port at this NIC ordinal'.
+    """
+    nic_ordinal = eth_port_num // 4
+    return f"{plane_block_prefix(plane)}:e{nic_ordinal:03x}::/48"
+
+
 def green_udt_sid(plane: int) -> str:
     """uDT6 -> Vrf-green for plane <P>."""
     return f"{plane_block_prefix(plane)}:{TENANT_GREEN_SID_FUNC:04x}::/48"
@@ -343,6 +358,20 @@ def write_leaf_frr(plane: int, leaf: int) -> None:
     # Tenant-ID uDT6 for green, inside this plane's /32 block.
     sid_lines.append(
         f"   sid {green_udt_sid(plane)} locator MAIN behavior uDT6 vrf {GREEN_VRF}"
+    )
+    # Host-facing uA toward the yellow host on Ethernet36. Yellow uses the
+    # host-based SRv6 model (host decaps via seg6local), so the egress leaf
+    # needs a uA-terminated forward to the host's NIC.
+    #
+    # Note: no symmetric e032 for green. Green's Ethernet32 sits in Vrf-green,
+    # but FRR's static-sids uA programs the seg6local in the default
+    # routing namespace and the next-hop must resolve there. Green doesn't
+    # need it anyway — the d000 uDT6 above decaps into Vrf-green and the
+    # connected /64 lookup hands the packet to the host.
+    yellow_host_nh = f"{host_uplink_prefix('yellow', plane, leaf)}::2"
+    sid_lines.append(
+        f"   sid {leaf_host_ua_sid(plane, 36)} locator MAIN behavior uA "
+        f"interface Ethernet36 nexthop {yellow_host_nh}"
     )
     static_block = "\n".join(sid_lines)
 
