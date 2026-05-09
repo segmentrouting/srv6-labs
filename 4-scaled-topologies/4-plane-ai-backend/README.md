@@ -117,6 +117,9 @@ the lab down — see "Reducing scale" below).
 | `topology.clab.yaml` | Containerlab topology (generated) |
 | `config/<node>/` | Per-node SONiC `config_db.json` and FRR `frr.conf` (generated) |
 | `config.sh` | Pushes generated configs into running SONiC containers |
+| `test-routes.sh` | Installs the demo PAIRS routes and runs the 64-pair ping/tcpdump suite |
+| `trace-flow.sh` | Per-hop SRv6 uSID trace for one tenant flow (see `trace-flow.md`) |
+| `trace-flow.md` | Tool writeup: what gets captured at each hop and how to read it |
 
 ## Deployment
 
@@ -179,20 +182,28 @@ Other targets:
 
 ```bash
 # Pick any leaf
-docker exec clab-sonic-docker-4p-8x16-p2-leaf10 vtysh -c 'show segment-routing srv6 sid'
-docker exec clab-sonic-docker-4p-8x16-p2-leaf10 vtysh -c 'show ipv6 route summary'
+docker exec p2-leaf10 vtysh -c 'show segment-routing srv6 sid'
+docker exec p2-leaf10 vtysh -c 'show ipv6 route summary'
 
 # A green host's view (4 plane routes, one per uplink)
-docker exec clab-sonic-docker-4p-8x16-green-host00 ip -6 route | grep fc00
+docker exec green-host00 ip -6 route | grep fc00
 
 # A yellow host should have 4 seg6local entries
-docker exec clab-sonic-docker-4p-8x16-yellow-host00 ip -6 route | grep seg6local
+docker exec yellow-host00 ip -6 route | grep seg6local
+```
+
+To watch a single flow shift uSIDs hop-by-hop across the fabric, see
+[`trace-flow.md`](./trace-flow.md):
+
+```bash
+./trace-flow.sh green  0 15           # PAIRS pair, all 4 planes
+./trace-flow.sh --install-route yellow 0 12   # arbitrary pair, routes auto-installed
 ```
 
 ### Tear down
 
 ```bash
-sudo containerlab destroy -t topology.clab.yaml
+sudo containerlab destroy -t topology.clab.yaml -c
 ```
 
 ## Routing model: no BGP, no IGP
@@ -279,6 +290,8 @@ Hosts will reduce to the new `NUM_LEAVES` count. Re-run
 
 ## See also
 
+- `./trace-flow.md` — per-hop SRv6 uSID trace tool: capture the outer
+  destination at every hop and compare against the expected shift.
 - `../01-sonic-vs/README.md` — original 3×3 lab and a longer writeup of the
   three multi-tenancy models (network / hybrid / host based).
 
